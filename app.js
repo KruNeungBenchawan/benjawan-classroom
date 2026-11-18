@@ -1,5 +1,5 @@
 (() => {
-  const STORAGE_KEY = "benjawan_classroom_data_v3";
+  const STORAGE_KEY = "benjawan_classroom_data_v4";
 
   const TYPE_LABELS = {
     onet: "เว็บติวสอบ / O-NET",
@@ -39,6 +39,7 @@
     searchQuery: "",
     subjectFilter: "all",
     gradeFilter: "all",
+    yearFilter: "all",
     sortBy: "newest",
     viewMode: "grid"
   };
@@ -52,6 +53,7 @@
     addAnnouncementBtn: document.getElementById("addAnnouncementBtn"),
     editProfileBtn: document.getElementById("editProfileBtn"),
     exportDataBtn: document.getElementById("exportDataBtn"),
+    exportDataJsBtn: document.getElementById("exportDataJsBtn"),
     importDataInput: document.getElementById("importDataInput"),
     resetDataBtn: document.getElementById("resetDataBtn"),
 
@@ -71,6 +73,7 @@
     searchInput: document.getElementById("searchInput"),
     subjectFilter: document.getElementById("subjectFilter"),
     gradeFilter: document.getElementById("gradeFilter"),
+    yearFilter: document.getElementById("yearFilter"),
     sortSelect: document.getElementById("sortSelect"),
     gridViewBtn: document.getElementById("gridViewBtn"),
     listViewBtn: document.getElementById("listViewBtn"),
@@ -308,6 +311,16 @@
     el.gradeFilter.value = grades.includes(prevGrade) ? prevGrade : "all";
     state.gradeFilter = el.gradeFilter.value;
 
+    const years = getUniqueValues("year");
+    const prevYear = state.yearFilter;
+    if (el.yearFilter) {
+      el.yearFilter.innerHTML =
+        `<option value="all">ทุกปีการศึกษา</option>` +
+        years.map((y) => `<option value="${escapeHtml(y)}">ปีการศึกษา ${escapeHtml(y)}</option>`).join("");
+      el.yearFilter.value = years.includes(prevYear) ? prevYear : "all";
+      state.yearFilter = el.yearFilter.value;
+    }
+
     // Populate modal datalists & category select
     el.subjectSuggestions.innerHTML = subjects.map((s) => `<option value="${escapeHtml(s)}">`).join("");
     el.gradeSuggestions.innerHTML = grades.map((g) => `<option value="${escapeHtml(g)}">`).join("");
@@ -323,6 +336,7 @@
       if (state.activeCategory !== "all" && item.category !== state.activeCategory) return false;
       if (state.subjectFilter !== "all" && (item.subject || "") !== state.subjectFilter) return false;
       if (state.gradeFilter !== "all" && (item.grade || "") !== state.gradeFilter) return false;
+      if (state.yearFilter !== "all" && (item.year || "") !== state.yearFilter) return false;
 
       if (q) {
         const haystack = [
@@ -356,6 +370,7 @@
       state.activeCategory !== "all" ||
       state.subjectFilter !== "all" ||
       state.gradeFilter !== "all" ||
+      state.yearFilter !== "all" ||
       state.searchQuery.trim() !== "";
 
     el.clearFiltersBtn.classList.toggle("hidden", !hasFilters);
@@ -441,6 +456,7 @@
     state.activeCategory = "all";
     state.subjectFilter = "all";
     state.gradeFilter = "all";
+    state.yearFilter = "all";
     state.searchQuery = "";
     el.searchInput.value = "";
     renderCategoryTabs();
@@ -507,6 +523,13 @@
     state.gradeFilter = e.target.value;
     renderResources();
   });
+
+  if (el.yearFilter) {
+    el.yearFilter.addEventListener("change", (e) => {
+      state.yearFilter = e.target.value;
+      renderResources();
+    });
+  }
 
   el.sortSelect.addEventListener("change", (e) => {
     state.sortBy = e.target.value;
@@ -673,6 +696,20 @@
     URL.revokeObjectURL(url);
     showToast("ดาวน์โหลดไฟล์สำรองข้อมูลแล้ว");
   });
+
+  if (el.exportDataJsBtn) {
+    el.exportDataJsBtn.addEventListener("click", () => {
+      const content = `// ข้อมูลเว็บไซต์ ห้องเรียนครูเบ็ญจวรรณ\nwindow.DEFAULT_CLASSROOM_DATA = ${JSON.stringify(state.data, null, 2)};\n`;
+      const blob = new Blob([content], { type: "application/javascript;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "data.js";
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast("ดาวน์โหลดไฟล์ data.js สำหรับอัปโหลดขึ้นเว็บแล้ว");
+    });
+  }
 
   el.importDataInput.addEventListener("change", (e) => {
     const file = e.target.files?.[0];

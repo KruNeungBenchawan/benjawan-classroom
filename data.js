@@ -44,6 +44,33 @@ window.DEFAULT_CLASSROOM_DATA = {
       pinned: true
     },
 
+    {
+      id: "history-smart-class",
+      title: "History Smart Class: เว็บแอปสื่อการสอนประวัติศาสตร์ ม.1–ม.3 (ครบ 15 หน่วย)",
+      category: "lesson-plans",
+      type: "onet",
+      subject: "ประวัติศาสตร์",
+      grade: "ม.1–ม.3",
+      year: "2569",
+      url: "history-m1-m3/index.html",
+      description: "เว็บแอปสื่อการสอนประวัติศาสตร์ ม.1–ม.3 อ้างอิงหนังสือเรียน พว. ครบ 15 หน่วย (สไลด์, ใบงานโต้ตอบ, คลังข้อสอบ และโหมดครู)",
+      date: "2026-11-18",
+      pinned: true
+    },
+    {
+      id: "history-index-75",
+      title: "สารบัญสื่อการสอนประวัติศาสตร์ ม.1–ม.3 (รวม 75 ไฟล์: PPTX, DOCX, HTML)",
+      category: "documents",
+      type: "link",
+      subject: "ประวัติศาสตร์",
+      grade: "ม.1–ม.3",
+      year: "2569",
+      url: "history-m1-m3/สารบัญสื่อการสอน_ประวัติศาสตร์_ม1-ม3.html",
+      description: "หน้ารวมลิงก์ดาวน์โหลดสไลด์ Interactive, ใบงาน A4 พร้อมเฉลย, PowerPoint (.pptx) และ Word (.docx) ครบทั้ง 15 หน่วย",
+      date: "2026-11-18",
+      pinned: true
+    },
+
     // --- ป.6 (onet-thai-p6-2569) ---
     {
       id: "onet-p6-2569",

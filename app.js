@@ -144,8 +144,10 @@
         }
       });
       // Auto-migrate old placeholder profile to official profile
-      if (parsed.profile && (parsed.profile.name === "ครูเบ็ญจวรรณ" || parsed.profile.school === "โรงเรียนตัวอย่างวิทยาคม")) {
+      if (parsed.profile && (parsed.profile.name === "ครูเบ็ญจวรรณ" || parsed.profile.school === "โรงเรียนตัวอย่างวิทยาคม" || parsed.profile.school === "ห้องเรียนภาษาไทย • ปีการศึกษา 2569")) {
         parsed.profile = defaults.profile;
+      } else if (parsed.profile && typeof parsed.profile.school === "string") {
+        parsed.profile.school = parsed.profile.school.replace(/\s*•\s*ปีการศึกษา\s*2569/g, "");
       }
       return parsed;
     } catch {

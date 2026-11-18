@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สไลด์ประกอบการสอน วิชาประวัติศาสตร์ ม.3 - สมัยปฏิรูปประเทศสู่ยุคประชาธิปไตย (สำนักพิมพ์ พว.)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1A237E;      /* สีน้ำเงินเข้ม-ทอง โทนสมัยปฏิรูปประเทศและประชาธิปไตย */
+            --primary-bg: #F3F5FC;
+            --accent: #C62828;
+            --accent-gold: #C68400;
+            --success: #2E7D32;
+            --text-dark: #1E1B24;
+            --text-muted: #5A5266;
+            --card-bg: #FFFFFF;
+            --border-color: #C5CAE9;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background: linear-gradient(135deg, #0d1242 0%, #1a237e 50%, #090d30 100%);
+            color: var(--text-dark);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1, h2, h3, .font-heading { font-family: 'Prompt', sans-serif; }
+
+        .top-bar {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: #fff;
+            padding: 10px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            z-index: 100;
+        }
+
+        .brand-badge { display: flex; align-items: center; gap: 12px; }
+        .pw-pill { background: #27AE60; color: white; font-family: 'Prompt', sans-serif; font-weight: 600; font-size: 0.85rem; padding: 4px 12px; border-radius: 20px; }
+        .grade-pill { background: #E65100; color: white; font-family: 'Prompt', sans-serif; font-weight: 700; font-size: 0.85rem; padding: 4px 12px; border-radius: 6px; }
+        .top-controls { display: flex; align-items: center; gap: 8px; }
+        .btn-control {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 6px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Prompt', sans-serif;
+            font-size: 0.84rem;
+            transition: all 0.2s;
+        }
+        .btn-control:hover { background: rgba(255, 255, 255, 0.28); transform: translateY(-1px); }
+
+        .deck-wrapper {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide {
+            width: 100%;
+            max-width: 1280px;
+            height: 100%;
+            max-height: 740px;
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            animation: slideIn 0.35s ease-out;
+        }
+        .slide.active { display: flex; }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(12px) scale(0.99); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .slide-header {
+            background: linear-gradient(90deg, var(--primary) 0%, #3949AB 100%);
+            color: white;
+            padding: 18px 36px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 4px solid #FFB300;
+        }
+        .slide-header h2 { font-size: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 12px; }
+        .slide-unit-tag { background: rgba(255, 255, 255, 0.2); padding: 4px 14px; border-radius: 20px; font-size: 0.9rem; font-family: 'Prompt', sans-serif; }
+
+        .slide-body {
+            flex: 1;
+            padding: 24px 36px;
+            overflow-y: auto;
+            background: radial-gradient(circle at bottom right, #f5f7ff 0%, #ffffff 70%);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .cover-slide {
+            background: linear-gradient(135deg, #1A237E 0%, #283593 50%, #0D1440 100%);
+            color: white;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .cover-box {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(12px);
+            border: 2px solid rgba(255, 213, 79, 0.45);
+            border-radius: 24px;
+            padding: 36px 50px;
+            max-width: 1020px;
+            width: 100%;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .cover-title { font-size: 2.95rem; font-weight: 800; margin: 12px 0 8px; color: #FFF; text-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+        .cover-subtitle { font-size: 1.55rem; color: #FFD54F; font-weight: 600; margin-bottom: 20px; }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+
+        .info-card {
+            background: #FFFFFF;
+            border: 2px solid var(--border-color);
+            border-radius: 14px;
+            padding: 16px 20px;
+            box-shadow: 0 4px 14px rgba(26, 35, 126, 0.06);
+        }
+        .info-card.highlight-orange { border-left: 6px solid var(--accent); }
+        .info-card.highlight-purple { border-left: 6px solid var(--primary); }
+        .info-card.highlight-green { border-left: 6px solid var(--success); }
+        .info-card.highlight-gold { border-left: 6px solid var(--accent-gold); }
+
+        .card-title { font-family: 'Prompt', sans-serif; font-size: 1.15rem; font-weight: 700; color: var(--primary); margin-bottom: 8px; }
+        .card-list { list-style: none; display: flex; flex-direction: column; gap: 6px; font-size: 1.01rem; line-height: 1.5; }
+        .card-list li { position: relative; padding-left: 18px; }
+        .card-list li::before { content: "•"; color: var(--accent); font-weight: bold; font-size: 1.25rem; position: absolute; left: 2px; top: -2px; }
+
+        .styled-table { width: 100%; border-collapse: collapse; border-radius: 12px; overflow: hidden; font-size: 0.98rem; }
+        .styled-table th { background: var(--primary); color: white; font-family: 'Prompt', sans-serif; padding: 10px 14px; text-align: left; }
+        .styled-table td { padding: 9px 14px; border-bottom: 1px solid var(--border-color); background: white; vertical-align: top; line-height: 1.45; }
+        .styled-table tr:nth-child(even) td { background: var(--primary-bg); }
+
+        .tag { display: inline-block; padding: 3px 10px; border-radius: 6px; font-size: 0.83rem; font-weight: 600; font-family: 'Prompt', sans-serif; }
+        .tag-purple { background: #E8EAF6; color: var(--primary); }
+        .tag-orange { background: #FFEBEE; color: var(--accent); }
+        .tag-green { background: #E8F5E9; color: var(--success); }
+        .tag-gold { background: #FFF8E1; color: #9C6B08; }
+
+        .question-box {
+            background: linear-gradient(90deg, #FFF8E7 0%, #FFFDF9 100%);
+            border: 2px solid #F5C76B;
+            border-left: 8px solid var(--accent-gold);
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin-top: auto;
+        }
+        .question-header { font-family: 'Prompt', sans-serif; font-weight: 700; color: #B27200; font-size: 1.04rem; display: flex; justify-content: space-between; align-items: center; }
+        .answer-reveal { display: none; margin-top: 8px; padding-top: 8px; border-top: 1px dashed #E0B860; color: #1B5E20; font-weight: 600; font-size: 1rem; }
+        .btn-reveal { background: var(--accent-gold); color: white; border: none; padding: 5px 14px; border-radius: 6px; font-family: 'Prompt', sans-serif; font-size: 0.85rem; cursor: pointer; font-weight: 600; }
+
+        .bottom-bar { background: rgba(0, 0, 0, 0.35); backdrop-filter: blur(8px); padding: 12px 36px; display: flex; justify-content: space-between; align-items: center; color: white; }
+        .nav-buttons { display: flex; gap: 12px; align-items: center; }
+        .btn-nav { background: #E65100; color: white; border: none; padding: 8px 22px; border-radius: 10px; font-family: 'Prompt', sans-serif; font-weight: 600; font-size: 1rem; cursor: pointer; }
+        .btn-nav:disabled { background: rgba(255, 255, 255, 0.2); color: rgba(255, 255, 255, 0.5); cursor: not-allowed; }
+        .progress-dots { display: flex; gap: 8px; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; background: rgba(255, 255, 255, 0.3); cursor: pointer; }
+        .dot.active { background: #FFD54F; transform: scale(1.3); }
+
+        .quiz-option { background: white; border: 2px solid var(--border-color); border-radius: 10px; padding: 10px 16px; cursor: pointer; font-size: 1rem; margin-bottom: 7px; display: flex; align-items: center; gap: 10px; }
+        .quiz-option:hover { border-color: var(--primary); background: var(--primary-bg); }
+        .quiz-option.correct { background: #E8F5E9; border-color: #2E7D32; color: #1B5E20; font-weight: 700; }
+        .quiz-option.wrong { background: #FFEBEE; border-color: #C62828; color: #B71C1C; }
+
+        @media print {
+            body { background: white; height: auto; overflow: visible; }
+            .top-bar, .bottom-bar, .btn-reveal { display: none !important; }
+            .deck-wrapper { display: block; padding: 0; }
+            .slide { display: flex !important; page-break-after: always; height: 190mm; max-width: 100%; box-shadow: none; border: 1px solid #ccc; margin-bottom: 15mm; }
+            .answer-reveal { display: block !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <div class="brand-badge">
+            <span class="pw-pill">อ้างอิงหนังสือเรียน พว.</span>
+            <span class="grade-pill">ชั้นมัธยมศึกษาปีที่ ๓</span>
+            <span style="font-family: 'Prompt', sans-serif; font-weight: 600;">รายวิชาพื้นฐาน ประวัติศาสตร์ | สมัยปฏิรูปประเทศ (ร.4–ร.6) สู่ยุคประชาธิปไตย (ร.7–ปัจจุบัน)</span>
+        </div>
+        <div class="top-controls">
+            <button class="btn-control" onclick="goToSlide(0)">🏠 หน้าแรก</button>
+            <button class="btn-control" onclick="goToSlide(1)">⛵ ร.4 สนธิสัญญาเบาว์ริง</button>
+            <button class="btn-control" onclick="goToSlide(2)">🚂 ร.5 ปฏิรูปประเทศ</button>
+            <button class="btn-control" onclick="goToSlide(5)">🌍 ร.6 สงครามโลกครั้งที่ 1</button>
+            <button class="btn-control" onclick="goToSlide(6)">🏛️ พ.ศ. 2475 ประชาธิปไตย</button>
+            <button class="btn-control" onclick="goToSlide(8)">🎯 แบบทดสอบ</button>
+            <button class="btn-control" onclick="window.print()">🖨️ พิมพ์ / PDF</button>
+            <button class="btn-control" onclick="toggleFullScreen()">⛶ เต็มจอ</button>
+        </div>
+    </div>
+
+    <div class="deck-wrapper">
+
+        <!-- SLIDE 1: หน้าปก -->
+        <div class="slide cover-slide active">
+            <div class="cover-box">
+                <div style="display:flex; justify-content:center; gap:12px; margin-bottom:14px;">
+                    <span class="pw-pill" style="font-size:1rem; padding:6px 18px;">กลุ่มสาระการเรียนรู้สังคมศึกษา ศาสนา และวัฒนธรรม</span>
+                    <span class="grade-pill" style="font-size:1rem; padding:6px 18px;">ชั้นมัธยมศึกษาปีที่ ๓</span>
+                </div>
+                <div style="font-size:1.3rem; color:#C5CAE9; font-family:'Prompt',sans-serif;">หน่วยการเรียนรู้ที่ ๒ – ๓ (ชุดที่ ๒)</div>
+                <h1 class="cover-title">สมัยปรับปรุงและปฏิรูปประเทศ (ร.๔ – ร.๖)<br>สู่สมัยประชาธิปไตย (ร.๗ – ปัจจุบัน)</h1>
+                <div class="cover-subtitle">(การเผชิญหน้าลัทธิจักรวรรดินิยม การปฏิรูปสู่ความทันสมัย และการพัฒนาประชาธิปไตยไทย)</div>
+                <hr style="border:none; border-top:1px solid rgba(255,255,255,0.25); margin: 18px auto; width: 70%;">
+                <div class="grid-4" style="text-align:left; margin-top:16px;">
+                    <div style="background:rgba(0,0,0,0.28); padding:14px; border-radius:12px;">
+                        <strong style="color:#FFD54F; font-family:'Prompt',sans-serif;">๑. รัชกาลที่ ๔ เปิดประเทศ</strong>
+                        <p style="font-size:0.9rem; margin-top:4px; color:#E8EAF6;">สนธิสัญญาเบาว์ริง (พ.ศ. 2398) การค้าเสรี และวิทยาศาสตร์</p>
+                    </div>
+                    <div style="background:rgba(0,0,0,0.28); padding:14px; border-radius:12px;">
+                        <strong style="color:#FFD54F; font-family:'Prompt',sans-serif;">๒. รัชกาลที่ ๕ ปฏิรูปใหญ่</strong>
+                        <p style="font-size:0.9rem; margin-top:4px; color:#E8EAF6;">12 กระทรวง มณฑลเทศาภิบาล เลิกทาส-ไพร่ รถไฟ และการทูต</p>
+                    </div>
+                    <div style="background:rgba(0,0,0,0.28); padding:14px; border-radius:12px;">
+                        <strong style="color:#FFD54F; font-family:'Prompt',sans-serif;">๓. รัชกาลที่ ๖ สร้างชาติ</strong>
+                        <p style="font-size:0.9rem; margin-top:4px; color:#E8EAF6;">นามสกุล ประถมศึกษา ดุสิตธานี และสงครามโลกครั้งที่ 1</p>
+                    </div>
+                    <div style="background:rgba(0,0,0,0.28); padding:14px; border-radius:12px;">
+                        <strong style="color:#FFD54F; font-family:'Prompt',sans-serif;">๔. สมัยประชาธิปไตย</strong>
+                        <p style="font-size:0.9rem; margin-top:4px; color:#E8EAF6;">การเปลี่ยนแปลงการปกครอง พ.ศ. 2475 และเศรษฐกิจพอเพียง</p>
+                    </div>
+                </div>
+                <p style="margin-top:20px; font-size:0.95rem; color:#C5CAE9;">
+                    อ้างอิงเนื้อหาจาก: หนังสือเรียน รายวิชาพื้นฐาน ประวัติศาสตร์ ม.3 (ผศ.ดร.วงเดือน นาราสัจจ์ และ ผศ.ชมพูนุท นาคีรักษ์) สำนักพิมพ์ พว.
+                </p>
+            </div>
+        </div>
+
+        <!-- SLIDE 2: สมัยรัชกาลที่ 4 การเปิดประเทศและสนธิสัญญาเบาว์ริง (พ.ศ. 2398) -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>⛵ ๑. สมัยรัชกาลที่ ๔ : การเปิดประเทศ และ "สนธิสัญญาเบาว์ริง" (พ.ศ. ๒๓๙๘)</h2>
+                <span class="slide-unit-tag">ประวัติศาสตร์ ม.3 (พว.) | หน้า 2/10</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="info-card highlight-purple">
+                        <div class="card-title">📜 สนธิสัญญาเบาว์ริง (พ.ศ. 2398) กับประเทศอังกฤษ</div>
+                        <ul class="card-list">
+                            <li><strong>สาเหตุการทำสนธิสัญญา:</strong> จักรวรรดินิยมตะวันตก (อังกฤษและฝรั่งเศส) กำลังแผ่อำนาจยึดครองเอเชีย (พม่าและจีนแพ้สงครามอังกฤษ) <strong>พระบาทสมเด็จพระจอมเกล้าเจ้าอยู่หัว (รัชกาลที่ 4)</strong> จึงทรงเลือกเปิดเจรจาการค้าเสรีกับ <strong>เซอร์จอห์น เบาว์ริง</strong> เพื่อรักษาเอกราชของชาติ</li>
+                            <li><strong>สาระสำคัญและผลกระทบของสนธิสัญญาเบาว์ริง:</strong>
+                                <br>1) <strong>ยกเลิกพระคลังสินค้า:</strong> พ่อค้าต่างชาติซื้อขายกับราษฎรไทยได้โดยตรง
+                                <br>2) <strong>จำกัดการเก็บภาษีขาเข้า "ร้อยละ 3" (ชักร้อยละ 3):</strong> ยกเลิกภาษีปากเรือ ทำให้รัฐขาดแคลนรายได้จากศุลกากร
+                                <br>3) <strong>เสีย "สิทธิสภาพนอกอาณาเขต" (การศาลกงสุล):</strong> คนในบังคับอังกฤษทำผิดในไทย ต้องขึ้นศาลกงสุลอังกฤษแทนศาลไทย
+                                <br>4) <strong>ข้าวกลายเป็นสินค้าส่งออกอันดับ 1:</strong> เศรษฐกิจไทยเปลี่ยนจาก "เพื่อยังชีพ" เป็น <strong>"เศรษฐกิจเพื่อการค้าส่งออก"</strong> มีการขุดคลองขยายที่นา (คลองผดุงกรุงเกษม, คลองมหาสวัสดิ์, คลองภาษีเจริญ)</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card highlight-gold">
+                        <div class="card-title" style="color:#B27200;">🔭 การปรับปรุงประเทศและพระปรีชาสามารถสมัย ร.4</div>
+                        <ul class="card-list">
+                            <li><strong>ด้านสังคมและวัฒนธรรม:</strong>
+                                <br>• ยกเลิกประเพณีห้ามราษฎรเฝ้าชมพระพักตร์เวลาเสด็จพระราชดำเนิน และอนุญาตให้ชาวต่างชาติเข้าเฝ้าโดยไม่ต้องหมอบคลาน
+                                <br>• สร้างถนนสายแรกแบบตะวันตก คือ <strong>"ถนนเจริญกรุง"</strong>
+                                <br>• ตั้งโรงพิมพ์หลวง ออกหนังสือราชการฉบับแรกคือ <strong>"ราชกิจจานุเบกษา"</strong>
+                                <br>• ตั้งโรงกษาปณ์ผลิต<strong>เงินเหรียญแบน</strong>ใช้แทนเงินพดด้วง
+                            </li>
+                            <li><strong>"พระบิดาแห่งวิทยาศาสตร์ไทย":</strong>
+                                <br>• ทรงคำนวณการเกิด<strong>สุริยุปราคาเต็มดวงล่วงหน้า 2 ปี</strong> ได้อย่างแม่นยำ ซึ่งเกิดขึ้นเมื่อวันที่ <strong>18 สิงหาคม พ.ศ. 2411 ณ ตำบลหว้ากอ จ.ประจวบคีรีขันธ์</strong> ท่ามกลางนักวิทยาศาสตร์อังกฤษและฝรั่งเศส</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: สมัยรัชกาลที่ 5 การปฏิรูปการเมืองการปกครอง (พ.ศ. 2435) -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>🏛️ ๒. สมัยรัชกาลที่ ๕ : การปฏิรูปการเมืองการปกครองครั้งใหญ่ (พ.ศ. ๒๔๓๕)</h2>
+                <span class="slide-unit-tag">ประวัติศาสตร์ ม.3 (พว.) | หน้า 3/10</span>
+            </div>
+            <div class="slide-body">
+                <p style="font-size:1.03rem; color:var(--text-muted);">
+                    <strong>พระบาทสมเด็จพระจุลจอมเกล้าเจ้าอยู่หัว (รัชกาลที่ 5)</strong> ทรงเร่งปฏิรูปการปกครองเพื่อ<strong>รวมอำนาจเข้าสู่ศูนย์กลาง (Centralization)</strong> ป้องกันไม่ให้ชาติตะวันตกใช้ความล้าหลังหรือความแตกแยกของหัวเมืองเป็นข้ออ้างเข้ายึดครอง:
+                </p>
+
+                <div class="grid-2">
+                    <div class="info-card highlight-purple">
+                        <div class="card-title">1. การปฏิรูปการปกครองส่วนกลาง (1 เมษายน พ.ศ. 2435)</div>
+                        <ul class="card-list">
+                            <li><strong>ยกเลิกระบบจตุสดมภ์ (เวียง วัง คลัง นา) และสมุหนายก-สมุหพระกลาโหม</strong> ที่ใช้มาตั้งแต่สมัยอยุธยา</li>
+                            <li><strong>จัดตั้ง "กระทรวงแบบใหม่ 12 กระทรวง"</strong> แบ่งงานตามหน้าที่ชัดเจน เช่น:
+                                <br>• <strong>กระทรวงมหาดไทย:</strong> ดูแลหัวเมืองทั่วประเทศ (มี <strong>สมเด็จฯ กรมพระยาดำรงราชานุภาพ</strong> เป็นเสนาบดีพระองค์แรก)
+                                <br>• <strong>กระทรวงกลาโหม:</strong> ดูแลกิจการทหารบกและทหารเรือ
+                                <br>• <strong>กระทรวงการต่างประเทศ (การท่า)</strong>, <strong>กระทรวงพระคลังมหาสมบัติ</strong>, <strong>กระทรวงยุติธรรม</strong>, <strong>กระทรวงธรรมการ (ศึกษาธิการ)</strong> ฯลฯ
+                            </li>
+                            <li>ทรงตั้ง <strong>สภาที่ปรึกษาราชการแผ่นดิน</strong> และ <strong>สภาที่ปรึกษาในพระองค์ (องคมนตรี)</strong></li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card highlight-orange">
+                        <div class="card-title" style="color:var(--accent);">2. การปฏิรูปการปกครองส่วนภูมิภาคและท้องถิ่น</div>
+                        <ul class="card-list">
+                            <li><strong>ยกเลิกระบบ "กินเมือง" และยกเลิกเมืองประเทศราช:</strong> ดึงอำนาจของเจ้าเมืองและเจ้าประเทศราช (เช่น ล้านนา) เข้ามาเป็นส่วนหนึ่งของราชอาณาจักร</li>
+                            <li><strong>จัดตั้งระบบ "มณฑลเทศาภิบาล" (พ.ศ. 2437):</strong>
+                                <br>• รวมหลายเมืองเข้าด้วยกันเป็น <strong>"มณฑล"</strong> มี <strong>สมุหเทศาภิบาล (ข้าหลวงเทศาภิบาล)</strong> ที่ส่งตรงจากกระทรวงมหาดไทยไปปกครองและรับเงินเดือนประจำ
+                                <br>• แบ่งระดับย่อยเป็น <strong>เมือง (จังหวัด) → อำเภอ → ตำบล (กำนัน) → หมู่บ้าน (ผู้ใหญ่บ้าน)</strong> (ทดลองเลือกตั้งผู้ใหญ่บ้านครั้งแรกที่บางปะอิน จ.พระนครศรีอยุธยา)
+                            </li>
+                            <li><strong>การปกครองส่วนท้องถิ่นแห่งแรก (พ.ศ. 2448):</strong> โปรดให้จัดตั้ง <strong>"สุขาภิบาลท่าฉลอม" จ.สมุทรสาคร</strong> เป็นต้นแบบเทศบาลในปัจจุบัน</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: สมัยรัชกาลที่ 5 การปฏิรูปสังคม (เลิกทาส-เลิกไพร่ การศึกษา) และเศรษฐกิจ-คมนาคม -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>🚂 ๓. สมัยรัชกาลที่ ๕ : การเลิกทาส-เลิกไพร่ การศึกษา และสาธารณูปโภคสมัยใหม่</h2>
+                <span class="slide-unit-tag">ประวัติศาสตร์ ม.3 (พว.) | หน้า 4/10</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="info-card highlight-green">
+                        <div class="card-title" style="color:var(--success);">🕊️ 1. การเลิกทาสและเลิกไพร่ (โดยไม่เสียเลือดเนื้อ)</div>
+                        <ul class="card-list">
+                            <li><strong>ขั้นตอนการเลิกทาสอย่างค่อยเป็นค่อยไป:</strong>
+                                <br>• <strong>พ.ศ. 2417:</strong> ตรา <strong>"พ.ร.บ. พิกัดเกษียณอายุลูกทาสลูกไท"</strong> ให้ลูกทาสที่เกิดตั้งแต่ปีมะโรง พ.ศ. 2411 (ปีที่ ร.5 ขึ้นครองราชย์) ลดค่าตัวลงเรื่อยๆ และ<strong>เป็นไทเมื่ออายุครบ 21 ปี</strong> โดยห้ามซื้อขายเป็นทาสอีก
+                                <br>• <strong>1 เมษายน พ.ศ. 2448 (ร.ศ. 124):</strong> ตรา <strong>"พระราชบัญญัติทาส ร.ศ. 124"</strong> เลิกทาสทั่วราชอาณาจักรอย่างสมบูรณ์ (ทรงได้รับพระราชสมญานามว่า <strong>"สมเด็จพระปิยมหาราช"</strong>)
+                            </li>
+                            <li><strong>การยกเลิกระบบไพร่:</strong> ยกเลิกการเกณฑ์แรงงานเข้าเดือนออกเดือน แล้วตรา <strong>"พระราชบัญญัติลักษณะเกณฑ์ทหาร ร.ศ. 124 (พ.ศ. 2448)"</strong> ให้ชายไทยเป็นทหารอาชีพแทน ทำให้ราษฎรมีอิสระในการประกอบอาชีพเต็มที่</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card highlight-gold">
+                        <div class="card-title" style="color:#B27200;">🏫 2. การศึกษา การคลัง และการคมนาคม</div>
+                        <ul class="card-list">
+                            <li><strong>ด้านการศึกษา:</strong> ตั้งโรงเรียนหลวงแห่งแรกในพระบรมมหาราชวัง (พ.ศ. 2414), ตั้ง<strong>โรงเรียนหลวงสำหรับราษฎรแห่งแรกที่วัดมหรรณพาราม (พ.ศ. 2427)</strong> และพระราชทาน<strong>ทุนเล่าเรียนหลวง (King's Scholarship)</strong></li>
+                            <li><strong>ด้านการคลังและธนาคาร:</strong> ตั้ง <strong>"หอรัษฎากรพิพัฒน์" (พ.ศ. 2416)</strong> เก็บภาษีเข้ารัฐโดยตรงแทนระบบเจ้าภาษีนายอากร, ใช้ระบบเงินตรา <strong>"บาท - สตางค์"</strong>, ออก<strong>ธนบัตร</strong> และตั้ง <strong>"บุคคลัภย์" (ต่อมาคือธนาคารไทยพาณิชย์ — ธนาคารแห่งแรกของไทย)</strong></li>
+                            <li><strong>ด้านคมนาคมและสาธารณสุข:</strong> สร้าง<strong>ทางรถไฟสายแรก</strong> (เอกชน: กรุงเทพฯ–สมุทรปราการ พ.ศ. 2436 / ของรัฐ: <strong>กรุงเทพฯ–นครราชสีมา พ.ศ. 2439</strong>), ไปรษณีย์โทรเลข, ไฟฟ้า, ประปา, <strong>โรงพยาบาลศิริราช</strong> และสภาอุณาโลมแดง (สภากาชาดไทย)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: วิกฤตการณ์ ร.ศ. 112 และการทูตเพื่อรักษาเอกราชสมัยรัชกาลที่ 5 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>🌍 ๔. การเผชิญหน้าลัทธิจักรวรรดินิยม (วิกฤตการณ์ ร.ศ. ๑๑๒) และการรักษาเอกราช</h2>
+                <span class="slide-unit-tag">ประวัติศาสตร์ ม.3 (พว.) | หน้า 5/10</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="info-card highlight-orange">
+                        <div class="card-title" style="color:var(--accent);">⚓ วิกฤตการณ์ ร.ศ. 112 (พ.ศ. 2436)</div>
+                        <ul class="card-list">
+                            <li><strong>เหตุการณ์:</strong> ฝรั่งเศส (ซึ่งยึดเวียดนามและกัมพูชาแล้ว) ส่งเรือรบ 2 ลำ (แองคงสตังค์ และ คอเมต) ฝ่าแนวป้องกันที่ป้อมพระจุลจอมเกล้า จ.สมุทรปราการ เข้ามาทอดสมอหน้าสถานทูตฝรั่งเศสในกรุงเทพฯ และยื่นคำขาดให้ไทยภายใน 48 ชั่วโมง</li>
+                            <li><strong>การแก้ไขวิกฤต:</strong> รัชกาลที่ 5 ทรงใช้ความอดกลั้นทางการทูต ยอมสละดินแดนฝั่งซ้ายแม่น้ำโขง (ลาว) และจ่ายเงินค่าเสียหาย <strong>3 ล้านฟรังก์</strong> (โดยนำ <strong>"เงินถุงแดง"</strong> ของรัชกาลที่ 3 มารวมกับเงินแผ่นดินจ่ายให้ฝรั่งเศส) ทำให้ฝรั่งเศสไม่มีข้ออ้างยึดครองกรุงเทพฯ</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card highlight-purple">
+                        <div class="card-title">🤝 นโยบายการทูตเชิงรุกเพื่อรักษาเอกราชและแลกอำนาจศาลคืน</div>
+                        <ul class="card-list">
+                            <li><strong>เสด็จประพาสยุโรป 2 ครั้ง (พ.ศ. 2440 และ พ.ศ. 2450):</strong>
+                                <br>• ทรงเป็นพระมหากษัตริย์ไทยพระองค์แรกที่เสด็จเยือนทวีปยุโรป เพื่อแสดงให้โลกเห็นว่าสยามเป็นประเทศที่มีอารยธรรมและมีเอกราชสมบูรณ์
+                                <br>• ทรงผูกมิตรกับ <strong>พระเจ้าซาร์นิโคลัสที่ 2 แห่งรัสเซีย</strong> และมหาอำนาจยุโรป เพื่อช่วยถ่วงดุลอำนาจกับอังกฤษและฝรั่งเศส
+                            </li>
+                            <li><strong>การยอมสละดินแดนบางส่วนเพื่อแลก "สิทธิสภาพนอกอาณาเขต" คืน:</strong>
+                                <br>• ยอมยกมณฑลบูรพา (พระตะบอง เสียมราฐ ศรีโสภณ) ให้ฝรั่งเศส (พ.ศ. 2449) และยกไทรบุรี กลันตัน ตรังกานู ปะลิส ให้อังกฤษ (พ.ศ. 2451) เพื่อแลกกับการดึงอำนาจศาลไทยกลับมาบังคับใช้กับคนในบังคับต่างชาติ</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 6: สมัยรัชกาลที่ 6 การสร้างชาติและการเข้าร่วมสงครามโลกครั้งที่ 1 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>🎖️ ๕. สมัยรัชกาลที่ ๖ : การปลุกจิตสำนึกรักชาติ และ สงครามโลกครั้งที่ ๑</h2>
+                <span class="slide-unit-tag">ประวัติศาสตร์ ม.3 (พว.) | หน้า 6/10</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="info-card highlight-purple">
+                        <div class="card-title">🇹🇭 1. การพัฒนาประเทศและปลูกฝังความรักชาติสมัย ร.6</div>
+                        <ul class="card-list">
+                            <li><strong>พระบาทสมเด็จพระมงกุฎเกล้าเจ้าอยู่หัว (รัชกาลที่ 6)</strong> ทรงปลูกฝังอุดมการณ์ความจงรักภักดีต่อ <strong>"ชาติ ศาสนา พระมหากษัตริย์"</strong> และกำหนดให้ใช้ <strong>"ธงไตรรงค์"</strong> (พ.ศ. 2460)</li>
+                            <li><strong>ด้านสังคมและการศึกษา:</strong>
+                                <br>• ก่อตั้ง <strong>กองเสือป่า และ กองลูกเสือ</strong> (พ.ศ. 2454)
+                                <br>• ตรา <strong>พ.ร.บ. ขนานนามสกุล (พ.ศ. 2456)</strong> และให้สตรีใช้คำนำหน้าว่า "นาง / นางสาว"
+                                <br>• สถาปนา<strong>มหาวิทยาลัยแห่งแรกของไทย</strong> คือ <strong>"จุฬาลงกรณ์มหาวิทยาลัย" (พ.ศ. 2459)</strong> และตรา <strong>พ.ร.บ. ประถมศึกษา (พ.ศ. 2464)</strong> บังคับให้เด็กทุกคนเรียนหนังสือ
+                            </li>
+                            <li><strong>การทดลองประชาธิปไตย:</strong> ทรงสร้างเมืองจำลอง <strong>"ดุสิตธานี"</strong> (พ.ศ. 2461) เพื่อฝึกหัดการปกครองท้องถิ่นแบบประชาธิปไตยและการออกเสียงเลือกตั้ง</li>
+                            <li>ทรงได้รับพระราชสมญานามว่า <strong>"สมเด็จพระมหาธีรราชเจ้า"</strong> (พระราชาผู้เป็นปราชญ์ผู้ยิ่งใหญ่)</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card highlight-gold">
+                        <div class="card-title" style="color:#B27200;">✈️ 2. การเข้าร่วมสงครามโลกครั้งที่ 1 (พ.ศ. 2460)</div>
+                        <ul class="card-list">
+                            <li><strong>การตัดสินพระทัย:</strong> เมื่อวันที่ <strong>22 กรกฎาคม พ.ศ. 2460</strong> รัชกาลที่ 6 ทรงประกาศสงครามกับฝ่ายมหาอำนาจกลาง (เยอรมนี และออสเตรีย-ฮังการี) โดยเข้าร่วมกับ<strong>ฝ่ายสัมพันธมิตร</strong> (อังกฤษ ฝรั่งเศส สหรัฐฯ) และส่ง<strong>กองบินทหารบกและกองทัพรถยนต์</strong>ไปร่วมรบในทวีปยุโรป</li>
+                            <li><strong>ผลดีอันยิ่งใหญ่ต่อประเทศไทย:</strong>
+                                <br>1) ไทยอยู่ในฝ่ายชนะสงคราม ได้เข้าร่วมประชุมสันติภาพที่พระราชวังแวร์ซาย และเข้าเป็น<strong>สมาชิกผู้ร่วมก่อตั้ง "องค์การสันนิบาตชาติ" (League of Nations)</strong>
+                                <br>2) ยกเลิกสนธิสัญญาที่ไม่เป็นธรรมกับเยอรมนีและออสเตรีย-ฮังการีทันที
+                                <br>3) ใช้เป็นจุดเริ่มต้นเจรจา<strong>แก้ไขสนธิสัญญาเบาว์ริงกับชาติมหาอำนาจอื่นๆ</strong> (โดยมี ดร.ฟรานซิส บี. แซร์ / พระยากัลยาณไมตรี เป็นที่ปรึกษา) จนได้เอกราชทางการศาลและภาษีอากรคืน</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 7: การเปลี่ยนแปลงการปกครอง พ.ศ. 2475 (สมัยรัชกาลที่ 7) -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>🏛️ ๖. การเปลี่ยนแปลงการปกครอง พ.ศ. ๒๔๗๕ (สมัยรัชกาลที่ ๗)</h2>
+                <span class="slide-unit-tag">ประวัติศาสตร์ ม.3 (พว.) | หน้า 7/10</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="info-card highlight-orange">
+                        <div class="card-title" style="color:var(--accent);">⚡ สาเหตุและเหตุการณ์ 24 มิถุนายน พ.ศ. 2475</div>
+                        <ul class="card-list">
+                            <li><strong>ปัจจัยและสาเหตุของการเปลี่ยนแปลงการปกครอง:</strong>
+                                <br>1) อิทธิพลแนวคิดประชาธิปไตยตะวันตกในกลุ่มนักเรียนไทยและข้าราชการที่ไปศึกษาต่อในยุโรป
+                                <br>2) <strong>วิกฤตเศรษฐกิจตกต่ำทั่วโลก (พ.ศ. 2472 – 2475):</strong> รัฐบาลสมัยรัชกาลที่ 7 ต้องตัดทอนงบประมาณและดุลข้าราชการออกจำนวนมาก ("ดุลยภาพ") สร้างความไม่พอใจในหมู่ข้าราชการและประชาชน
+                            </li>
+                            <li><strong>เหตุการณ์วันที่ 24 มิถุนายน พ.ศ. 2475:</strong>
+                                <br>• กลุ่ม <strong>"คณะราษฎร"</strong> (ประกอบด้วยสายทหารบก ทหารเรือ และพลเรือน นำโดย <strong>พระยาพหลพลพยุหเสนา, หลวงประดิษฐ์มนูธรรม/ปรีดี พนมยงค์, หลวงพิบูลสงคราม</strong>) ได้ยึดอำนาจการปกครองเพื่อเปลี่ยนระบอบจากสมบูรณาญาสิทธิราชย์มาเป็น<strong>ระบอบประชาธิปไตยอันมีพระมหากษัตริย์ทรงเป็นประมุข</strong></li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card highlight-purple">
+                        <div class="card-title">👑 พระมหากรุณาธิคุณของรัชกาลที่ 7 (พระบาทสมเด็จพระปกเกล้าเจ้าอยู่หัว)</div>
+                        <ul class="card-list">
+                            <li><strong>ทรงเห็นแก่ความสงบสุขของแผ่นดิน:</strong> แม้รัชกาลที่ 7 จะทรงเตรียมร่างรัฐธรรมนูญไว้พระราชทานอยู่ก่อนแล้ว แต่เมื่อคณะราษฎรยึดอำนาจ พระองค์ทรงยินยอมเป็นพระมหากษัตริย์ภายใต้รัฐธรรมนูญ เพื่อ<strong>ไม่ให้คนไทยต้องรบราฆ่าฟันเสียเลือดเนื้อกันเอง</strong></li>
+                            <li><strong>พระราชทานรัฐธรรมนูญ:</strong>
+                                <br>• <strong>27 มิถุนายน พ.ศ. 2475:</strong> พระราชทานพระราชบัญญัติธรรมนูญการปกครองแผ่นดินสยามชั่วคราว (มี <strong>พระยามโนปกรณ์นิติธาดา</strong> เป็นนายกรัฐมนตรีคนแรกของไทย)
+                                <br>• <strong>10 ธันวาคม พ.ศ. 2475:</strong> พระราชทาน<strong>รัฐธรรมนูญแห่งราชอาณาจักรสยาม (ฉบับถาวรฉบับแรก)</strong> จึงกำหนดให้วันที่ 10 ธันวาคมเป็น "วันรัฐธรรมนูญ"
+                            </li>
+                            <li><strong>การสละราชสมบัติ (2 มีนาคม พ.ศ. 2477):</strong> ทรงมีพระราชหัตถเลขาสละราชสมบัติเพื่อโอนอำนาจให้แก่ประชาชนทุกคน ไม่ใช่คณะใดคณะหนึ่ง</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 8: พัฒนาการของไทยในสมัยประชาธิปไตย (ร.8 – ร.9 – ร.10) -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>🌟 ๗. พัฒนาการด้านการเมือง เศรษฐกิจ และสังคมในยุคประชาธิปไตย (ร.๘ – ปัจจุบัน)</h2>
+                <span class="slide-unit-tag">ประวัติศาสตร์ ม.3 (พว.) | หน้า 8/10</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-3">
+                    <div class="info-card highlight-purple">
+                        <span class="tag tag-purple">สมัยรัชกาลที่ 8 (พ.ศ. 2477 – 2489)</span>
+                        <h3 class="card-title" style="margin-top:8px;">🌏 เอกราชสมบูรณ์และสงครามโลกครั้งที่ 2</h3>
+                        <ul class="card-list">
+                            <li><strong>พ.ศ. 2481:</strong> ไทยแก้ไขสนธิสัญญากับนานาชาติสำเร็จสมบูรณ์ ได้รับ<strong>เอกราชทางการศาลและภาษีอากรคืนครบ 100%</strong></li>
+                            <li><strong>พ.ศ. 2482:</strong> รัฐบาลจอมพล ป. พิบูลสงคราม เปลี่ยนชื่อประเทศจาก "สยาม" เป็น <strong>"ประเทศไทย"</strong> และประกาศรัฐนิยม</li>
+                            <li><strong>สงครามโลกครั้งที่ 2 (พ.ศ. 2484 – 2488):</strong> กองทัพญี่ปุ่นบุกผ่านไทย เกิดขบวนการ <strong>"เสรีไทย"</strong> (นำโดย ปรีดี พนมยงค์ และ ม.ร.ว.เสนีย์ ปราโมช) ช่วยให้ไทยไม่ตกเป็นผู้แพ้สงคราม และเข้าเป็นสมาชิกสหประชาชาติ (UN) ลำดับที่ 55 (พ.ศ. 2489)</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card highlight-green">
+                        <span class="tag tag-green">ด้านเศรษฐกิจยุคพัฒนา</span>
+                        <h3 class="card-title" style="margin-top:8px; color:var(--success);">📈 แผนพัฒนาเศรษฐกิจฯ และเศรษฐกิจพอเพียง</h3>
+                        <ul class="card-list">
+                            <li><strong>พ.ศ. 2504 (สมัยจอมพลสฤษดิ์ ธนะรัชต์):</strong> เริ่มใช้ <strong>"แผนพัฒนาเศรษฐกิจแห่งชาติ ฉบับที่ 1"</strong> เร่งพัฒนาโครงสร้างพื้นฐาน (น้ำไหล ไฟสว่าง ทางดี มีงานทำ) และส่งเสริมการลงทุนอุตสาหกรรม</li>
+                            <li><strong>ปรัชญาของเศรษฐกิจพอเพียง และ โครงการอันเนื่องมาจากพระราชดำริ:</strong>
+                                <br>ในสมัย<strong>พระบาทสมเด็จพระบรมชนกาธิเบศร มหาภูมิพลอดุลยเดชมหาราช บรมนาถบพิตร (รัชกาลที่ 9)</strong> ทรงมีโครงการพระราชดำริกว่า 4,000 โครงการ (เช่น ฝนหลวง, แก้มลิง, หญ้าแฝก, ทฤษฎีใหม่) และพระราชทานหลัก<strong>เศรษฐกิจพอเพียง</strong> (พอประมาณ มีเหตุผล มีภูมิคุ้มกัน บนเงื่อนไขความรู้และคุณธรรม)</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card highlight-gold">
+                        <span class="tag tag-gold">สืบสาน รักษา และต่อยอด</span>
+                        <h3 class="card-title" style="margin-top:8px; color:#B27200;">👑 สมัยรัชกาลที่ 10 สู่ปัจจุบัน</h3>
+                        <ul class="card-list">
+                            <li><strong>พระบาทสมเด็จพระวชิรเกล้าเจ้าอยู่หัว (รัชกาลที่ 10)</strong> เสด็จขึ้นครองราชย์เมื่อ พ.ศ. 2559</li>
+                            <li>ทรงมีพระปฐมบรมราชโองการที่จะ <strong>"สืบสาน รักษา และต่อยอด และครองแผ่นดินโดยธรรม เพื่อประโยชน์สุขแห่งอาณาราษฎรตลอดไป"</strong></li>
+                            <li>ทรงส่งเสริมงานจิตอาสาพระราชทาน การศึกษา การสาธารณสุข และการพัฒนาคุณภาพชีวิตของประชาชนทุกภูมิภาค</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 9: กิจกรรมทบทวนความรู้ สมัยปฏิรูปประเทศสู่ยุคประชาธิปไตย (ชุดที่ 1/2) -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>🎯 กิจกรรมทบทวนความรู้ สมัยปฏิรูปประเทศสู่ยุคประชาธิปไตย (ชุดที่ 1/2)</h2>
+                <span class="slide-unit-tag">ประวัติศาสตร์ ม.3 (พว.) | หน้า 9/10</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-3">
+                    <div class="info-card">
+                        <div class="card-title">ข้อที่ 1</div>
+                        <p style="margin-bottom:10px; font-weight:600;">ข้อใดเป็นผลกระทบสำคัญที่เกิดขึ้นกับประเทศไทยภายหลังการทำ "สนธิสัญญาเบาว์ริง" กับอังกฤษเมื่อ พ.ศ. 2398 ในสมัยรัชกาลที่ 4?</p>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ก. พระคลังสินค้าผูกขาดการค้าข้าวได้มากขึ้น</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, true)">ข. ยกเลิกพระคลังสินค้า เก็บภาษีขาเข้าได้เพียงร้อยละ 3 ข้าวกลายเป็นสินค้าส่งออกอันดับ 1 และเสียสิทธิสภาพนอกอาณาเขต</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ค. ไทยเลิกติดต่อค้าขายกับชาติตะวันตกทั้งหมด</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ง. เปลี่ยนมาใช้เงินพดด้วงแทนเหรียญกษาปณ์</div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="card-title">ข้อที่ 2</div>
+                        <p style="margin-bottom:10px; font-weight:600;">การจัดระเบียบการปกครองส่วนภูมิภาคแบบ "มณฑลเทศาภิบาล" ในสมัยรัชกาลที่ 5 มีจุดมุ่งหมายสำคัญที่สุดเพื่อสิ่งใด?</p>
+                        <div class="quiz-option" onclick="checkQuiz(this, true)">ก. เพื่อรวมอำนาจเข้าสู่ศูนย์กลาง สร้างความเป็นเอกภาพ และป้องกันการแทรกแซงจากจักรวรรดินิยมตะวันตก</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ข. เพื่อเพิ่มอำนาจให้เจ้าเมืองประเทศราชปกครองตนเองอย่างอิสระ</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ค. เพื่อนำระบบจตุสดมภ์และเมืองลูกหลวงกลับมาใช้อีกครั้ง</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ง. เพื่อยกเลิกกระทรวงมหาดไทย</div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="card-title">ข้อที่ 3</div>
+                        <p style="margin-bottom:10px; font-weight:600;">การที่รัชกาลที่ 6 ทรงนำประเทศไทยเข้าร่วมสงครามโลกครั้งที่ 1 (พ.ศ. 2460) กับฝ่ายสัมพันธมิตร ส่งผลดีต่อประเทศไทยอย่างไร?</p>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ก. ทำให้ไทยได้รับอาณานิคมในทวีปยุโรป</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, true)">ข. ทำให้ไทยได้เข้าเป็นสมาชิกองค์การสันนิบาตชาติ และเป็นจุดเริ่มต้นในการเจรจาแก้ไขสนธิสัญญาที่ไม่เป็นธรรม</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ค. ทำให้ไทยไม่ต้องเข้าร่วมองค์การระหว่างประเทศใดๆ อีก</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ง. ทำให้ระบบเจ้าภาษีนายอากรกลับมาใช้อีกครั้ง</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 10: กิจกรรมทบทวนความรู้ สมัยปฏิรูปประเทศสู่ยุคประชาธิปไตย (ชุดที่ 2/2) & สรุป -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>🎯 กิจกรรมทบทวนความรู้ สมัยปฏิรูปประเทศสู่ยุคประชาธิปไตย (ชุดที่ 2/2)</h2>
+                <span class="slide-unit-tag">ประวัติศาสตร์ ม.3 (พว.) | หน้า 10/10</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="info-card">
+                        <div class="card-title">ข้อที่ 4</div>
+                        <p style="margin-bottom:10px; font-weight:600;">หน่วยงานใดที่รัชกาลที่ 5 ทรงจัดตั้งขึ้นเมื่อ พ.ศ. 2416 เพื่อทำหน้าที่รวบรวมและจัดเก็บภาษีอากรเข้าแผ่นดินโดยตรงแทนระบบเจ้าภาษีนายอากร?</p>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ก. พระคลังสินค้า</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, true)">ข. หอรัษฎากรพิพัฒน์</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ค. สุขาภิบาลท่าฉลอม</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ง. ดุสิตธานี</div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="card-title">ข้อที่ 5</div>
+                        <p style="margin-bottom:10px; font-weight:600;">เหตุการณ์เปลี่ยนแปลงการปกครองเมื่อวันที่ 24 มิถุนายน พ.ศ. 2475 ในสมัยรัชกาลที่ 7 ส่งผลให้ระบอบการปกครองของไทยเปลี่ยนไปอย่างไร?</p>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ก. เปลี่ยนจากแบบพ่อปกครองลูกเป็นธรรมราชา</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ข. เปลี่ยนจากระบบจตุสดมภ์เป็น 12 กระทรวง</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, true)">ค. เปลี่ยนจากระบอบสมบูรณาญาสิทธิราชย์ เป็นระบอบประชาธิปไตยอันมีพระมหากษัตริย์ทรงเป็นประมุข</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ง. เปลี่ยนจากระบบเทศาภิบาลเป็นระบบเมืองลูกหลวง</div>
+                    </div>
+                </div>
+
+                <div class="info-card highlight-purple" style="background:linear-gradient(90deg, #E8EAF6 0%, #FFF 100%); margin-top:auto;">
+                    <h3 class="card-title" style="font-size:1.3rem;">📝 กิจกรรมต่อเนื่องท้ายคาบเรียน: ใบงานวิชาประวัติศาสตร์ ม.3 (ชุดที่ 2 สมัยปฏิรูปประเทศสู่ยุคประชาธิปไตย)</h3>
+                    <p style="font-size:1.05rem; line-height:1.6;">
+                        ให้นักเรียนทำ <strong>ใบงานที่ 3.1 (สมัยปรับปรุงและปฏิรูปประเทศ ร.4 – ร.6)</strong> และ <strong>ใบงานที่ 3.2 (การเปลี่ยนแปลงการปกครอง พ.ศ. 2475 และพัฒนาการยุคประชาธิปไตย)</strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="bottom-bar">
+        <div style="font-family:'Prompt',sans-serif; font-size:0.95rem;">
+            ใช้ปุ่มลูกศร <strong>⬅️ ➡️ บนคีย์บอร์ด</strong> เพื่อเลื่อนสไลด์ได้ทันที
+        </div>
+        <div class="progress-dots" id="dotsContainer"></div>
+        <div class="nav-buttons">
+            <button class="btn-nav" id="prevBtn" onclick="changeSlide(-1)">⬅️ ก่อนหน้า</button>
+            <span id="slideCounter" style="font-family:'Prompt',sans-serif; font-weight:700; min-width:80px; text-align:center;">1 / 10</span>
+            <button class="btn-nav" id="nextBtn" onclick="changeSlide(1)">ถัดไป ➡️</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        const dotsContainer = document.getElementById('dotsContainer');
+        const slideCounter = document.getElementById('slideCounter');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'dot' + (i === 0 ? ' active' : '');
+            dot.onclick = () => goToSlide(i);
+            dotsContainer.appendChild(dot);
+        }
+
+        function updateUI() {
+            slides.forEach((s, idx) => s.classList.toggle('active', idx === currentSlide));
+            document.querySelectorAll('.dot').forEach((d, idx) => d.classList.toggle('active', idx === currentSlide));
+            slideCounter.textContent = `${currentSlide + 1} / ${totalSlides}`;
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === totalSlides - 1;
+        }
+
+        function changeSlide(dir) {
+            const next = currentSlide + dir;
+            if (next >= 0 && next < totalSlides) { currentSlide = next; updateUI(); }
+        }
+
+        function goToSlide(index) { currentSlide = index; updateUI(); }
+
+        function checkQuiz(el, isCorrect) {
+            const parent = el.parentElement;
+            parent.querySelectorAll('.quiz-option').forEach(opt => opt.classList.remove('correct', 'wrong'));
+            if (isCorrect) {
+                el.classList.add('correct');
+                if (!el.textContent.includes('✅')) el.innerHTML += ' <span>✅ ถูกต้อง!</span>';
+            } else {
+                el.classList.add('wrong');
+                if (!el.textContent.includes('❌')) el.innerHTML += ' <span>❌ ลองใหม่อีกครั้ง</span>';
+            }
+        }
+
+        function toggleFullScreen() {
+            if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+            else if (document.exitFullscreen) document.exitFullscreen();
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') changeSlide(1);
+            else if (e.key === 'ArrowLeft') changeSlide(-1);
+        });
+
+        updateUI();
+    </script>
+</body>
+</html>

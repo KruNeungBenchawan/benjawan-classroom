@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ใบงานและเฉลย วิชาประวัติศาสตร์ ม.3 - สมัยปฏิรูปประเทศสู่ยุคประชาธิปไตย (สำนักพิมพ์ พว.)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Prompt:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1A237E;
+            --primary-light: #E8EAF6;
+            --accent: #C62828;
+            --answer-red: #D32F2F;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background: #DCE0EC;
+            color: #1A1A1A;
+            padding: 75px 0 40px;
+            line-height: 1.5;
+        }
+
+        .toolbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            background: #0D1242;
+            color: white;
+            padding: 12px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 999;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+        }
+        .toolbar-title { font-family: 'Prompt', sans-serif; font-size: 1rem; display: flex; align-items: center; gap: 10px; }
+        .toolbar-actions { display: flex; gap: 10px; }
+        .btn-tool { padding: 8px 16px; border-radius: 8px; border: none; font-family: 'Prompt', sans-serif; font-weight: 600; font-size: 0.9rem; cursor: pointer; }
+        .btn-student { background: #FFFFFF; color: #0D1242; }
+        .btn-teacher { background: #E53935; color: white; }
+        .btn-print { background: #00897B; color: white; }
+
+        .a4-page {
+            width: 210mm;
+            min-height: 297mm;
+            background: white;
+            margin: 0 auto 24px;
+            padding: 13mm 15mm;
+            box-shadow: 0 8px 28px rgba(0,0,0,0.18);
+            border-radius: 4px;
+            position: relative;
+        }
+
+        .ws-header { border: 2px solid var(--primary); border-radius: 10px; overflow: hidden; margin-bottom: 11px; }
+        .ws-header-top { background: var(--primary); color: white; padding: 8px 16px; display: flex; justify-content: space-between; align-items: center; font-family: 'Prompt', sans-serif; }
+        .ws-header-top h1 { font-size: 1.15rem; font-weight: 700; }
+        .ws-badge { background: #E65100; color: white; padding: 2px 10px; border-radius: 14px; font-size: 0.82rem; font-weight: 600; }
+        .ws-student-info { padding: 7px 16px; background: #F7F8FC; font-size: 0.9rem; display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; }
+
+        .ws-section { margin-bottom: 12px; }
+        .section-title { font-family: 'Prompt', sans-serif; font-size: 0.94rem; font-weight: 700; color: var(--primary); background: var(--primary-light); padding: 5px 12px; border-left: 5px solid var(--primary); border-radius: 4px; margin-bottom: 7px; }
+
+        .ws-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+        .ws-table th, .ws-table td { border: 1px solid #9E9E9E; padding: 5px 8px; vertical-align: top; }
+        .ws-table th { background: var(--primary-light); color: #1A237E; font-family: 'Prompt', sans-serif; font-weight: 600; text-align: center; }
+
+        .matching-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 12px; font-size: 0.86rem; }
+        .match-box { border: 1px solid #B0BEC5; border-radius: 8px; padding: 7px 11px; background: #FAFAFA; }
+        .match-item { margin-bottom: 4px; }
+
+        .fill-blank { display: inline-block; min-width: 105px; border-bottom: 1px dotted #333; text-align: center; padding: 0 5px; }
+        .ans-text { color: transparent; user-select: none; font-weight: 700; }
+        body.teacher-mode .ans-text { color: var(--answer-red); user-select: auto; }
+
+        .ans-block { border-bottom: 1px dotted #555; min-height: 21px; padding: 1px 6px; font-size: 0.85rem; color: transparent; }
+        body.teacher-mode .ans-block { color: var(--answer-red); font-weight: 600; }
+
+        .mindmap-container { border: 1.5px dashed var(--primary); border-radius: 12px; padding: 10px; background: #F9FAFF; }
+        .mindmap-center { background: var(--primary); color: white; font-family: 'Prompt', sans-serif; font-weight: 700; text-align: center; padding: 5px 16px; border-radius: 20px; width: 350px; margin: 3px auto 8px; font-size: 0.92rem; }
+        .mindmap-branches { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+        .mm-node { border: 1.5px solid #3949AB; border-radius: 8px; padding: 6px 10px; background: white; font-size: 0.84rem; }
+        .mm-node-title { font-family: 'Prompt', sans-serif; font-weight: 700; color: var(--primary); border-bottom: 1px solid #E0E0E0; padding-bottom: 2px; margin-bottom: 4px; display: flex; justify-content: space-between; }
+
+        .evidence-card { border: 1px solid #BCAAA4; background: #FFFDF9; border-radius: 8px; padding: 8px 12px; font-size: 0.86rem; }
+        .teacher-watermark { display: none; background: #FFEBEE; color: #C62828; border: 1.5px solid #EF5350; padding: 3px 10px; border-radius: 6px; font-family: 'Prompt', sans-serif; font-weight: 700; font-size: 0.82rem; }
+        body.teacher-mode .teacher-watermark { display: inline-block; }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .toolbar { display: none !important; }
+            .a4-page { box-shadow: none; margin: 0; width: 100%; page-break-after: always; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="toolbar">
+        <div class="toolbar-title">
+            <span>📄 ใบงานประวัติศาสตร์ ม.3 (พว.) — สมัยปฏิรูปประเทศสู่ยุคประชาธิปไตย (รวม 2 ใบงาน)</span>
+            <span class="teacher-watermark">🔑 โหมดครูผู้สอน (แสดงเฉลย)</span>
+        </div>
+        <div class="toolbar-actions">
+            <button class="btn-tool btn-student" onclick="setMode(false)">📝 โหมดใบงานนักเรียน (ซ่อนเฉลย)</button>
+            <button class="btn-tool btn-teacher" onclick="setMode(true)">🔑 โหมดเฉลยสำหรับครู (แสดงคำตอบสีแดง)</button>
+            <button class="btn-tool btn-print" onclick="window.print()">🖨️ สั่งพิมพ์ขนาด A4 / บันทึก PDF</button>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         PAGE 1: ใบงานที่ 3.1 เรื่อง สมัยปรับปรุงและปฏิรูปประเทศ (ร.4 - ร.6)
+         ===================================================================== -->
+    <div class="a4-page">
+        <div class="ws-header">
+            <div class="ws-header-top">
+                <h1>ใบงานที่ ๓.๑ เรื่อง การปรับปรุงและปฏิรูปประเทศให้ทันสมัย (ร.๔ – ร.๖)</h1>
+                <div>
+                    <span class="ws-badge">วิชาประวัติศาสตร์ ม.๓ (พว.)</span>
+                    <span class="teacher-watermark" style="margin-left:6px;">ฉบับเฉลยครู</span>
+                </div>
+            </div>
+            <div class="ws-student-info">
+                <span><strong>ชื่อ-นามสกุล:</strong> ............................................................................................</span>
+                <span><strong>ชั้น:</strong> ม.๓ / .........</span>
+                <span><strong>เลขที่:</strong> .........</span>
+                <span><strong>คะแนนที่ได้:</strong> ........ / ๒๐ คะแนน</span>
+            </div>
+        </div>
+
+        <!-- ตอนที่ 1 -->
+        <div class="ws-section">
+            <div class="section-title">ตอนที่ ๑ : วิเคราะห์ผลกระทบของ "สนธิสัญญาเบาว์ริง (พ.ศ. ๒๓๙๘)" ในสมัยรัชกาลที่ ๔ (๖ คะแนน)</div>
+            <div class="evidence-card" style="line-height:1.75;">
+                ๑. สนธิสัญญาเบาว์ริง ทำขึ้นระหว่างประเทศไทยกับประเทศ <span class="fill-blank"><span class="ans-text">อังกฤษ (เซอร์จอห์น เบาว์ริง)</span></span> เมื่อ พ.ศ. ๒๓๙๘<br>
+                ๒. <strong>ด้านการค้าและภาษี:</strong> ยกเลิกการผูกขาดของ <span class="fill-blank"><span class="ans-text">พระคลังสินค้า</span></span> และจำกัดให้ไทยเก็บภาษีขาเข้าได้เพียงร้อยละ <span class="fill-blank"><span class="ans-text">๓ (ชักร้อยละ ๓)</span></span><br>
+                ๓. <strong>ด้านเศรษฐกิจการเกษตร:</strong> สินค้าส่งออกอันดับ ๑ ของไทยเปลี่ยนจากของป่ามาเป็น <span class="fill-blank"><span class="ans-text">ข้าว</span></span> ทำให้มีการขุดคลองขยายที่นาจำนวนมาก<br>
+                ๔. <strong>ด้านการศาล (อธิปไตย):</strong> ไทยต้องสูญเสีย <span class="fill-blank"><span class="ans-text">สิทธิสภาพนอกอาณาเขต (คนในบังคับต่างชาติขึ้นศาลกงสุล)</span></span><br>
+                ๕. พระปรีชาสามารถด้านดาราศาสตร์ของรัชกาลที่ ๔ คือการคำนวณการเกิด <span class="fill-blank"><span class="ans-text">สุริยุปราคาเต็มดวง ที่ ต.หว้ากอ จ.ประจวบคีรีขันธ์ (พ.ศ. ๒๔๑๑)</span></span>
+            </div>
+        </div>
+
+        <!-- ตอนที่ 2 -->
+        <div class="ws-section">
+            <div class="section-title">ตอนที่ ๒ : สรุปผังความคิด (Mind Mapping) การปฏิรูปประเทศครั้งใหญ่ในสมัยรัชกาลที่ ๕ (๑๐ คะแนน)</div>
+            <div class="mindmap-container">
+                <div class="mindmap-center">🚂 การปฏิรูปประเทศสู่ความทันสมัยในสมัยรัชกาลที่ ๕</div>
+                <div class="mindmap-branches">
+                    <div class="mm-node">
+                        <div class="mm-node-title"><span>๑. การปกครองส่วนกลาง (พ.ศ. ๒๔๓๕)</span><span>(๒.๕ คะแนน)</span></div>
+                        <div>• ยกเลิกระบบเดิมคือ <span class="fill-blank"><span class="ans-text">จตุสดมภ์ และสมุหนายก-กลาโหม</span></span></div>
+                        <div>• จัดตั้งหน่วยงานบริหารแบบใหม่คือ <span class="fill-blank"><span class="ans-text">กระทรวง ๑๒ กระทรวง</span></span></div>
+                        <div>• เสนาบดีกระทรวงมหาดไทยพระองค์แรกคือ:</div>
+                        <div>&nbsp;&nbsp;<span class="fill-blank"><span class="ans-text">สมเด็จฯ กรมพระยาดำรงราชานุภาพ</span></span></div>
+                    </div>
+
+                    <div class="mm-node">
+                        <div class="mm-node-title"><span>๒. การปกครองส่วนภูมิภาคและท้องถิ่น</span><span>(๒.๕ คะแนน)</span></div>
+                        <div>• ยกเลิกเมืองประเทศราช จัดเป็นระบบ <span class="fill-blank"><span class="ans-text">มณฑลเทศาภิบาล</span></span></div>
+                        <div>&nbsp;&nbsp;เพื่อ <span class="fill-blank"><span class="ans-text">รวมอำนาจเข้าสู่ศูนย์กลาง</span></span></div>
+                        <div>• ทดลองการปกครองส่วนท้องถิ่นแห่งแรก (พ.ศ. ๒๔๔๘):</div>
+                        <div>&nbsp;&nbsp;คือ <span class="fill-blank"><span class="ans-text">สุขาภิบาลท่าฉลอม จ.สมุทรสาคร</span></span></div>
+                    </div>
+
+                    <div class="mm-node">
+                        <div class="mm-node-title"><span>๓. การปฏิรูปสังคมและการศึกษา</span><span>(๒.๕ คะแนน)</span></div>
+                        <div>• <strong>การเลิกทาสและเลิกไพร่:</strong> ตราพระราชบัญญัติทาส</div>
+                        <div>&nbsp;&nbsp;เมื่อ พ.ศ. <span class="fill-blank"><span class="ans-text">๒๔๔๘ (ร.ศ. ๑๒๔) โดยไม่เสียเลือดเนื้อ</span></span></div>
+                        <div>• <strong>โรงเรียนหลวงสำหรับราษฎรแห่งแรก (พ.ศ. ๒๔๒๗):</strong></div>
+                        <div>&nbsp;&nbsp;ตั้งอยู่ที่ <span class="fill-blank"><span class="ans-text">วัดมหรรณพาราม</span></span></div>
+                    </div>
+
+                    <div class="mm-node">
+                        <div class="mm-node-title"><span>๔. การคลังและสาธารณูปโภคสมัยใหม่</span><span>(๒.๕ คะแนน)</span></div>
+                        <div>• หน่วยงานจัดเก็บภาษีแทนเจ้าภาษีนายอากร (พ.ศ. ๒๔๑๖):</div>
+                        <div>&nbsp;&nbsp;คือ <span class="fill-blank"><span class="ans-text">หอรัษฎากรพิพัฒน์</span></span></div>
+                        <div>• ทางรถไฟหลวงสายแรก: <span class="fill-blank"><span class="ans-text">กรุงเทพฯ – นครราชสีมา</span></span></div>
+                        <div>• โรงพยาบาลหลวงแห่งแรก: <span class="fill-blank"><span class="ans-text">โรงพยาบาลศิริราช</span></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ตอนที่ 3 -->
+        <div class="ws-section">
+            <div class="section-title">ตอนที่ ๓ : พระราชกรณียกิจสำคัญในสมัยรัชกาลที่ ๖ (๔ คะแนน)</div>
+            <div class="evidence-card">
+                <p><strong>คำถาม:</strong> ในสมัยรัชกาลที่ ๖ ทรงสร้างเมืองจำลองเพื่อฝึกหัดประชาธิปไตยชื่อว่าอะไร และการเข้าร่วมสงครามโลกครั้งที่ ๑ (พ.ศ. ๒๔๖๐) ส่งผลดีต่อประเทศไทยอย่างไร?</p>
+                <div class="ans-block">๑) เมืองจำลองฝึกหัดการปกครองแบบประชาธิปไตย ชื่อว่า "ดุสิตธานี"</div>
+                <div class="ans-block">๒) การเข้าร่วมสงครามโลกครั้งที่ ๑ กับฝ่ายสัมพันธมิตร ทำให้ไทยชนะสงคราม ได้เข้าเป็นสมาชิกองค์การสันนิบาตชาติ และใช้เป็นจุดเริ่มต้นเจรจาแก้ไขสนธิสัญญาที่ไม่เป็นธรรมจนได้เอกราชทางการศาลและภาษีอากรคืน</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         PAGE 2: ใบงานที่ 3.2 เรื่อง การเปลี่ยนแปลงการปกครอง พ.ศ. 2475 และพัฒนาการยุคประชาธิปไตย
+         ===================================================================== -->
+    <div class="a4-page">
+        <div class="ws-header">
+            <div class="ws-header-top">
+                <h1>ใบงานที่ ๓.๒ เรื่อง การเปลี่ยนแปลงการปกครอง พ.ศ. ๒๔๗๕ และพัฒนาการยุคประชาธิปไตย</h1>
+                <div>
+                    <span class="ws-badge">วิชาประวัติศาสตร์ ม.๓ (พว.)</span>
+                    <span class="teacher-watermark" style="margin-left:6px;">ฉบับเฉลยครู</span>
+                </div>
+            </div>
+            <div class="ws-student-info">
+                <span><strong>ชื่อ-นามสกุล:</strong> ............................................................................................</span>
+                <span><strong>ชั้น:</strong> ม.๓ / .........</span>
+                <span><strong>เลขที่:</strong> .........</span>
+                <span><strong>คะแนนที่ได้:</strong> ........ / ๒๐ คะแนน</span>
+            </div>
+        </div>
+
+        <!-- ตอนที่ 1 -->
+        <div class="ws-section">
+            <div class="section-title">ตอนที่ ๑ : สรุปเหตุการณ์การเปลี่ยนแปลงการปกครอง พ.ศ. ๒๔๗๕ สมัยรัชกาลที่ ๗ (๑๐ คะแนน)</div>
+            <table class="ws-table">
+                <thead>
+                    <tr>
+                        <th style="width:28%;">หัวข้อศึกษา</th>
+                        <th style="width:72%;">รายละเอียดและสาระสำคัญทางประวัติศาสตร์</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>๑. วันและคณะผู้ก่อการ</strong></td>
+                        <td>
+                            <div class="ans-block">วันที่ ๒๔ มิถุนายน พ.ศ. ๒๔๗๕ โดยกลุ่ม "คณะราษฎร" (นำโดย พระยาพหลพลพยุหเสนา, หลวงประดิษฐ์มนูธรรม/ปรีดี พนมยงค์, หลวงพิบูลสงคราม)</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>๒. ระบอบการปกครองที่เปลี่ยนไป</strong></td>
+                        <td>
+                            <div class="ans-block">เปลี่ยนจาก "ระบอบสมบูรณาญาสิทธิราชย์" มาเป็น "ระบอบประชาธิปไตยอันมีพระมหากษัตริย์ทรงเป็นประมุข"</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>๓. สาเหตุสำคัญของการเปลี่ยนแปลง</strong></td>
+                        <td>
+                            <div class="ans-block">๑) การรับแนวคิดประชาธิปไตยตะวันตกของคนรุ่นใหม่ ๒) ปัญหาวิกฤตเศรษฐกิจตกต่ำทั่วโลก (พ.ศ. ๒๔๗๒-๒๔๗๕) จนรัฐต้องดุลข้าราชการออก</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>๔. พระมหากรุณาธิคุณของรัชกาลที่ ๗</strong></td>
+                        <td>
+                            <div class="ans-block">ทรงยินยอมอยู่ภายใต้รัฐธรรมนูญเพื่อป้องกันการเสียเลือดเนื้อของคนไทย และพระราชทานรัฐธรรมนูญฉบับถาวรฉบับแรกเมื่อ ๑๐ ธันวาคม พ.ศ. ๒๔๗๕</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>๕. นายกรัฐมนตรีคนแรกของไทย</strong></td>
+                        <td>
+                            <div class="ans-block">พระยามโนปกรณ์นิติธาดา</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ตอนที่ 2: จับคู่เหตุการณ์สำคัญยุคประชาธิปไตย -->
+        <div class="ws-section">
+            <div class="section-title">ตอนที่ ๒ : นำตัวอักษร ก – จ มาเติมหน้าหัวข้อที่มีความสัมพันธ์กัน (๕ คะแนน)</div>
+            <div class="matching-grid">
+                <div class="match-box">
+                    <div class="match-item">.......... <strong>๑. ขบวนการเสรีไทย (สมัยสงครามโลกครั้งที่ ๒)</strong> <span class="ans-text">[ ค ]</span></div>
+                    <div class="match-item">.......... <strong>๒. การเปลี่ยนชื่อประเทศจาก "สยาม" เป็น "ไทย" (พ.ศ. ๒๔๘๒)</strong> <span class="ans-text">[ ก ]</span></div>
+                    <div class="match-item">.......... <strong>๓. แผนพัฒนาเศรษฐกิจแห่งชาติ ฉบับที่ ๑ (พ.ศ. ๒๕๐๔)</strong> <span class="ans-text">[ ง ]</span></div>
+                    <div class="match-item">.......... <strong>๔. ปรัชญาของเศรษฐกิจพอเพียง และ โครงการแก้มลิง</strong> <span class="ans-text">[ ข ]</span></div>
+                    <div class="match-item">.......... <strong>๕. จุฬาลงกรณ์มหาวิทยาลัย (พ.ศ. ๒๔๕๙)</strong> <span class="ans-text">[ จ ]</span></div>
+                </div>
+                <div class="match-box" style="background:#E8EAF6;">
+                    <div class="match-item"><strong>ก.</strong> นโยบายชาตินิยมและรัฐนิยมในสมัยรัฐบาลจอมพล ป. พิบูลสงคราม</div>
+                    <div class="match-item"><strong>ข.</strong> แนวพระราชดำริเพื่อการพัฒนาที่ยั่งยืนในสมัยรัชกาลที่ ๙</div>
+                    <div class="match-item"><strong>ค.</strong> ขบวนการต่อต้านกองทัพญี่ปุ่นที่ช่วยให้ไทยไม่ตกเป็นผู้แพ้สงครามโลกครั้งที่ ๒</div>
+                    <div class="match-item"><strong>ง.</strong> เริ่มต้นพัฒนาโครงสร้างพื้นฐานในสมัยรัฐบาลจอมพลสฤษดิ์ ธนะรัชต์</div>
+                    <div class="match-item"><strong>จ.</strong> มหาวิทยาลัยแห่งแรกของประเทศไทยที่สถาปนาขึ้นในสมัยรัชกาลที่ ๖</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ตอนที่ 3: คำถามคิดวิเคราะห์ -->
+        <div class="ws-section">
+            <div class="section-title">ตอนที่ ๓ : การประยุกต์ใช้ "ปรัชญาของเศรษฐกิจพอเพียง" ในชีวิตประจำวัน (๕ คะแนน)</div>
+            <div class="evidence-card">
+                <p><strong>คำถาม:</strong> หลักปรัชญาของเศรษฐกิจพอเพียงในพระบาทสมเด็จพระบรมชนกาธิเบศร มหาภูมิพลอดุลยเดชมหาราช บรมนาถบพิตร (รัชกาลที่ ๙) ประกอบด้วย "๓ ห่วง ๒ เงื่อนไข" อะไรบ้าง และนักเรียนนำมาใช้ในการเรียนและการใช้จ่ายอย่างไร?</p>
+                <div class="ans-block">• ๓ ห่วง ได้แก่: ๑) ความพอประมาณ ๒) ความมีเหตุผล ๓) การมีภูมิคุ้มกันในตัวที่ดี / ๒ เงื่อนไข ได้แก่: เงื่อนไขความรู้ และ เงื่อนไขคุณธรรม</div>
+                <div class="ans-block">• การนำไปใช้: ใช้จ่ายอย่างประหยัดไม่ฟุ่มเฟือย รู้จักออมเงินไว้ใช้ยามฉุกเฉิน และตั้งใจศึกษาหาความรู้ด้วยความซื่อสัตย์สุจริต</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function setMode(isTeacher) {
+            if (isTeacher) document.body.classList.add('teacher-mode');
+            else document.body.classList.remove('teacher-mode');
+        }
+    </script>
+</body>
+</html>

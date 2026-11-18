@@ -1,0 +1,2233 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="theme-color" content="#4c1d95">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>History Smart Class | เว็บแอปสื่อการสอนประวัติศาสตร์ ม.1–ม.3 (พว.)</title>
+<link rel="manifest" href="manifest.json">
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f1f5f9;
+    --surface: #ffffff;
+    --surface-2: #f8fafc;
+    --text: #0f172a;
+    --text-muted: #475569;
+    --border: #e2e8f0;
+    --primary: #5b21b6;
+    --primary-light: #ede9fe;
+    --accent: #d97706;
+    --accent-light: #fef3c7;
+    --success: #059669;
+    --success-light: #d1fae5;
+    --danger: #dc2626;
+    --danger-light: #fee2e2;
+    --m1-color: #6d28d9;
+    --m2-color: #b91c1c;
+    --m3-color: #047857;
+    --shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+    --radius: 16px;
+    --font-scale: 1;
+  }
+
+  body.dark-mode {
+    --bg: #0f172a;
+    --surface: #1e293b;
+    --surface-2: #334155;
+    --text: #f8fafc;
+    --text-muted: #cbd5e1;
+    --border: #334155;
+    --primary: #8b5cf6;
+    --primary-light: rgba(139, 92, 246, 0.2);
+    --accent: #fbbf24;
+    --accent-light: rgba(251, 191, 36, 0.15);
+    --shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: calc(16px * var(--font-scale)); }
+  body {
+    font-family: 'Sarabun', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+
+  /* Top App Bar */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: linear-gradient(135deg, #2e1065 0%, #4c1d95 50%, #7c2d12 100%);
+    color: #fff;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .brand-logo {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    flex-shrink: 0;
+  }
+  .brand-title h1 {
+    font-size: 1.15rem;
+    font-weight: 800;
+    line-height: 1.2;
+  }
+  .brand-title span {
+    font-size: 0.78rem;
+    opacity: 0.85;
+    display: block;
+  }
+  .topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .icon-btn {
+    background: rgba(255,255,255,0.14);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.25);
+    padding: 7px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.15s;
+  }
+  .icon-btn:hover { background: rgba(255,255,255,0.26); }
+  .icon-btn.teacher-active {
+    background: #dc2626;
+    border-color: #fca5a5;
+    box-shadow: 0 0 12px rgba(220,38,38,0.5);
+  }
+
+  /* Layout */
+  .app-layout {
+    display: grid;
+    grid-template-columns: 310px 1fr;
+    flex: 1;
+    max-width: 1600px;
+    width: 100%;
+    margin: 0 auto;
+    gap: 20px;
+    padding: 20px;
+  }
+
+  /* Sidebar */
+  .sidebar {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    box-shadow: var(--shadow);
+    height: fit-content;
+    position: sticky;
+    top: 80px;
+  }
+  .grade-tabs {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    margin-bottom: 14px;
+    background: var(--surface-2);
+    padding: 5px;
+    border-radius: 12px;
+  }
+  .grade-tab {
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 7px 4px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .grade-tab.active {
+    background: var(--primary);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(91,33,182,0.25);
+  }
+  .unit-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .unit-item {
+    text-align: left;
+    background: var(--surface-2);
+    border: 2px solid transparent;
+    border-radius: 12px;
+    padding: 12px 14px;
+    cursor: pointer;
+    font-family: inherit;
+    color: var(--text);
+    transition: all 0.15s;
+    position: relative;
+  }
+  .unit-item:hover {
+    border-color: var(--border);
+    transform: translateY(-1px);
+  }
+  .unit-item.active {
+    background: var(--primary-light);
+    border-color: var(--primary);
+  }
+  .unit-badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 99px;
+    color: #fff;
+    margin-bottom: 5px;
+  }
+  .badge-m1 { background: var(--m1-color); }
+  .badge-m2 { background: var(--m2-color); }
+  .badge-m3 { background: var(--m3-color); }
+  .unit-item h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 3px;
+  }
+  .unit-item p {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    line-height: 1.35;
+  }
+  .unit-score-pill {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    background: var(--success-light);
+    color: var(--success);
+    padding: 2px 7px;
+    border-radius: 99px;
+  }
+
+  /* Main Content Area */
+  .main-area {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    min-width: 0;
+  }
+  .unit-hero {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .unit-hero-info h2 {
+    font-size: 1.45rem;
+    font-weight: 800;
+    margin-top: 4px;
+  }
+  .unit-hero-info p {
+    font-size: 0.92rem;
+    color: var(--text-muted);
+  }
+
+  /* Mode Navigation Tabs */
+  .mode-tabs {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    background: var(--surface);
+    padding: 8px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+  }
+  .mode-tab {
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    padding: 12px 10px;
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.15s;
+  }
+  .mode-tab:hover { background: var(--surface-2); color: var(--text); }
+  .mode-tab.active {
+    background: var(--primary);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(91, 33, 182, 0.25);
+  }
+
+  /* Workspace Card */
+  .workspace-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: var(--shadow);
+    min-height: 520px;
+  }
+
+  /* MODE 1: Interactive Slide Player */
+  .slide-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .slide-stage {
+    background: linear-gradient(145deg, #1e1b4b 0%, #311042 60%, #1e293b 100%);
+    color: #fff;
+    border-radius: 18px;
+    padding: 36px 40px;
+    min-height: 430px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.12), 0 12px 30px rgba(0,0,0,0.2);
+    overflow: hidden;
+  }
+  .slide-stage:fullscreen {
+    padding: 60px 80px;
+    border-radius: 0;
+    justify-content: center;
+  }
+  .slide-tag {
+    display: inline-block;
+    background: rgba(251, 191, 36, 0.2);
+    border: 1px solid #fbbf24;
+    color: #fde68a;
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 99px;
+    margin-bottom: 12px;
+  }
+  .slide-title {
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: #fef08a;
+    margin-bottom: 18px;
+    line-height: 1.3;
+  }
+  .slide-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin-top: 8px;
+  }
+  .slide-box {
+    background: rgba(255, 255, 255, 0.09);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 14px;
+    padding: 16px 18px;
+    backdrop-filter: blur(8px);
+  }
+  .slide-box h4 {
+    color: #fbbf24;
+    font-size: 1.05rem;
+    margin-bottom: 8px;
+  }
+  .slide-box ul {
+    padding-left: 18px;
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+  .slide-box li { margin-bottom: 5px; }
+  .slide-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 28px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+  }
+  .slide-dots {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .slide-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.3);
+    border: none;
+    cursor: pointer;
+  }
+  .slide-dot.active {
+    width: 26px;
+    border-radius: 99px;
+    background: #fbbf24;
+  }
+
+  /* MODE 2: Interactive Worksheet */
+  .student-bar {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 12px;
+    background: var(--surface-2);
+    padding: 16px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    margin-bottom: 20px;
+  }
+  .input-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .input-field label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text-muted);
+  }
+  .input-field input, .ws-input, .ws-textarea {
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1.5px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 0.95rem;
+    width: 100%;
+  }
+  .ws-input:focus, .ws-textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-light);
+  }
+  .ws-section {
+    margin-bottom: 24px;
+    padding: 18px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background: var(--surface-2);
+  }
+  .ws-section h3 {
+    font-size: 1.1rem;
+    color: var(--primary);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .ws-question-row {
+    margin-bottom: 16px;
+    padding-bottom: 14px;
+    border-bottom: 1px dashed var(--border);
+  }
+  .ws-question-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .ws-prompt {
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .ws-ans-reveal {
+    margin-top: 8px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: var(--danger-light);
+    color: #991b1b;
+    font-weight: 700;
+    font-size: 0.9rem;
+    border-left: 4px solid var(--danger);
+    display: none;
+  }
+  body.teacher-mode .ws-ans-reveal {
+    display: block;
+  }
+  .ws-feedback {
+    margin-top: 6px;
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+  .ws-feedback.ok { color: var(--success); }
+  .ws-feedback.review { color: var(--accent); }
+
+  /* MODE 3: Quiz */
+  .quiz-card {
+    padding: 18px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background: var(--surface-2);
+    margin-bottom: 16px;
+  }
+  .quiz-q {
+    font-weight: 700;
+    font-size: 1.05rem;
+    margin-bottom: 12px;
+  }
+  .quiz-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .quiz-opt {
+    text-align: left;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1.5px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 0.92rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .quiz-opt:hover { border-color: var(--primary); }
+  .quiz-opt.correct {
+    background: var(--success-light);
+    border-color: var(--success);
+    color: #065f46;
+  }
+  .quiz-opt.wrong {
+    background: var(--danger-light);
+    border-color: var(--danger);
+    color: #991b1b;
+  }
+  .quiz-explain {
+    margin-top: 10px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: var(--primary-light);
+    font-size: 0.88rem;
+    display: none;
+  }
+  .quiz-explain.show, body.teacher-mode .quiz-explain { display: block; }
+
+  /* MODE 4: Downloads */
+  .dl-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+  }
+  .dl-card {
+    border: 1px solid var(--border);
+    background: var(--surface-2);
+    border-radius: 14px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 14px;
+  }
+  .dl-card h4 { font-size: 1.05rem; }
+  .dl-card p { font-size: 0.85rem; color: var(--text-muted); }
+
+  /* Buttons */
+  .btn-primary, .btn-secondary, .btn-danger, .btn-success {
+    padding: 10px 18px;
+    border-radius: 10px;
+    border: none;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 0.92rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-decoration: none;
+    transition: transform 0.12s, opacity 0.12s;
+  }
+  .btn-primary { background: var(--primary); color: #fff; }
+  .btn-secondary { background: var(--surface-2); color: var(--text); border: 1px solid var(--border); }
+  .btn-success { background: var(--success); color: #fff; }
+  .btn-danger { background: var(--danger); color: #fff; }
+  .btn-primary:hover, .btn-success:hover, .btn-danger:hover { opacity: 0.92; transform: translateY(-1px); }
+
+  /* Modal */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(4px);
+    z-index: 500;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .modal-backdrop.open { display: flex; }
+  .modal-box {
+    background: var(--surface);
+    color: var(--text);
+    border-radius: 20px;
+    max-width: 600px;
+    width: 100%;
+    padding: 28px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  /* Responsive Mobile & Tablet */
+  @media (max-width: 960px) {
+    .app-layout {
+      grid-template-columns: 1fr;
+      padding: 12px;
+    }
+    .sidebar {
+      position: static;
+    }
+    .unit-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+    .mode-tabs {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 640px) {
+    .student-bar, .quiz-options {
+      grid-template-columns: 1fr;
+    }
+    .slide-stage {
+      padding: 22px 20px;
+      min-height: 360px;
+    }
+    .slide-title { font-size: 1.35rem; }
+    .brand-title span { display: none; }
+  }
+
+  @media print {
+    .topbar, .sidebar, .mode-tabs, .no-print { display: none !important; }
+    .app-layout { display: block; padding: 0; }
+    .workspace-card { border: none; box-shadow: none; padding: 0; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-logo">🏛️</div>
+      <div class="brand-title">
+        <h1>History Smart Class (ม.1 – ม.3)</h1>
+        <span>เว็บแอปสื่อการสอน สไลด์ ใบงานโต้ตอบ และคลังข้อสอบ • อ้างอิงหนังสือเรียน พว.</span>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <a class="icon-btn" href="../index.html" style="text-decoration:none;background:rgba(255,255,255,0.24);font-weight:700;">
+        🏠 ห้องเรียนครูเบ็ญจวรรณ
+      </a>
+      <button class="icon-btn" id="teacherToggleBtn" onclick="toggleTeacherMode()">
+        🔑 โหมดครู: <span id="teacherStatusText">ปิดเฉลย</span>
+      </button>
+      <button class="icon-btn" onclick="openModal('qrModal')">📱 QR แชร์เข้ามือถือ</button>
+      <button class="icon-btn" onclick="openModal('deployModal')">☁️ วิธีนำขึ้นเว็บฟรี</button>
+      <button class="icon-btn" onclick="adjustFont(0.08)" title="ขยายตัวอักษร">A+</button>
+      <button class="icon-btn" onclick="adjustFont(-0.08)" title="ย่อตัวอักษร">A-</button>
+      <button class="icon-btn" onclick="toggleDarkMode()" id="themeBtn">🌙</button>
+    </div>
+  </header>
+
+  <!-- Main Layout -->
+  <div class="app-layout">
+    <!-- Sidebar: Grade & Unit Selector -->
+    <aside class="sidebar">
+      <div class="grade-tabs">
+        <button class="grade-tab active" onclick="filterGrade('all', this)">ทั้งหมด</button>
+        <button class="grade-tab" onclick="filterGrade('m1', this)">ม.1</button>
+        <button class="grade-tab" onclick="filterGrade('m2', this)">ม.2</button>
+        <button class="grade-tab" onclick="filterGrade('m3', this)">ม.3</button>
+      </div>
+      <div class="unit-list" id="unitListContainer"></div>
+    </aside>
+
+    <!-- Main Workspace -->
+    <main class="main-area">
+      <!-- Unit Hero Header -->
+      <section class="unit-hero">
+        <div class="unit-hero-info">
+          <span class="unit-badge badge-m1" id="heroBadge">ม.1</span>
+          <h2 id="heroTitle">หน่วยการเรียนรู้</h2>
+          <p id="heroDesc">คำอธิบายหน่วยการเรียนรู้</p>
+        </div>
+        <div class="no-print" style="display:flex; gap:8px; flex-wrap:wrap;">
+          <a id="heroQuickSlideLink" href="#" target="_blank" class="btn-secondary">🖥️ เปิดสไลด์แยกเต็มจอ</a>
+          <a id="heroQuickWsLink" href="#" target="_blank" class="btn-secondary">🖨️ เปิดใบงาน A4 สำหรับพิมพ์</a>
+        </div>
+      </section>
+
+      <!-- 4 Interactive Mode Tabs -->
+      <nav class="mode-tabs">
+        <button class="mode-tab active" onclick="switchMode('slides', this)">🖥️ 1. สไลด์ประกอบการสอน</button>
+        <button class="mode-tab" onclick="switchMode('worksheet', this)">✍️ 2. ใบงานโต้ตอบออนไลน์</button>
+        <button class="mode-tab" onclick="switchMode('quiz', this)">🎯 3. แบบทดสอบวัดผล</button>
+        <button class="mode-tab" onclick="switchMode('downloads', this)">📥 4. ดาวน์โหลดไฟล์ (.pptx/.docx)</button>
+      </nav>
+
+      <!-- Dynamic Workspace Container -->
+      <section class="workspace-card" id="workspaceContainer"></section>
+    </main>
+  </div>
+
+  <!-- Modal: QR Code & Device Share -->
+  <div class="modal-backdrop" id="qrModal" onclick="if(event.target===this)closeModal('qrModal')">
+    <div class="modal-box" style="text-align:center;">
+      <div class="modal-header">
+        <h3>📱 สแกนเปิดเว็บแอปบนมือถือ / แท็บเล็ต</h3>
+        <button class="btn-secondary" onclick="closeModal('qrModal')">✕ ปิด</button>
+      </div>
+      <p style="font-size:0.92rem; color:var(--text-muted); margin-bottom:14px;">
+        เมื่อนำเว็บแอปขึ้นออนไลน์แล้ว วางลิงก์ด้านล่างเพื่อสร้าง QR Code ให้นักเรียนทั้งห้องสแกนจากจอโปรเจกเตอร์ได้ทันที
+      </p>
+      <div style="display:flex; gap:8px; margin-bottom:18px;">
+        <input type="text" id="qrUrlInput" class="ws-input" placeholder="วางลิงก์เว็บไซต์ของคุณที่นี่..." oninput="updateQrImage()">
+      </div>
+      <div style="background:#fff; padding:18px; border-radius:16px; display:inline-block; border:1px solid var(--border);">
+        <img id="qrCodeImg" alt="QR Code" style="width:220px; height:220px; display:block;" src="">
+      </div>
+      <p style="font-size:0.82rem; color:var(--text-muted); margin-top:12px;">
+        💡 เคล็ดลับ: บน iPhone/iPad หรือ Android สามารถกดเมนู <strong>"เพิ่มไปยังหน้าจอโฮม (Add to Home Screen)"</strong> เพื่อติดตั้งเป็นไอคอนแอปได้ทันที
+      </p>
+    </div>
+  </div>
+
+  <!-- Modal: Easy Free Online Deployment Guide -->
+  <div class="modal-backdrop" id="deployModal" onclick="if(event.target===this)closeModal('deployModal')">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>☁️ วิธีนำเว็บแอปขึ้นออนไลน์ฟรี (เปิดได้ทุกอุปกรณ์ทั่วโลก)</h3>
+        <button class="btn-secondary" onclick="closeModal('deployModal')">✕ ปิด</button>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:14px; font-size:0.93rem;">
+        <div style="padding:14px; border-radius:12px; background:var(--surface-2); border-left:4px solid var(--primary);">
+          <h4>วิธีที่ 1 : ลากวางโฟลเดอร์ขึ้น Netlify Drop (ง่ายที่สุดใน 30 วินาที ไม่ต้องเขียนโค้ด)</h4>
+          <ol style="padding-left:20px; margin-top:6px;">
+            <li>เปิดเว็บไซต์ <a href="https://app.netlify.com/drop" target="_blank" style="color:var(--primary); font-weight:700;">app.netlify.com/drop</a> (สมัครฟรีด้วยบัญชี Google/อีเมล)</li>
+            <li>ลากโฟลเดอร์ <code>d:\ประวัติศาสตร์ม.1</code> ทั้งโฟลเดอร์ไปวางในกรอบบนหน้าเว็บ</li>
+            <li>รออัปโหลดประมาณ 10 วินาที ระบบจะสร้างลิงก์เว็บไซต์ <code>https://....netlify.app</code> ให้แชร์ให้นักเรียนเปิดผ่านมือถือ แท็บเล็ต หรือคอมพิวเตอร์ได้ทันที!</li>
+          </ol>
+        </div>
+        <div style="padding:14px; border-radius:12px; background:var(--surface-2); border-left:4px solid var(--success);">
+          <h4>วิธีที่ 2 : ใช้งานแบบไม่ต้องใช้อินเทอร์เน็ต (Offline / แฟลชไดรฟ์)</h4>
+          <p style="margin-top:4px;">
+            คุณครูสามารถคัดลอกโฟลเดอร์ <code>ประวัติศาสตร์ม.1</code> ลงแฟลชไดรฟ์ หรือ Google Drive แล้วดับเบิลคลิกไฟล์ <code>index.html</code> เพื่อเปิดใช้งานในห้องเรียนได้ทันทีโดยไม่ต้องเชื่อมต่ออินเทอร์เน็ต
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script src="units-extra.js?v=3"></script>
+<script>
+// ============================================================================
+// DATA STORE: All 6 Core Units across Grades 7, 8, 9 (ม.1, ม.2, ม.3 - พว.)
+// ============================================================================
+const UNITS_DATA = [
+  {
+    id: 'm1_u3',
+    grade: 'm1',
+    gradeLabel: 'ม.1 • หน่วยที่ 3',
+    badgeClass: 'badge-m1',
+    title: 'สมัยก่อนสุโขทัยในดินแดนไทย',
+    desc: 'สมัยก่อนประวัติศาสตร์ (ยุคหิน–ยุคโลหะ) และพัฒนาการของรัฐโบราณ/อาณาจักรโบราณในดินแดนไทย (ทวารวดี ศรีวิชัย ตามพรลิงค์ โคตรบูรณ์ ละโว้ หริภุญชัย)',
+    files: {
+      slideHtml: 'ม.1/สไลด์_หน่วยที่3_สมัยก่อนสุโขทัย_Interactive.html',
+      wsHtml: 'ม.1/ใบงานและเฉลย_หน่วยที่3_สมัยก่อนสุโขทัย_A4.html',
+      pptx: 'ม.1/สไลด์ประกอบการสอน_หน่วยที่3_สมัยก่อนสุโขทัยในดินแดนไทย.pptx',
+      docxStudent: 'ม.1/ใบงาน_หน่วยที่3_สมัยก่อนสุโขทัยในดินแดนไทย.docx',
+      docxTeacher: 'ม.1/เฉลยใบงาน_หน่วยที่3_สมัยก่อนสุโขทัยในดินแดนไทย.docx'
+    },
+    slides: [
+      {
+        tag: 'สไลด์ที่ 1 / 5 • แนวคิดสำคัญ',
+        title: 'การแบ่งยุคสมัยก่อนประวัติศาสตร์ในดินแดนไทย',
+        boxes: [
+          {
+            h: '🪨 ยุคหิน (Stone Age)',
+            items: [
+              'ยุคหินเก่า: เร่ร่อน ล่าสัตว์ อาศัยในถ้ำ เครื่องมือหินกะเทาะหยาบ (เช่น ถ้ำผีแมน จ.แม่ฮ่องสอน)',
+              'ยุคหินกลาง: เครื่องมือหินกะเทาะประณีตขึ้น เริ่มตั้งหลักแหล่งใกล้แหล่งน้ำ',
+              'ยุคหินใหม่: เริ่มเพาะปลูก เลี้ยงสัตว์ ตั้งชุมชนถาวร เครื่องมือหินขัด และภาชนะดินเผา (เช่น บ้านเก่า จ.กาญจนบุรี)'
+            ]
+          },
+          {
+            h: '⚒️ ยุคโลหะ (Metal Age)',
+            items: [
+              'ยุคสำริด: นำทองแดงผสมดีบุกหล่อเป็นขวานสำริด กำไล ลูกปัด แหล่งสำคัญคือ บ้านเชียง จ.อุดรธานี (มรดกโลก)',
+              'ยุคเหล็ก: ถลุงเหล็กทำเครื่องมือเกษตรและอาวุธที่แข็งแกร่ง ขยายชุมชนสู่การติดต่อค้าขายทางทะเล'
+            ]
+          }
+        ]
+      },
+      {
+        tag: 'สไลด์ที่ 2 / 5 • รัฐโบราณภาคกลาง',
+        title: 'อาณาจักรทวารวดี และ อาณาจักรละโว้',
+        boxes: [
+          {
+            h: '☸️ อาณาจักรทวารวดี (พุทธศตวรรษที่ 11–16)',
+            items: [
+              'ศูนย์กลาง: ลุ่มแม่น้ำเจ้าพระยา (นครปฐม, อู่ทอง สุพรรณบุรี, คูบัว ราชบุรี)',
+              'ศาสนา: พระพุทธศาสนาเถรวาท',
+              'หลักฐานเด่น: เสมาธรรมจักรกับกวางหมอบ, เหรียญเงินจารึก "ศรีทวารวดีศวรปุณย"'
+            ]
+          },
+          {
+            h: '🏛️ อาณาจักรละโว้ (พุทธศตวรรษที่ 11–19)',
+            items: [
+              'ศูนย์กลาง: เมืองลพบุรี (ลุ่มแม่น้ำลพบุรี-ป่าสัก)',
+              'ศาสนา/วัฒนธรรม: พุทธมหายานและพราหมณ์-ฮินดู ได้รับอิทธิพลขอม',
+              'หลักฐานเด่น: พระปรางค์สามยอด, เทวสถานปรางค์แขก จ.ลพบุรี'
+            ]
+          }
+        ]
+      },
+      {
+        tag: 'สไลด์ที่ 3 / 5 • รัฐโบราณภาคใต้',
+        title: 'อาณาจักรศรีวิชัย และ อาณาจักรตามพรลิงค์',
+        boxes: [
+          {
+            h: '🚢 อาณาจักรศรีวิชัย (พุทธศตวรรษที่ 13–18)',
+            items: [
+              'ศูนย์กลางในไทย: เมืองไชยา จ.สุราษฎร์ธานี เมืองท่าการค้านานาชาติ',
+              'ศาสนา: พระพุทธศาสนามหายาน',
+              'หลักฐานเด่น: พระบรมธาตุไชยา, พระโพธิสัตว์อวโลกิเตศวรสำริด'
+            ]
+          },
+          {
+            h: '🔔 อาณาจักรตามพรลิงค์ (พุทธศตวรรษที่ 12–19)',
+            items: [
+              'ศูนย์กลาง: เมืองนครศรีธรรมราช',
+              'ศาสนา: ศูนย์กลางพระพุทธศาสนาเถรวาทลัทธิลังกาวงศ์ที่เผยแผ่ขึ้นไปสู่สุโขทัย',
+              'หลักฐานเด่น: พระบรมธาตุเจดีย์นครศรีธรรมราช'
+            ]
+          }
+        ]
+      },
+      {
+        tag: 'สไลด์ที่ 4 / 5 • รัฐโบราณภาคอีสานและภาคเหนือ',
+        title: 'อาณาจักรโคตรบูรณ์ และ อาณาจักรหริภุญชัย',
+        boxes: [
+          {
+            h: '🌾 อาณาจักรโคตรบูรณ์ (ภาคตะวันออกเฉียงเหนือ)',
+            items: [
+              'ศูนย์กลาง: แอ่งสกลนคร–นครพนม ริมฝั่งแม่น้ำโขง',
+              'หลักฐานเด่น: พระธาตุพนม จ.นครพนม ศูนย์รวมศรัทธาพุทธศาสนาสองฝั่งโขง'
+            ]
+          },
+          {
+            h: '🏔️ อาณาจักรหริภุญชัย (ภาคเหนือ)',
+            items: [
+              'ศูนย์กลาง: เมืองลำพูน (พระนางจามเทวีทรงเป็นปฐมกษัตริย์)',
+              'หลักฐานเด่น: พระธาตุหริภุญชัย, เจดีย์กู่กุด (วัดจามเทวี) ก่อนรวมเข้ากับอาณาจักรล้านนา'
+            ]
+          }
+        ]
+      },
+      {
+        tag: 'สไลด์ที่ 5 / 5 • สรุปสาระสำคัญ',
+        title: 'มรดกจากสมัยก่อนสุโขทัยสู่รากฐานชาติไทย',
+        boxes: [
+          {
+            h: '📌 ปัจจัยความเจริญรุ่งเรือง',
+            items: [
+              'ทำเลที่ตั้งติดแม่น้ำสายใหญ่และเส้นทางการค้าทางทะเลระหว่างอินเดีย–จีน',
+              'การเลือกรับอารยธรรมอินเดียและจีนมาผสมผสานกับภูมิปัญญาท้องถิ่น'
+            ]
+          },
+          {
+            h: '💡 ความเชื่อมโยงสู่สุโขทัยและอยุธยา',
+            items: [
+              'พระพุทธศาสนาลังกาวงศ์จากตามพรลิงค์ (นครศรีธรรมราช) ส่งต่อสู่สุโขทัย',
+              'ละโว้และสุพรรณภูมิหลอมรวมกันเป็นรากฐานการสถาปนาอาณาจักรอยุธยา'
+            ]
+          }
+        ]
+      }
+    ],
+    worksheet: [
+      {
+        prompt: '1. แหล่งโบราณคดี "บ้านเชียง จ.อุดรธานี" จัดอยู่ในยุคสมัยใด และมีหลักฐานเด่นคืออะไร?',
+        keywords: ['สำริด', 'โลหะ', 'ดินเผา', 'เขียนสี'],
+        answer: 'ยุคโลหะ (ยุคสำริด/เหล็ก) มีหลักฐานเด่นคือ ภาชนะดินเผาเขียนสีลายก้นหอย และเครื่องมือเครื่องใช้สำริด'
+      },
+      {
+        prompt: '2. โบราณวัตถุ "ธรรมจักรศิลาและกวางหมอบ" เป็นสัญลักษณ์ของอาณาจักรโบราณใด และสะท้อนการนับถือศาสนาใด?',
+        keywords: ['ทวารวดี', 'พุทธ', 'เถรวาท'],
+        answer: 'อาณาจักรทวารวดี สะท้อนความเจริญรุ่งเรืองของพระพุทธศาสนา (นิกายเถรวาท)'
+      },
+      {
+        prompt: '3. อาณาจักรโบราณทางภาคใต้ที่เป็นศูนย์กลางเผยแผ่ "พระพุทธศาสนาลัทธิลังกาวงศ์" ไปยังสุโขทัยคืออาณาจักรใด (ปัจจุบันคือจังหวัดใด)?',
+        keywords: ['ตามพรลิงค์', 'นครศรีธรรมราช'],
+        answer: 'อาณาจักรตามพรลิงค์ (ปัจจุบันคือ จังหวัดนครศรีธรรมราช)'
+      },
+      {
+        prompt: '4. "พระปรางค์สามยอด จ.ลพบุรี" และ "พระธาตุหริภุญชัย จ.ลำพูน" เป็นหลักฐานของอาณาจักรโบราณใดตามลำดับ?',
+        keywords: ['ละโว้', 'หริภุญชัย'],
+        answer: 'พระปรางค์สามยอด = อาณาจักรละโว้, พระธาตุหริภุญชัย = อาณาจักรหริภุญชัย'
+      }
+    ],
+    quiz: [
+      {
+        q: '1. มนุษย์สมัยก่อนประวัติศาสตร์เริ่มรู้จักการเพาะปลูก เลี้ยงสัตว์ และทำเครื่องมือหินขัดในยุคใด?',
+        opts: ['ก. ยุคหินเก่า', 'ข. ยุคหินกลาง', 'ค. ยุคหินใหม่', 'ง. ยุคเหล็ก'],
+        ans: 2,
+        exp: 'ยุคหินใหม่ มนุษย์เริ่มตั้งถิ่นฐานถาวร เพาะปลูก เลี้ยงสัตว์ ใช้ขวานหินขัดและปั้นภาชนะดินเผา'
+      },
+      {
+        q: '2. เหรียญเงินมีจารึกภาษาสันสกฤตว่า "ศรีทวารวดีศวรปุณย" เป็นหลักฐานยืนยันความมีอยู่จริงของอาณาจักรใด?',
+        opts: ['ก. อาณาจักรทวารวดี', 'ข. อาณาจักรศรีวิชัย', 'ค. อาณาจักรละโว้', 'ง. อาณาจักรโคตรบูรณ์'],
+        ans: 0,
+        exp: 'คำจารึกแปลว่า บุญกุศลของพระราชาแห่งศรีทวารวดี พบในบริเวณลุ่มแม่น้ำเจ้าพระยา'
+      },
+      {
+        q: '3. ประติมากรรม "พระโพธิสัตว์อวโลกิเตศวร" ที่พบที่ อ.ไชยา จ.สุราษฎร์ธานี สะท้อนการนับถือศาสนาใดของอาณาจักรศรีวิชัย?',
+        opts: ['ก. พุทธศาสนาเถรวาท', 'ข. พุทธศาสนามหายาน', 'ค. ศาสนาอิสลาม', 'ง. ลัทธิเต๋า'],
+        ans: 1,
+        exp: 'คติเรื่องพระโพธิสัตว์อวโลกิเตศวรเป็นหัวใจสำคัญของพระพุทธศาสนามหายานในอาณาจักรศรีวิชัย'
+      },
+      {
+        q: '4. พระนางจามเทวีทรงเป็นปฐมกษัตริย์ผู้สถาปนาอาณาจักรโบราณใดในภาคเหนือ?',
+        opts: ['ก. อาณาจักรโคตรบูรณ์', 'ข. อาณาจักรละโว้', 'ค. อาณาจักรหริภุญชัย', 'ง. อาณาจักรตามพรลิงค์'],
+        ans: 2,
+        exp: 'พระนางจามเทวีเสด็จจากละโว้ขึ้นไปครองเมืองหริภุญชัย (จ.ลำพูน)'
+      },
+      {
+        q: '5. ปัจจัยสำคัญที่สุดที่ทำให้เกิดรัฐท่าเรือและอาณาจักรโบราณทางภาคใต้ของไทยคือข้อใด?',
+        opts: ['ก. การทำเหมืองทองคำขนาดใหญ่', 'ข. การตั้งอยู่บนเส้นทางการค้าทางทะเลระหว่างอินเดียและจีน', 'ค. การมีที่ราบสูงขนาดใหญ่', 'ง. การปิดประเทศไม่คบค้ากับต่างชาติ'],
+        ans: 1,
+        exp: 'คาบสมุทรภาคใต้เป็นจุดพักเรือหลบลมมรสุมและจุดเชื่อมการค้าทางทะเลระหว่างอินเดีย อาหรับ และจีน'
+      }
+    ]
+  },
+  {
+    id: 'm1_u4',
+    grade: 'm1',
+    gradeLabel: 'ม.1 • หน่วยที่ 4',
+    badgeClass: 'badge-m1',
+    title: 'อาณาจักรสุโขทัย',
+    desc: 'การสถาปนาอาณาจักร การเมืองการปกครอง (พ่อปกครองลูก/ธรรมราชา) เศรษฐกิจ สังคม ศิลปวัฒนธรรม และภูมิปัญญาไทยสมัยสุโขทัย',
+    files: {
+      slideHtml: 'ม.1/สไลด์_หน่วยที่4_อาณาจักรสุโขทัย_Interactive.html',
+      wsHtml: 'ม.1/ใบงานและเฉลย_หน่วยที่4_อาณาจักรสุโขทัย_A4.html',
+      pptx: 'ม.1/สไลด์ประกอบการสอน_หน่วยที่4_อาณาจักรสุโขทัย.pptx',
+      docxStudent: 'ม.1/ใบงาน_หน่วยที่4_อาณาจักรสุโขทัย.docx',
+      docxTeacher: 'ม.1/เฉลยใบงาน_หน่วยที่4_อาณาจักรสุโขทัย.docx'
+    },
+    slides: [
+      {
+        tag: 'สไลด์ที่ 1 / 5 • การสถาปนาอาณาจักร',
+        title: 'การสถาปนาอาณาจักรสุโขทัย (พ.ศ. 1792)',
+        boxes: [
+          {
+            h: '⚔️ เหตุการณ์สำคัญ',
+            items: [
+              'พ่อขุนบางกลางหาว และ พ่อขุนผาเมือง ร่วมมือกันขับไล่อำนาจขอมสบาดโขลญลำพงออกจากเมืองสุโขทัย',
+              'พ่อขุนบางกลางหาวทรงขึ้นครองราชย์เป็น "พ่อขุนศรีอินทราทิตย์" ปฐมกษัตริย์ราชวงศ์พระร่วง'
+            ]
+          },
+          {
+            h: '🗺️ การจัดระเบียบการปกครอง',
+            items: [
+              'เมืองหลวง (ราชธานี): สุโขทัย',
+              'เมืองลูกหลวง (เมืองหน้าด่าน 4 ทิศ): ศรีสัชนาลัย (เหนือ), สองแคว (ตะวันออก), สระหลวง (ใต้), นครชุม (ตะวันตก)',
+              'เมืองพระยามหานคร และ เมืองประเทศราช'
+            ]
+          }
+        ]
+      },
+      {
+        tag: 'สไลด์ที่ 2 / 5 • การเมืองการปกครอง',
+        title: 'เปรียบเทียบการปกครองสุโขทัยตอนต้น vs ตอนปลาย',
+        boxes: [
+          {
+            h: '🔔 สุโขทัยตอนต้น : ปิตุราชาธิปไตย (พ่อปกครองลูก)',
+            items: [
+              'กษัตริย์ใช้คำนำหน้าว่า "พ่อขุน" ใกล้ชิดราษฎรดุจพ่อแม่ดูแลลูก',
+              'สมัยพ่อขุนรามคำแหงมหาราช โปรดให้แขวน "กระดิ่ง" ไว้ที่ประตูวังให้ราษฎรสั่นร้องทุกข์ได้โดยตรง'
+            ]
+          },
+          {
+            h: '☸️ สุโขทัยตอนปลาย : ธรรมราชา',
+            items: [
+              'กษัตริย์ใช้คำนำหน้าว่า "พระมหาธรรมราชา" ปกครองด้วยทศพิธราชธรรม',
+              'พระมหาธรรมราชาที่ 1 (พระยาลิไท) ทรงพระราชนิพนธ์ "ไตรภูมิพระร่วง" ใช้หลักกรรมและพุทธศาสนาสร้างความสงบเรียบร้อยในสังคม'
+            ]
+          }
+        ]
+      },
+      {
+        tag: 'สไลด์ที่ 3 / 5 • เศรษฐกิจและภูมิปัญญาการจัดการน้ำ',
+        title: 'เศรษฐกิจเสรี และระบบชลประทานสุโขทัย',
+        boxes: [
+          {
+            h: '🌾 การค้าเสรีและภาษี (จกอบ)',
+            items: [
+              '"เจ้าเมืองบ่เอาจกอบในไพร่ลู่ทาง เพื่อนจูงวัวไปค้า ขี่ม้าไปขาย"',
+              'ยกเว้นภาษีผ่านด่าน (จกอบ) เพื่อส่งเสริมการค้าขาย และใช้ "เงินพดด้วง" / เบี้ยหอย เป็นสื่อกลาง'
+            ]
+          },
+          {
+            h: '💧 ภูมิปัญญาการจัดการน้ำ & เครื่องสังคโลก',
+            items: [
+              'สร้างทำนบกั้นน้ำ "สรีดภงส์" (ทำนบพระร่วง) กักเก็บน้ำจากภูเขาส่งเข้าสู่คูเมืองและตระพัง',
+              'ผลิต "เครื่องสังคโลก" เคลือบสีเขียวไข่กาด้วยเตาทุเรียง ส่งออกไปขายทั่วเอเชียตะวันออกเฉียงใต้'
+            ]
+          }
+        ]
+      },
+      {
+        tag: 'สไลด์ที่ 4 / 5 • ศิลปวัฒนธรรมและมรดกโลก',
+        title: 'ประดิษฐ์อักษรไทย และศิลปกรรมสุโขทัย',
+        boxes: [
+          {
+            h: '📜 ลายสือไทย (พ.ศ. 1826)',
+            items: [
+              'พ่อขุนรามคำแหงมหาราชทรงประดิษฐ์ "ลายสือไทย" เมื่อ พ.ศ. 1826',
+              'วางสระและพยัญชนะอยู่ในบรรทัดเดียวกัน เป็นรากฐานของอักษรไทยในปัจจุบัน'
+            ]
+          },
+          {
+            h: '🙏 ศิลปกรรมเอกลักษณ์สุโขทัย',
+            items: [
+              'เจดีย์ทรงพุ่มข้าวบิณฑ์ (ดอกบัวตูม) เช่น วัดมหาธาตุ จ.สุโขทัย',
+              'พระพุทธรูปปางลีลา และ พระพุทธชินราช (วัดพระศรีรัตนมหาธาตุฯ จ.พิษณุโลก)'
+            ]
+          }
+        ]
+      },
+      {
+        tag: 'สไลด์ที่ 5 / 5 • การเสื่อมอำนาจ',
+        title: 'การรวมอาณาจักรสุโขทัยเข้ากับอาณาจักรอยุธยา',
+        boxes: [
+          {
+            h: '📉 ปัจจัยการเสื่อมอำนาจ',
+            items: [
+              'ปัญหาการแย่งชิงราชสมบัติหลังรัชกาลพ่อขุนรามคำแหงมหาราช',
+              'อาณาจักรอยุธยาซึ่งตั้งอยู่ใกล้ปากแม่น้ำและทะเลมีอำนาจทางเศรษฐกิจและการทหารเข้มแข็งขึ้น'
+            ]
+          },
+          {
+            h: '🤝 การรวมอาณาจักร (พ.ศ. 1981)',
+            items: [
+              'สุโขทัยถูกรวมเข้าเป็นส่วนหนึ่งของอาณาจักรอยุธยาในสมัยสมเด็จพระบรมราชาธิราชที่ 2 (เจ้าสามพระยา)'
+            ]
+          }
+        ]
+      }
+    ],
+    worksheet: [
+      {
+        prompt: '1. ผู้นำคนไทย 2 พระองค์ที่ร่วมกันขับไล่ขอมสบาดโขลญลำพงและสถาปนาอาณาจักรสุโขทัยคือใคร?',
+        keywords: ['บางกลางหาว', 'ผาเมือง', 'ศรีอินทราทิตย์'],
+        answer: 'พ่อขุนบางกลางหาว (พ่อขุนศรีอินทราทิตย์) และ พ่อขุนผาเมือง'
+      },
+      {
+        prompt: '2. รูปแบบการปกครองสมัยสุโขทัยตอนต้น และ สมัยสุโขทัยตอนปลาย แตกต่างกันอย่างไร?',
+        keywords: ['พ่อปกครองลูก', 'ธรรมราชา', 'กระดิ่ง', 'ไตรภูมิ'],
+        answer: 'ตอนต้นเป็นแบบ "พ่อปกครองลูก" (สั่นกระดิ่งร้องทุกข์) ส่วนตอนปลายเป็นแบบ "ธรรมราชา" (ปกครองด้วยหลักทศพิธราชธรรมและไตรภูมิพระร่วง)'
+      },
+      {
+        prompt: '3. คำว่า "เจ้าเมืองบ่เอาจกอบในไพร่ลู่ทาง" ในศิลาจารึกหลักที่ 1 หมายถึงนโยบายเศรษฐกิจใด?',
+        keywords: ['ภาษี', 'การค้าเสรี', 'ผ่านด่าน'],
+        answer: 'การไม่เก็บภาษีผ่านด่าน (จกอบ) เพื่อส่งเสริมการค้าเสรีในอาณาจักรสุโขทัย'
+      },
+      {
+        prompt: '4. ยกตัวอย่างภูมิปัญญาไทยสมัยสุโขทัยมา 2 ด้าน พร้อมบอกความสำคัญ',
+        keywords: ['ลายสือไทย', 'สรีดภงส์', 'สังคโลก', 'เตาทุเรียง', 'พุ่มข้าวบิณฑ์'],
+        answer: '1) การประดิษฐ์ลายสือไทย (พ.ศ. 1826) เป็นรากฐานภาษาไทย 2) ทำนบสรีดภงส์ แก้ปัญหาน้ำแล้ง/น้ำท่วม และ 3) เตาทุเรียงผลิตเครื่องสังคโลกส่งออก'
+      }
+    ],
+    quiz: [
+      {
+        q: '1. ปฐมกษัตริย์แห่งราชวงศ์พระร่วงผู้สถาปนาอาณาจักรสุโขทัยคือพระองค์ใด?',
+        opts: ['ก. พ่อขุนผาเมือง', 'ข. พ่อขุนศรีอินทราทิตย์', 'ค. พ่อขุนบานเมือง', 'ง. พ่อขุนรามคำแหงมหาราช'],
+        ans: 1,
+        exp: 'พ่อขุนบางกลางหาวได้รับการอภิเษกเป็นพ่อขุนศรีอินทราทิตย์ ปฐมกษัตริย์แห่งกรุงสุโขทัย'
+      },
+      {
+        q: '2. วรรณกรรมเรื่อง "ไตรภูมิพระร่วง" พระราชนิพนธ์ในพระมหาธรรมราชาที่ 1 (ลิไท) มีจุดมุ่งหมายทางการปกครองอย่างไร?',
+        opts: ['ก. สอนยุทธวิธีการรบทางเรือ', 'ข. ใช้หลักเรื่องบาปบุญคุณโทษให้ราษฎรทำความดีและอยู่ร่วมกันอย่างสงบ', 'ค. บันทึกรายชื่อพ่อค้าต่างชาติ', 'ง. กำหนดอัตราภาษีผ่านด่าน'],
+        ans: 1,
+        exp: 'ไตรภูมิพระร่วงใช้หลักพุทธศาสนาเรื่องนรก-สวรรค์และทศพิธราชธรรมหล่อหลอมสังคมตามแนวคิดธรรมราชา'
+      },
+      {
+        q: '3. "สรีดภงส์" (ทำนบพระร่วง) เป็นภูมิปัญญาของชาวสุโขทัยในด้านใด?',
+        opts: ['ก. การหล่อพระพุทธรูปสำริด', 'ข. การกักเก็บและผันน้ำเพื่อการชลประทานและอุปโภคบริโภค', 'ค. การต่อเรือสำเภาเดินทะเล', 'ง. การสร้างป้อมปราการชายแดน'],
+        ans: 1,
+        exp: 'สรีดภงส์คือทำนบดินกั้นน้ำระหว่างเขากิ่วอ้ายมาและเขาพระบาทใหญ่ เพื่อผันน้ำเข้าสู่เมืองสุโขทัย'
+      },
+      {
+        q: '4. เจดีย์ที่มีรูปทรงเป็นเอกลักษณ์เฉพาะของศิลปะสุโขทัยแท้คือข้อใด?',
+        opts: ['ก. เจดีย์ทรงพุ่มข้าวบิณฑ์ (ทรงดอกบัวตูม)', 'ข. เจดีย์ย่อมุมไม้สิบสอง', 'ค. พระปรางค์ขอม', 'ง. เจดีย์ทรงระฆังคว่ำแบบลังกาแท้'],
+        ans: 0,
+        exp: 'เจดีย์ทรงพุ่มข้าวบิณฑ์ (เช่น วัดมหาธาตุ จ.สุโขทัย) เป็นสถาปัตยกรรมเอกลักษณ์ประจำอาณาจักรสุโขทัย'
+      },
+      {
+        q: '5. พ่อขุนรามคำแหงมหาราชทรงประดิษฐ์อักษรไทย (ลายสือไทย) เมื่อปี พ.ศ. ใด?',
+        opts: ['ก. พ.ศ. 1792', 'ข. พ.ศ. 1826', 'ค. พ.ศ. 1893', 'ง. พ.ศ. 1981'],
+        ans: 1,
+        exp: 'พ่อขุนรามคำแหงมหาราชทรงประดิษฐ์ลายสือไทยเมื่อปีมะแม พ.ศ. 1826 (มหาศักราช 1205)'
+      }
+    ]
+  },
+  {
+    id: 'm2_u1',
+    grade: 'm2',
+    gradeLabel: 'ม.2 • ชุดที่ 1',
+    badgeClass: 'badge-m2',
+    title: 'อาณาจักรอยุธยา',
+    desc: 'การสถาปนากรุงศรีอยุธยา การปกครอง 3 ช่วงสมัย ระบบศักดินา เศรษฐกิจพระคลังสินค้า ความสัมพันธ์กับต่างประเทศ และภูมิปัญญาไทย',
+    files: {
+      slideHtml: 'ม.2/สไลด์_ม2_อาณาจักรอยุธยา_Interactive.html',
+      wsHtml: 'ม.2/ใบงานและเฉลย_ม2_อาณาจักรอยุธยา_A4.html',
+      pptx: 'ม.2/สไลด์ประกอบการสอน_ม2_อาณาจักรอยุธยา.pptx',
+      docxStudent: 'ม.2/ใบงาน_ม2_อาณาจักรอยุธยา.docx',
+      docxTeacher: 'ม.2/เฉลยใบงาน_ม2_อาณาจักรอยุธยา.docx'
+    },
+    slides: [
+      {
+        tag: 'สไลด์ที่ 1 / 5 • การสถาปนาและทำเลที่ตั้ง',
+        title: 'การสถาปนาอาณาจักรอยุธยา (พ.ศ. 1893)',
+        boxes: [
+          {
+            h: '👑 การสถาปนาราชธานี',
+            items: [
+              'สมเด็จพระรามาธิบดีที่ 1 (พระเจ้าอู่ทอง) ทรงสถาปนากรุงศรีอยุธยาเมื่อ พ.ศ. 1893',
+              'เกิดจากการรวมอำนาจของแคว้นละโว้ (ลพบุรี) และแคว้นสุพรรณภูมิ (สุพรรณบุรี) เป็นราชธานียาวนาน 417 ปี (33 พระองค์ 5 ราชวงศ์)'
+            ]
+          },
+          {
+            h: '🌊 ปัจจัยความอุดมสมบูรณ์ (เกาะเมือง)',
+            items: [
+              'ล้อมรอบด้วยแม่น้ำ 3 สาย: แม่น้ำเจ้าพระยา แม่น้ำป่าสัก และแม่น้ำลพบุรี',
+              'เป็นปราการธรรมชาติป้องกันข้าศึก ดินตะกอนอุดมสมบูรณ์ และอยู่ไม่ไกลจากอ่าวไทย จึงเป็นเมืองท่าการค้านานาชาติ'
+            ]
+          }
+        ]
+      },
+      {
+        tag: 'สไลด์ที่ 2 / 5 • พัฒนาการด้านการปกครอง',
+        title: 'การเมืองการปกครองสมัยอยุธยา 3 ช่วงสมัย',
+        boxes: [
+          {
+            h: '🏛️ ตอนต้น : จตุสดมภ์ (เวียง วัง คลัง นา)',
+            items: [
+              'กรมเวียง (นครบาล): ดูแลความสงบเรียบร้อยในราชธานี',
+              'กรมวัง (ธรรมาธิกรณ์): ดูแลราชสำนักและตัดสินคดีความ',
+              'กรมคลัง (โกษาธิบดี): ดูแลการเงิน การคลัง และการค้ากับต่างชาติ',
+              'กรมนา (เกษตราธิการ): ดูแลที่นาและเสบียงอาหาร'
+            ]
+          },
+          {
+            h: '⚖️ ตอนกลาง (ปฏิรูปสมัยพระบรมไตรโลกนาถ) & ตอนปลาย',
+            items: [
+              'ตอนกลาง: แยกฝ่ายทหาร (สมุหพระกลาโหม) และฝ่ายพลเรือน (สมุหนายก คุมจตุสดมภ์) ยกเลิกเมืองลูกหลวงเป็นหัวเมืองชั้นใน-ชั้นนอก-ประเทศราช',
+              'ตอนปลาย (สมัยพระเพทราชา): ให้สมุหพระกลาโหมดูแลทั้งทหาร-พลเรือนหัวเมืองฝ่ายใต้ และสมุหนายกดูแลทั้งทหาร-พลเรือนหัวเมืองฝ่ายเหนือ เพื่อถ่วงดุลอำนาจ'
+            ]
+          }
+        ]
+      },
+      {
+        tag: 'สไลด์ที่ 3 / 5 • สังคมและระบบศักดินา',
+        title: 'โครงสร้างสังคมอยุธยา และ ระบบศักดินา',
+        boxes: [
+          {
+            h: '📜 ระบบศักดินา (พ.ศ. 1998)',
+            items: [
+              'ตราขึ้นในสมัยสมเด็จพระบรมไตรโลกนาถ ใช้จำนวน "ไร่นา" เป็นตัวกำหนดสิทธิ หน้าที่ ความรับผิดชอบ และอัตราโทษตามกฎหมาย',
+              'ขุนนางถือศักดินา 400 ไร่ขึ้นไป ส่วนไพร่สามัญถือศักดินา 10–25 ไร่ และทาสถือศักดินา 5 ไร่'
+            ]
+          },
+          {
+            h: '👥 ชนชั้นในสังคมและบทบาทพระสงฆ์',
+            items: [
+              'ชนชั้นปกครอง (พระมหากษัตริย์ พระบรมวงศานุวงศ์ ขุนนาง) และ ชนชั้นผู้ถูกปกครอง (ไพร่ และ ทาส)',
+              'ไพร่ต้องสังกัดมูลนายและเข้าเวรรับราชการ (เข้าเดือนออกเดือน) หากไม่เข้าเวรต้องจ่าย "เงินส่วย"',
+              'วัดและพระภิกษุสงฆ์เป็นศูนย์กลางการศึกษาและเป็นทางเลื่อนฐานะทางสังคม'
+            ]
+          }
+        ]
+      },
+      {
+        tag: 'สไลด์ที่ 4 / 5 • เศรษฐกิจและการทูต',
+        title: 'พระคลังสินค้า และความสัมพันธ์ระหว่างประเทศ',
+        boxes: [
+          {
+            h: '💰 รายได้แผ่นดิน 4 ประเภท & พระคลังสินค้า',
+            items: [
+              'จังกอบ (ภาษีผ่านด่าน/ปากเรือ), อากร (เก็บจากผลผลิต เช่น อากรค่านา), ส่วย (สิ่งของ/เงินแทนแรงงานไพร่), ฤชา (ค่าธรรมเนียมศาล)',
+              '"พระคลังสินค้า" ผูกขาดสินค้าต้องห้าม (งาช้าง ดีบุก ไม้ฝาง รังนก ดินประสิว) สร้างรายได้มหาศาลให้ราชสำนัก'
+            ]
+          },
+          {
+            h: '🌍 ความสัมพันธ์กับชาติตะวันตกและเอเชีย',
+            items: [
+              'โปรตุเกสเป็นชาติตะวันตกชาติแรกที่เข้ามาในสมัยสมเด็จพระรามาธิบดีที่ 2 (พ.ศ. 2054)',
+              'เจริญสัมพันธไมตรีรุ่งเรืองสูงสุดในสมัยสมเด็จพระนารายณ์มหาราช (ส่งคณะทูตเจ้าพระยาโกษาธิบดี (ปาน) ไปฝรั่งเศส)'
+            ]
+          }
+        ]
+      },
+      {
+        tag: 'สไลด์ที่ 5 / 5 • ภูมิปัญญาและการเสื่อมอำนาจ',
+        title: 'ภูมิปัญญาสมัยอยุธยา และการเสียกรุงครั้งที่ 2 (พ.ศ. 2310)',
+        boxes: [
+          {
+            h: '🛠️ ภูมิปัญญาไทยสมัยอยุธยา',
+            items: [
+              'การขุดคลองลัดแม่น้ำเจ้าพระยา (เช่น คลองลัดบางกอก คลองลัดเกร็ด) เพื่อย่นระยะเวลาเดินเรือและขยายพื้นที่เกษตร',
+              'วรรณคดี "จินดามณี" แบบเรียนภาษาไทยเล่มแรก แต่งโดยพระโหราธิบดีในสมัยสมเด็จพระนารายณ์มหาราช'
+            ]
+          },
+          {
+            h: '📉 สาเหตุการเสียกรุงศรีอยุธยาครั้งที่ 2 (พ.ศ. 2310)',
+            items: [
+              'ความแตกแยกทางการเมืองในราชสำนัก ขาดเอกภาพในการป้องกันพระนคร และพม่าเปลี่ยนยุทธวิธีไม่ถอยทัพกลับในฤดูน้ำหลาก'
+            ]
+          }
+        ]
+      }
+    ],
+    worksheet: [
+      {
+        prompt: '1. เพราะเหตุใดทำเลที่ตั้งของกรุงศรีอยุธยา (ล้อมรอบด้วยแม่น้ำ 3 สาย) จึงเหมาะสมทั้งด้านเศรษฐกิจและความมั่นคง?',
+        keywords: ['เจ้าพระยา', 'ป่าสัก', 'ลพบุรี', 'ปราการ', 'น้ำหลาก', 'ค้าขาย', 'อ่าวไทย'],
+        answer: 'แม่น้ำเจ้าพระยา ป่าสัก และลพบุรี เป็นปราการธรรมชาติและมีฤดูน้ำหลากป้องกันข้าศึก อีกทั้งดินอุดมสมบูรณ์และออกสู่อ่าวไทยเพื่อค้าขายทางทะเลได้สะดวก'
+      },
+      {
+        prompt: '2. การปฏิรูปการปกครองในสมัย "สมเด็จพระบรมไตรโลกนาถ" ได้แบ่งอำนาจอัครมหาเสนาบดี 2 ตำแหน่งอย่างไร?',
+        keywords: ['สมุหพระกลาโหม', 'สมุหนายก', 'ทหาร', 'พลเรือน'],
+        answer: 'แบ่งเป็น สมุหพระกลาโหม (ดูแลฝ่ายทหารทั่วราชอาณาจักร) และ สมุหนายก (ดูแลฝ่ายพลเรือนและควบคุมจตุสดมภ์)'
+      },
+      {
+        prompt: '3. รายได้แผ่นดิน 4 ประเภท ได้แก่ จังกอบ อากร ส่วย และฤชา มีความหมายต่างกันอย่างไร?',
+        keywords: ['ผ่านด่าน', 'ผลผลิต', 'ไพร่', 'ธรรมเนียม'],
+        answer: 'จังกอบ = ภาษีผ่านด่าน/ขนาดเรือ, อากร = ภาษีผลผลิตการประกอบอาชีพ, ส่วย = สิ่งของหรือเงินส่งแทนการเข้าเวรของไพร่, ฤชา = ค่าธรรมเนียมทางราชการ/ศาล'
+      },
+      {
+        prompt: '4. ชาติตะวันตกชาติแรกที่เข้ามาติดต่อกับอยุธยาคือชาติใด และในสมัยสมเด็จพระนารายณ์มหาราชได้ส่งทูตไปเจริญสัมพันธไมตรีกับชาติใด?',
+        keywords: ['โปรตุเกส', 'ฝรั่งเศส', 'โกษา'],
+        answer: 'ชาติแรกคือ โปรตุเกส (สมัยสมเด็จพระรามาธิบดีที่ 2) และในสมัยสมเด็จพระนารายณ์มหาราชทรงส่งคณะทูตเจ้าพระยาโกษาธิบดี (ปาน) ไปประเทศฝรั่งเศส'
+      }
+    ],
+    quiz: [
+      {
+        q: '1. สมเด็จพระรามาธิบดีที่ 1 (พระเจ้าอู่ทอง) ทรงสถาปนากรุงศรีอยุธยาเป็นราชธานีเมื่อปี พ.ศ. ใด?',
+        opts: ['ก. พ.ศ. 1792', 'ข. พ.ศ. 1893', 'ค. พ.ศ. 1998', 'ง. พ.ศ. 2310'],
+        ans: 1,
+        exp: 'กรุงศรีอยุธยาสถาปนาขึ้นเมื่อปี พ.ศ. 1893 และเป็นราชธานียาวนาน 417 ปี'
+      },
+      {
+        q: '2. ในระบบจตุสดมภ์ หน่วยงานใดทำหน้าที่ดูแลการเงินของแผ่นดินและการค้าขายกับชาวต่างชาติ?',
+        opts: ['ก. กรมเวียง', 'ข. กรมวัง', 'ค. กรมคลัง', 'ง. กรมนา'],
+        ans: 2,
+        exp: 'กรมคลัง (โกษาธิบดี) ดูแลรายรับรายจ่ายของแผ่นดิน พระคลังสินค้า และการติดต่อค้าขายกับต่างประเทศ'
+      },
+      {
+        q: '3. วัตถุประสงค์สำคัญที่สุดของการตรากฎหมาย "ศักดินา" ในสมัยสมเด็จพระบรมไตรโลกนาถคือข้อใด?',
+        opts: ['ก. เพื่อแจกจ่ายที่ดินทำกินให้ทาสทุกคนเท่ากัน', 'ข. เพื่อกำหนดสิทธิ หน้าที่ ความรับผิดชอบ และลำดับศักดิ์ของคนในสังคมอย่างมีระเบียบ', 'ค. เพื่อยกเลิกระบบไพร่', 'ง. เพื่อเก็บภาษีเรือสำเภาต่างชาติ'],
+        ans: 1,
+        exp: 'ระบบศักดินาใช้จำนวนไร่นาเป็นเกณฑ์วัดลำดับชนชั้น สิทธิ หน้าที่ และอัตราโทษปรับในสังคมอยุธยา'
+      },
+      {
+        q: '4. แบบเรียนภาษาไทยเล่มแรกที่แต่งขึ้นโดยพระโหราธิบดีในสมัยสมเด็จพระนารายณ์มหาราชมีชื่อว่าอะไร?',
+        opts: ['ก. ไตรภูมิพระร่วง', 'ข. จินดามณี', 'ค. ลิลิตโองการแช่งน้ำ', 'ง. กฎหมายตราสามดวง'],
+        ans: 1,
+        exp: 'จินดามณี เป็นตำราเรียนหนังสือไทยและการประพันธ์เล่มแรกของไทย แต่งขึ้นในสมัยสมเด็จพระนารายณ์มหาราช'
+      },
+      {
+        q: '5. หน่วยงานของราชสำนักอยุธยาที่ทำหน้าที่ผูกขาดการซื้อขายสินค้าต้องห้าม (เช่น งาช้าง ดีบุก ไม้ฝาง) กับพ่อค้าต่างชาติคือหน่วยงานใด?',
+        opts: ['ก. กรมธรรมการ', 'ข. พระคลังสินค้า', 'ค. กรมพระสุรัสวดี', 'ง. ศาลลูกขุน ณ ศาลา'],
+        ans: 1,
+        exp: 'พระคลังสินค้า ทำหน้าที่ซื้อขายสินค้าต้องห้ามและเก็บภาษีขาเข้า-ขาออก สร้างรายได้หลักให้แก่อาณาจักรอยุธยา'
+      }
+    ]
+  },
+  {
+    id: 'm2_u2',
+    grade: 'm2',
+    gradeLabel: 'ม.2 • ชุดที่ 2',
+    badgeClass: 'badge-m2',
+    title: 'อาณาจักรธนบุรี',
+    desc: 'การกอบกู้เอกราช การสถาปนากรุงธนบุรี การปราบชุมนุม การฟื้นฟูเศรษฐกิจ ศาสนา ศิลปวัฒนธรรม และวีรกรรมบรรพบุรุษไทย',
+    files: {
+      slideHtml: 'ม.2/สไลด์_ม2_อาณาจักรธนบุรี_Interactive.html',
+      wsHtml: 'ม.2/ใบงานและเฉลย_ม2_อาณาจักรธนบุรี_A4.html',
+      pptx: 'ม.2/สไลด์ประกอบการสอน_ม2_อาณาจักรธนบุรี.pptx',
+      docxStudent: 'ม.2/ใบงาน_ม2_อาณาจักรธนบุรี.docx',
+      docxTeacher: 'ม.2/เฉลยใบงาน_ม2_อาณาจักรธนบุรี.docx'
+    },
+    slides: [
+      {
+        tag: 'สไลด์ที่ 1 / 4 • การกอบกู้เอกราชและสถาปนาราชธานี',
+        title: 'การกอบกู้เอกราชและการสถาปนากรุงธนบุรี (พ.ศ. 2310)',
+        boxes: [
+          {
+            h: '⚔️ การกอบกู้เอกราชภายใน 7 เดือน',
+            items: [
+              'พระยาวชิรปราการ (ตาก) รวบรวมกำลังพลตีฝ่าวงล้อมพม่าไปตั้งมั่นที่เมืองจันทบุรี',
+              'ต่อเรือรบยกทัพกลับมายึดค่ายโพธิ์สามต้นคืนจากสุกี้พระนายกอง กอบกู้เอกราชสำเร็จในเดือนพฤศจิกายน พ.ศ. 2310'
+            ]
+          },
+          {
+            h: '🏰 เหตุผลที่ทรงเลือก "กรุงธนบุรี" เป็นราชธานีใหม่',
+            items: [
+              'กรุงศรีอยุธยาเสียหายหนักเกินกว่ากำลังพลในขณะนั้นจะบูรณะและป้องกันได้',
+              'ธนบุรีมีขนาดพอเหมาะกับกำลังพล มีป้อมวิไชยประสิทธิ์ และตั้งอยู่ใกล้ปากอ่าวไทย สะดวกต่อการค้าทางทะเลและถอยทัพทางเรือหากศึกเหนือกำลัง'
+            ]
+          }
+        ]
+      },
+      {
+        tag: 'สไลด์ที่ 2 / 4 • การรวบรวมแผ่นดิน',
+        title: 'การปราบปรามชุมนุมต่างๆ เพื่อรวมชาติ (พ.ศ. 2311–2313)',
+        boxes: [
+          {
+            h: '🚩 ชุมนุมอิสระหลังเสียกรุงศรีอยุธยาครั้งที่ 2',
+            items: [
+              '1. ชุมนุมสุกี้พระนายกอง (ค่ายโพธิ์สามต้น) — ปราบปรามสำเร็จเป็นแห่งแรก',
+              '2. ชุมนุมเจ้าพิษณุโลก (เรือง)',
+              '3. ชุมนุมเจ้าพระฝาง (เรือน) เมืองสวางคบุรี',
+              '4. ชุมนุมเจ้าพิมาย (กรมหมื่นเทพพิพิธ)',
+              '5. ชุมนุมเจ้านครศรีธรรมราช (หนู)'
+            ]
+          },
+          {
+            h: '🛡️ ความมั่นคงของราชอาณาจักร',
+            items: [
+              'ทรงรวบรวมแผ่นดินที่แตกแยกให้กลับมาเป็นปึกแผ่นภายในเวลาเพียง 3 ปี และทำศึกป้องกันราชอาณาจักร (เช่น ศึกค่ายบางกุ้ง ศึกอะแซหวุ่นกี้)'
+            ]
+          }
+        ]
+      },
+      {
+        tag: 'สไลด์ที่ 3 / 4 • เศรษฐกิจและวัฒนธรรม',
+        title: 'การแก้ไขวิกฤตเศรษฐกิจและฟื้นฟูศิลปวัฒนธรรม',
+        boxes: [
+          {
+            h: '🍚 การแก้ไขปัญหาการขาดแคลนข้าว',
+            items: [
+              'ทรงสละพระราชทรัพย์ส่วนพระองค์ซื้อข้าวสารจากเรือสำเภาต่างชาติในราคาสูง เพื่อจูงใจให้พ่อค้านำข้าวเข้ามาขายมากๆ แล้วแจกจ่ายแก่ราษฎร',
+              'โปรดให้ข้าราชการและราษฎรทำนาปีละ 2 ครั้ง (นาปีและนาปรัง) และส่งเสริมการค้าสำเภากับจีน'
+            ]
+          },
+          {
+            h: '📚 การฟื้นฟูพระพุทธศาสนาและวรรณกรรม',
+            items: [
+              'รวบรวมพระไตรปิฎกจากหัวเมือง (นครศรีธรรมราช/สวางคบุรี) มาคัดลอกเป็นฉบับหลวง',
+              'อัญเชิญ "พระแก้วมรกต" มาประดิษฐาน ณ วัดอรุณราชวราราม และทรงพระราชนิพนธ์บทละครเรื่องรามเกียรติ์'
+            ]
+          }
+        ]
+      },
+      {
+        tag: 'สไลด์ที่ 4 / 4 • วีรกรรมบรรพบุรุษไทย',
+        title: 'วีรกรรมสำคัญของบรรพบุรุษไทยสมัยอยุธยา–ธนบุรี',
+        boxes: [
+          {
+            h: '🔥 ชาวบ้านบางระจัน (พ.ศ. 2308–2309)',
+            items: [
+              'รวมพลังชาวบ้านต่อสู้ต้านทานกองทัพพม่าของเนเมียวสีหบดีได้ถึง 7 ครั้ง นานกว่า 5 เดือน แสดงถึงความสามัคคีและเสียสละเพื่อแผ่นดิน'
+            ]
+          },
+          {
+            h: '🗡️ สมเด็จพระเจ้าตากสินมหาราช และ พระยาพิชัยดาบหัก',
+            items: [
+              'สมเด็จพระเจ้าตากสินมหาราช: ทรงกอบกู้เอกราชและรวมแผ่นดินไทยไว้ให้ลูกหลาน',
+              'พระยาพิชัยดาบหัก (จ้อย/ทองดี ฟันขาว): ทหารเอกคู่พระทัยผู้ต่อสู้ป้องกันเมืองพิชัยด้วยดาบสองมือจนดาบหัก (พ.ศ. 2316)'
+            ]
+          }
+        ]
+      }
+    ],
+    worksheet: [
+      {
+        prompt: '1. เพราะเหตุใดสมเด็จพระเจ้าตากสินมหาราชจึงทรงเลือก "กรุงธนบุรี" เป็นราชธานีแทนการบูรณะกรุงศรีอยุธยา?',
+        keywords: ['เสียหาย', 'ขนาด', 'กำลังพล', 'ป้อม', 'ปากน้ำ', 'ทะเล', 'การค้า'],
+        answer: 'เพราะอยุธยาเสียหายหนักเกินกำลังพลจะรักษาได้ ส่วนธนบุรีมีขนาดพอเหมาะ มีป้อมวิไชยประสิทธิ์ และตั้งอยู่ใกล้ปากแม่น้ำเจ้าพระยา สะดวกต่อการค้าขายทางทะเลและการรบทางน้ำ'
+      },
+      {
+        prompt: '2. หลังกรุงศรีอยุธยาแตกใน พ.ศ. 2310 มีการตั้งชุมนุมอิสระที่สำคัญใดบ้างที่สมเด็จพระเจ้าตากสินมหาราชทรงปราบปรามเพื่อรวมแผ่นดิน?',
+        keywords: ['พิษณุโลก', 'พระฝาง', 'พิมาย', 'นครศรีธรรมราช', 'โพธิ์สามต้น'],
+        answer: 'ชุมนุมสุกี้พระนายกอง (ค่ายโพธิ์สามต้น), ชุมนุมเจ้าพิษณุโลก, ชุมนุมเจ้าพระฝาง, ชุมนุมเจ้าพิมาย และชุมนุมเจ้านครศรีธรรมราช'
+      },
+      {
+        prompt: '3. สมเด็จพระเจ้าตากสินมหาราชทรงแก้ไขวิกฤตขาดแคลนข้าวในช่วงต้นรัชกาลด้วยวิธีการใด?',
+        keywords: ['ซื้อข้าว', 'สำเภา', 'ทำนา', 'พระราชทรัพย์'],
+        answer: 'ทรงใช้พระราชทรัพย์ซื้อข้าวจากเรือสำเภาต่างชาติในราคาสูงเพื่อจูงใจให้พ่อค้านำข้าวมาขายมากๆ จนราคาถูกลง และโปรดให้ข้าราชการทำนาปีละ 2 ครั้ง'
+      },
+      {
+        prompt: '4. ยกตัวอย่างวีรกรรมของ "พระยาพิชัยดาบหัก" หรือ "ชาวบ้านบางระจัน" พร้อมข้อคิดที่ได้',
+        keywords: ['ดาบหัก', 'สามัคคี', 'เสียสละ', 'กล้าหาญ', 'เอกราช'],
+        answer: 'พระยาพิชัยดาบหักสู้รบปกป้องเมืองพิชัยด้วยดาบสองมือจนดาบหักแต่สามารถขับไล่ข้าศึกได้สำเร็จ สะท้อนความกล้าหาญ ความกตัญญู และการเสียสละเพื่อชาติ'
+      }
+    ],
+    quiz: [
+      {
+        q: '1. สมเด็จพระเจ้าตากสินมหาราชทรงใช้เมืองใดเป็นฐานที่มั่นในการรวบรวมกำลังพลและต่อเรือรบก่อนยกทัพกลับมากอบกู้เอกราช?',
+        opts: ['ก. เมืองพิษณุโลก', 'ข. เมืองจันทบุรี', 'ค. เมืองนครศรีธรรมราช', 'ง. เมืองเชียงใหม่'],
+        ans: 1,
+        exp: 'พระองค์ทรงเดินทัพไปตั้งมั่นที่เมืองจันทบุรี ต่อเรือรบ และยกทัพเรือกลับมายึดค่ายโพธิ์สามต้นในเดือนพฤศจิกายน พ.ศ. 2310'
+      },
+      {
+        q: '2. ชุมนุมอิสระแห่งสุดท้ายในภาคเหนือที่สมเด็จพระเจ้าตากสินมหาราชทรงปราบปรามสำเร็จใน พ.ศ. 2313 คือชุมนุมใด?',
+        opts: ['ก. ชุมนุมเจ้าพิมาย', 'ข. ชุมนุมเจ้านครศรีธรรมราช', 'ค. ชุมนุมเจ้าพระฝาง (เมืองสวางคบุรี)', 'ง. ชุมนุมค่ายโพธิ์สามต้น'],
+        ans: 2,
+        exp: 'ชุมนุมเจ้าพระฝางที่เมืองสวางคบุรี (จ.อุตรดิตถ์) ถูกปราบปรามสำเร็จใน พ.ศ. 2313 ทำให้แผ่นดินกลับมารวมเป็นปึกแผ่น'
+      },
+      {
+        q: '3. สมเด็จพระเจ้าตากสินมหาราชทรงแก้ปัญหาข้าวสารขาดแคลนและราคาแพงในระยะแรกด้วยกุศโลบายทางเศรษฐศาสตร์อย่างไร?',
+        opts: ['ก. สั่งห้ามเรือสำเภาต่างชาติเข้าเทียบท่า', 'ข. ทรงซื้อข้าวจากเรือสำเภาในราคาสูงเพื่อจูงใจให้พ่อค้าต่างชาตินำข้าวเข้ามาขายจำนวนมาก', 'ค. ยกเลิกการใช้เงินพดด้วง', 'ง. ย้ายเมืองหลวงไปอยู่ภาคอีสาน'],
+        ans: 1,
+        exp: 'เมื่อพ่อค้าเห็นว่าขายข้าวได้ราคาดีจึงนำข้าวเข้ามาขายจำนวนมาก ทำให้ปริมาณข้าวเพียงพอและราคาลดลงตามกลไกตลาด'
+      },
+      {
+        q: '4. ทหารเอกคู่พระทัยของสมเด็จพระเจ้าตากสินมหาราชที่ได้รับสมญานามจากการรบป้องกันเมืองพิชัยเมื่อ พ.ศ. 2316 คือท่านใด?',
+        opts: ['ก. พระยาพิชัยดาบหัก', 'ข. นายจันหนวดเขี้ยว', 'ค. ขุนรองปลัดชู', 'ง. เจ้าพระยาโกษาธิบดี (ปาน)'],
+        ans: 0,
+        exp: 'พระยาพิชัย (ทองดี ฟันขาว) ออกรบป้องกันเมืองพิชัยจากทัพโปสุพลาจนดาบหักแต่ยังคงสู้จนชนะข้าศึก'
+      },
+      {
+        q: '5. อาณาจักรธนบุรีดำรงอยู่เป็นราชธานีของไทยเป็นเวลากี่ปี?',
+        opts: ['ก. 7 ปี', 'ข. 15 ปี (พ.ศ. 2310–2325)', 'ค. 45 ปี', 'ง. 417 ปี'],
+        ans: 1,
+        exp: 'กรุงธนบุรีเป็นราชธานีตั้งแต่ พ.ศ. 2310 ถึง พ.ศ. 2325 รวมระยะเวลา 15 ปี'
+      }
+    ]
+  },
+  {
+    id: 'm3_u1',
+    grade: 'm3',
+    gradeLabel: 'ม.3 • ชุดที่ 1',
+    badgeClass: 'badge-m3',
+    title: 'สมัยรัตนโกสินทร์ตอนต้น (รัชกาลที่ 1 – 3)',
+    desc: 'การสถาปนากรุงรัตนโกสินทร์ กฎหมายตราสามดวง สงครามเก้าทัพ การค้าสำเภา ระบบเจ้าภาษีนายอากร สนธิสัญญาเบอร์นี และวัดพระเชตุพนฯ',
+    files: {
+      slideHtml: 'ม.3/สไลด์_ม3_รัตนโกสินทร์ตอนต้น_Interactive.html',
+      wsHtml: 'ม.3/ใบงานและเฉลย_ม3_รัตนโกสินทร์ตอนต้น_A4.html',
+      pptx: 'ม.3/สไลด์ประกอบการสอน_ม3_รัตนโกสินทร์ตอนต้น.pptx',
+      docxStudent: 'ม.3/ใบงาน_ม3_รัตนโกสินทร์ตอนต้น.docx',
+      docxTeacher: 'ม.3/เฉลยใบงาน_ม3_รัตนโกสินทร์ตอนต้น.docx'
+    },
+    slides: [
+      {
+        tag: 'สไลด์ที่ 1 / 4 • การสถาปนากรุงรัตนโกสินทร์',
+        title: 'การสถาปนากรุงรัตนโกสินทร์ (พ.ศ. 2325)',
+        boxes: [
+          {
+            h: '👑 ปฐมกษัตริย์ราชวงศ์จักรี',
+            items: [
+              'พระบาทสมเด็จพระพุทธยอดฟ้าจุฬาโลกมหาราช (รัชกาลที่ 1) ทรงปราบดาภิเษกเมื่อวันที่ 6 เมษายน พ.ศ. 2325',
+              'ทรงย้ายราชธานีจากฝั่งธนบุรีมาอยู่ฝั่งตะวันออกของแม่น้ำเจ้าพระยา (กรุงเทพมหานคร)'
+            ]
+          },
+          {
+            h: '🗺️ เหตุผลการย้ายราชธานีมายังฝั่งพระนคร',
+            items: [
+              'ฝั่งธนบุรีเป็นท้องคุ้งน้ำกัดเซาะตลิ่งพัง และมีวัดขนาบพระบรมมหาราชวัง (วัดแจ้งและวัดท้ายตลาด) ขยายเมืองได้ยาก',
+              'ฝั่งพระนครเป็นหัวแหลม มีแม่น้ำเจ้าพระยาเป็นคูเมืองด้านทิศตะวันตกและทิศใต้ ขยายเมืองออกไปทางทิศตะวันออกได้กว้างขวาง'
+            ]
+          }
+        ]
+      },
+      {
+        tag: 'สไลด์ที่ 2 / 4 • การเมืองและกฎหมาย',
+        title: 'กฎหมายตราสามดวง และ สงครามเก้าทัพ',
+        boxes: [
+          {
+            h: '⚖️ การชำระ "กฎหมายตราสามดวง" (พ.ศ. 2347)',
+            items: [
+              'รัชกาลที่ 1 โปรดให้ชำระกฎหมายเก่าตั้งแต่สมัยอยุธยาให้ถูกต้องเป็นธรรม',
+              'ประทับตรา 3 ดวง: ตราคชสีห์ (สมุหพระกลาโหม), ตราราชสีห์ (สมุหนายก) และตราบัวแก้ว (โกษาธิบดี)'
+            ]
+          },
+          {
+            h: '🛡️ สงครามเก้าทัพ (พ.ศ. 2328)',
+            items: [
+              'พระเจ้าปดุงแห่งพม่ายกทัพใหญ่ 9 ทัพเข้ามาตีไทย',
+              'รัชกาลที่ 1 และกรมพระราชวังบวรมหาสุรสิงหนาททรงใช้ยุทธวิธีเชิงรุก สกัดกั้นที่ลาดหญ้า จ.กาญจนบุรี จนได้รับชัยชนะอย่างเด็ดขาด'
+            ]
+          }
+        ]
+      },
+      {
+        tag: 'สไลด์ที่ 3 / 4 • เศรษฐกิจและการทูต',
+        title: 'การค้าสำเภา ระบบเจ้าภาษีนายอากร และสนธิสัญญาเบอร์นี',
+        boxes: [
+          {
+            h: '⛵ การค้าสำเภาและ "เจ้าภาษีนายอากร" (สมัย ร.3)',
+            items: [
+              'รัชกาลที่ 3 ทรงเชี่ยวชาญการค้าสำเภากับจีน จนได้รับพระราชสมญานาม "เจ้าสัว" และทรงเก็บ "เงินถุงแดง" ไว้ใช้ยามบ้านเมืองคับขัน',
+              'ทรงนำระบบ "เจ้าภาษีนายอากร" ให้เอกชนประมูลผูกขาดเก็บภาษีส่งหลวง ทำให้รายได้แผ่นดินเพิ่มขึ้นอย่างมาก'
+            ]
+          },
+          {
+            h: '📜 สนธิสัญญาเบอร์นี (พ.ศ. 2369)',
+            items: [
+              'ทูตอังกฤษ เฮนรี เบอร์นี เข้ามาทำสนธิสัญญาการค้าฉบับแรกในสมัยรัชกาลที่ 3',
+              'เปลี่ยนจากการเก็บภาษีหลายซับซ้อนมาเป็น "ภาษีปากเรือ" ตามความกว้างของเรืออย่างชัดเจน'
+            ]
+          }
+        ]
+      },
+      {
+        tag: 'สไลด์ที่ 4 / 4 • ศาสนาและศิลปวัฒนธรรม',
+        title: 'การสังคายนาพระไตรปิฎก และ มหาวิทยาลัยแห่งแรกของไทย',
+        boxes: [
+          {
+            h: '☸️ การสังคายนาพระไตรปิฎก (พ.ศ. 2331)',
+            items: [
+              'รัชกาลที่ 1 โปรดให้ทำสังคายนาพระไตรปิฎก ณ วัดมหาธาตุยุวราชรังสฤษฎิ์ เพื่อชำระพระธรรมวินัยให้บริสุทธิ์'
+            ]
+          },
+          {
+            h: '🏛️ จารึกวัดพระเชตุพนฯ (วัดโพธิ์) สมัยรัชกาลที่ 3',
+            items: [
+              'รัชกาลที่ 3 โปรดให้บูรณะวัดโพธิ์และจารึกตำราวิชาการ (การแพทย์ แผนที่ วรรณคดี ฤๅษีดัดตน) ลงบนแผ่นศิลา',
+              'ได้รับการยกย่องเป็น "มหาวิทยาลัยเปิดแห่งแรกของไทย" และขึ้นทะเบียนมรดกความทรงจำแห่งโลกโดย UNESCO'
+            ]
+          }
+        ]
+      }
+    ],
+    worksheet: [
+      {
+        prompt: '1. เพราะเหตุใดรัชกาลที่ 1 จึงทรงย้ายราชธานีจากฝั่งธนบุรีมายังฝั่งตะวันออกของแม่น้ำเจ้าพระยา (กรุงเทพฯ)?',
+        keywords: ['ตลิ่ง', 'วัด', 'ขยายเมือง', 'แม่น้ำ', 'คูเมือง'],
+        answer: 'เพราะฝั่งธนบุรีตลิ่งถูกน้ำกัดเซาะพังและมีวัดขนาบวังทำให้ขยายเมืองไม่ได้ ส่วนฝั่งพระนครมีแม่น้ำเป็นคูเมืองป้องกันข้าศึกและมีพื้นที่ราบลุ่มขยายเมืองได้กว้างขวาง'
+      },
+      {
+        prompt: '2. "กฎหมายตราสามดวง" ชำระขึ้นในรัชกาลใด และตราทั้ง 3 ดวงได้แก่ตราประจำตำแหน่งใดบ้าง?',
+        keywords: ['รัชกาลที่ 1', 'คชสีห์', 'ราชสีห์', 'บัวแก้ว'],
+        answer: 'ชำระในสมัยรัชกาลที่ 1 (พ.ศ. 2347) ประกอบด้วย ตราคชสีห์ (สมุหพระกลาโหม), ตราราชสีห์ (สมุหนายก) และตราบัวแก้ว (โกษาธิบดี)'
+      },
+      {
+        prompt: '3. ระบบ "เจ้าภาษีนายอากร" และ "เงินถุงแดง" ในสมัยรัชกาลที่ 3 มีความสำคัญต่อบ้านเมืองอย่างไร?',
+        keywords: ['ประมูล', 'รายได้', 'ถุงแดง', 'เอกราช', 'ร.5'],
+        answer: 'ระบบเจ้าภาษีนายอากรให้เอกชนประมูลเก็บภาษีส่งรัฐทำให้รายได้เพิ่มขึ้น ส่วนเงินถุงแดงจากการค้าสำเภาถูกเก็บรักษาไว้ช่วยไถ่บ้านเมืองในวิกฤตการณ์ ร.ศ. 112 สมัยรัชกาลที่ 5'
+      },
+      {
+        prompt: '4. เพราะเหตุใด "วัดพระเชตุพนวิมลมังคลาราม (วัดโพธิ์)" จึงได้รับการยกย่องว่าเป็นมหาวิทยาลัยแห่งแรกของไทย?',
+        keywords: ['จารึก', 'ตำรา', 'แพทย์', 'ประชาชน', 'รัชกาลที่ 3'],
+        answer: 'เพราะรัชกาลที่ 3 โปรดให้จารึกสรรพวิชาความรู้ทั้งการแพทย์ โบราณคดี วรรณคดี ไว้ตามศาลารายเพื่อให้ประชาชนทุกชนชั้นเข้ามาศึกษาหาความรู้ได้อย่างเสรี'
+      }
+    ],
+    quiz: [
+      {
+        q: '1. พระบาทสมเด็จพระพุทธยอดฟ้าจุฬาโลกมหาราช (รัชกาลที่ 1) ทรงสถาปนากรุงรัตนโกสินทร์เมื่อปี พ.ศ. ใด?',
+        opts: ['ก. พ.ศ. 2310', 'ข. พ.ศ. 2325', 'ค. พ.ศ. 2398', 'ง. พ.ศ. 2475'],
+        ans: 1,
+        exp: 'รัชกาลที่ 1 ทรงปราบดาภิเษกและสถาปนากรุงรัตนโกสินทร์เมื่อวันที่ 6 เมษายน พ.ศ. 2325'
+      },
+      {
+        q: '2. ประมวลกฎหมายฉบับสำคัญที่รัชกาลที่ 1 โปรดให้ชำระขึ้นเมื่อ พ.ศ. 2347 เพื่อใช้เป็นหลักในการตัดสินคดีความคือข้อใด?',
+        opts: ['ก. กฎมณเฑียรบาล', 'ข. กฎหมายตราสามดวง', 'ค. พระราชบัญญัติพิกัดเกษียณอายุลูกทาส', 'ง. รัฐธรรมนูญแห่งราชอาณาจักรไทย'],
+        ans: 1,
+        exp: 'กฎหมายตราสามดวง ชำระขึ้นใน พ.ศ. 2347 และใช้เป็นหลักกฎหมายไทยมาจนถึงสมัยปฏิรูปกฎหมายในรัชกาลที่ 5'
+      },
+      {
+        q: '3. พระมหากษัตริย์พระองค์ใดในสมัยรัตนโกสินทร์ตอนต้นที่ทรงพระปรีชาสามารถด้านการค้าสำเภาจนได้รับพระราชสมญานามว่า "เจ้าสัว"?',
+        opts: ['ก. รัชกาลที่ 1', 'ข. รัชกาลที่ 2', 'ค. รัชกาลที่ 3 (พระบาทสมเด็จพระนั่งเกล้าเจ้าอยู่หัว)', 'ง. รัชกาลที่ 4'],
+        ans: 2,
+        exp: 'รัชกาลที่ 3 ทรงแต่งสำเภาค้าขายตั้งแต่ทรงดำรงพระยศเป็นพระเจ้าลูกยาเธอ กรมหมื่นเจษฎาบดินทร์ และทรงเก็บเงินถุงแดงไว้แผ่นดิน'
+      },
+      {
+        q: '4. สนธิสัญญาการค้าฉบับแรกที่ไทยทำกับประเทศอังกฤษในสมัยรัชกาลที่ 3 (พ.ศ. 2369) คือสนธิสัญญาใด?',
+        opts: ['ก. สนธิสัญญาเบอร์นี', 'ข. สนธิสัญญาเบาว์ริง', 'ค. สนธิสัญญาแวร์ซาย', 'ง. สนธิสัญญาโตเกียว'],
+        ans: 0,
+        exp: 'สนธิสัญญาเบอร์นี ทำขึ้นเมื่อ พ.ศ. 2369 โดยมีร้อยเอก เฮนรี เบอร์นี เป็นทูตจากบริษัทอินเดียตะวันออกของอังกฤษ'
+      },
+      {
+        q: '5. ยุคทองของวรรณคดีการละครในสมัยรัตนโกสินทร์ตอนต้น (เช่น อิเหนา รามเกียรติ์ ขุนช้างขุนแผน) ตรงกับรัชสมัยใด?',
+        opts: ['ก. รัชกาลที่ 1', 'ข. รัชกาลที่ 2 (พระบาทสมเด็จพระพุทธเลิศหล้านภาลัย)', 'ค. รัชกาลที่ 3', 'ง. รัชกาลที่ 5'],
+        ans: 1,
+        exp: 'รัชสมัยพระบาทสมเด็จพระพุทธเลิศหล้านภาลัย (รัชกาลที่ 2) ได้รับการยกย่องว่าเป็นยุคทองของวรรณคดีและนาฏศิลป์ไทย'
+      }
+    ]
+  },
+  {
+    id: 'm3_u2',
+    grade: 'm3',
+    gradeLabel: 'ม.3 • ชุดที่ 2',
+    badgeClass: 'badge-m3',
+    title: 'การปฏิรูปประเทศและยุคประชาธิปไตย (ร.4 – ปัจจุบัน)',
+    desc: 'สนธิสัญญาเบาว์ริง การปฏิรูปประเทศสมัย ร.5 (เลิกทาส/มณฑลเทศาภิบาล) สงครามโลกครั้งที่ 1 การแก้ไขสนธิสัญญา และการเปลี่ยนแปลงการปกครอง พ.ศ. 2475',
+    files: {
+      slideHtml: 'ม.3/สไลด์_ม3_ปฏิรูปประเทศและยุคประชาธิปไตย_Interactive.html',
+      wsHtml: 'ม.3/ใบงานและเฉลย_ม3_ปฏิรูปประเทศและยุคประชาธิปไตย_A4.html',
+      pptx: 'ม.3/สไลด์ประกอบการสอน_ม3_ปฏิรูปประเทศและยุคประชาธิปไตย.pptx',
+      docxStudent: 'ม.3/ใบงาน_ม3_ปฏิรูปประเทศและยุคประชาธิปไตย.docx',
+      docxTeacher: 'ม.3/เฉลยใบงาน_ม3_ปฏิรูปประเทศและยุคประชาธิปไตย.docx'
+    },
+    slides: [
+      {
+        tag: 'สไลด์ที่ 1 / 4 • การเปิดประเทศสมัยรัชกาลที่ 4',
+        title: 'สนธิสัญญาเบาว์ริง (พ.ศ. 2398) และการเข้าสู่ระบบการค้าเสรี',
+        boxes: [
+          {
+            h: '🚢 สาระสำคัญของสนธิสัญญาเบาว์ริง',
+            items: [
+              'ยกเลิกการผูกขาดของพระคลังสินค้า ให้พ่อค้าต่างชาติค้าขายกับราษฎรได้โดยเสรี',
+              'เก็บภาษีขาเข้าได้ไม่เกินร้อยละ 3 (ชักร้อยละสาม) และอนุญาตให้ส่งออก "ข้าว" ได้เป็นสินค้าหลัก'
+            ]
+          },
+          {
+            h: '⚖️ ผลกระทบด้านเอกราชทางการศาลและการคลัง',
+            items: [
+              'ไทยเสีย "สิทธิสภาพนอกอาณาเขต" (คนในบังคับอังกฤษทำผิดไม่ต้องขึ้นศาลไทย แต่ขึ้นศาลกงสุลอังกฤษ)',
+              'เสียเอกราชทางภาษีศุลกากร แต่ช่วยให้ไทยรอดพ้นจากการใช้กำลังทหารของชาติตะวันตกและเศรษฐกิจการปลูกข้าวขยายตัวรวดเร็ว'
+            ]
+          }
+        ]
+      },
+      {
+        tag: 'สไลด์ที่ 2 / 4 • การปฏิรูปประเทศสมัยรัชกาลที่ 5',
+        title: 'การปฏิรูปการปกครองและสังคมสมัยรัชกาลที่ 5',
+        boxes: [
+          {
+            h: '🏛️ การรวมศูนย์อำนาจเข้าสู่ส่วนกลาง (พ.ศ. 2435)',
+            items: [
+              'ยกเลิกระบบจตุสดมภ์และสมุหนายก/สมุหพระกลาโหม จัดตั้ง "กระทรวง 12 กระทรวง" ตามแบบอารยประเทศ',
+              'ยกเลิกหัวเมืองชั้นใน-นอก-ประเทศราช จัดตั้งระบบ "มณฑลเทศาภิบาล" ส่งข้าหลวงเทศาภิบาลไปปกครอง'
+            ]
+          },
+          {
+            h: '🕊️ การเลิกทาสและเลิกไพร่โดยสันติวิธี',
+            items: [
+              'ทรงออก พ.ร.บ. พิกัดเกษียณอายุลูกทาสลูกไท (พ.ศ. 2417) จนถึง พ.ร.บ. ทาส ร.ศ. 124 (พ.ศ. 2448) เลิกทาสสำเร็จโดยไม่เสียเลือดเนื้อ',
+              'ทรงสร้างทางรถไฟสายแรก (กรุงเทพฯ–นครราชสีมา), ไปรษณีย์โทรเลข และโรงเรียนสำหรับราษฎร'
+            ]
+          }
+        ]
+      },
+      {
+        tag: 'สไลด์ที่ 3 / 4 • รัชกาลที่ 6 และการกอบกู้เอกราชทางศาล',
+        title: 'สงครามโลกครั้งที่ 1 และการแก้ไขสนธิสัญญาที่ไม่เป็นธรรม',
+        boxes: [
+          {
+            h: '✈️ การเข้าร่วมสงครามโลกครั้งที่ 1 (พ.ศ. 2460)',
+            items: [
+              'พระบาทสมเด็จพระมงกุฎเกล้าเจ้าอยู่หัว (รัชกาลที่ 6) ทรงประกาศเข้าร่วมสงครามกับฝ่ายสัมพันธมิตร',
+              'ทรงส่งทหารอาสาไทยไปร่วมรบในยุโรป และทรงเปลี่ยนธงชาติจากธงช้างเผือกเป็น "ธงไตรรงค์"'
+            ]
+          },
+          {
+            h: '🤝 การแก้ไขสนธิสัญญาที่ไม่เป็นธรรม',
+            items: [
+              'ผลจากการอยู่ฝ่ายชนะสงคราม ทำให้ไทยเจรจาแก้ไขสนธิสัญญาเรื่องสิทธิสภาพนอกอาณาเขตและภาษีศุลกากร (โดยมี ดร.ฟรานซิส บี. แซร์ เป็นที่ปรึกษา) จนได้เอกราชทางศาลและภาษีคืนสมบูรณ์ในสมัย ร.8 (พ.ศ. 2481)'
+            ]
+          }
+        ]
+      },
+      {
+        tag: 'สไลด์ที่ 4 / 4 • การเปลี่ยนแปลงการปกครอง พ.ศ. 2475',
+        title: 'การเปลี่ยนแปลงการปกครองสู่ระบอบประชาธิปไตย (พ.ศ. 2475)',
+        boxes: [
+          {
+            h: '📜 เหตุการณ์วันที่ 24 มิถุนายน พ.ศ. 2475',
+            items: [
+              'เกิดภาวะเศรษฐกิจตกต่ำทั่วโลก และแนวคิดประชาธิปไตยแพร่หลายในหมู่ผู้สำเร็จการศึกษาจากยุโรป',
+              '"คณะราษฎร" (สายทหารและพลเรือน) ทำการเปลี่ยนแปลงการปกครองจากระบอบสมบูรณาญาสิทธิราชย์มาเป็นระบอบประชาธิปไตยอันมีพระมหากษัตริย์ทรงเป็นประมุข'
+            ]
+          },
+          {
+            h: '👑 พระมหากรุณาธิคุณของรัชกาลที่ 7',
+            items: [
+              'พระบาทสมเด็จพระปกเกล้าเจ้าอยู่หัว (รัชกาลที่ 7) ทรงเห็นแก่ความสงบสุขของบ้านเมือง ไม่ประสงค์ให้เกิดการเสียเลือดเนื้อ',
+              'ทรงพระราชทานรัฐธรรมนูญฉบับถาวรฉบับแรก เมื่อวันที่ 10 ธันวาคม พ.ศ. 2475 (วันรัฐธรรมนูญ)'
+            ]
+          }
+        ]
+      }
+    ],
+    worksheet: [
+      {
+        prompt: '1. "สนธิสัญญาเบาว์ริง (พ.ศ. 2398)" ในสมัยรัชกาลที่ 4 ส่งผลดีและผลเสียต่อประเทศไทยอย่างไร?',
+        keywords: ['พระคลังสินค้า', 'ข้าว', 'ร้อยละ 3', 'สิทธิสภาพนอกอาณาเขต', 'ศาล'],
+        answer: 'ผลดี: การค้าเสรีขยายตัว ข้าวกลายเป็นสินค้าส่งออกอันดับหนึ่ง และรอดพ้นภัยอาณานิคม ผลเสีย: เก็บภาษีขาเข้าได้เพียงร้อยละ 3 และเสียสิทธิสภาพนอกอาณาเขต (เอกราชทางการศาล)'
+      },
+      {
+        prompt: '2. การปฏิรูปการปกครองและสังคมในสมัยรัชกาลที่ 5 มีผลงานสำคัญอะไรบ้างที่เปลี่ยนโฉมประเทศไทยสู่ยุคใหม่?',
+        keywords: ['เลิกทาส', 'มณฑลเทศาภิบาล', 'กระทรวง', 'รถไฟ', 'โรงเรียน'],
+        answer: 'การเลิกทาสและไพร่โดยสันติวิธี, การตั้ง 12 กระทรวงและระบบมณฑลเทศาภิบาลรวมศูนย์อำนาจ และการสร้างทางรถไฟ การศึกษา และการสื่อสารสมัยใหม่'
+      },
+      {
+        prompt: '3. การที่รัชกาลที่ 6 ทรงนำประเทศไทยเข้าร่วมสงครามโลกครั้งที่ 1 กับฝ่ายสัมพันธมิตร ส่งผลดีต่ออธิปไตยของไทยอย่างไร?',
+        keywords: ['ชนะสงคราม', 'สิทธิสภาพนอกอาณาเขต', 'ภาษี', 'สนธิสัญญา'],
+        answer: 'ทำให้ไทยมีสถานะเป็นประเทศผู้ชนะสงคราม ได้รับการยอมรับในเวทีโลก และสามารถเจรจาแก้ไขสนธิสัญญาที่ไม่เป็นธรรมเพื่อขอคืนเอกราชทางศาลและภาษีศุลกากร'
+      },
+      {
+        prompt: '4. ปัจจัยสำคัญที่ทำให้เกิดการเปลี่ยนแปลงการปกครองเมื่อวันที่ 24 มิถุนายน พ.ศ. 2475 คืออะไร?',
+        keywords: ['เศรษฐกิจตกต่ำ', 'ประชาธิปไตย', 'คณะราษฎร', 'รัฐธรรมนูญ'],
+        answer: 'อิทธิพลแนวคิดประชาธิปไตยจากตะวันตก ประกอบกับปัญหาเศรษฐกิจตกต่ำทั่วโลกหลังสงครามโลกครั้งที่ 1 ทำให้คณะราษฎรดำเนินการเปลี่ยนแปลงการปกครอง'
+      }
+    ],
+    quiz: [
+      {
+        q: '1. ข้อใดคือผลกระทบสำคัญที่ไทยได้รับจากการทำ "สนธิสัญญาเบาว์ริง" กับอังกฤษเมื่อ พ.ศ. 2398?',
+        opts: ['ก. พระคลังสินค้ามีอำนาจผูกขาดสินค้ามากขึ้น', 'ข. ยกเลิกการค้าเสรีและห้ามส่งออกข้าว', 'ค. ไทยเสียสิทธิสภาพนอกอาณาเขตและเก็บภาษีขาเข้าได้เพียงร้อยละ 3', 'ง. ไทยต้องส่งทหารไปรบในยุโรปทันที'],
+        ans: 2,
+        exp: 'สนธิสัญญาเบาว์ริงกำหนดให้ยกเลิกพระคลังสินค้า เก็บภาษีขาเข้าได้ไม่เกินร้อยละ 3 และคนในบังคับอังกฤษได้รับสิทธิสภาพนอกอาณาเขต'
+      },
+      {
+        q: '2. การจัดระเบียบการปกครองส่วนภูมิภาคแบบใหม่ในสมัยรัชกาลที่ 5 ที่รวมศูนย์อำนาจเข้าสู่ส่วนกลางเรียกว่าระบบใด?',
+        opts: ['ก. ระบบเมืองลูกหลวง', 'ข. ระบบจตุสดมภ์', 'ค. ระบบมณฑลเทศาภิบาล', 'ง. ระบบเจ้าภาษีนายอากร'],
+        ans: 2,
+        exp: 'ระบบมณฑลเทศาภิบาล รวมหัวเมืองต่างๆ เข้าเป็นมณฑล มีข้าหลวงเทศาภิบาลจากส่วนกลางไปปกครองแทนระบบกินเมืองแบบเดิม'
+      },
+      {
+        q: '3. พระมหากษัตริย์พระองค์ใดทรงตัดสินพระทัยนำประเทศไทยเข้าร่วมสงครามโลกครั้งที่ 1 (พ.ศ. 2460) และพระราชทานธงไตรรงค์?',
+        opts: ['ก. รัชกาลที่ 4', 'ข. รัชกาลที่ 5', 'ค. รัชกาลที่ 6 (พระบาทสมเด็จพระมงกุฎเกล้าเจ้าอยู่หัว)', 'ง. รัชกาลที่ 7'],
+        ans: 2,
+        exp: 'รัชกาลที่ 6 ทรงนำไทยเข้าร่วมสงครามโลกครั้งที่ 1 กับฝ่ายสัมพันธมิตร ส่งทหารอาสาไปยุโรป และประกาศใช้ธงไตรรงค์'
+      },
+      {
+        q: '4. เหตุการณ์เปลี่ยนแปลงการปกครองจากระบอบสมบูรณาญาสิทธิราชย์มาเป็นระบอบประชาธิปไตยเกิดขึ้นเมื่อใด?',
+        opts: ['ก. 6 เมษายน พ.ศ. 2325', 'ข. 1 เมษายน พ.ศ. 2448', 'ค. 24 มิถุนายน พ.ศ. 2475', 'ง. 10 ธันวาคม พ.ศ. 2540'],
+        ans: 2,
+        exp: 'คณะราษฎรทำการเปลี่ยนแปลงการปกครองเมื่อวันที่ 24 มิถุนายน พ.ศ. 2475 และรัชกาลที่ 7 พระราชทานรัฐธรรมนูญฉบับถาวรเมื่อ 10 ธันวาคม พ.ศ. 2475'
+      },
+      {
+        q: '5. "เมืองจำลองดุสิตธานี" สร้างขึ้นในรัชสมัยใดเพื่อทดลองฝึกหัดการปกครองท้องถิ่นตามแนวคิดประชาธิปไตย?',
+        opts: ['ก. รัชกาลที่ 3', 'ข. รัชกาลที่ 4', 'ค. รัชกาลที่ 6', 'ง. รัชกาลที่ 8'],
+        ans: 2,
+        exp: 'รัชกาลที่ 6 ทรงสร้างเมืองจำลองดุสิตธานีเพื่อทดลองการเลือกตั้ง การตั้งพรรคการเมือง และการออกหนังสือพิมพ์'
+      }
+    ]
+  }
+];
+
+// ============================================================================
+// MERGE ALL 15 UNITS IN CURRICULUM ORDER (ม.1 หน่วยที่ 1-5, ม.2 หน่วยที่ 1-5, ม.3 หน่วยที่ 1-5)
+// ============================================================================
+const ORDER_MAP = {
+  m1_u3: { order: 103, gradeLabel: 'ม.1 • หน่วยที่ 3', title: 'สมัยก่อนสุโขทัยในดินแดนไทย' },
+  m1_u4: { order: 104, gradeLabel: 'ม.1 • หน่วยที่ 4', title: 'อาณาจักรสุโขทัย' },
+  m2_u1: { order: 202, gradeLabel: 'ม.2 • หน่วยที่ 2', title: 'พัฒนาการของอาณาจักรอยุธยา' },
+  m2_u2: { order: 204, gradeLabel: 'ม.2 • หน่วยที่ 4', title: 'พัฒนาการของอาณาจักรธนบุรี' },
+  m3_u1: { order: 302, gradeLabel: 'ม.3 • หน่วยที่ 2', title: 'พัฒนาการของไทยสมัยรัตนโกสินทร์ตอนต้น (ร.1 – ร.3)' },
+  m3_u2: { order: 303, gradeLabel: 'ม.3 • หน่วยที่ 3', title: 'พัฒนาการของไทยสมัยปรับปรุงและปฏิรูปประเทศ (ร.4 – ร.6)' }
+};
+UNITS_DATA.forEach(u => {
+  if (ORDER_MAP[u.id]) {
+    u.order = ORDER_MAP[u.id].order;
+    u.gradeLabel = ORDER_MAP[u.id].gradeLabel;
+    u.title = ORDER_MAP[u.id].title;
+  }
+});
+if (window.EXTRA_UNITS_DATA && Array.isArray(window.EXTRA_UNITS_DATA)) {
+  UNITS_DATA.push(...window.EXTRA_UNITS_DATA);
+}
+UNITS_DATA.sort((a, b) => (a.order || 999) - (b.order || 999));
+
+// ============================================================================
+// APP STATE & CONTROLLERS
+// ============================================================================
+let currentGradeFilter = 'all';
+let currentUnitId = 'm1_u1';
+let currentMode = 'slides';
+let currentSlideIndex = 0;
+let isTeacherMode = false;
+let fontScale = 1;
+
+function getCurrentUnit() {
+  return UNITS_DATA.find(u => u.id === currentUnitId) || UNITS_DATA[0];
+}
+
+function initApp() {
+  renderUnitList();
+  selectUnit('m1_u1');
+  const qrInput = document.getElementById('qrUrlInput');
+  if (qrInput) {
+    qrInput.value = window.location.protocol.startsWith('http')
+      ? window.location.href
+      : 'https://thai-history-pw-class.netlify.app';
+    updateQrImage();
+  }
+  if ('caches' in window) {
+    caches.keys().then(keys => {
+      keys.filter(k => k !== 'thai-history-pwa-v3').forEach(k => caches.delete(k));
+    }).catch(() => {});
+  }
+  if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
+    navigator.serviceWorker.register('sw.js?v=3').then(reg => reg.update()).catch(() => {});
+  }
+}
+
+function filterGrade(grade, btnEl) {
+  currentGradeFilter = grade;
+  document.querySelectorAll('.grade-tab').forEach(b => b.classList.remove('active'));
+  if (btnEl) btnEl.classList.add('active');
+  renderUnitList();
+  const visible = UNITS_DATA.filter(u => grade === 'all' || u.grade === grade);
+  if (visible.length && !visible.some(u => u.id === currentUnitId)) {
+    selectUnit(visible[0].id);
+  }
+}
+
+function renderUnitList() {
+  const container = document.getElementById('unitListContainer');
+  const units = UNITS_DATA.filter(u => currentGradeFilter === 'all' || u.grade === currentGradeFilter);
+  const scores = JSON.parse(localStorage.getItem('historyQuizScores') || '{}');
+
+  container.innerHTML = units.map(u => {
+    const scoreText = scores[u.id] !== undefined ? `<span class="unit-score-pill">✓ ${scores[u.id]}/${u.quiz.length}</span>` : '';
+    return `
+      <button class="unit-item ${u.id === currentUnitId ? 'active' : ''}" onclick="selectUnit('${u.id}')">
+        <span class="unit-badge ${u.badgeClass}">${u.gradeLabel}</span>
+        ${scoreText}
+        <h4>${u.title}</h4>
+        <p>${u.desc}</p>
+      </button>
+    `;
+  }).join('');
+}
+
+function selectUnit(unitId) {
+  currentUnitId = unitId;
+  currentSlideIndex = 0;
+  renderUnitList();
+  const unit = getCurrentUnit();
+
+  const badge = document.getElementById('heroBadge');
+  badge.className = `unit-badge ${unit.badgeClass}`;
+  badge.textContent = unit.gradeLabel;
+  document.getElementById('heroTitle').textContent = unit.title;
+  document.getElementById('heroDesc').textContent = unit.desc;
+  document.getElementById('heroQuickSlideLink').href = unit.files.slideHtml;
+  document.getElementById('heroQuickWsLink').href = unit.files.wsHtml;
+
+  renderWorkspace();
+}
+
+function switchMode(mode, btnEl) {
+  currentMode = mode;
+  document.querySelectorAll('.mode-tab').forEach(b => b.classList.remove('active'));
+  if (btnEl) btnEl.classList.add('active');
+  renderWorkspace();
+}
+
+function renderWorkspace() {
+  const unit = getCurrentUnit();
+  const container = document.getElementById('workspaceContainer');
+
+  if (currentMode === 'slides') {
+    renderSlideMode(unit, container);
+  } else if (currentMode === 'worksheet') {
+    renderWorksheetMode(unit, container);
+  } else if (currentMode === 'quiz') {
+    renderQuizMode(unit, container);
+  } else if (currentMode === 'downloads') {
+    renderDownloadsMode(unit, container);
+  }
+}
+
+// ============================================================================
+// MODE 1: BUILT-IN INTERACTIVE SLIDES
+// ============================================================================
+function renderSlideMode(unit, container) {
+  const slide = unit.slides[currentSlideIndex] || unit.slides[0];
+  const total = unit.slides.length;
+
+  const boxesHtml = slide.boxes.map(b => `
+    <div class="slide-box">
+      <h4>${b.h}</h4>
+      <ul>${b.items.map(i => `<li>${i}</li>`).join('')}</ul>
+    </div>
+  `).join('');
+
+  const dotsHtml = unit.slides.map((_, idx) => `
+    <button class="slide-dot ${idx === currentSlideIndex ? 'active' : ''}" onclick="goToSlide(${idx})" title="สไลด์ที่ ${idx + 1}"></button>
+  `).join('');
+
+  container.innerHTML = `
+    <div class="slide-toolbar">
+      <div>
+        <strong>🖥️ สไลด์สรุปสาระสำคัญ (${currentSlideIndex + 1} / ${total})</strong>
+        <span style="font-size:0.85rem; color:var(--text-muted); margin-left:8px;">(ใช้ปุ่มลูกศร ⬅️ ➡️ หรือปัดหน้าจอบนมือถือ/แท็บเล็ตได้)</span>
+      </div>
+      <div style="display:flex; gap:8px;">
+        <button class="btn-secondary" onclick="toggleSlideFullscreen()">⛶ ขยายเต็มจอโปรเจกเตอร์</button>
+        <a class="btn-primary" href="${unit.files.slideHtml}" target="_blank">🚀 เปิดสไลด์ฉบับเต็ม (10+ หน้า)</a>
+      </div>
+    </div>
+
+    <div class="slide-stage" id="slideStageEl" ontouchstart="handleTouchStart(event)" ontouchend="handleTouchEnd(event)">
+      <div>
+        <span class="slide-tag">${slide.tag}</span>
+        <h3 class="slide-title">${slide.title}</h3>
+        <div class="slide-grid">${boxesHtml}</div>
+      </div>
+
+      <div class="slide-controls">
+        <button class="icon-btn" onclick="prevSlide()" ${currentSlideIndex === 0 ? 'disabled style="opacity:0.4"' : ''}>⬅️ ก่อนหน้า</button>
+        <div class="slide-dots">${dotsHtml}</div>
+        <button class="icon-btn" onclick="nextSlide()" ${currentSlideIndex === total - 1 ? 'disabled style="opacity:0.4"' : ''}>ถัดไป ➡️</button>
+      </div>
+    </div>
+  `;
+}
+
+function prevSlide() {
+  if (currentSlideIndex > 0) {
+    currentSlideIndex--;
+    renderWorkspace();
+  }
+}
+function nextSlide() {
+  const unit = getCurrentUnit();
+  if (currentSlideIndex < unit.slides.length - 1) {
+    currentSlideIndex++;
+    renderWorkspace();
+  }
+}
+function goToSlide(idx) {
+  currentSlideIndex = idx;
+  renderWorkspace();
+}
+function toggleSlideFullscreen() {
+  const el = document.getElementById('slideStageEl');
+  if (!el) return;
+  if (!document.fullscreenElement) {
+    el.requestFullscreen().catch(() => {});
+  } else {
+    document.exitFullscreen().catch(() => {});
+  }
+}
+
+let touchStartX = 0;
+function handleTouchStart(e) {
+  touchStartX = e.changedTouches[0].screenX;
+}
+function handleTouchEnd(e) {
+  const diff = e.changedTouches[0].screenX - touchStartX;
+  if (Math.abs(diff) > 50) {
+    if (diff < 0) nextSlide();
+    else prevSlide();
+  }
+}
+
+document.addEventListener('keydown', (e) => {
+  if (currentMode === 'slides' && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+    if (e.key === 'ArrowRight') nextSlide();
+    if (e.key === 'ArrowLeft') prevSlide();
+  }
+});
+
+// ============================================================================
+// MODE 2: INTERACTIVE WORKSHEET & AUTO-CHECK
+// ============================================================================
+function renderWorksheetMode(unit, container) {
+  const savedAnswers = JSON.parse(localStorage.getItem(`ws_${unit.id}`) || '{}');
+  const studentInfo = JSON.parse(localStorage.getItem('studentInfo') || '{"name":"","room":"","no":""}');
+
+  const questionsHtml = unit.worksheet.map((item, idx) => `
+    <div class="ws-question-row">
+      <div class="ws-prompt">${item.prompt}</div>
+      <textarea class="ws-textarea" rows="2" id="ws_input_${idx}" placeholder="พิมพ์คำตอบของคุณที่นี่..." oninput="saveWsInput('${unit.id}', ${idx}, this.value)">${savedAnswers[idx] || ''}</textarea>
+      <div class="ws-feedback" id="ws_fb_${idx}"></div>
+      <div class="ws-ans-reveal">✅ <strong>แนวคำตอบ/เฉลยครู:</strong> ${item.answer}</div>
+    </div>
+  `).join('');
+
+  container.innerHTML = `
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:16px;">
+      <div>
+        <h3>✍️ ใบงานออนไลน์แบบโต้ตอบ : ${unit.title}</h3>
+        <p style="font-size:0.86rem; color:var(--text-muted);">พิมพ์คำตอบบนมือถือ แท็บเล็ต หรือคอมพิวเตอร์ พร้อมระบบตรวจคำสำคัญอัตโนมัติ</p>
+      </div>
+      <div class="no-print" style="display:flex; gap:8px; flex-wrap:wrap;">
+        <button class="btn-success" onclick="checkWorksheetAnswers()">✔️ ตรวจคำตอบอัตโนมัติ</button>
+        <button class="btn-danger" onclick="toggleTeacherMode()">🔑 สลับแสดง/ซ่อนเฉลยครู</button>
+        <button class="btn-secondary" onclick="window.print()">🖨️ พิมพ์ / บันทึก PDF</button>
+      </div>
+    </div>
+
+    <div class="student-bar">
+      <div class="input-field">
+        <label>ชื่อ - นามสกุล นักเรียน</label>
+        <input type="text" placeholder="ด.ช./ด.ญ. ..." value="${studentInfo.name}" oninput="saveStudentInfo('name', this.value)">
+      </div>
+      <div class="input-field">
+        <label>ชั้น / ห้อง</label>
+        <input type="text" placeholder="เช่น ม.1/1" value="${studentInfo.room}" oninput="saveStudentInfo('room', this.value)">
+      </div>
+      <div class="input-field">
+        <label>เลขที่</label>
+        <input type="text" placeholder="เช่น 12" value="${studentInfo.no}" oninput="saveStudentInfo('no', this.value)">
+      </div>
+    </div>
+
+    <div class="ws-section">
+      <h3>📋 ตอนที่ 1 : วิเคราะห์และตอบคำถามทางประวัติศาสตร์</h3>
+      ${questionsHtml}
+    </div>
+
+    <div class="no-print" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+      <span id="wsSummaryResult" style="font-weight:700; color:var(--primary);"></span>
+      <a href="${unit.files.wsHtml}" target="_blank" class="btn-secondary">📄 เปิดใบงานฉบับเต็ม A4 (ตาราง + Mind Map)</a>
+    </div>
+  `;
+}
+
+function saveStudentInfo(field, val) {
+  const info = JSON.parse(localStorage.getItem('studentInfo') || '{"name":"","room":"","no":""}');
+  info[field] = val;
+  localStorage.setItem('studentInfo', JSON.stringify(info));
+}
+
+function saveWsInput(unitId, idx, val) {
+  const data = JSON.parse(localStorage.getItem(`ws_${unitId}`) || '{}');
+  data[idx] = val;
+  localStorage.setItem(`ws_${unitId}`, JSON.stringify(data));
+}
+
+function checkWorksheetAnswers() {
+  const unit = getCurrentUnit();
+  let matchedCount = 0;
+
+  unit.worksheet.forEach((item, idx) => {
+    const val = (document.getElementById(`ws_input_${idx}`)?.value || '').trim();
+    const fbEl = document.getElementById(`ws_fb_${idx}`);
+    if (!fbEl) return;
+
+    if (!val) {
+      fbEl.className = 'ws-feedback review';
+      fbEl.textContent = '⚠️ กรุณาพิมพ์คำตอบก่อนตรวจ';
+      return;
+    }
+
+    const hitKeywords = item.keywords.filter(kw => val.includes(kw));
+    if (hitKeywords.length >= 1) {
+      matchedCount++;
+      fbEl.className = 'ws-feedback ok';
+      fbEl.textContent = `✅ เยี่ยมมาก! พบประเด็นสำคัญ (${hitKeywords.join(', ')})`;
+    } else {
+      fbEl.className = 'ws-feedback review';
+      fbEl.textContent = `💡 ลองทบทวนและเพิ่มคำสำคัญ เช่น: ${item.keywords.slice(0, 2).join(', ')}`;
+    }
+  });
+
+  const summaryEl = document.getElementById('wsSummaryResult');
+  if (summaryEl) {
+    summaryEl.textContent = `📊 ผลการตรวจเบื้องต้น: ตอบตรงประเด็นสำคัญ ${matchedCount} / ${unit.worksheet.length} ข้อ (กดปุ่ม "สลับแสดง/ซ่อนเฉลยครู" เพื่อเทียบคำตอบละเอียด)`;
+  }
+}
+
+// ============================================================================
+// MODE 3: INTERACTIVE MULTIPLE-CHOICE QUIZ
+// ============================================================================
+function renderQuizMode(unit, container) {
+  const questionsHtml = unit.quiz.map((qItem, qIdx) => {
+    const optsHtml = qItem.opts.map((optText, optIdx) => `
+      <button class="quiz-opt" id="q_${qIdx}_opt_${optIdx}" onclick="selectQuizOption(${qIdx}, ${optIdx})">
+        ${optText}
+      </button>
+    `).join('');
+
+    return `
+      <div class="quiz-card">
+        <div class="quiz-q">${qItem.q}</div>
+        <div class="quiz-options">${optsHtml}</div>
+        <div class="quiz-explain" id="q_exp_${qIdx}">
+          💡 <strong>คำอธิบายเฉลย:</strong> ${qItem.exp}
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  container.innerHTML = `
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:18px;">
+      <div>
+        <h3>🎯 แบบทดสอบวัดผลประจำหน่วย : ${unit.title}</h3>
+        <p style="font-size:0.86rem; color:var(--text-muted);">คลิกเลือกคำตอบที่ถูกต้องที่สุด ระบบจะตรวจและแสดงคำอธิบายทันที</p>
+      </div>
+      <div style="display:flex; align-items:center; gap:10px;">
+        <span id="quizScoreBanner" style="font-weight:800; font-size:1.05rem; color:var(--primary);">คะแนน: 0 / ${unit.quiz.length}</span>
+        <button class="btn-secondary" onclick="renderWorkspace()">🔄 ทำใหม่อีกครั้ง</button>
+      </div>
+    </div>
+    ${questionsHtml}
+  `;
+  window.currentQuizAnswers = {};
+}
+
+function selectQuizOption(qIdx, optIdx) {
+  const unit = getCurrentUnit();
+  const qItem = unit.quiz[qIdx];
+  if (!window.currentQuizAnswers) window.currentQuizAnswers = {};
+  window.currentQuizAnswers[qIdx] = optIdx;
+
+  qItem.opts.forEach((_, i) => {
+    const btn = document.getElementById(`q_${qIdx}_opt_${i}`);
+    if (!btn) return;
+    btn.classList.remove('correct', 'wrong');
+    if (i === qItem.ans) {
+      btn.classList.add('correct');
+    } else if (i === optIdx && optIdx !== qItem.ans) {
+      btn.classList.add('wrong');
+    }
+  });
+
+  const expEl = document.getElementById(`q_exp_${qIdx}`);
+  if (expEl) expEl.classList.add('show');
+
+  // Update score
+  let score = 0;
+  Object.keys(window.currentQuizAnswers).forEach(k => {
+    if (window.currentQuizAnswers[k] === unit.quiz[k].ans) score++;
+  });
+  const banner = document.getElementById('quizScoreBanner');
+  if (banner) banner.textContent = `คะแนน: ${score} / ${unit.quiz.length}`;
+
+  if (Object.keys(window.currentQuizAnswers).length === unit.quiz.length) {
+    const scores = JSON.parse(localStorage.getItem('historyQuizScores') || '{}');
+    scores[unit.id] = Math.max(scores[unit.id] || 0, score);
+    localStorage.setItem('historyQuizScores', JSON.stringify(scores));
+    renderUnitList();
+  }
+}
+
+// ============================================================================
+// MODE 4: DOWNLOADS & FULL FILES
+// ============================================================================
+function renderDownloadsMode(unit, container) {
+  container.innerHTML = `
+    <div style="margin-bottom:20px;">
+      <h3>📥 ดาวน์โหลดไฟล์สื่อการสอนและใบงาน : ${unit.title}</h3>
+      <p style="font-size:0.9rem; color:var(--text-muted);">รองรับการนำไปแก้ไขต่อใน Microsoft PowerPoint, Microsoft Word, Google Slides และ Google Docs</p>
+    </div>
+
+    <div class="dl-grid">
+      <div class="dl-card">
+        <div>
+          <span class="unit-badge badge-m1" style="background:#c2410c;">PowerPoint (.pptx)</span>
+          <h4 style="margin-top:8px;">📊 สไลด์ประกอบการสอน</h4>
+          <p>ไฟล์นำเสนอ PowerPoint แก้ไขข้อความ ปรับแต่งฟอนต์ หรือเพิ่มรูปภาพได้ทันที</p>
+        </div>
+        <a class="btn-primary" style="background:#c2410c;" href="${unit.files.pptx}" download>⬇️ ดาวน์โหลดไฟล์ .pptx</a>
+      </div>
+
+      <div class="dl-card">
+        <div>
+          <span class="unit-badge badge-m1" style="background:#1d4ed8;">MS Word (.docx)</span>
+          <h4 style="margin-top:8px;">📝 ใบงานสำหรับนักเรียน</h4>
+          <p>ไฟล์เอกสาร Word สำหรับแจกนักเรียน มีตารางเปรียบเทียบ วิเคราะห์หลักฐาน และผังความคิด</p>
+        </div>
+        <a class="btn-primary" style="background:#1d4ed8;" href="${unit.files.docxStudent}" download>⬇️ ดาวน์โหลดใบงาน (.docx)</a>
+      </div>
+
+      <div class="dl-card">
+        <div>
+          <span class="unit-badge badge-m1" style="background:#b91c1c;">MS Word (.docx)</span>
+          <h4 style="margin-top:8px;">✅ เฉลยใบงานสำหรับครู</h4>
+          <p>ไฟล์เอกสาร Word พร้อมแนวคำตอบสีแดงครบทุกข้อ สำหรับครูผู้สอน</p>
+        </div>
+        <a class="btn-primary" style="background:#b91c1c;" href="${unit.files.docxTeacher}" download>⬇️ ดาวน์โหลดเฉลยครู (.docx)</a>
+      </div>
+
+      <div class="dl-card">
+        <div>
+          <span class="unit-badge badge-m1" style="background:#047857;">HTML Interactive & A4</span>
+          <h4 style="margin-top:8px;">🌐 สไลด์เต็มจอ & ใบงาน A4</h4>
+          <p>เปิดสไลด์ Interactive ฉบับเต็ม หรือเปิดใบงานขนาด A4 พร้อมปุ่มสลับเฉลยสำหรับสั่งพิมพ์</p>
+        </div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <a class="btn-secondary" style="flex:1;" href="${unit.files.slideHtml}" target="_blank">🖥️ สไลด์เต็มจอ</a>
+          <a class="btn-secondary" style="flex:1;" href="${unit.files.wsHtml}" target="_blank">📄 ใบงาน A4</a>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// ============================================================================
+// TOPBAR UTILITIES (Teacher Mode, Font Scale, Dark Mode, Modals, QR)
+// ============================================================================
+function toggleTeacherMode() {
+  isTeacherMode = !isTeacherMode;
+  document.body.classList.toggle('teacher-mode', isTeacherMode);
+  const btn = document.getElementById('teacherToggleBtn');
+  const txt = document.getElementById('teacherStatusText');
+  if (btn) btn.classList.toggle('teacher-active', isTeacherMode);
+  if (txt) txt.textContent = isTeacherMode ? 'แสดงเฉลยครู' : 'ปิดเฉลย';
+}
+
+function adjustFont(delta) {
+  fontScale = Math.min(1.35, Math.max(0.85, fontScale + delta));
+  document.documentElement.style.setProperty('--font-scale', fontScale);
+}
+
+function toggleDarkMode() {
+  const isDark = document.body.classList.toggle('dark-mode');
+  document.getElementById('themeBtn').textContent = isDark ? '☀️' : '🌙';
+}
+
+function openModal(id) {
+  document.getElementById(id)?.classList.add('open');
+}
+function closeModal(id) {
+  document.getElementById(id)?.classList.remove('open');
+}
+
+function updateQrImage() {
+  const url = document.getElementById('qrUrlInput')?.value || window.location.href;
+  const img = document.getElementById('qrCodeImg');
+  if (img) {
+    img.src = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(url)}`;
+  }
+}
+
+window.addEventListener('DOMContentLoaded', initApp);
+</script>
+</body>
+</html>

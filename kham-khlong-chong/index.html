@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>บทเรียนสำเร็จรูป เรื่อง คำคล้องจอง</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="min-h-screen flex flex-col pb-20 md:pb-0">
+  <!-- Top Sticky Navigation Bar -->
+  <header class="no-print sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b-2 border-slate-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-3 sm:px-4 py-2 sm:py-3 flex flex-col gap-2.5">
+      <!-- Row 1: Brand & Student Status (Compact on Mobile, Spacious on Desktop) -->
+      <div class="flex items-center justify-between gap-2">
+        <div onclick="App.navigate('home')" class="flex items-center gap-2 sm:gap-3 cursor-pointer group min-w-0">
+          <div class="w-9 h-9 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-br from-indigo-600 to-pink-500 text-white text-lg sm:text-2xl flex items-center justify-center shadow-md shrink-0 group-hover:scale-105 transition">
+            🎈
+          </div>
+          <div class="min-w-0">
+            <div class="font-kid font-bold text-sm sm:text-lg md:text-xl text-indigo-950 leading-tight truncate">
+              คำคล้องจองหรรษา
+            </div>
+            <div class="hidden sm:block text-xs text-slate-500 truncate">
+              บทเรียนสำเร็จรูป • สื่อการสอน • ใบงาน • เกมฝึกทักษะ
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Controls: Home to Classroom, Sound, Voice Settings, Stars, Student Profile -->
+        <div class="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+          <a
+            href="../index.html"
+            class="kid-btn bg-sky-100 hover:bg-sky-200 text-sky-900 border-sky-300 px-2.5 py-1.5 text-xs sm:text-sm font-bold flex items-center gap-1"
+            title="กลับหน้าหลัก ห้องเรียนครูเบ็ญจวรรณ"
+          >
+            🏠 <span class="hidden sm:inline">ห้องเรียนครูเบ็ญ</span>
+          </a>
+          <button
+            id="header-sound-btn"
+            onclick="App.toggleSoundBtn()"
+            class="kid-btn bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-300 px-2.5 py-1.5 text-xs sm:text-sm"
+            title="เปิด/ปิดเสียงเอฟเฟกต์"
+          >
+            🔊 <span class="hidden lg:inline">เสียงเปิด</span>
+          </button>
+
+          <button
+            onclick="App.openProfileModal()"
+            class="kid-btn bg-amber-50 hover:bg-amber-100 text-amber-900 border-amber-300 px-2.5 py-1.5 text-xs sm:text-sm"
+            title="เลือกเสียงผู้อ่านภาษาไทยและปรับความเร็ว"
+          >
+            🎙️ <span class="hidden lg:inline">ตั้งค่าเสียง</span>
+          </button>
+
+          <div
+            onclick="App.navigate('certificate')"
+            class="cursor-pointer bg-amber-100 hover:bg-amber-200 border-2 border-amber-300 rounded-2xl px-2.5 sm:px-3.5 py-1 sm:py-1.5 flex items-center gap-1 font-kid font-bold text-amber-900 text-xs sm:text-sm transition"
+            title="ดูเกียรติบัตรและดาวสะสม"
+          >
+            <span>⭐</span>
+            <span id="header-stars">0</span>
+            <span class="hidden sm:inline">ดาว</span>
+          </div>
+
+          <button
+            onclick="App.openProfileModal()"
+            class="bg-indigo-50 hover:bg-indigo-100 border-2 border-indigo-200 rounded-2xl px-2.5 sm:px-3 py-1 sm:py-1.5 flex items-center gap-1.5 transition"
+            title="คลิกเพื่อเปลี่ยนชื่อนักเรียนหรือตัวละคร"
+          >
+            <span id="header-avatar" class="text-base sm:text-xl">🐱</span>
+            <span id="header-student-name" class="font-kid font-bold text-xs sm:text-sm text-indigo-950 max-w-[75px] sm:max-w-[140px] truncate">
+              น้องคนเก่ง
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Row 2: Desktop Navigation Tabs (Visible on md and up) -->
+      <nav class="hidden md:flex items-center gap-1.5 overflow-x-auto pb-0.5 no-scrollbar">
+        <button data-nav-tab="home" onclick="App.navigate('home')" class="nav-pill active text-sm flex items-center gap-1.5">
+          <span>🏠</span> <span>หน้าแรก</span>
+        </button>
+        <button data-nav-tab="lessons" onclick="App.navigate('lessons')" class="nav-pill text-sm flex items-center gap-1.5">
+          <span>📖</span> <span>บทเรียนความรู้ (4 บท)</span>
+        </button>
+        <button data-nav-tab="media" onclick="App.navigate('media')" class="nav-pill text-sm flex items-center gap-1.5">
+          <span>🃏</span> <span>สื่อการสอน & บัตรคำ</span>
+        </button>
+        <button data-nav-tab="worksheets" onclick="App.navigate('worksheets')" class="nav-pill text-sm flex items-center gap-1.5">
+          <span>📝</span> <span>ใบงาน (ทำเว็บ/พิมพ์ A4)</span>
+        </button>
+        <button data-nav-tab="games" onclick="App.navigate('games')" class="nav-pill text-sm flex items-center gap-1.5">
+          <span>🎮</span> <span>เกมหรรษา (3 เกม)</span>
+        </button>
+        <button data-nav-tab="certificate" onclick="App.navigate('certificate')" class="nav-pill text-sm flex items-center gap-1.5">
+          <span>🏆</span> <span>เกียรติบัตร</span>
+        </button>
+        <button data-nav-tab="parents" onclick="App.navigate('parents')" class="nav-pill text-sm flex items-center gap-1.5">
+          <span>👨‍👩‍👧</span> <span>มุมผู้ปกครอง & เฉลย</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main id="app-main" class="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-5 md:px-6 py-4 sm:py-6 md:py-8"></main>
+
+  <!-- Mobile Bottom App Bar (Visible on phones < 768px) -->
+  <nav class="no-print mobile-bottom-nav md:hidden">
+    <div class="grid grid-cols-6 gap-0.5 px-1.5 py-1.5 max-w-md mx-auto">
+      <button data-nav-tab="home" onclick="App.navigate('home')" class="mobile-nav-item active">
+        <span class="nav-icon">🏠</span>
+        <span>หน้าแรก</span>
+      </button>
+      <button data-nav-tab="lessons" onclick="App.navigate('lessons')" class="mobile-nav-item">
+        <span class="nav-icon">📖</span>
+        <span>บทเรียน</span>
+      </button>
+      <button data-nav-tab="media" onclick="App.navigate('media')" class="mobile-nav-item">
+        <span class="nav-icon">🃏</span>
+        <span>สื่อบัตรคำ</span>
+      </button>
+      <button data-nav-tab="worksheets" onclick="App.navigate('worksheets')" class="mobile-nav-item">
+        <span class="nav-icon">📝</span>
+        <span>ใบงาน</span>
+      </button>
+      <button data-nav-tab="games" onclick="App.navigate('games')" class="mobile-nav-item">
+        <span class="nav-icon">🎮</span>
+        <span>เกม</span>
+      </button>
+      <button data-nav-tab="parents" onclick="App.navigate('parents')" class="mobile-nav-item">
+        <span class="nav-icon">👨‍👩‍👧</span>
+        <span>ผู้ปกครอง</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Footer -->
+  <footer class="no-print bg-white/80 border-t border-slate-200 py-5 mt-8">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500 text-center sm:text-left">
+      <div>
+        📚 <strong>สื่อบทเรียนสำเร็จรูป วิชาภาษาไทย เรื่อง คำคล้องจอง</strong> (1-3 พยางค์ และบทร้อยกรอง)
+      </div>
+      <div>
+        ออกแบบสำหรับนักเรียนและผู้ปกครองใช้ทบทวนได้ทั้งบนมือถือ แท็บเล็ต และคอมพิวเตอร์ ✨
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="no-print fixed bottom-20 md:bottom-5 right-3 sm:right-5 left-3 sm:left-auto z-50 flex flex-col items-center sm:items-end gap-2 pointer-events-none"></div>
+
+  <!-- Profile & Voice Settings Modal -->
+  <div
+    id="profile-modal"
+    class="no-print hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4"
+  ></div>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

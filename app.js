@@ -119,7 +119,8 @@
     sidebarNav: document.getElementById("sidebarNav"),
     viewHome: document.getElementById("viewHome"),
     viewResources: document.getElementById("viewResources"),
-    heroExploreBtn: document.getElementById("heroExploreBtn")
+    heroExploreBtn: document.getElementById("heroExploreBtn"),
+    refreshPageBtn: document.getElementById("refreshPageBtn")
   };
 
   function cloneDefaultData() {
@@ -489,6 +490,21 @@
 
   // Event Listeners
   el.teacherModeBtn.addEventListener("click", toggleTeacherMode);
+
+  if (el.refreshPageBtn) {
+    el.refreshPageBtn.addEventListener("click", async () => {
+      showToast("กำลังรีเฟรชหน้าเว็บเวอร์ชันล่าสุด...");
+      try {
+        if ("caches" in window) {
+          const keys = await caches.keys();
+          await Promise.all(keys.map((k) => caches.delete(k)));
+        }
+      } catch {
+        // ignore cache API errors
+      }
+      window.location.href = `${window.location.pathname}?r=${Date.now()}`;
+    });
+  }
 
   if (el.sidebarNav) {
     el.sidebarNav.addEventListener("click", (e) => {

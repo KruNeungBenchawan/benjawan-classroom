@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สไลด์ประกอบการสอน วิชาประวัติศาสตร์ ม.2 - อาณาจักรอยุธยา (สำนักพิมพ์ พว.)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #8E244D;      /* สีแดงเลือดหมู-ทอง โทนอยุธยา/พว. ม.2 */
+            --primary-bg: #FDF4F7;
+            --accent: #D84315;
+            --accent-gold: #C68400;
+            --success: #2E7D32;
+            --text-dark: #1E1B24;
+            --text-muted: #5A5266;
+            --card-bg: #FFFFFF;
+            --border-color: #EBCDDA;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background: linear-gradient(135deg, #3b0d1e 0%, #5c1630 50%, #240712 100%);
+            color: var(--text-dark);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1, h2, h3, .font-heading { font-family: 'Prompt', sans-serif; }
+
+        .top-bar {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: #fff;
+            padding: 10px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            z-index: 100;
+        }
+
+        .brand-badge { display: flex; align-items: center; gap: 12px; }
+        .pw-pill { background: #27AE60; color: white; font-family: 'Prompt', sans-serif; font-weight: 600; font-size: 0.85rem; padding: 4px 12px; border-radius: 20px; }
+        .grade-pill { background: #F57C00; color: white; font-family: 'Prompt', sans-serif; font-weight: 700; font-size: 0.85rem; padding: 4px 12px; border-radius: 6px; }
+        .top-controls { display: flex; align-items: center; gap: 8px; }
+        .btn-control {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 6px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Prompt', sans-serif;
+            font-size: 0.84rem;
+            transition: all 0.2s;
+        }
+        .btn-control:hover { background: rgba(255, 255, 255, 0.28); transform: translateY(-1px); }
+
+        .deck-wrapper {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide {
+            width: 100%;
+            max-width: 1280px;
+            height: 100%;
+            max-height: 740px;
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            animation: slideIn 0.35s ease-out;
+        }
+        .slide.active { display: flex; }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(12px) scale(0.99); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .slide-header {
+            background: linear-gradient(90deg, var(--primary) 0%, #B73264 100%);
+            color: white;
+            padding: 18px 36px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 4px solid #FFB300;
+        }
+        .slide-header h2 { font-size: 1.52rem; font-weight: 700; display: flex; align-items: center; gap: 12px; }
+        .slide-unit-tag { background: rgba(255, 255, 255, 0.2); padding: 4px 14px; border-radius: 20px; font-size: 0.9rem; font-family: 'Prompt', sans-serif; }
+
+        .slide-body {
+            flex: 1;
+            padding: 24px 36px;
+            overflow-y: auto;
+            background: radial-gradient(circle at bottom right, #fff8fa 0%, #ffffff 70%);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .cover-slide {
+            background: linear-gradient(135deg, #880E4F 0%, #6A1B4D 50%, #3E1030 100%);
+            color: white;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .cover-box {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(12px);
+            border: 2px solid rgba(255, 213, 79, 0.4);
+            border-radius: 24px;
+            padding: 36px 50px;
+            max-width: 1000px;
+            width: 100%;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .cover-title { font-size: 3.1rem; font-weight: 800; margin: 12px 0 8px; color: #FFF; text-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+        .cover-subtitle { font-size: 1.6rem; color: #FFD54F; font-weight: 600; margin-bottom: 20px; }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+
+        .info-card {
+            background: #FFFFFF;
+            border: 2px solid var(--border-color);
+            border-radius: 14px;
+            padding: 16px 20px;
+            box-shadow: 0 4px 14px rgba(142, 36, 77, 0.06);
+        }
+        .info-card.highlight-orange { border-left: 6px solid var(--accent); }
+        .info-card.highlight-purple { border-left: 6px solid var(--primary); }
+        .info-card.highlight-green { border-left: 6px solid var(--success); }
+        .info-card.highlight-gold { border-left: 6px solid var(--accent-gold); }
+
+        .card-title { font-family: 'Prompt', sans-serif; font-size: 1.16rem; font-weight: 700; color: var(--primary); margin-bottom: 8px; }
+        .card-list { list-style: none; display: flex; flex-direction: column; gap: 6px; font-size: 1.01rem; line-height: 1.5; }
+        .card-list li { position: relative; padding-left: 18px; }
+        .card-list li::before { content: "•"; color: var(--accent); font-weight: bold; font-size: 1.25rem; position: absolute; left: 2px; top: -2px; }
+
+        .styled-table { width: 100%; border-collapse: collapse; border-radius: 12px; overflow: hidden; font-size: 0.98rem; }
+        .styled-table th { background: var(--primary); color: white; font-family: 'Prompt', sans-serif; padding: 10px 14px; text-align: left; }
+        .styled-table td { padding: 9px 14px; border-bottom: 1px solid var(--border-color); background: white; vertical-align: top; line-height: 1.45; }
+        .styled-table tr:nth-child(even) td { background: var(--primary-bg); }
+
+        .tag { display: inline-block; padding: 3px 10px; border-radius: 6px; font-size: 0.83rem; font-weight: 600; font-family: 'Prompt', sans-serif; }
+        .tag-purple { background: #FCE4EC; color: var(--primary); }
+        .tag-orange { background: #FBE9E7; color: var(--accent); }
+        .tag-green { background: #E8F5E9; color: var(--success); }
+        .tag-gold { background: #FFF8E1; color: #9C6B08; }
+
+        .question-box {
+            background: linear-gradient(90deg, #FFF8E7 0%, #FFFDF9 100%);
+            border: 2px solid #F5C76B;
+            border-left: 8px solid var(--accent-gold);
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin-top: auto;
+        }
+        .question-header { font-family: 'Prompt', sans-serif; font-weight: 700; color: #B27200; font-size: 1.04rem; display: flex; justify-content: space-between; align-items: center; }
+        .answer-reveal { display: none; margin-top: 8px; padding-top: 8px; border-top: 1px dashed #E0B860; color: #1B5E20; font-weight: 600; font-size: 1rem; }
+        .btn-reveal { background: var(--accent-gold); color: white; border: none; padding: 5px 14px; border-radius: 6px; font-family: 'Prompt', sans-serif; font-size: 0.85rem; cursor: pointer; font-weight: 600; }
+
+        .bottom-bar { background: rgba(0, 0, 0, 0.35); backdrop-filter: blur(8px); padding: 12px 36px; display: flex; justify-content: space-between; align-items: center; color: white; }
+        .nav-buttons { display: flex; gap: 12px; align-items: center; }
+        .btn-nav { background: #F57C00; color: white; border: none; padding: 8px 22px; border-radius: 10px; font-family: 'Prompt', sans-serif; font-weight: 600; font-size: 1rem; cursor: pointer; }
+        .btn-nav:disabled { background: rgba(255, 255, 255, 0.2); color: rgba(255, 255, 255, 0.5); cursor: not-allowed; }
+        .progress-dots { display: flex; gap: 8px; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; background: rgba(255, 255, 255, 0.3); cursor: pointer; }
+        .dot.active { background: #FFD54F; transform: scale(1.3); }
+
+        .quiz-option { background: white; border: 2px solid var(--border-color); border-radius: 10px; padding: 10px 16px; cursor: pointer; font-size: 1rem; margin-bottom: 7px; display: flex; align-items: center; gap: 10px; }
+        .quiz-option:hover { border-color: var(--primary); background: var(--primary-bg); }
+        .quiz-option.correct { background: #E8F5E9; border-color: #2E7D32; color: #1B5E20; font-weight: 700; }
+        .quiz-option.wrong { background: #FFEBEE; border-color: #C62828; color: #B71C1C; }
+
+        @media print {
+            body { background: white; height: auto; overflow: visible; }
+            .top-bar, .bottom-bar, .btn-reveal { display: none !important; }
+            .deck-wrapper { display: block; padding: 0; }
+            .slide { display: flex !important; page-break-after: always; height: 190mm; max-width: 100%; box-shadow: none; border: 1px solid #ccc; margin-bottom: 15mm; }
+            .answer-reveal { display: block !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <div class="brand-badge">
+            <span class="pw-pill">อ้างอิงหนังสือเรียน พว.</span>
+            <span class="grade-pill">ชั้นมัธยมศึกษาปีที่ ๒</span>
+            <span style="font-family: 'Prompt', sans-serif; font-weight: 600;">รายวิชาพื้นฐาน ประวัติศาสตร์ | หน่วยการเรียนรู้ที่ 2–3 : อาณาจักรอยุธยา</span>
+        </div>
+        <div class="top-controls">
+            <button class="btn-control" onclick="goToSlide(0)">🏠 หน้าแรก</button>
+            <button class="btn-control" onclick="goToSlide(1)">🏰 การสถาปนา</button>
+            <button class="btn-control" onclick="goToSlide(3)">⚖️ การปกครอง 3 ยุค</button>
+            <button class="btn-control" onclick="goToSlide(5)">⛵ เศรษฐกิจ-สังคม</button>
+            <button class="btn-control" onclick="goToSlide(8)">✨ ภูมิปัญญาอยุธยา</button>
+            <button class="btn-control" onclick="goToSlide(10)">🎯 แบบทดสอบ</button>
+            <button class="btn-control" onclick="window.print()">🖨️ พิมพ์ / PDF</button>
+            <button class="btn-control" onclick="toggleFullScreen()">⛶ เต็มจอ</button>
+        </div>
+    </div>
+
+    <div class="deck-wrapper">
+
+        <!-- SLIDE 1: หน้าปก -->
+        <div class="slide cover-slide active">
+            <div class="cover-box">
+                <div style="display:flex; justify-content:center; gap:12px; margin-bottom:14px;">
+                    <span class="pw-pill" style="font-size:1rem; padding:6px 18px;">กลุ่มสาระการเรียนรู้สังคมศึกษา ศาสนา และวัฒนธรรม</span>
+                    <span class="grade-pill" style="font-size:1rem; padding:6px 18px;">ชั้นมัธยมศึกษาปีที่ ๒</span>
+                </div>
+                <div style="font-size:1.3rem; color:#F8BBD0; font-family:'Prompt',sans-serif;">หน่วยการเรียนรู้ที่ ๒ – ๓</div>
+                <h1 class="cover-title">พัฒนาการ ภูมิปัญญา และวัฒนธรรม<br>สมัยอยุธยา (พ.ศ. ๑๘๙๓ – ๒๓๑๐)</h1>
+                <div class="cover-subtitle">(ราชธานีที่ยืนยาวถึง ๔๑๗ ปี แห่งลุ่มแม่น้ำเจ้าพระยา)</div>
+                <hr style="border:none; border-top:1px solid rgba(255,255,255,0.25); margin: 18px auto; width: 70%;">
+                <div class="grid-4" style="text-align:left; margin-top:16px;">
+                    <div style="background:rgba(0,0,0,0.28); padding:14px; border-radius:12px;">
+                        <strong style="color:#FFD54F; font-family:'Prompt',sans-serif;">๑. การสถาปนาและ ๕ ราชวงศ์</strong>
+                        <p style="font-size:0.9rem; margin-top:4px; color:#FCE4EC;">พระเจ้าอู่ทอง ทำเลเกาะเมืองแม่น้ำ 3 สาย และ 5 ราชวงศ์</p>
+                    </div>
+                    <div style="background:rgba(0,0,0,0.28); padding:14px; border-radius:12px;">
+                        <strong style="color:#FFD54F; font-family:'Prompt',sans-serif;">๒. การเมืองการปกครอง ๓ ยุค</strong>
+                        <p style="font-size:0.9rem; margin-top:4px; color:#FCE4EC;">จตุสดมภ์ การปฏิรูปสมัยพระบรมไตรโลกนาถ และระบบศักดินา</p>
+                    </div>
+                    <div style="background:rgba(0,0,0,0.28); padding:14px; border-radius:12px;">
+                        <strong style="color:#FFD54F; font-family:'Prompt',sans-serif;">๓. เศรษฐกิจและการทูต</strong>
+                        <p style="font-size:0.9rem; margin-top:4px; color:#FCE4EC;">พระคลังสินค้า ระบบไพร่ และการติดต่อกับชาติตะวันตก</p>
+                    </div>
+                    <div style="background:rgba(0,0,0,0.28); padding:14px; border-radius:12px;">
+                        <strong style="color:#FFD54F; font-family:'Prompt',sans-serif;">๔. ภูมิปัญญาและการเสียกรุง</strong>
+                        <p style="font-size:0.9rem; margin-top:4px; color:#FCE4EC;">ศิลปกรรม วรรณกรรมจินดามณี และการเสียกรุงครั้งที่ 1 และ 2</p>
+                    </div>
+                </div>
+                <p style="margin-top:20px; font-size:0.95rem; color:#F8BBD0;">
+                    อ้างอิงเนื้อหาจาก: หนังสือเรียน รายวิชาพื้นฐาน ประวัติศาสตร์ ม.2 (ผศ.ดร.วงเดือน นาราสัจจ์ และ ผศ.ชมพูนุท นาคีรักษ์) สำนักพิมพ์ พว.
+                </p>
+            </div>
+        </div>
+
+        <!-- SLIDE 2: การสถาปนาอาณาจักรอยุธยา และ ปัจจัยความเจริญรุ่งเรือง -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>🏰 ๑. การสถาปนาอาณาจักรอยุธยา (พ.ศ. ๑๘๙๓) และปัจจัยความเจริญ</h2>
+                <span class="slide-unit-tag">ประวัติศาสตร์ ม.2 (พว.) | หน้า 2/12</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="info-card highlight-purple">
+                        <div class="card-title">👑 การสถาปนากรุงศรีอยุธยา (พ.ศ. 1893)</div>
+                        <ul class="card-list">
+                            <li><strong>ผู้สถาปนา:</strong> <strong>สมเด็จพระรามาธิบดีที่ 1 (พระเจ้าอู่ทอง)</strong> ทรงสถาปนากรุงศรีอยุธยาบริเวณหนองโสน (บึงพระราม) เมื่อวันที่ 4 มีนาคม พ.ศ. 1893</li>
+                            <li><strong>การหลอมรวม 2 แคว้นใหญ่:</strong> เกิดจากการรวมอำนาจของแคว้นโบราณในภาคกลาง 2 แคว้น คือ:
+                                <br>• <strong>แคว้นละโว้ (ลพบุรี):</strong> มีความเชี่ยวชาญด้านวัฒนธรรม ศาสนา และระเบียบการปกครองแบบขอม
+                                <br>• <strong>แคว้นสุพรรณภูมิ (สุพรรณบุรี):</strong> มีความเข้มแข็งด้านกำลังคนและการทหาร
+                            </li>
+                            <li><strong>แนวคิดกษัตริย์:</strong> ผสมผสานแนวคิด <strong>"เทวราชา"</strong> (ศาสนาพราหมณ์-ฮินดู) เข้ากับ <strong>"ธรรมราชา"</strong> (พระพุทธศาสนาเถรวาท)</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card highlight-gold">
+                        <div class="card-title" style="color:#B27200;">🌊 ปัจจัยทางภูมิศาสตร์ที่ส่งผลต่อความรุ่งเรือง</div>
+                        <ul class="card-list">
+                            <li><strong>1. สภาพ "เกาะเมือง" ที่มีแม่น้ำล้อมรอบ 3 สาย:</strong>
+                                <br>• ทิศเหนือและตะวันออก: <strong>แม่น้ำลพบุรี</strong> และ <strong>แม่น้ำป่าสัก</strong>
+                                <br>• ทิศตะวันตกและใต้: <strong>แม่น้ำเจ้าพระยา</strong>
+                            </li>
+                            <li><strong>2. ความอุดมสมบูรณ์ทางการเกษตร:</strong> เป็นที่ราบลุ่มแม่น้ำกว้างขวาง ดินตะกอนอุดมสมบูรณ์ เหมาะแก่การปลูกข้าวเลี้ยงประชากรจำนวนมาก</li>
+                            <li><strong>3. ยุทธศาสตร์ป้องกันข้าศึก:</strong> แม่น้ำทั้ง 3 สายทำหน้าที่เป็นคูเมืองธรรมชาติ และเมื่อถึงฤดูน้ำหลาก น้ำจะท่วมทุ่งนาเป็นเสมือนปราการน้ำล้อมรอบเกาะเมือง ทำให้ข้าศึกตั้งทัพปิดล้อมได้ยาก</li>
+                            <li><strong>4. อยู่ใกล้ทะเล (อ่าวไทย):</strong> เรือสำเภาต่างชาติสามารถแล่นเข้าแม่น้ำเจ้าพระยาขึ้นมาค้าขายถึงตัวพระนครได้โดยตรง</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: 5 ราชวงศ์แห่งอาณาจักรอยุธยา (417 ปี) -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>👑 ๒. ราชวงศ์ที่ปกครองอาณาจักรอยุธยา (๕ ราชวงศ์ ๓๓ พระองค์)</h2>
+                <span class="slide-unit-tag">ประวัติศาสตร์ ม.2 (พว.) | หน้า 3/12</span>
+            </div>
+            <div class="slide-body">
+                <p style="font-size:1.03rem; color:var(--text-muted);">
+                    ตลอดระยะเวลา <strong>417 ปี (พ.ศ. 1893 – 2310)</strong> อาณาจักรอยุธยามีพระมหากษัตริย์ปกครองรวม <strong>33 พระองค์</strong> จาก <strong>5 ราชวงศ์</strong> ดังนี้:
+                </p>
+
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th style="width:20%;">ชื่อราชวงศ์</th>
+                            <th style="width:15%;">จำนวนกษัตริย์</th>
+                            <th style="width:28%;">ปฐมกษัตริย์ของราชวงศ์</th>
+                            <th style="width:37%;">พระมหากษัตริย์สำคัญและเหตุการณ์เด่น</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>1. ราชวงศ์อู่ทอง</strong></td>
+                            <td>3 พระองค์</td>
+                            <td>สมเด็จพระรามาธิบดีที่ 1<br>(พระเจ้าอู่ทอง)</td>
+                            <td>วางรากฐานการปกครองระบบจตุสดมภ์ (เวียง วัง คลัง นา) และสร้างวัดพุทไธศวรรย์, วัดพระราม</td>
+                        </tr>
+                        <tr>
+                            <td><strong>2. ราชวงศ์สุพรรณภูมิ</strong><br><span class="tag tag-gold">ครองราชย์นานที่สุด</span></td>
+                            <td>13 พระองค์</td>
+                            <td>สมเด็จพระบรมราชาธิราชที่ 1<br>(ขุนหลวงพะงั่ว)</td>
+                            <td>• <strong>สมเด็จพระบรมไตรโลกนาถ:</strong> ปฏิรูปการปกครองและระบบศักดินา<br>• <strong>สมเด็จพระสุริโยทัย</strong> และเสียกรุงครั้งที่ 1 (พ.ศ. 2112)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>3. ราชวงศ์สุโขทัย</strong></td>
+                            <td>7 พระองค์</td>
+                            <td>สมเด็จพระมหาธรรมราชาธิราช<br>(พระยาศรีสรรเพชญ์ที่ 1)</td>
+                            <td>• <strong>สมเด็จพระนเรศวรมหาราช:</strong> ทรงประกาศอิสรภาพ (พ.ศ. 2127) และทำยุทธหัตถี<br>• <strong>สมเด็จพระเอกาทศรถ</strong> และ <strong>สมเด็จพระเจ้าทรงธรรม</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>4. ราชวงศ์ปราสาททอง</strong></td>
+                            <td>4 พระองค์</td>
+                            <td>สมเด็จพระเจ้าปราสาททอง</td>
+                            <td>• <strong>สมเด็จพระนารายณ์มหาราช:</strong> ยุคทองของการค้าและการทูตกับชาติตะวันตก (ส่งทูตโกษาปานไปฝรั่งเศส)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>5. ราชวงศ์บ้านพลูหลวง</strong></td>
+                            <td>6 พระองค์</td>
+                            <td>สมเด็จพระเพทราชา</td>
+                            <td>• <strong>สมเด็จพระเจ้าอยู่หัวบรมโกศ:</strong> ยุคทองของวรรณคดีและพุทธศาสนา (ส่งพระสมณทูตไปฟื้นฟูพุทธศาสนาที่ศรีลังกา)<br>• สิ้นสุดในสมัยสมเด็จพระที่นั่งสุริยาศน์อมรินทร์ (พระเจ้าเอกทัศ) พ.ศ. 2310</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: พัฒนาการด้านการเมืองการปกครอง (ตอนต้น vs ตอนกลาง) -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>⚖️ ๓. พัฒนาการด้านการเมืองการปกครอง (อยุธยาตอนต้น และ ตอนกลาง)</h2>
+                <span class="slide-unit-tag">ประวัติศาสตร์ ม.2 (พว.) | หน้า 4/12</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="info-card highlight-purple">
+                        <span class="tag tag-purple">ระยะที่ 1 : อยุธยาตอนต้น (พ.ศ. 1893 – 1991)</span>
+                        <h3 class="card-title" style="margin-top:8px;">🏛️ ระบบจตุสดมภ์ และ เมืองลูกหลวง</h3>
+                        <ul class="card-list">
+                            <li><strong>การปกครองส่วนกลาง (จตุสดมภ์ 4 กรม):</strong>
+                                <br>• <strong>กรมเวียง:</strong> ดูแลความสงบเรียบร้อยและปราบโจรผู้ร้ายในพระนคร
+                                <br>• <strong>กรมวัง:</strong> ดูแลราชสำนัก พระราชพิธี และตัดสินคดีความ
+                                <br>• <strong>กรมคลัง:</strong> ดูแลการเงิน ภาษีอากร และการค้าต่างประเทศ
+                                <br>• <strong>กรมนา:</strong> ดูแลการเกษตร เสบียงอาหาร และเก็บอากรค่านา
+                            </li>
+                            <li><strong>การปกครองส่วนภูมิภาค:</strong>
+                                <br>• <strong>เมืองลูกหลวง (เมืองหน้าด่าน 4 ทิศ):</strong> ทิศเหนือ (<strong>ลพบุรี</strong>), ทิศตะวันออก (<strong>นครนายก</strong>), ทิศใต้ (<strong>พระประแดง</strong>), ทิศตะวันตก (<strong>สุพรรณบุรี</strong>)
+                                <br>• เมืองพระยามหานคร (หัวเมืองชั้นนอก) และ เมืองประเทศราช</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card highlight-orange">
+                        <span class="tag tag-orange">ระยะที่ 2 : อยุธยาตอนกลาง (พ.ศ. 1991 – 2231)</span>
+                        <h3 class="card-title" style="margin-top:8px; color:var(--accent);">⚔️ การปฏิรูปสมัยสมเด็จพระบรมไตรโลกนาถ</h3>
+                        <ul class="card-list">
+                            <li><strong>สาเหตุการปฏิรูป:</strong> อาณาเขตกว้างขวางขึ้น (รวมสุโขทัยเข้ามา) และเจ้าเมืองลูกหลวงมักก่อกบฏแย่งชิงราชสมบัติ จึง<strong>รวมอำนาจเข้าสู่ศูนย์กลาง</strong></li>
+                            <li><strong>1) แยกฝ่ายทหารและฝ่ายพลเรือนชัดเจน:</strong>
+                                <br>• <strong>สมุหพระกลาโหม:</strong> อัครมหาเสนาบดีควบคุม<strong>ฝ่ายทหาร</strong>ทั่วราชอาณาจักร
+                                <br>• <strong>สมุหนายก:</strong> อัครมหาเสนาบดีควบคุม<strong>ฝ่ายพลเรือน</strong> และกำกับ <strong>จตุสดมภ์</strong> (เปลี่ยนชื่อเป็น <em>นครบาล, ธรรมาธิกรณ์, โกษาธิบดี, เกษตราธิการ</em>)
+                            </li>
+                            <li><strong>2) ยกเลิกเมืองลูกหลวง:</strong> จัดเป็น<strong>หัวเมืองชั้นใน</strong> (ผู้รั้งปกครอง) และ<strong>หัวเมืองชั้นนอก</strong> (เมืองชั้นเอก โท ตรี จัตวา)</li>
+                            <li><strong>3) ตรา "กฎหมายทำเนียบศักดินา":</strong> กำหนดสิทธิและหน้าที่คนในสังคม</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: การปกครองสมัยอยุธยาตอนปลาย และ โครงสร้างสังคมศักดินา-ไพร่ -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>🛡️ ๔. การปกครองสมัยอยุธยาตอนปลาย และ สังคมระบบศักดินา-ไพร่</h2>
+                <span class="slide-unit-tag">ประวัติศาสตร์ ม.2 (พว.) | หน้า 5/12</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="info-card highlight-gold">
+                        <span class="tag tag-gold">ระยะที่ 3 : อยุธยาตอนปลาย (พ.ศ. 2231 – 2310)</span>
+                        <h3 class="card-title" style="margin-top:8px; color:#B27200;">🗺️ การปรับปรุงการปกครองสมัยสมเด็จพระเพทราชา</h3>
+                        <ul class="card-list">
+                            <li><strong>สาเหตุ:</strong> เพื่อถ่วงดุลอำนาจขุนนางไม่ให้สมุหพระกลาโหมกุมกำลังทหารแต่เพียงผู้เดียว จึงแบ่งอำนาจการบังคับบัญชาตาม<strong>พื้นที่ภูมิภาค (ทั้งทหารและพลเรือน)</strong>:</li>
+                            <li><strong>1) สมุหนายก (อัครมหาเสนาบดีฝ่ายเหนือ):</strong> ดูแลบังคับบัญชาทั้งฝ่ายทหารและพลเรือนใน<strong>หัวเมืองฝ่ายเหนือทั้งหมด</strong></li>
+                            <li><strong>2) สมุหพระกลาโหม (อัครมหาเสนาบดีฝ่ายใต้):</strong> ดูแลบังคับบัญชาทั้งฝ่ายทหารและพลเรือนใน<strong>หัวเมืองฝ่ายใต้ทั้งหมด</strong></li>
+                            <li><strong>3) เสนาบดีกรมคลัง (โกษาธิบดี):</strong> ดูแลทั้งทหารและพลเรือนใน<strong>หัวเมืองชายทะเลตะวันออก</strong> และกิจการท่าเรือค้าขาย</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card highlight-green">
+                        <span class="tag tag-green">โครงสร้างสังคมสมัยอยุธยา</span>
+                        <h3 class="card-title" style="margin-top:8px; color:var(--success);">👥 ระบบศักดินา และ การควบคุมกำลังคน (ระบบไพร่)</h3>
+                        <ul class="card-list">
+                            <li><strong>ระบบศักดินา:</strong> การกำหนดศักดิ์และสิทธิ์ของคนในสังคมโดยใช้จำนวนไร่นาเป็นเกณฑ์วัด (เช่น มหาอุปราช 100,000 ไร่, ขุนนาง 400–10,000 ไร่, ไพร่ 10–25 ไร่, ทาสและยาจก 5 ไร่)</li>
+                            <li><strong>ระบบไพร่ (การขึ้นทะเบียนสังกัดมูลนาย):</strong> ชายฉกรรจ์อายุ 18–60 ปี ต้องสักเลกขึ้นทะเบียนสังกัดกรมกอง (มูลนาย) และต้อง<strong>ถูกเกณฑ์แรงงาน "เข้าเดือนออกเดือน" (ปีละ 6 เดือน)</strong> แบ่งเป็น:
+                                <br>• <strong>ไพร่หลวง:</strong> สังกัดพระมหากษัตริย์ รับใช้ราชการแผ่นดิน
+                                <br>• <strong>ไพร่สม:</strong> พระมหากษัตริย์พระราชทานให้สังกัดเจ้านายหรือขุนนาง
+                                <br>• <strong>ไพร่ส่วย:</strong> อาศัยอยู่ห่างไกล ส่งสิ่งของมีค่า (ดีบุก, มูลค้างคาว, ฝาง) แทนการเข้าเวรแรงงาน</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 6: พัฒนาการด้านเศรษฐกิจสมัยอยุธยา (การค้าสำเภา พระคลังสินค้า และภาษีอากร) -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>⛵ ๕. พัฒนาการด้านเศรษฐกิจ : พระคลังสินค้า และ รายได้ของแผ่นดิน ๔ ประเภท</h2>
+                <span class="slide-unit-tag">ประวัติศาสตร์ ม.2 (พว.) | หน้า 6/12</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="info-card highlight-purple">
+                        <div class="card-title">🚢 การค้าสำเภา และ "พระคลังสินค้า"</div>
+                        <ul class="card-list">
+                            <li><strong>อยุธยาในฐานะเมืองท่านานาชาติ:</strong> เป็นศูนย์กลางแลกเปลี่ยนสินค้าระหว่างจีน ญี่ปุ่น อินเดีย อาหรับ เปอร์เซีย และชาติตะวันตก</li>
+                            <li><strong>บทบาทของ "พระคลังสินค้า" (การค้าผูกขาดโดยรัฐ):</strong>
+                                <br>• หน่วยงานของรัฐที่ทำหน้าที่<strong>ผูกขาดการซื้อขาย "สินค้าต้องห้าม"</strong> (สินค้าหายากและทำกำไรสูง หรือยุทธปัจจัย)
+                                <br>• <strong>สินค้าส่งออกต้องห้าม:</strong> ของป่า เช่น ไม้กฤษณา ไม้ฝาง นอแรด งาช้าง ดีบุก รังนก หนังกวาง (พ่อค้าต่างชาติต้องซื้อผ่านพระคลังสินค้าเท่านั้น)
+                                <br>• <strong>สินค้านำเข้าต้องห้าม:</strong> อาวุธปืน ดินปืน กำมะถัน ผ้าแพรชั้นดี</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card highlight-orange">
+                        <div class="card-title" style="color:var(--accent);">💰 รายได้จากภาษีอากร 4 ประเภทสมัยอยุธยา</div>
+                        <ul class="card-list">
+                            <li><strong>1. จังกอบ:</strong> ภาษีที่เก็บตามด่านขนอนทั้งทางบกและทางน้ำ โดยเก็บตาม<strong>ขนาดความกว้างของปากเรือ</strong> หรือชักส่วนสินค้า 10 หยิบ 1</li>
+                            <li><strong>2. อากร:</strong> ภาษีที่เก็บจากผลประโยชน์ในการประกอบอาชีพของราษฎร เช่น <strong>อากรค่านา</strong> (หางข้าว), อากรสวน, อากรสมพัตสร, อากรสุราและบ่อนเบี้ย</li>
+                            <li><strong>3. ส่วย:</strong> สิ่งของหรือเงินที่<strong>ไพร่ส่วย</strong>ส่งมาทดแทนการถูกเกณฑ์แรงงานเข้าเดือนออกเดือน รวมถึงเครื่องราชบรรณาการ</li>
+                            <li><strong>4. ฤชา:</strong> <strong>ค่าธรรมเนียม</strong>ที่ทางราชการเรียกเก็บจากการให้บริการแก่ราษฎร เช่น ค่าธรรมเนียมศาลในการตัดสินคดี หรือค่าออกโฉนดตราจอง</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-header">
+                        <span>💡 เปรียบเทียบสุโขทัยกับอยุธยา: นโยบายการเก็บ "จังกอบ (จกอบ)" ของอยุธยาแตกต่างจากสมัยสุโขทัยอย่างไร?</span>
+                        <button class="btn-reveal" onclick="toggleAnswer('ans_ayu1')">แสดงแนวคำตอบ</button>
+                    </div>
+                    <div id="ans_ayu1" class="answer-reveal">
+                        ✅ แนวคำตอบ: สมัยสุโขทัยยกเว้นไม่เก็บภาษีผ่านด่าน (เจ้าเมืองบ่เอาจกอบ) เพื่อจูงใจพ่อค้าเข้าเมือง แต่อยุธยามีทำเลที่ตั้งติดแม่น้ำออกสู่ทะเลที่พ่อค้าทั่วโลกต้องเข้ามาค้าขายอยู่แล้ว จึงเก็บ "จังกอบ" ตามขนาดความกว้างปากเรือและตั้ง "พระคลังสินค้า" ผูกขาดสินค้าสำคัญ ทำให้ราชสำนักอยุธยามั่งคั่งมาก
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 7: ความสัมพันธ์ระหว่างประเทศสมัยอยุธยา (เอเชียและชาติตะวันตก) -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>🌏 ๖. ความสัมพันธ์ระหว่างประเทศในสมัยอยุธยา (เอเชีย และ ตะวันตก)</h2>
+                <span class="slide-unit-tag">ประวัติศาสตร์ ม.2 (พว.) | หน้า 7/12</span>
+            </div>
+            <div class="slide-body">
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th style="width:22%;">ประเทศ / กลุ่มชาติ</th>
+                            <th style="width:26%;">ช่วงเวลาที่เริ่มติดต่อ</th>
+                            <th style="width:52%;">ลักษณะความสัมพันธ์และผลกระทบสำคัญ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>1. จีน และ ญี่ปุ่น</strong><br>(ภูมิภาคเอเชีย)</td>
+                            <td>ตั้งแต่สมัยอยุธยาตอนต้น</td>
+                            <td>
+                                • <strong>จีน (ราชวงศ์หมิง-ชิง):</strong> การค้าในระบบ<strong>จิ้มก้อง (บรรณาการ)</strong> ส่งผลให้อยุธยาได้สิทธิพิเศษทางการค้าสำเภา<br>
+                                • <strong>ญี่ปุ่น:</strong> ค้าขายหนังกวางและแร่เงิน มีหมู่บ้านญี่ปุ่นและ<strong>กรมอาสาญี่ปุ่น (ออกญาเสนาภิมุข / ยามาดะ นางามาซะ)</strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>2. โปรตุเกส</strong><br><span class="tag tag-orange">ชาติตะวันตกชาติแรก</span></td>
+                            <td>พ.ศ. 2054<br>(สมัยสมเด็จพระรามาธิบดีที่ 2)</td>
+                            <td>
+                                <strong>ดูอาร์เต เฟอร์นันเดส</strong> เป็นทูตคนแรกเข้ามาทำสัญญาการค้า โปรตุเกสนำ<strong>อาวุธปืนไฟ</strong> ยุทธวิธีสร้างป้อมปราการ และวัฒนธรรมขนมหวาน (ทองหยิบ ทองหยอด ฝอยทอง โดยท้าวทองกีบม้า) เข้ามาเผยแพร่
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>3. ฮอลันดา (ดัตช์) และ อังกฤษ</strong></td>
+                            <td>สมัยสมเด็จพระนเรศวรมหาราช – พระเจ้าทรงธรรม</td>
+                            <td>
+                                เข้ามาตั้งสถานีการค้าเพื่อซื้อหนังกวาง ข้าว และดีบุก ต่อมาในสมัยสมเด็จพระนารายณ์ฯ ฮอลันดาเคยนำเรือรบมาปิดอ่าวไทยบีบคั้นอยุธยาเรื่องสิทธิผูกขาดการค้า
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>4. ฝรั่งเศส</strong><br>(พระเจ้าหลุยส์ที่ 14)</td>
+                            <td>สมัยสมเด็จพระนารายณ์มหาราช</td>
+                            <td>
+                                ทรงดึงฝรั่งเศสมา<strong>ถ่วงดุลอำนาจกับฮอลันดา</strong> โดยมี <strong>เจ้าพระยาวิชาเยนทร์ (ฟอลคอน)</strong> เป็นที่ปรึกษา และส่งคณะทูตนำโดย <strong>ออกพระวิสุทธสุนทร (โกษาปาน)</strong> ไปเจริญสัมพันธไมตรีที่พระราชวังแวร์ซาย ได้รับวิทยาการดาราศาสตร์ การประปา และการสร้างป้อมปราการ
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SLIDE 8: ภูมิปัญญาและศิลปวัฒนธรรมสมัยอยุธยา -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>✨ ๗. ภูมิปัญญาและศิลปวัฒนธรรมไทยสมัยอยุธยา</h2>
+                <span class="slide-unit-tag">ประวัติศาสตร์ ม.2 (พว.) | หน้า 8/12</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-3">
+                    <div class="info-card highlight-purple">
+                        <span class="tag tag-purple">สถาปัตยกรรม 4 ยุค</span>
+                        <h3 class="card-title" style="margin-top:8px;">🏛️ 1. ด้านสถาปัตยกรรม</h3>
+                        <ul class="card-list">
+                            <li><strong>ยุคที่ 1 (อิทธิพลขอม-ลพบุรี):</strong> นิยมสร้าง <strong>"พระปรางค์"</strong> เป็นประธาน เช่น วัดพุทไธศวรรย์, วัดราชบูรณะ</li>
+                            <li><strong>ยุคที่ 2 (อิทธิพลสุโขทัย-ลังกา):</strong> นิยมสร้าง <strong>"เจดีย์ทรงลังกา (ระฆังคว่ำ)"</strong> เช่น <strong>วัดพระศรีสรรเพชญ์</strong> (วัดในเขตพระราชวังหลวงที่ไม่มีพระสงฆ์จำพรรษา)</li>
+                            <li><strong>ยุคที่ 3 (สมัยปราสาททอง-นารายณ์):</strong> ฟื้นฟูพระปรางค์ เช่น <strong>วัดไชยวัฒนาราม</strong> และรับสถาปัตยกรรมตะวันตก-เปอร์เซีย (ตึกโค้งแหลมที่ลพบุรี)</li>
+                            <li><strong>ยุคที่ 4 (อยุธยาตอนปลาย):</strong> นิยม <strong>"เจดีย์ย่อมุมไม้สิบสอง"</strong></li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card highlight-orange">
+                        <span class="tag tag-orange">ประติมากรรมและจิตรกรรม</span>
+                        <h3 class="card-title" style="margin-top:8px; color:var(--accent);">🎨 2. ประติมากรรมและหัตถกรรม</h3>
+                        <ul class="card-list">
+                            <li><strong>พระพุทธรูปทรงเครื่อง:</strong> เอกลักษณ์เด่นของอยุธยาตอนกลาง-ปลาย ที่สร้างพระพุทธรูปสวมมงกุฎและเครื่องประดับกษัตริย์ (เช่น <strong>วัดหน้าพระเมรุ</strong>) สะท้อนคติพระพุทธเจ้าทรงเป็นพระมหาจักรพรรดิ</li>
+                            <li><strong>ประณีตศิลป์:</strong> งานแกะสลักไม้บานประตู งานประดับมุก และ<strong>ตู้พระธรรมลายรดน้ำ</strong>ที่วิจิตรงดงาม</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card highlight-green">
+                        <span class="tag tag-green">ภาษาและวรรณกรรม</span>
+                        <h3 class="card-title" style="margin-top:8px; color:var(--success);">📚 3. ด้านวรรณกรรมสำคัญ</h3>
+                        <ul class="card-list">
+                            <li><strong>ลิลิตโองการแช่งน้ำ:</strong> วรรณกรรมพิธีถือน้ำพระพิพัฒน์สัตยาสมัยพระเจ้าอู่ทอง</li>
+                            <li><strong>มหาชาติคำหลวง และ ลิลิตยวนพ่าย:</strong> สมัยสมเด็จพระบรมไตรโลกนาถ</li>
+                            <li><strong>หนังสือ "จินดามณี":</strong> แต่งโดย <strong>พระโหราธิบดี</strong> ในสมัยสมเด็จพระนารายณ์มหาราช ถือเป็น<strong>แบบเรียนภาษาไทยเล่มแรก</strong></li>
+                            <li><strong>กาพย์เห่เรือ:</strong> พระนิพนธ์ใน<strong>เจ้าฟ้าธรรมธิเบศร (เจ้าฟ้ากุ้ง)</strong> สมัยอยุธยาตอนปลาย</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 9: ความเสื่อมและการเสียกรุงศรีอยุธยา ครั้งที่ 1 (พ.ศ. 2112) และ ครั้งที่ 2 (พ.ศ. 2310) -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>🔥 ๘. เปรียบเทียบการเสียกรุงศรีอยุธยา ครั้งที่ ๑ (พ.ศ. ๒๑๑๒) และ ครั้งที่ ๒ (พ.ศ. ๒๓๑๐)</h2>
+                <span class="slide-unit-tag">ประวัติศาสตร์ ม.2 (พว.) | หน้า 9/12</span>
+            </div>
+            <div class="slide-body">
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th style="width:20%;">ประเด็นเปรียบเทียบ</th>
+                            <th style="width:40%;">การเสียกรุงศรีอยุธยา ครั้งที่ ๑ (พ.ศ. ๒๑๑๒)</th>
+                            <th style="width:40%;">การเสียกรุงศรีอยุธยา ครั้งที่ ๒ (พ.ศ. ๒๓๑๐)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>กษัตริย์อยุธยา / พม่า</strong></td>
+                            <td>• อยุธยา: สมเด็จพระมหาจักรพรรดิ – สมเด็จพระมหินทราธิราช<br>• พม่า: <strong>พระเจ้าบุเรงนอง</strong> (ราชวงศ์ตองอู)</td>
+                            <td>• อยุธยา: สมเด็จพระที่นั่งสุริยาศน์อมรินทร์ (พระเจ้าเอกทัศ)<br>• พม่า: <strong>พระเจ้ามังระ</strong> (ส่งเนเมียวสีหบดี และ มังมหานรธา ยกทัพมา)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>สาเหตุสำคัญ</strong></td>
+                            <td>• สงครามช้างเผือก และการขาดความสามัคคีระหว่างราชสำนักอยุธยากับหัวเมืองเหนือ (สมเด็จพระมหาธรรมราชา เมืองพิษณุโลก)</td>
+                            <td>• ความแตกแยกแย่งชิงอำนาจในราชสำนักมาตั้งแต่ปลายราชวงศ์บ้านพลูหลวงทำให้ขุนนางมีฝีมือถูกกำจัด<br>• ว่างเว้นสงครามใหญ่เป็นเวลานาน การระดมพลไพร่ล้มเหลว และพม่าปรับยุทธวิธีล้อมกรุงข้ามฤดูน้ำหลาก</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ผลกระทบและการกอบกู้เอกราช</strong></td>
+                            <td>• พม่าไม่ได้ทำลายบ้านเมือง เพียงกวาดต้อนผู้คนและตั้งสมเด็จพระมหาธรรมราชาเป็นกษัตริย์ประเทศราช<br>• <strong>สมเด็จพระนเรศวรมหาราช</strong>ทรงประกาศอิสรภาพเมื่อ <strong>พ.ศ. 2127</strong> (รวมเวลาเสียเอกราช 15 ปี)</td>
+                            <td>• พม่าเผาทำลายปราสาทราชวัง วัดวาอาราม และกวาดต้อนผู้คน ทำให้อาณาจักรอยุธยา<strong>ล่มสลายลงอย่างถาวร</strong><br>• <strong>สมเด็จพระเจ้าตากสินมหาราช</strong>ทรงกอบกู้เอกราชคืนได้ภายใน <strong>7 เดือน (พ.ย. พ.ศ. 2310)</strong> และสถาปนากรุงธนบุรี</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SLIDE 10: บุคคลสำคัญสมัยอยุธยา -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>🌟 ๙. พระมหากษัตริย์และบุคคลสำคัญในประวัติศาสตร์สมัยอยุธยา</h2>
+                <span class="slide-unit-tag">ประวัติศาสตร์ ม.2 (พว.) | หน้า 10/12</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="info-card highlight-purple">
+                        <div class="card-title">1. สมเด็จพระบรมไตรโลกนาถ (พ.ศ. 1991 – 2031)</div>
+                        <ul class="card-list">
+                            <li>ทรงรวมอาณาจักรสุโขทัยเข้ากับอยุธยาอย่างสมบูรณ์</li>
+                            <li>ทรงปฏิรูปการปกครอง (สมุหพระกลาโหม - สมุหนายก - จตุสดมภ์) และตรา<strong>กฎหมายทำเนียบศักดินา</strong>ที่ใช้สืบต่อกันมากว่า 400 ปี</li>
+                            <li>ทรงถวายพระราชวังเดิมสร้างเป็น <strong>วัดพระศรีสรรเพชญ์</strong></li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card highlight-orange">
+                        <div class="card-title" style="color:var(--accent);">2. สมเด็จพระสุริโยทัย และ สมเด็จพระนเรศวรมหาราช</div>
+                        <ul class="card-list">
+                            <li><strong>สมเด็จพระสุริโยทัย:</strong> ทรงไสช้างพระที่นั่งเข้าขวางพระเจ้าแปรเพื่อปกป้องสมเด็จพระมหาจักรพรรดิ (พ.ศ. 2091)</li>
+                            <li><strong>สมเด็จพระนเรศวรมหาราช:</strong> ทรงประกาศอิสรภาพที่เมืองแครง (พ.ศ. 2127) และทรงกระทำ<strong>ยุทธหัตถี</strong>มีชัยชนะเหนือพระมหาอุปราชา (พ.ศ. 2135) สร้างความมั่นคงให้ชาติไทยยาวนานกว่า 150 ปี</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card highlight-gold">
+                        <div class="card-title" style="color:#B27200;">3. สมเด็จพระนารายณ์มหาราช และ โกษาปาน</div>
+                        <ul class="card-list">
+                            <li>ทรงใช้นโยบายการทูตถ่วงดุลอำนาจมหาอำนาจตะวันตกอย่างชาญฉลาด</li>
+                            <li><strong>เจ้าพระยาโกษาธิบดี (ปาน):</strong> หัวหน้าคณะราชทูตไทยไปเจริญสัมพันธไมตรีกับพระเจ้าหลุยส์ที่ 14 แห่งฝรั่งเศส จนได้รับการชื่นชมไปทั่วทวีปยุโรป</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card highlight-green">
+                        <div class="card-title" style="color:var(--success);">4. วีรชนชาวบ้านบางระจัน (พ.ศ. 2308 – 2309)</div>
+                        <ul class="card-list">
+                            <li>กลุ่มชาวบ้านเมืองวิเศษไชยชาญ สิงห์บุรี สรรคบุรี (นำโดย นายแท่น นายโชติ นายอิน นายเมือง นายดอก นายทองแก้ว ฯลฯ โดยมีพระอาจารย์ธรรมโชติเป็นขวัญกำลังใจ)</li>
+                            <li>รวมพลังต่อสู้ต้านทานกองทัพพม่าของเนเมียวสีหบดีได้ถึง 7 ครั้ง นานกว่า 5 เดือน เป็นแบบอย่างของความรักชาติและสามัคคี</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 11: กิจกรรมทบทวนความรู้ (Interactive Quiz 1-3) -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>🎯 กิจกรรมทบทวนความรู้ เรื่อง อาณาจักรอยุธยา (ชุดที่ 1/2)</h2>
+                <span class="slide-unit-tag">ประวัติศาสตร์ ม.2 (พว.) | หน้า 11/12</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-3">
+                    <div class="info-card">
+                        <div class="card-title">ข้อที่ 1</div>
+                        <p style="margin-bottom:10px; font-weight:600;">พระมหากษัตริย์พระองค์ใดทรงปฏิรูปการปกครองสมัยอยุธยาตอนกลาง โดยแยกฝ่ายทหาร (สมุหพระกลาโหม) และฝ่ายพลเรือน (สมุหนายก) ออกจากกัน และตรากฎหมายทำเนียบศักดินา?</p>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ก. สมเด็จพระรามาธิบดีที่ 1 (พระเจ้าอู่ทอง)</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, true)">ข. สมเด็จพระบรมไตรโลกนาถ</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ค. สมเด็จพระนารายณ์มหาราช</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ง. สมเด็จพระเพทราชา</div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="card-title">ข้อที่ 2</div>
+                        <p style="margin-bottom:10px; font-weight:600;">ภาษีที่เก็บตามด่านขนอนทั้งทางบกและทางน้ำ โดยคำนวณตามขนาดความกว้างของปากเรือสำเภา เรียกว่าภาษีประเภทใด?</p>
+                        <div class="quiz-option" onclick="checkQuiz(this, true)">ก. จังกอบ</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ข. อากร</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ค. ส่วย</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ง. ฤชา</div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="card-title">ข้อที่ 3</div>
+                        <p style="margin-bottom:10px; font-weight:600;">ชาติตะวันตกชาติแรกที่เดินทางเข้ามาเจริญสัมพันธไมตรีและค้าขายกับกรุงศรีอยุธยาเมื่อ พ.ศ. 2054 คือชาติใด?</p>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ก. ฮอลันดา (เนเธอร์แลนด์)</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ข. ฝรั่งเศส</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, true)">ค. โปรตุเกส</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ง. อังกฤษ</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 12: กิจกรรมทบทวนความรู้ (Interactive Quiz 4-5) & สรุป -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>🎯 กิจกรรมทบทวนความรู้ เรื่อง อาณาจักรอยุธยา (ชุดที่ 2/2)</h2>
+                <span class="slide-unit-tag">ประวัติศาสตร์ ม.2 (พว.) | หน้า 12/12</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="info-card">
+                        <div class="card-title">ข้อที่ 4</div>
+                        <p style="margin-bottom:10px; font-weight:600;">ในสมัยอยุธยาตอนปลาย (เริ่มสมัยสมเด็จพระเพทราชา) ได้ปรับปรุงอำนาจหน้าที่ของ "สมุหพระกลาโหม" อย่างไร?</p>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ก. ให้ดูแลเฉพาะทหารรักษาพระองค์ในเขตพระราชวัง</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, true)">ข. ให้บังคับบัญชาทั้งฝ่ายทหารและพลเรือนในหัวเมืองฝ่ายใต้ทั้งหมด</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ค. ให้บังคับบัญชาเฉพาะหัวเมืองฝ่ายเหนือทั้งหมด</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ง. ให้ดูแลเฉพาะพระคลังสินค้าและการค้าสำเภา</div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="card-title">ข้อที่ 5</div>
+                        <p style="margin-bottom:10px; font-weight:600;">วรรณกรรมเรื่องใดที่แต่งขึ้นโดย "พระโหราธิบดี" ในสมัยสมเด็จพระนารายณ์มหาราช และถือเป็นแบบเรียนภาษาไทยเล่มแรก?</p>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ก. ลิลิตโองการแช่งน้ำ</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ข. มหาชาติคำหลวง</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, true)">ค. จินดามณี</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ง. กาพย์เห่เรือ</div>
+                    </div>
+                </div>
+
+                <div class="info-card highlight-purple" style="background:linear-gradient(90deg, #FCE4EC 0%, #FFF 100%); margin-top:auto;">
+                    <h3 class="card-title" style="font-size:1.3rem;">📝 กิจกรรมต่อเนื่องท้ายคาบเรียน: ใบงานวิชาประวัติศาสตร์ ม.2 เรื่อง อาณาจักรอยุธยา</h3>
+                    <p style="font-size:1.05rem; line-height:1.6;">
+                        ให้นักเรียนทำ <strong>ใบงานที่ 2.1 (การสถาปนาและพัฒนาการด้านการเมือง-เศรษฐกิจ-สังคมสมัยอยุธยา)</strong> และ <strong>ใบงานที่ 2.2 (ความสัมพันธ์กับต่างประเทศ ภูมิปัญญา และการเสียกรุงศรีอยุธยา)</strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="bottom-bar">
+        <div style="font-family:'Prompt',sans-serif; font-size:0.95rem;">
+            ใช้ปุ่มลูกศร <strong>⬅️ ➡️ บนคีย์บอร์ด</strong> เพื่อเลื่อนสไลด์ได้ทันที
+        </div>
+        <div class="progress-dots" id="dotsContainer"></div>
+        <div class="nav-buttons">
+            <button class="btn-nav" id="prevBtn" onclick="changeSlide(-1)">⬅️ ก่อนหน้า</button>
+            <span id="slideCounter" style="font-family:'Prompt',sans-serif; font-weight:700; min-width:80px; text-align:center;">1 / 12</span>
+            <button class="btn-nav" id="nextBtn" onclick="changeSlide(1)">ถัดไป ➡️</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        const dotsContainer = document.getElementById('dotsContainer');
+        const slideCounter = document.getElementById('slideCounter');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'dot' + (i === 0 ? ' active' : '');
+            dot.onclick = () => goToSlide(i);
+            dotsContainer.appendChild(dot);
+        }
+
+        function updateUI() {
+            slides.forEach((s, idx) => s.classList.toggle('active', idx === currentSlide));
+            document.querySelectorAll('.dot').forEach((d, idx) => d.classList.toggle('active', idx === currentSlide));
+            slideCounter.textContent = `${currentSlide + 1} / ${totalSlides}`;
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === totalSlides - 1;
+        }
+
+        function changeSlide(dir) {
+            const next = currentSlide + dir;
+            if (next >= 0 && next < totalSlides) { currentSlide = next; updateUI(); }
+        }
+
+        function goToSlide(index) { currentSlide = index; updateUI(); }
+
+        function toggleAnswer(id) {
+            const el = document.getElementById(id);
+            el.style.display = (el.style.display === 'block') ? 'none' : 'block';
+        }
+
+        function checkQuiz(el, isCorrect) {
+            const parent = el.parentElement;
+            parent.querySelectorAll('.quiz-option').forEach(opt => opt.classList.remove('correct', 'wrong'));
+            if (isCorrect) {
+                el.classList.add('correct');
+                if (!el.textContent.includes('✅')) el.innerHTML += ' <span>✅ ถูกต้อง!</span>';
+            } else {
+                el.classList.add('wrong');
+                if (!el.textContent.includes('❌')) el.innerHTML += ' <span>❌ ลองใหม่อีกครั้ง</span>';
+            }
+        }
+
+        function toggleFullScreen() {
+            if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+            else if (document.exitFullscreen) document.exitFullscreen();
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') changeSlide(1);
+            else if (e.key === 'ArrowLeft') changeSlide(-1);
+        });
+
+        updateUI();
+    </script>
+</body>
+</html>

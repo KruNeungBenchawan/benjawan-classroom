@@ -1,5 +1,5 @@
 (() => {
-  const STORAGE_KEY = "benjawan_classroom_data_v5";
+  const STORAGE_KEY = "benjawan_classroom_data_v6";
 
   const TYPE_LABELS = {
     onet: "เว็บติวสอบ / O-NET",

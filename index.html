@@ -10,7 +10,7 @@
     href="https://fonts.googleapis.com/css2?family=Mali:wght@500;600;700&family=Sarabun:wght@400;500;600;700&display=swap"
     rel="stylesheet"
   />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=3" />
 </head>
 <body>
   <!-- Teacher Mode Toolbar (visible only when Teacher Mode is active) -->
@@ -127,173 +127,169 @@
         </div>
       </aside>
 
-      <!-- Main Stage Content -->
+      <!-- Main Stage -->
       <main class="main-stage">
-        <!-- Hero Banner (Matching Reference Image Composition + Chibi Style) -->
-        <section class="hero-banner" id="homeSection" aria-label="หน้าหลัก ห้องเรียนครูเบ็ญจวรรณ">
-          <!-- Decorative geometric line & sky-blue accent block -->
-          <div class="hero-accent-block" aria-hidden="true"></div>
-          <div class="hero-accent-line" aria-hidden="true"></div>
-          <span class="sparkle sparkle-1" aria-hidden="true">✦</span>
-          <span class="sparkle sparkle-2" aria-hidden="true">✦</span>
-          <span class="sparkle sparkle-3" aria-hidden="true">✦</span>
+        <!-- VIEW 1: Home (Fits in 1 Screen) -->
+        <div id="viewHome" class="stage-view">
+          <!-- Hero Banner -->
+          <section class="hero-banner" id="homeSection" aria-label="หน้าหลัก ห้องเรียนครูเบ็ญจวรรณ">
+            <div class="hero-accent-block" aria-hidden="true"></div>
+            <div class="hero-accent-line" aria-hidden="true"></div>
+            <span class="sparkle sparkle-1" aria-hidden="true">✦</span>
+            <span class="sparkle sparkle-2" aria-hidden="true">✦</span>
+            <span class="sparkle sparkle-3" aria-hidden="true">✦</span>
 
-          <div class="hero-content-grid">
-            <div class="hero-text-col">
-              <!-- Cute Chibi Classroom Crest -->
-              <div class="hero-crest" aria-hidden="true">
-                <svg viewBox="0 0 64 64" width="60" height="60" fill="none">
-                  <circle cx="32" cy="32" r="29" fill="#FFF7D6" stroke="#1E527C" stroke-width="3" />
-                  <path d="M18 40V23a3 3 0 0 1 3-3h10v22H21a3 3 0 0 1-3-2z" fill="#7DD3FC" stroke="#1E527C" stroke-width="2.5" />
-                  <path d="M46 40V23a3 3 0 0 0-3-3H33v22h10a3 3 0 0 0 3-2z" fill="#FDE047" stroke="#1E527C" stroke-width="2.5" />
-                  <circle cx="32" cy="17" r="5" fill="#FF7AA2" stroke="#1E527C" stroke-width="2.5" />
-                  <path d="M25 46h14" stroke="#1E527C" stroke-width="3" stroke-linecap="round" />
-                </svg>
+            <div class="hero-content-grid">
+              <div class="hero-text-col">
+                <div class="hero-crest" aria-hidden="true">
+                  <svg viewBox="0 0 64 64" width="48" height="48" fill="none">
+                    <circle cx="32" cy="32" r="29" fill="#FFF7D6" stroke="#1E527C" stroke-width="3" />
+                    <path d="M18 40V23a3 3 0 0 1 3-3h10v22H21a3 3 0 0 1-3-2z" fill="#7DD3FC" stroke="#1E527C" stroke-width="2.5" />
+                    <path d="M46 40V23a3 3 0 0 0-3-3H33v22h10a3 3 0 0 0 3-2z" fill="#FDE047" stroke="#1E527C" stroke-width="2.5" />
+                    <circle cx="32" cy="17" r="5" fill="#FF7AA2" stroke="#1E527C" stroke-width="2.5" />
+                    <path d="M25 46h14" stroke="#1E527C" stroke-width="3" stroke-linecap="round" />
+                  </svg>
+                </div>
+
+                <h1 class="hero-main-title">ห้องเรียนครูเบ็ญจวรรณ</h1>
+                <p class="hero-subtitle">คลังรวบรวมสื่อการสอน ใบงาน และเอกสารออนไลน์</p>
+                <p class="hero-submeta" id="profileSchool">ห้องเรียนภาษาไทย • ปีการศึกษา 2569</p>
+
+                <div class="hero-teacher-box">
+                  <p class="hero-teacher-name" id="profileName">นางสาวเบ็ญจวรรณ สิงห์กุล</p>
+                  <p class="hero-teacher-role" id="profileRole">ตำแหน่งครู วิทยฐานะครูชำนาญการ</p>
+                </div>
+
+                <p class="hero-bio" id="profileBio">
+                  ยินดีต้อนรับเข้าสู่คลังรวบรวมสื่อการสอน ใบงาน แผนการจัดการเรียนรู้ คลังติวสอบ O-NET และเอกสารสำคัญต่างๆ อย่างเป็นระบบ
+                </p>
+
+                <div class="hero-stats">
+                  <div class="hero-stat-pill">
+                    <strong id="statTotal">0</strong> สื่อ &amp; เอกสาร
+                  </div>
+                  <div class="hero-stat-pill">
+                    <strong id="statCategories">0</strong> หมวดหมู่
+                  </div>
+                  <div class="hero-stat-pill">
+                    <strong id="statSubjects">0</strong> รายวิชา
+                  </div>
+                  <button type="button" class="hero-stat-pill hero-go-btn" id="heroExploreBtn">
+                    ดูสื่อทั้งหมด →
+                  </button>
+                </div>
               </div>
 
-              <h1 class="hero-main-title">ห้องเรียนครูเบ็ญจวรรณ</h1>
-              <p class="hero-subtitle">คลังรวบรวมสื่อการสอน ใบงาน และเอกสารออนไลน์</p>
-              <p class="hero-submeta" id="profileSchool">ห้องเรียนภาษาไทย • ปีการศึกษา 2569</p>
-
-              <div class="hero-teacher-box">
-                <p class="hero-teacher-name" id="profileName">นางสาวเบ็ญจวรรณ สิงห์กุล</p>
-                <p class="hero-teacher-role" id="profileRole">ตำแหน่งครู วิทยฐานะครูชำนาญการ</p>
-              </div>
-
-              <p class="hero-bio" id="profileBio">
-                ยินดีต้อนรับนักเรียน ผู้ปกครอง และเพื่อนครูทุกท่าน เข้าสู่คลังรวบรวมสื่อการสอน ใบงาน แผนการจัดการเรียนรู้ คลังติวสอบ O-NET และเอกสารสำคัญต่างๆ อย่างเป็นระบบ
-              </p>
-
-              <div class="hero-stats">
-                <div class="hero-stat-pill">
-                  <strong id="statTotal">0</strong> สื่อ &amp; เอกสาร
+              <!-- Overlapping Chibi Circular Frames -->
+              <div class="hero-circles">
+                <div class="circle-arc" aria-hidden="true"></div>
+                <div class="circle-main">
+                  <img
+                    src="assets/chibi-teacher.jpg"
+                    alt="การ์ตูน Chibi ครูเบ็ญจวรรณ"
+                    onerror="this.style.display='none'; document.getElementById('profileAvatar').classList.remove('hidden');"
+                  />
+                  <div class="avatar-fallback hidden" id="profileAvatar">ครูเบ็ญ</div>
                 </div>
-                <div class="hero-stat-pill">
-                  <strong id="statCategories">0</strong> หมวดหมู่
-                </div>
-                <div class="hero-stat-pill">
-                  <strong id="statSubjects">0</strong> รายวิชา
+                <div class="circle-sub">
+                  <img
+                    src="assets/chibi-classroom.jpg"
+                    alt="การ์ตูน Chibi นักเรียนและห้องเรียน"
+                    onerror="this.parentElement.style.display='none';"
+                  />
                 </div>
               </div>
             </div>
 
-            <!-- Overlapping Chibi Circular Frames -->
-            <div class="hero-circles">
-              <div class="circle-arc" aria-hidden="true"></div>
-              <div class="circle-main">
-                <img
-                  src="assets/chibi-teacher.jpg"
-                  alt="การ์ตูน Chibi ครูเบ็ญจวรรณ"
-                  onerror="this.style.display='none'; document.getElementById('profileAvatar').classList.remove('hidden');"
+            <!-- Layered Cloud Wave Footer inside Hero -->
+            <div class="hero-clouds" aria-hidden="true">
+              <svg viewBox="0 0 1200 90" preserveAspectRatio="none">
+                <path
+                  d="M0,55 C60,25 120,25 175,48 C230,20 300,22 350,48 C410,18 485,20 540,46 C600,18 675,20 730,48 C790,22 860,22 920,46 C985,18 1060,20 1120,46 C1155,32 1185,35 1200,48 L1200,90 L0,90 Z"
+                  fill="#4B86B4"
+                  opacity="0.75"
                 />
-                <div class="avatar-fallback hidden" id="profileAvatar">ครูเบ็ญ</div>
-              </div>
-              <div class="circle-sub">
-                <img
-                  src="assets/chibi-classroom.jpg"
-                  alt="การ์ตูน Chibi นักเรียนและห้องเรียน"
-                  onerror="this.parentElement.style.display='none';"
+                <path
+                  d="M0,68 C75,38 145,42 210,64 C275,38 355,40 420,62 C490,36 575,38 640,64 C710,38 785,40 850,62 C925,36 1005,40 1070,64 C1120,46 1165,48 1200,62 L1200,90 L0,90 Z"
+                  fill="#9AD0F5"
                 />
-              </div>
+              </svg>
             </div>
-          </div>
+          </section>
 
-          <!-- Layered Cloud Wave Footer inside Hero (like reference image) -->
-          <div class="hero-clouds" aria-hidden="true">
-            <svg viewBox="0 0 1200 90" preserveAspectRatio="none">
-              <path
-                d="M0,55 C60,25 120,25 175,48 C230,20 300,22 350,48 C410,18 485,20 540,46 C600,18 675,20 730,48 C790,22 860,22 920,46 C985,18 1060,20 1120,46 C1155,32 1185,35 1200,48 L1200,90 L0,90 Z"
-                fill="#4B86B4"
-                opacity="0.75"
-              />
-              <path
-                d="M0,68 C75,38 145,42 210,64 C275,38 355,40 420,62 C490,36 575,38 640,64 C710,38 785,40 850,62 C925,36 1005,40 1070,64 C1120,46 1165,48 1200,62 L1200,90 L0,90 Z"
-                fill="#9AD0F5"
-              />
-            </svg>
-          </div>
-        </section>
-
-        <!-- Featured O-NET 2569 Showcase -->
-        <section class="featured-onet-section" aria-label="คลังติวสอบ O-NET ภาษาไทย 2569">
-          <div class="featured-head">
-            <span class="featured-pill">
-              <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
-                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-              </svg>
-              เว็บติวสอบ O-NET ภาษาไทย แนะนำ (ปี 2569)
-            </span>
-          </div>
-          <div class="featured-onet-grid">
-            <a
-              href="https://kruneungbenchawan.github.io/onet-thai-p6-2569/index.html"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="onet-banner-card onet-p6"
-            >
-              <div class="onet-icon-box" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                  <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
-                  <path d="M6 12v5c3 3 9 3 12 0v-5" />
-                </svg>
+          <!-- Bottom Row on Home View: O-NET 2569 + Announcements side-by-side -->
+          <div class="home-bottom-grid">
+            <section class="featured-onet-section" aria-label="คลังติวสอบ O-NET ภาษาไทย 2569">
+              <div class="featured-head">
+                <span class="featured-pill">
+                  <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                  เว็บติวสอบ O-NET ภาษาไทย แนะนำ (2569)
+                </span>
               </div>
-              <div class="onet-info">
-                <span class="onet-level-badge">ระดับชั้น ป.6</span>
-                <h3>O-NET ภาษาไทย ป.6 (2569)</h3>
-                <p>ฝึกทำข้อสอบและทบทวนบทเรียนภาษาไทยออนไลน์</p>
-              </div>
-              <span class="onet-arrow" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="18" height="18">
-                  <path d="M5 12h14M13 5l7 7-7 7" />
-                </svg>
-              </span>
-            </a>
+              <div class="featured-onet-grid">
+                <a
+                  href="https://kruneungbenchawan.github.io/onet-thai-p6-2569/index.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="onet-banner-card onet-p6"
+                >
+                  <div class="onet-icon-box" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                      <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                      <path d="M6 12v5c3 3 9 3 12 0v-5" />
+                    </svg>
+                  </div>
+                  <div class="onet-info">
+                    <span class="onet-level-badge">ระดับชั้น ป.6</span>
+                    <h3>O-NET ภาษาไทย ป.6</h3>
+                  </div>
+                  <span class="onet-arrow" aria-hidden="true">→</span>
+                </a>
 
-            <a
-              href="https://kruneungbenchawan.github.io/onet-thai-m3-2569/"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="onet-banner-card onet-m3"
-            >
-              <div class="onet-icon-box" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                  <path d="M12 20h9" />
-                  <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
-                </svg>
+                <a
+                  href="https://kruneungbenchawan.github.io/onet-thai-m3-2569/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="onet-banner-card onet-m3"
+                >
+                  <div class="onet-icon-box" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                      <path d="M12 20h9" />
+                      <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+                    </svg>
+                  </div>
+                  <div class="onet-info">
+                    <span class="onet-level-badge">ระดับชั้น ม.3</span>
+                    <h3>O-NET ภาษาไทย ม.3</h3>
+                  </div>
+                  <span class="onet-arrow" aria-hidden="true">→</span>
+                </a>
               </div>
-              <div class="onet-info">
-                <span class="onet-level-badge">ระดับชั้น ม.3</span>
-                <h3>O-NET ภาษาไทย ม.3 (2569)</h3>
-                <p>คลังข้อสอบเสมือนจริงและสรุปเนื้อหาเตรียมสอบ ม.3</p>
+            </section>
+
+            <!-- Announcements Board -->
+            <section class="card announcements-card" aria-label="กระดานประกาศข่าวสาร">
+              <div class="section-head">
+                <h2>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="18" height="18">
+                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                    <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                  </svg>
+                  ประกาศข่าวสาร
+                </h2>
+                <span class="count-badge" id="announcementCount">0 ประกาศ</span>
               </div>
-              <span class="onet-arrow" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="18" height="18">
-                  <path d="M5 12h14M13 5l7 7-7 7" />
-                </svg>
-              </span>
-            </a>
+              <ul class="announcement-list" id="announcementList">
+                <!-- Rendered by JS -->
+              </ul>
+            </section>
           </div>
-        </section>
+        </div>
 
-        <!-- Announcements Board -->
-        <section class="card announcements-card" aria-label="กระดานประกาศข่าวสาร">
-          <div class="section-head">
-            <h2>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="20" height="20">
-                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
-                <path d="M13.73 21a2 2 0 0 1-3.46 0" />
-              </svg>
-              กระดานประกาศข่าวสารห้องเรียน
-            </h2>
-            <span class="count-badge" id="announcementCount">0 ประกาศ</span>
-          </div>
-          <ul class="announcement-list" id="announcementList">
-            <!-- Rendered by JS -->
-          </ul>
-        </section>
-
-        <!-- Resources & Documents Section -->
-        <section id="resourcesSection" class="resources-section" aria-label="คลังสื่อการสอนและเอกสาร">
+        <!-- VIEW 2: Resources & Documents Explorer (Fits in 1 Screen) -->
+        <section id="viewResources" class="stage-view hidden" aria-label="คลังสื่อการสอนและเอกสาร">
           <div class="categories-section">
             <div class="category-tabs" id="categoryTabs" role="tablist">
               <!-- Rendered by JS -->
@@ -357,15 +353,17 @@
             <button id="clearFiltersBtn" class="link-btn hidden" type="button">ล้างตัวกรองทั้งหมด</button>
           </div>
 
-          <div id="resourcesContainer" class="resources-grid" aria-live="polite">
-            <!-- Rendered by JS -->
-          </div>
+          <div class="resources-scroll-area">
+            <div id="resourcesContainer" class="resources-grid" aria-live="polite">
+              <!-- Rendered by JS -->
+            </div>
 
-          <div id="emptyState" class="empty-state hidden">
-            <div class="empty-icon" aria-hidden="true">📂</div>
-            <h3>ไม่พบสื่อการสอนหรือเอกสารที่ค้นหา</h3>
-            <p>ลองเปลี่ยนคำค้นหา หรือเลือกหมวดหมู่/ระดับชั้นอื่นดูนะครับ</p>
-            <button id="emptyResetBtn" class="btn btn-outline" type="button">แสดงรายการทั้งหมด</button>
+            <div id="emptyState" class="empty-state hidden">
+              <div class="empty-icon" aria-hidden="true">📂</div>
+              <h3>ไม่พบสื่อการสอนหรือเอกสารที่ค้นหา</h3>
+              <p>ลองเปลี่ยนคำค้นหา หรือเลือกหมวดหมู่/ระดับชั้นอื่นดูนะครับ</p>
+              <button id="emptyResetBtn" class="btn btn-outline" type="button">แสดงรายการทั้งหมด</button>
+            </div>
           </div>
         </section>
 
@@ -509,7 +507,7 @@
   <!-- Toast Notification -->
   <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
 
-  <script src="data.js"></script>
-  <script src="app.js"></script>
+  <script src="data.js?v=3"></script>
+  <script src="app.js?v=3"></script>
 </body>
 </html>

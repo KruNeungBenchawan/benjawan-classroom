@@ -225,6 +225,8 @@ a {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  overflow-y: auto;
+  padding-bottom: 4px;
 }
 
 /* Hero Banner (Compact 1-Page Composition) */
@@ -477,7 +479,7 @@ a {
 /* Home Bottom Grid (O-NET + Announcements side by side in 1 screen) */
 .home-bottom-grid {
   display: grid;
-  grid-template-columns: 1.15fr 1fr;
+  grid-template-columns: 1.45fr 1fr;
   gap: 14px;
   flex: 1;
   min-height: 0;
@@ -491,16 +493,16 @@ a {
 
 .featured-onet-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
   flex: 1;
 }
 
 .onet-banner-card {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 14px 16px;
+  gap: 10px;
+  padding: 12px 13px;
   border-radius: 18px;
   border: 2.5px solid var(--navy);
   box-shadow: 0 4px 0 var(--navy);
@@ -561,7 +563,6 @@ a {
 
 .onet-game {
   background: linear-gradient(135deg, #f3e8ff 0%, #ffe4ee 100%);
-  grid-column: 1 / -1;
 }
 
 .onet-game .onet-icon-box {
@@ -569,9 +570,9 @@ a {
 }
 
 .onet-icon-box {
-  width: 54px;
-  height: 54px;
-  border-radius: 16px;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
   border: 2px solid var(--navy);
   background: #ffffff;
   display: grid;
@@ -581,8 +582,8 @@ a {
 }
 
 .onet-icon-box svg {
-  width: 26px;
-  height: 26px;
+  width: 22px;
+  height: 22px;
 }
 
 .onet-p6 .onet-icon-box { color: #e11d48; }
@@ -606,7 +607,7 @@ a {
 }
 
 .onet-info h3 {
-  font-size: 1.08rem;
+  font-size: 0.98rem;
   font-weight: 700;
   color: var(--navy-dark);
 }
@@ -618,8 +619,8 @@ a {
 }
 
 .onet-arrow {
-  width: 36px;
-  height: 36px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   background: #ffffff;
   border: 2px solid var(--navy);
@@ -627,6 +628,7 @@ a {
   place-items: center;
   flex-shrink: 0;
   color: var(--navy);
+  font-size: 0.9rem;
 }
 
 /* Generic Card */

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ใบงานและเฉลย วิชาประวัติศาสตร์ ม.2 - อาณาจักรอยุธยา (สำนักพิมพ์ พว.)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Prompt:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #8E244D;
+            --primary-light: #FCE4EC;
+            --accent: #D84315;
+            --answer-red: #D32F2F;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background: #E5DCE0;
+            color: #1A1A1A;
+            padding: 75px 0 40px;
+            line-height: 1.5;
+        }
+
+        .toolbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            background: #3B0D1E;
+            color: white;
+            padding: 12px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 999;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+        }
+        .toolbar-title { font-family: 'Prompt', sans-serif; font-size: 1rem; display: flex; align-items: center; gap: 10px; }
+        .toolbar-actions { display: flex; gap: 10px; }
+        .btn-tool { padding: 8px 16px; border-radius: 8px; border: none; font-family: 'Prompt', sans-serif; font-weight: 600; font-size: 0.9rem; cursor: pointer; }
+        .btn-student { background: #FFFFFF; color: #3B0D1E; }
+        .btn-teacher { background: #E53935; color: white; }
+        .btn-print { background: #00897B; color: white; }
+
+        .a4-page {
+            width: 210mm;
+            min-height: 297mm;
+            background: white;
+            margin: 0 auto 24px;
+            padding: 13mm 15mm;
+            box-shadow: 0 8px 28px rgba(0,0,0,0.18);
+            border-radius: 4px;
+            position: relative;
+        }
+
+        .ws-header { border: 2px solid var(--primary); border-radius: 10px; overflow: hidden; margin-bottom: 11px; }
+        .ws-header-top { background: var(--primary); color: white; padding: 8px 16px; display: flex; justify-content: space-between; align-items: center; font-family: 'Prompt', sans-serif; }
+        .ws-header-top h1 { font-size: 1.15rem; font-weight: 700; }
+        .ws-badge { background: #F57C00; color: white; padding: 2px 10px; border-radius: 14px; font-size: 0.82rem; font-weight: 600; }
+        .ws-student-info { padding: 7px 16px; background: #FFF9FB; font-size: 0.9rem; display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; }
+
+        .ws-section { margin-bottom: 12px; }
+        .section-title { font-family: 'Prompt', sans-serif; font-size: 0.94rem; font-weight: 700; color: var(--primary); background: var(--primary-light); padding: 5px 12px; border-left: 5px solid var(--primary); border-radius: 4px; margin-bottom: 7px; }
+
+        .ws-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+        .ws-table th, .ws-table td { border: 1px solid #9E9E9E; padding: 5px 8px; vertical-align: top; }
+        .ws-table th { background: var(--primary-light); color: #5C102E; font-family: 'Prompt', sans-serif; font-weight: 600; text-align: center; }
+
+        .matching-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 12px; font-size: 0.86rem; }
+        .match-box { border: 1px solid #B0BEC5; border-radius: 8px; padding: 7px 11px; background: #FAFAFA; }
+        .match-item { margin-bottom: 4px; }
+
+        .fill-blank { display: inline-block; min-width: 105px; border-bottom: 1px dotted #333; text-align: center; padding: 0 5px; }
+        .ans-text { color: transparent; user-select: none; font-weight: 700; }
+        body.teacher-mode .ans-text { color: var(--answer-red); user-select: auto; }
+
+        .ans-block { border-bottom: 1px dotted #555; min-height: 21px; padding: 1px 6px; font-size: 0.85rem; color: transparent; }
+        body.teacher-mode .ans-block { color: var(--answer-red); font-weight: 600; }
+
+        .mindmap-container { border: 1.5px dashed var(--primary); border-radius: 12px; padding: 10px; background: #FFFDFD; }
+        .mindmap-center { background: var(--primary); color: white; font-family: 'Prompt', sans-serif; font-weight: 700; text-align: center; padding: 5px 16px; border-radius: 20px; width: 340px; margin: 3px auto 8px; font-size: 0.92rem; }
+        .mindmap-branches { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+        .mm-node { border: 1.5px solid #AD1457; border-radius: 8px; padding: 6px 10px; background: white; font-size: 0.84rem; }
+        .mm-node-title { font-family: 'Prompt', sans-serif; font-weight: 700; color: var(--primary); border-bottom: 1px solid #E0E0E0; padding-bottom: 2px; margin-bottom: 4px; display: flex; justify-content: space-between; }
+
+        .evidence-card { border: 1px solid #BCAAA4; background: #FFFDF9; border-radius: 8px; padding: 8px 12px; font-size: 0.86rem; }
+        .teacher-watermark { display: none; background: #FFEBEE; color: #C62828; border: 1.5px solid #EF5350; padding: 3px 10px; border-radius: 6px; font-family: 'Prompt', sans-serif; font-weight: 700; font-size: 0.82rem; }
+        body.teacher-mode .teacher-watermark { display: inline-block; }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .toolbar { display: none !important; }
+            .a4-page { box-shadow: none; margin: 0; width: 100%; page-break-after: always; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="toolbar">
+        <div class="toolbar-title">
+            <span>📄 ใบงานประวัติศาสตร์ ม.2 (พว.) — อาณาจักรอยุธยา (รวม 2 ใบงาน)</span>
+            <span class="teacher-watermark">🔑 โหมดครูผู้สอน (แสดงเฉลย)</span>
+        </div>
+        <div class="toolbar-actions">
+            <button class="btn-tool btn-student" onclick="setMode(false)">📝 โหมดใบงานนักเรียน (ซ่อนเฉลย)</button>
+            <button class="btn-tool btn-teacher" onclick="setMode(true)">🔑 โหมดเฉลยสำหรับครู (แสดงคำตอบสีแดง)</button>
+            <button class="btn-tool btn-print" onclick="window.print()">🖨️ สั่งพิมพ์ขนาด A4 / บันทึก PDF</button>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         PAGE 1: ใบงานที่ 2.1 เรื่อง การสถาปนาและพัฒนาการด้านการเมือง-เศรษฐกิจ-สังคมสมัยอยุธยา
+         ===================================================================== -->
+    <div class="a4-page">
+        <div class="ws-header">
+            <div class="ws-header-top">
+                <h1>ใบงานที่ ๒.๑ เรื่อง การสถาปนาและพัฒนาการด้านการเมือง-เศรษฐกิจ-สังคมสมัยอยุธยา</h1>
+                <div>
+                    <span class="ws-badge">วิชาประวัติศาสตร์ ม.๒ (พว.)</span>
+                    <span class="teacher-watermark" style="margin-left:6px;">ฉบับเฉลยครู</span>
+                </div>
+            </div>
+            <div class="ws-student-info">
+                <span><strong>ชื่อ-นามสกุล:</strong> ............................................................................................</span>
+                <span><strong>ชั้น:</strong> ม.๒ / .........</span>
+                <span><strong>เลขที่:</strong> .........</span>
+                <span><strong>คะแนนที่ได้:</strong> ........ / ๒๐ คะแนน</span>
+            </div>
+        </div>
+
+        <!-- ตอนที่ 1 -->
+        <div class="ws-section">
+            <div class="section-title">ตอนที่ ๑ : เติมข้อมูลเกี่ยวกับการสถาปนาและปัจจัยความเจริญของกรุงศรีอยุธยา (๕ คะแนน)</div>
+            <div class="evidence-card" style="line-height:1.72;">
+                ๑. ผู้สถาปนากรุงศรีอยุธยาเมื่อ พ.ศ. ๑๘๙๓ คือ <span class="fill-blank"><span class="ans-text">สมเด็จพระรามาธิบดีที่ ๑ (พระเจ้าอู่ทอง)</span></span> โดยเป็นการรวมอำนาจของ ๒ แคว้นสำคัญคือ แคว้น <span class="fill-blank"><span class="ans-text">ละโว้ (ลพบุรี)</span></span> และแคว้น <span class="fill-blank"><span class="ans-text">สุพรรณภูมิ (สุพรรณบุรี)</span></span><br>
+                ๒. เกาะเมืองอยุธยามีแม่น้ำล้อมรอบ ๓ สาย ได้แก่ <span class="fill-blank"><span class="ans-text">แม่น้ำเจ้าพระยา, แม่น้ำป่าสัก และแม่น้ำลพบุรี</span></span><br>
+                ๓. ตลอดเวลา ๔๑๗ ปี อยุธยามีราชวงศ์ปกครองรวม ๕ ราชวงศ์ โดยราชวงศ์ที่ครองราชย์ยาวนานที่สุด (๑๓ พระองค์) คือ <span class="fill-blank"><span class="ans-text">ราชวงศ์สุพรรณภูมิ</span></span>
+            </div>
+        </div>
+
+        <!-- ตอนที่ 2 -->
+        <div class="ws-section">
+            <div class="section-title">ตอนที่ ๒ : ตารางเปรียบเทียบการจัดระเบียบการปกครองสมัยอยุธยา ๓ ยุค (๙ คะแนน)</div>
+            <table class="ws-table">
+                <thead>
+                    <tr>
+                        <th style="width:20%;">ยุคสมัย</th>
+                        <th style="width:42%;">การปกครองส่วนกลาง (ราชธานี)</th>
+                        <th style="width:38%;">การปกครองส่วนภูมิภาค (หัวเมือง)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>๑. อยุธยาตอนต้น</strong><br><small>(พ.ศ. ๑๘๙๓ – ๑๙๙๑)</small></td>
+                        <td>
+                            <div class="ans-block">แบ่งเป็น จตุสดมภ์ ๔ กรม ได้แก่ กรมเวียง กรมวัง กรมคลัง และกรมนา</div>
+                        </td>
+                        <td>
+                            <div class="ans-block">แบ่งเป็น เมืองลูกหลวง (หน้าด่าน ๔ ทิศ: ลพบุรี นครนายก พระประแดง สุพรรณบุรี) เมืองพระยามหานคร และประเทศราช</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>๒. อยุธยาตอนกลาง</strong><br><small>(สมัยพระบรมไตรโลกนาถ)</small></td>
+                        <td>
+                            <div class="ans-block">แยกฝ่ายทหาร (สมุหพระกลาโหม) และฝ่ายพลเรือน (สมุหนายก) กำกับจตุสดมภ์ (นครบาล ธรรมาธิกรณ์ โกษาธิบดี เกษตราธิการ)</div>
+                        </td>
+                        <td>
+                            <div class="ans-block">ยกเลิกเมืองลูกหลวง จัดเป็น หัวเมืองชั้นใน (ผู้รั้ง) หัวเมืองชั้นนอก (เมืองเอก โท ตรี จัตวา) และเมืองประเทศราช</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>๓. อยุธยาตอนปลาย</strong><br><small>(พ.ศ. ๒๒๓๑ – ๒๓๑๐)</small></td>
+                        <td colspan="2">
+                            <div class="ans-block">ถ่วงดุลอำนาจโดยแบ่งพื้นที่บังคับบัญชาทั้งทหารและพลเรือน: ๑) สมุหนายก ดูแลหัวเมืองฝ่ายเหนือ ๒) สมุหพระกลาโหม ดูแลหัวเมืองฝ่ายใต้ และ ๓) โกษาธิบดี (พระคลัง) ดูแลหัวเมืองชายทะเลตะวันออก</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ตอนที่ 3 -->
+        <div class="ws-section">
+            <div class="section-title">ตอนที่ ๓ : เศรษฐกิจการค้าสำเภา ภาษีอากร และระบบไพร่สมัยอยุธยา (๖ คะแนน)</div>
+            <div class="matching-grid">
+                <div class="match-box">
+                    <div class="match-item">.......... <strong>๑. พระคลังสินค้า</strong> <span class="ans-text">[ ค ]</span></div>
+                    <div class="match-item">.......... <strong>๒. จังกอบ</strong> <span class="ans-text">[ ก ]</span></div>
+                    <div class="match-item">.......... <strong>๓. อากร</strong> <span class="ans-text">[ ฉ ]</span></div>
+                    <div class="match-item">.......... <strong>๔. ส่วย</strong> <span class="ans-text">[ ข ]</span></div>
+                    <div class="match-item">.......... <strong>๕. ฤชา</strong> <span class="ans-text">[ ง ]</span></div>
+                    <div class="match-item">.......... <strong>๖. การเข้าเดือนออกเดือน</strong> <span class="ans-text">[ จ ]</span></div>
+                </div>
+                <div class="match-box" style="background:#FCE4EC;">
+                    <div class="match-item"><strong>ก.</strong> ภาษีเก็บตามด่านขนอนโดยวัดความกว้างปากเรือ</div>
+                    <div class="match-item"><strong>ข.</strong> สิ่งของหรือแร่ธาตุที่ส่งแทนการถูกเกณฑ์แรงงาน</div>
+                    <div class="match-item"><strong>ค.</strong> หน่วยงานผูกขาดการซื้อขายสินค้าต้องห้ามของรัฐ</div>
+                    <div class="match-item"><strong>ง.</strong> ค่าธรรมเนียมที่รัฐเรียกเก็บจากการติดต่อราชการ/ศาล</div>
+                    <div class="match-item"><strong>จ.</strong> หน้าที่ของไพร่ในการถูกเกณฑ์แรงงานปีละ ๖ เดือน</div>
+                    <div class="match-item"><strong>ฉ.</strong> ภาษีเก็บจากการประกอบอาชีพ เช่น ค่านา สุรา บ่อนเบี้ย</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         PAGE 2: ใบงานที่ 2.2 เรื่อง ความสัมพันธ์กับต่างประเทศ ภูมิปัญญา และการเสียกรุงศรีอยุธยา
+         ===================================================================== -->
+    <div class="a4-page">
+        <div class="ws-header">
+            <div class="ws-header-top">
+                <h1>ใบงานที่ ๒.๒ เรื่อง ความสัมพันธ์กับต่างประเทศ ภูมิปัญญา และการเสียกรุงศรีอยุธยา</h1>
+                <div>
+                    <span class="ws-badge">วิชาประวัติศาสตร์ ม.๒ (พว.)</span>
+                    <span class="teacher-watermark" style="margin-left:6px;">ฉบับเฉลยครู</span>
+                </div>
+            </div>
+            <div class="ws-student-info">
+                <span><strong>ชื่อ-นามสกุล:</strong> ............................................................................................</span>
+                <span><strong>ชั้น:</strong> ม.๒ / .........</span>
+                <span><strong>เลขที่:</strong> .........</span>
+                <span><strong>คะแนนที่ได้:</strong> ........ / ๒๐ คะแนน</span>
+            </div>
+        </div>
+
+        <!-- ตอนที่ 1: ผังความคิด Mind Map -->
+        <div class="ws-section">
+            <div class="section-title">ตอนที่ ๑ : สรุปผังความคิด (Mind Mapping) ความสัมพันธ์ต่างชาติและภูมิปัญญาสมัยอยุธยา (๑๒ คะแนน)</div>
+            <div class="mindmap-container">
+                <div class="mindmap-center">✨ ความสัมพันธ์กับต่างชาติและภูมิปัญญาสมัยอยุธยา</div>
+                <div class="mindmap-branches">
+                    <div class="mm-node">
+                        <div class="mm-node-title"><span>๑. ความสัมพันธ์กับประเทศในเอเชีย</span><span>(๓ คะแนน)</span></div>
+                        <div>• <strong>จีน:</strong> ค้าขายในระบบ <span class="fill-blank"><span class="ans-text">บรรณาการ (จิ้มก้อง)</span></span></div>
+                        <div>• <strong>ญี่ปุ่น:</strong> สินค้าที่ญี่ปุ่นต้องการซื้อคือ <span class="fill-blank"><span class="ans-text">หนังกวาง, ไม้ฝาง</span></span></div>
+                        <div>&nbsp;&nbsp;หัวหน้ากรมอาสาญี่ปุ่นคือ: <span class="fill-blank"><span class="ans-text">ออกญาเสนาภิมุข (ยามาดะ)</span></span></div>
+                    </div>
+
+                    <div class="mm-node">
+                        <div class="mm-node-title"><span>๒. ความสัมพันธ์กับชาติตะวันตก</span><span>(๓ คะแนน)</span></div>
+                        <div>• <strong>ชาติตะวันตกชาติแรก (พ.ศ. ๒๐๕๔):</strong> <span class="fill-blank"><span class="ans-text">โปรตุเกส (นำปืนไฟเข้ามา)</span></span></div>
+                        <div>• <strong>สมัยสมเด็จพระนารายณ์มหาราช:</strong> ดึงชาติ <span class="fill-blank"><span class="ans-text">ฝรั่งเศส</span></span></div>
+                        <div>&nbsp;&nbsp;มาถ่วงดุลอำนาจกับชาติ <span class="fill-blank"><span class="ans-text">ฮอลันดา (ดัตช์)</span></span></div>
+                        <div>&nbsp;&nbsp;ราชทูตไทยที่ไปฝรั่งเศสคือ: <span class="fill-blank"><span class="ans-text">เจ้าพระยาโกษาธิบดี (ปาน)</span></span></div>
+                    </div>
+
+                    <div class="mm-node">
+                        <div class="mm-node-title"><span>๓. ภูมิปัญญาด้านสถาปัตยกรรม-ศิลปะ</span><span>(๓ คะแนน)</span></div>
+                        <div>• <strong>วัดในเขตพระราชวังหลวง (เจดีย์ทรงลังกา ๓ องค์):</strong></div>
+                        <div>&nbsp;&nbsp;คือวัด <span class="fill-blank"><span class="ans-text">วัดพระศรีสรรเพชญ์</span></span></div>
+                        <div>• <strong>วัดพระปรางค์สมัยพระเจ้าปราสาททอง:</strong> <span class="fill-blank"><span class="ans-text">วัดไชยวัฒนาราม</span></span></div>
+                        <div>• <strong>พระพุทธรูปเอกลักษณ์อยุธยาตอนปลาย:</strong> <span class="fill-blank"><span class="ans-text">พระพุทธรูปทรงเครื่อง</span></span></div>
+                    </div>
+
+                    <div class="mm-node">
+                        <div class="mm-node-title"><span>๔. ภูมิปัญญาด้านภาษาและวรรณกรรม</span><span>(๓ คะแนน)</span></div>
+                        <div>• <strong>แบบเรียนภาษาไทยเล่มแรก:</strong> เรื่อง <span class="fill-blank"><span class="ans-text">จินดามณี</span></span></div>
+                        <div>&nbsp;&nbsp;ผู้แต่งคือ: <span class="fill-blank"><span class="ans-text">พระโหราธิบดี (สมัยพระนารายณ์ฯ)</span></span></div>
+                        <div>• <strong>วรรณกรรมพิธีถือน้ำพิพัฒน์สัตยา:</strong> <span class="fill-blank"><span class="ans-text">ลิลิตโองการแช่งน้ำ</span></span></div>
+                        <div>• <strong>ผู้แต่งกาพย์เห่เรือ:</strong> <span class="fill-blank"><span class="ans-text">เจ้าฟ้าธรรมธิเบศร (เจ้าฟ้ากุ้ง)</span></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ตอนที่ 2: เปรียบเทียบการเสียกรุงครั้งที่ 1 และ 2 -->
+        <div class="ws-section">
+            <div class="section-title">ตอนที่ ๒ : เปรียบเทียบการเสียกรุงศรีอยุธยา ครั้งที่ ๑ (พ.ศ. ๒๑๑๒) และ ครั้งที่ ๒ (พ.ศ. ๒๓๑๐) (๘ คะแนน)</div>
+            <table class="ws-table">
+                <thead>
+                    <tr>
+                        <th style="width:24%;">ประเด็นวิเคราะห์</th>
+                        <th style="width:38%;">การเสียกรุงศรีอยุธยา ครั้งที่ ๑ (พ.ศ. ๒๑๑๒)</th>
+                        <th style="width:38%;">การเสียกรุงศรีอยุธยา ครั้งที่ ๒ (พ.ศ. ๒๓๑๐)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>๑. สาเหตุสำคัญของความพ่ายแพ้</strong></td>
+                        <td>
+                            <div class="ans-block">ความแตกแยกระหว่างราชสำนักอยุธยากับหัวเมืองฝ่ายเหนือ (เมืองพิษณุโลก) และกองทัพพระเจ้าบุเรงนองมีความเข้มแข็งมาก</div>
+                        </td>
+                        <td>
+                            <div class="ans-block">การแย่งชิงราชสมบัติในราชวงศ์บ้านพลูหลวงทำให้เสียขุนนางคนสำคัญ การระดมพลไพร่ล้มเหลว และพม่าล้อมกรุงข้ามฤดูน้ำหลาก</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>๒. ผลกระทบและผู้กอบกู้เอกราช</strong></td>
+                        <td>
+                            <div class="ans-block">ตกเป็นประเทศราชพม่า ๑๕ ปี บ้านเมืองไม่ถูกเผาทำลาย / ผู้กอบกู้เอกราชคือ สมเด็จพระนเรศวรมหาราช (พ.ศ. ๒๑๒๗)</div>
+                        </td>
+                        <td>
+                            <div class="ans-block">บ้านเมืองถูกเผาทำลายจนอยุธยาล่มสลายถาวร / ผู้กอบกู้เอกราชใน ๗ เดือนคือ สมเด็จพระเจ้าตากสินมหาราช (พ.ศ. ๒๓๑๐)</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function setMode(isTeacher) {
+            if (isTeacher) document.body.classList.add('teacher-mode');
+            else document.body.classList.remove('teacher-mode');
+        }
+    </script>
+</body>
+</html>

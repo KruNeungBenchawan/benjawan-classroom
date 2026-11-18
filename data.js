@@ -14,6 +14,7 @@ window.DEFAULT_CLASSROOM_DATA = {
     { id: "lesson-plans", name: "แผน / สรุปเนื้อหา" },
     { id: "worksheets", name: "ใบงาน / แบบฝึกหัด" },
     { id: "media", name: "สไลด์ / สื่อภาพ" },
+    { id: "games", name: "เกมการเรียนรู้" },
     { id: "exams", name: "ข้อสอบ / O-NET" },
     { id: "documents", name: "เอกสาร PDF / ทั่วไป" }
   ],
@@ -28,6 +29,21 @@ window.DEFAULT_CLASSROOM_DATA = {
   ],
 
   resources: [
+    // --- เกมการเรียนรู้ ---
+    {
+      id: "game-kham-khlong-chong",
+      title: "เกมคำคล้องจองหรรษา (บทเรียน + สื่อบัตรคำ + ใบงาน + 3 เกม)",
+      category: "games",
+      type: "onet",
+      subject: "ภาษาไทย",
+      grade: "ประถมศึกษา",
+      year: "2569",
+      url: "kham-khlong-chong/index.html",
+      description: "บทเรียนสำเร็จรูปและเกมฝึกทักษะเรื่อง คำคล้องจอง ครบ 4 บทเรียน พร้อมเกมหรรษา 3 เกม เสียงอ่านภาษาไทย และเกียรติบัตร",
+      date: "2026-11-18",
+      pinned: true
+    },
+
     // --- ป.6 (onet-thai-p6-2569) ---
     {
       id: "onet-p6-2569",

@@ -1,5 +1,5 @@
 (() => {
-  const STORAGE_KEY = "benjawan_classroom_data_v2";
+  const STORAGE_KEY = "benjawan_classroom_data_v3";
 
   const TYPE_LABELS = {
     onet: "เว็บติวสอบ / O-NET",
@@ -164,8 +164,8 @@
 
   function sanitizeUrl(url) {
     try {
-      const parsed = new URL(url);
-      if (parsed.protocol === "http:" || parsed.protocol === "https:") {
+      const parsed = new URL(url, window.location.href);
+      if (parsed.protocol === "http:" || parsed.protocol === "https:" || parsed.protocol === "file:") {
         return parsed.href;
       }
     } catch {

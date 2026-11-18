@@ -559,6 +559,15 @@ a {
   background: linear-gradient(135deg, #e3f9ef 0%, #e3f3ff 100%);
 }
 
+.onet-game {
+  background: linear-gradient(135deg, #f3e8ff 0%, #ffe4ee 100%);
+  grid-column: 1 / -1;
+}
+
+.onet-game .onet-icon-box {
+  color: #7c3aed;
+}
+
 .onet-icon-box {
   width: 54px;
   height: 54px;

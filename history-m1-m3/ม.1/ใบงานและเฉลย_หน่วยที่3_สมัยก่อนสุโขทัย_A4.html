@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ใบงานและเฉลย วิชาประวัติศาสตร์ ม.1 - หน่วยการเรียนรู้ที่ 3 (สำนักพิมพ์ พว.)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Prompt:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #5E35B1;
+            --primary-light: #EDE7F6;
+            --accent: #E65100;
+            --answer-red: #D32F2F;
+            --border-dark: #4A3B69;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background: #E0DCE8;
+            color: #1A1A1A;
+            padding: 75px 0 40px;
+            line-height: 1.5;
+        }
+
+        /* Floating Control Toolbar (Hidden when printing) */
+        .toolbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #2C1847;
+            color: white;
+            padding: 12px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 999;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+        }
+
+        .toolbar-title {
+            font-family: 'Prompt', sans-serif;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toolbar-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-tool {
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: none;
+            font-family: 'Prompt', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-student {
+            background: #FFFFFF;
+            color: #2C1847;
+        }
+
+        .btn-teacher {
+            background: #E53935;
+            color: white;
+        }
+
+        .btn-print {
+            background: #00897B;
+            color: white;
+        }
+
+        .btn-tool:hover {
+            transform: translateY(-1px);
+            opacity: 0.92;
+        }
+
+        /* A4 Page Layout */
+        .a4-page {
+            width: 210mm;
+            min-height: 297mm;
+            background: white;
+            margin: 0 auto 24px;
+            padding: 14mm 16mm;
+            box-shadow: 0 8px 28px rgba(0,0,0,0.18);
+            border-radius: 4px;
+            position: relative;
+        }
+
+        /* Header Banner of Worksheet */
+        .ws-header {
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
+        .ws-header-top {
+            background: var(--primary);
+            color: white;
+            padding: 8px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Prompt', sans-serif;
+        }
+
+        .ws-header-top h1 {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .ws-badge {
+            background: #FF6F00;
+            color: white;
+            padding: 2px 10px;
+            border-radius: 14px;
+            font-size: 0.82rem;
+            font-weight: 600;
+        }
+
+        .ws-student-info {
+            padding: 8px 16px;
+            background: #FBF9FF;
+            font-size: 0.92rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: space-between;
+        }
+
+        /* Section Styling */
+        .ws-section {
+            margin-bottom: 14px;
+        }
+
+        .section-title {
+            font-family: 'Prompt', sans-serif;
+            font-size: 0.98rem;
+            font-weight: 700;
+            color: var(--primary);
+            background: var(--primary-light);
+            padding: 5px 12px;
+            border-left: 5px solid var(--primary);
+            border-radius: 4px;
+            margin-bottom: 8px;
+        }
+
+        /* Tables */
+        .ws-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.88rem;
+        }
+
+        .ws-table th, .ws-table td {
+            border: 1px solid #9E9E9E;
+            padding: 6px 9px;
+            vertical-align: top;
+        }
+
+        .ws-table th {
+            background: #EDE7F6;
+            color: #311B92;
+            font-family: 'Prompt', sans-serif;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        /* Matching Box */
+        .matching-grid {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 12px;
+            font-size: 0.88rem;
+        }
+
+        .match-box {
+            border: 1px solid #B0BEC5;
+            border-radius: 8px;
+            padding: 8px 12px;
+            background: #FAFAFA;
+        }
+
+        .match-item {
+            margin-bottom: 5px;
+        }
+
+        /* Dotted Line Input & Teacher Answer */
+        .fill-blank {
+            display: inline-block;
+            min-width: 120px;
+            border-bottom: 1px dotted #333;
+            text-align: center;
+            padding: 0 6px;
+            position: relative;
+        }
+
+        .ans-text {
+            color: transparent;
+            user-select: none;
+            font-weight: 700;
+        }
+
+        body.teacher-mode .ans-text {
+            color: var(--answer-red);
+            user-select: auto;
+        }
+
+        .ans-block {
+            border-bottom: 1px dotted #555;
+            min-height: 22px;
+            padding: 2px 6px;
+            font-size: 0.87rem;
+            color: transparent;
+        }
+
+        body.teacher-mode .ans-block {
+            color: var(--answer-red);
+            font-weight: 600;
+        }
+
+        /* Mind Map Structure for Worksheet 3.2 */
+        .mindmap-container {
+            border: 1.5px dashed var(--primary);
+            border-radius: 12px;
+            padding: 12px;
+            background: #FDFBFF;
+            position: relative;
+        }
+
+        .mindmap-center {
+            background: var(--primary);
+            color: white;
+            font-family: 'Prompt', sans-serif;
+            font-weight: 700;
+            text-align: center;
+            padding: 6px 18px;
+            border-radius: 20px;
+            width: 310px;
+            margin: 6px auto 10px;
+            font-size: 0.95rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+
+        .mindmap-branches {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .mm-node {
+            border: 1.5px solid #7E57C2;
+            border-radius: 8px;
+            padding: 7px 10px;
+            background: white;
+            font-size: 0.85rem;
+        }
+
+        .mm-node-title {
+            font-family: 'Prompt', sans-serif;
+            font-weight: 700;
+            color: var(--primary);
+            border-bottom: 1px solid #E0E0E0;
+            padding-bottom: 3px;
+            margin-bottom: 4px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Evidence Box */
+        .evidence-card {
+            border: 1px solid #BCAAA4;
+            background: #FFFDF9;
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 0.88rem;
+        }
+
+        .teacher-watermark {
+            display: none;
+            background: #FFEBEE;
+            color: #C62828;
+            border: 1.5px solid #EF5350;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-family: 'Prompt', sans-serif;
+            font-weight: 700;
+            font-size: 0.82rem;
+        }
+
+        body.teacher-mode .teacher-watermark {
+            display: inline-block;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .toolbar {
+                display: none !important;
+            }
+            .a4-page {
+                box-shadow: none;
+                margin: 0;
+                width: 100%;
+                page-break-after: always;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Floating Toolbar -->
+    <div class="toolbar">
+        <div class="toolbar-title">
+            <span>📄 ใบงานประวัติศาสตร์ ม.1 (พว.) — หน่วยการเรียนรู้ที่ 3 (รวม 2 ใบงาน)</span>
+            <span class="teacher-watermark">🔑 โหมดครูผู้สอน (แสดงเฉลย)</span>
+        </div>
+        <div class="toolbar-actions">
+            <button class="btn-tool btn-student" onclick="setMode(false)">📝 โหมดใบงานนักเรียน (ซ่อนเฉลย)</button>
+            <button class="btn-tool btn-teacher" onclick="setMode(true)">🔑 โหมดเฉลยสำหรับครู (แสดงคำตอบสีแดง)</button>
+            <button class="btn-tool btn-print" onclick="window.print()">🖨️ สั่งพิมพ์ขนาด A4 / บันทึก PDF</button>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         PAGE 1: ใบงานที่ 3.1 เรื่อง สมัยก่อนประวัติศาสตร์ในดินแดนไทย
+         ===================================================================== -->
+    <div class="a4-page">
+        <div class="ws-header">
+            <div class="ws-header-top">
+                <h1>ใบงานที่ ๓.๑ เรื่อง สมัยก่อนประวัติศาสตร์ในดินแดนไทย</h1>
+                <div>
+                    <span class="ws-badge">วิชาประวัติศาสตร์ ม.๑ (พว.)</span>
+                    <span class="teacher-watermark" style="margin-left:6px;">ฉบับเฉลยครู</span>
+                </div>
+            </div>
+            <div class="ws-student-info">
+                <span><strong>ชื่อ-นามสกุล:</strong> ............................................................................................</span>
+                <span><strong>ชั้น:</strong> ม.๑ / .........</span>
+                <span><strong>เลขที่:</strong> .........</span>
+                <span><strong>คะแนนที่ได้:</strong> ........ / ๒๐ คะแนน</span>
+            </div>
+        </div>
+
+        <!-- ตอนที่ 1 -->
+        <div class="ws-section">
+            <div class="section-title">ตอนที่ ๑ : เติมข้อมูลเปรียบเทียบพัฒนาการของมนุษย์สมัยก่อนประวัติศาสตร์ในดินแดนไทย (๑๐ คะแนน)</div>
+            <table class="ws-table">
+                <thead>
+                    <tr>
+                        <th style="width:16%;">ยุคสมัย</th>
+                        <th style="width:28%;">ลักษณะเครื่องมือเครื่องใช้สำคัญ</th>
+                        <th style="width:30%;">วิถีการดำรงชีวิต / สังคม</th>
+                        <th style="width:26%;">ตัวอย่างแหล่งโบราณคดีในไทย</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>๑. ยุคหินเก่า</strong><br><small>(๗๐๐,๐๐๐ - ๑๐,๐๐๐ ปีมาแล้ว)</small></td>
+                        <td>
+                            <div class="ans-block">เครื่องมือหินกรวดกะเทาะแบบหยาบๆ (กะเทาะหน้าเดียว) ใช้ทุบ สับ ขุด</div>
+                        </td>
+                        <td>
+                            <div class="ans-block">เร่ร่อน ล่าสัตว์ เก็บหาของป่า อาศัยตามถ้ำและเพิงผา</div>
+                        </td>
+                        <td>
+                            <div class="ans-block">ถ้ำพระ อ.ไทรโยค จ.กาญจนบุรี, บ้านแม่ทะ จ.ลำปาง</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>๒. ยุคหินกลาง</strong><br><small>(๑๐,๐๐๐ - ๔,๐๐๐ ปีมาแล้ว)</small></td>
+                        <td>
+                            <div class="ans-block">เครื่องมือหินกะเทาะที่ประณีตขึ้น ขนาดเล็กลง (วัฒนธรรมโฮบินเนียน)</div>
+                        </td>
+                        <td>
+                            <div class="ans-block">อาศัยในถ้ำ/เพิงผาใกล้แหล่งน้ำ เริ่มอยู่กึ่งตั้งหลักแหล่งและรู้จักสะสมเมล็ดพืช</div>
+                        </td>
+                        <td>
+                            <div class="ans-block">ถ้ำผีแมน จ.แม่ฮ่องสอน, ถ้ำเขาทะลุ จ.กาญจนบุรี</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>๓. ยุคหินใหม่</strong><br><small>(๔,๐๐๐ - ๒,๕๐๐ ปีมาแล้ว)</small></td>
+                        <td>
+                            <div class="ans-block">ขวานหินขัด (ผิวเรียบ มีคม) และภาชนะดินเผา (เช่น หม้อสามขา)</div>
+                        </td>
+                        <td>
+                            <div class="ans-block">ตั้งหลักแหล่งถาวรเป็นหมู่บ้านริมน้ำ ทำการเพาะปลูกและเลี้ยงสัตว์ ทอผ้า</div>
+                        </td>
+                        <td>
+                            <div class="ans-block">แหล่งโบราณคดีบ้านเก่า จ.กาญจนบุรี, โคกพนมดี จ.ชลบุรี</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>๔. ยุคสำริด</strong><br><small>(๒,๕๐๐ - ๑,๕๐๐ ปีมาแล้ว)</small></td>
+                        <td>
+                            <div class="ans-block">เครื่องมือโลหะสำริด (ทองแดงผสมดีบุก) และภาชนะดินเผาลายเขียนสี</div>
+                        </td>
+                        <td>
+                            <div class="ans-block">ชุมชนเกษตรกรรมขนาดใหญ่ มีพิธีกรรมฝังศพพร้อมสิ่งของเครื่องใช้</div>
+                        </td>
+                        <td>
+                            <div class="ans-block">แหล่งโบราณคดีบ้านเชียง จ.อุดรธานี (มรดกโลก), บ้านโนนวัด</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>๕. ยุคเหล็ก</strong><br><small>(๒,๕๐๐ - ๑,๕๐๐ ปีมาแล้ว)</small></td>
+                        <td>
+                            <div class="ans-block">เครื่องมือและอาวุธเหล็กที่มีความแข็งแกร่งทนทานสูง</div>
+                        </td>
+                        <td>
+                            <div class="ans-block">ขยายพื้นที่เกษตรกรรม มีคูน้ำคันดิน มีชนชั้นผู้นำ ติดต่อค้าขายกับต่างชาติ</div>
+                        </td>
+                        <td>
+                            <div class="ans-block">แหล่งโบราณคดีบ้านดอนตาเพชร จ.กาญจนบุรี, เนินอุโลก</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ตอนที่ 2 -->
+        <div class="ws-section">
+            <div class="section-title">ตอนที่ ๒ : นำตัวอักษรหน้าหลักฐานทางโบราณคดี (ก – จ) มาเติมหน้าแหล่งโบราณคดีที่สัมพันธ์กัน (๕ คะแนน)</div>
+            <div class="matching-grid">
+                <div class="match-box">
+                    <div class="match-item">.......... <strong>๑. แหล่งโบราณคดีบ้านเชียง (จ.อุดรธานี)</strong> <span class="ans-text">[ ข ]</span></div>
+                    <div class="match-item">.......... <strong>๒. แหล่งโบราณคดีบ้านเก่า (จ.กาญจนบุรี)</strong> <span class="ans-text">[ ก ]</span></div>
+                    <div class="match-item">.......... <strong>๓. แหล่งโบราณคดีบ้านดอนตาเพชร (จ.กาญจนบุรี)</strong> <span class="ans-text">[ ง ]</span></div>
+                    <div class="match-item">.......... <strong>๔. อุทยานแห่งชาติผาแต้ม (จ.อุบลราชธานี)</strong> <span class="ans-text">[ ค ]</span></div>
+                    <div class="match-item">.......... <strong>๕. แหล่งโบราณคดีถ้ำผีแมน (จ.แม่ฮ่องสอน)</strong> <span class="ans-text">[ จ ]</span></div>
+                </div>
+                <div class="match-box" style="background:#F3E5F5;">
+                    <div class="match-item"><strong>ก.</strong> พบภาชนะดินเผา "หม้อสามขา" และขวานหินขัดยุคหินใหม่</div>
+                    <div class="match-item"><strong>ข.</strong> มรดกโลกที่โดดเด่นด้วยภาชนะดินเผาลายเขียนสีและสำริด</div>
+                    <div class="match-item"><strong>ค.</strong> ภาพเขียนสีสมัยก่อนประวัติศาสตร์บนผนังหน้าผาริมแม่น้ำโขง</div>
+                    <div class="match-item"><strong>ง.</strong> ชุมชนยุคเหล็กที่พบลูกปัดหินคาร์เนเลียนและสำริดติดต่อกับอินเดีย</div>
+                    <div class="match-item"><strong>จ.</strong> พบเมล็ดพืชโบราณและโลงไม้ขุดบนเพิงผาสูงในภาคเหนือ</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ตอนที่ 3 -->
+        <div class="ws-section">
+            <div class="section-title">ตอนที่ ๓ : วิเคราะห์หลักฐานทางประวัติศาสตร์ (Active Learning) (๕ คะแนน)</div>
+            <div class="evidence-card">
+                <p style="margin-bottom:6px;">
+                    <strong>สถานการณ์ศึกษา:</strong> นักโบราณคดีขุดค้นพบ <em>"โครงกระดูกมนุษย์ที่ถูกฝังร่วมกับภาชนะดินเผาบรรจุอาหาร กำไลสำริด และเครื่องมือเหล็ก รวมถึงพบลูกปัดแก้วและลูกปัดหินมีค่าที่ผลิตจากประเทศอินเดีย"</em>
+                </p>
+                <p style="margin-top:6px;"><strong>๑. หลักฐานข้างต้นสะท้อนให้เห็นความเชื่อและวิถีเศรษฐกิจของคนในชุมชนโบราณนี้อย่างไรบ้าง? (๓ คะแนน)</strong></p>
+                <div class="ans-block">๑) ด้านความเชื่อ: มีความเชื่อเรื่องชีวิตหลังความตาย จึงฝังอาหารและเครื่องประดับไปพร้อมกับผู้ตาย และสะท้อนฐานะทางสังคม</div>
+                <div class="ans-block">๒) ด้านเศรษฐกิจ: นอกจากการเกษตรแล้ว ยังมีการติดต่อค้าขายแลกเปลี่ยนสินค้าระยะไกลกับพ่อค้าต่างชาติ (อินเดีย)</div>
+
+                <p style="margin-top:6px;"><strong>๒. เพราะเหตุใดการเปลี่ยนมาใช้ "เครื่องมือเหล็ก" จึงช่วยให้ชุมชนโบราณพัฒนาไปเป็น "เมืองและรัฐโบราณ" ได้เร็วขึ้น? (๒ คะแนน)</strong></p>
+                <div class="ans-block">เพราะเหล็กมีความแข็งแกร่งทนทานกว่าหินและสำริดมาก ทำให้ถางป่าขยายพื้นที่ทำนาได้ผลผลิตอาหารจำนวนมาก รองรับประชากรที่เพิ่มขึ้น และใช้อาวุธเหล็กป้องกันหรือขยายอำนาจของเมือง</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         PAGE 2: ใบงานที่ 3.2 เรื่อง พัฒนาการของรัฐโบราณในดินแดนไทย (4 ภูมิภาค)
+         ===================================================================== -->
+    <div class="a4-page">
+        <div class="ws-header">
+            <div class="ws-header-top">
+                <h1>ใบงานที่ ๓.๒ เรื่อง พัฒนาการของรัฐโบราณในดินแดนไทย (๔ ภูมิภาค)</h1>
+                <div>
+                    <span class="ws-badge">วิชาประวัติศาสตร์ ม.๑ (พว.)</span>
+                    <span class="teacher-watermark" style="margin-left:6px;">ฉบับเฉลยครู</span>
+                </div>
+            </div>
+            <div class="ws-student-info">
+                <span><strong>ชื่อ-นามสกุล:</strong> ............................................................................................</span>
+                <span><strong>ชั้น:</strong> ม.๑ / .........</span>
+                <span><strong>เลขที่:</strong> .........</span>
+                <span><strong>คะแนนที่ได้:</strong> ........ / ๒๐ คะแนน</span>
+            </div>
+        </div>
+
+        <!-- ตอนที่ 1: ผังความคิด Mind Map -->
+        <div class="ws-section">
+            <div class="section-title">ตอนที่ ๑ : สรุปผังความคิด (Mind Mapping) รัฐโบราณในดินแดนไทย ๔ ภูมิภาค (๑๒ คะแนน)</div>
+            <div class="mindmap-container">
+                <div class="mindmap-center">🏛️ รัฐโบราณในดินแดนไทยก่อนสมัยสุโขทัย</div>
+                <div class="mindmap-branches">
+                    <!-- ภาคกลาง -->
+                    <div class="mm-node">
+                        <div class="mm-node-title"><span>๑. ภาคกลาง</span><span>(๓ คะแนน)</span></div>
+                        <div>• <strong>อาณาจักรทวารวดี:</strong> ศูนย์กลางที่ <span class="fill-blank"><span class="ans-text">จ.นครปฐม / ลุ่มน้ำเจ้าพระยา</span></span></div>
+                        <div>&nbsp;&nbsp;ศาสนาหลัก: <span class="fill-blank"><span class="ans-text">พระพุทธศาสนาเถรวาท</span></span></div>
+                        <div>&nbsp;&nbsp;หลักฐานสำคัญ: <span class="fill-blank"><span class="ans-text">ธรรมจักรศิลาและกวางหมอบ</span></span></div>
+                        <div>• <strong>แคว้นละโว้:</strong> ศูนย์กลางที่ <span class="fill-blank"><span class="ans-text">จ.ลพบุรี</span></span></div>
+                        <div>&nbsp;&nbsp;โบราณสถานสำคัญ: <span class="fill-blank"><span class="ans-text">พระปรางค์สามยอด / ศาลพระกาฬ</span></span></div>
+                    </div>
+
+                    <!-- ภาคเหนือ -->
+                    <div class="mm-node">
+                        <div class="mm-node-title"><span>๒. ภาคเหนือ</span><span>(๓ คะแนน)</span></div>
+                        <div>• <strong>แคว้นหริภุญชัย:</strong> ศูนย์กลางที่ <span class="fill-blank"><span class="ans-text">จ.ลำพูน</span></span></div>
+                        <div>&nbsp;&nbsp;ปฐมกษัตริย์: <span class="fill-blank"><span class="ans-text">พระนางจามเทวี (จากเมืองละโว้)</span></span></div>
+                        <div>&nbsp;&nbsp;หลักฐานสำคัญ: <span class="fill-blank"><span class="ans-text">พระธาตุหริภุญชัย, เจดีย์กู่กุด</span></span></div>
+                        <div>• <strong>แคว้นโยนกนาคนคร / เงินยาง:</strong> ตั้งอยู่ที่ <span class="fill-blank"><span class="ans-text">จ.เชียงราย</span></span></div>
+                        <div>&nbsp;&nbsp;ต่อมารวมเป็นอาณาจักร: <span class="fill-blank"><span class="ans-text">ล้านนา (โดยพญามังราย)</span></span></div>
+                    </div>
+
+                    <!-- ภาคตะวันออกเฉียงเหนือ -->
+                    <div class="mm-node">
+                        <div class="mm-node-title"><span>๓. ภาคตะวันออกเฉียงเหนือ (อีสาน)</span><span>(๓ คะแนน)</span></div>
+                        <div>• <strong>แคว้นศรีโคตรบูร:</strong> ตั้งอยู่บริเวณ <span class="fill-blank"><span class="ans-text">สองฝั่งแม่น้ำโขง (นครพนม)</span></span></div>
+                        <div>&nbsp;&nbsp;ศาสนสถานคู่บ้านคู่เมือง: <span class="fill-blank"><span class="ans-text">พระธาตุพนม จ.นครพนม</span></span></div>
+                        <div>• <strong>ชุมชนวัฒนธรรมขอมโบราณ (อีสานใต้):</strong></div>
+                        <div>&nbsp;&nbsp;บริเวณลุ่มน้ำ: <span class="fill-blank"><span class="ans-text">แม่น้ำมูล - แม่น้ำชี</span></span></div>
+                        <div>&nbsp;&nbsp;ปราสาทหินสำคัญ: <span class="fill-blank"><span class="ans-text">ปราสาทหินพิมาย, ปราสาทพนมรุ้ง</span></span></div>
+                    </div>
+
+                    <!-- ภาคใต้ -->
+                    <div class="mm-node">
+                        <div class="mm-node-title"><span>๔. ภาคใต้</span><span>(๓ คะแนน)</span></div>
+                        <div>• <strong>แคว้นลังกาสุกะ:</strong> ศูนย์กลางที่ <span class="fill-blank"><span class="ans-text">เมืองโบราณยะรัง จ.ปัตตานี</span></span></div>
+                        <div>• <strong>อาณาจักรศรีวิชัย:</strong> ศูนย์กลางที่ <span class="fill-blank"><span class="ans-text">อ.ไชยา จ.สุราษฎร์ธานี</span></span></div>
+                        <div>&nbsp;&nbsp;นับถือศาสนา: <span class="fill-blank"><span class="ans-text">พระพุทธศาสนานิกายมหายาน</span></span></div>
+                        <div>• <strong>แคว้นตามพรลิงค์:</strong> ศูนย์กลางที่ <span class="fill-blank"><span class="ans-text">จ.นครศรีธรรมราช</span></span></div>
+                        <div>&nbsp;&nbsp;เผยแผ่พุทธศาสนาลัทธิ: <span class="fill-blank"><span class="ans-text">เถรวาท ลัทธิลังกาวงศ์</span></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ตอนที่ 2: ตรวจสอบความเข้าใจ -->
+        <div class="ws-section">
+            <div class="section-title">ตอนที่ ๒ : ระบุชื่อ "รัฐโบราณ" จากหลักฐานและข้อมูลทางประวัติศาสตร์ที่กำหนดให้ (๕ คะแนน)</div>
+            <table class="ws-table">
+                <thead>
+                    <tr>
+                        <th style="width:72%;">ข้อมูลและหลักฐานทางประวัติศาสตร์</th>
+                        <th style="width:28%;">ชื่อรัฐ / แคว้นโบราณ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>๑. พบเหรียญเงินจารึกภาษาสันสกฤตว่า <em>"ศรีทวารวดีศวรปุณยะ"</em> และบันทึกพระภิกษุจีนเหี้ยนจังเรียกว่า <em>"โถโลโปตี้"</em></td>
+                        <td style="text-align:center;"><span class="ans-text">อาณาจักรทวารวดี</span></td>
+                    </tr>
+                    <tr>
+                        <td>๒. พบประติมากรรม <em>"พระโพธิสัตว์อวโลกิเตศวรสำริด"</em> และ <em>"พระบรมธาตุไชยา"</em> รุ่งเรืองด้วยพุทธศาสนามหายานและการค้าทางทะเล</td>
+                        <td style="text-align:center;"><span class="ans-text">อาณาจักรศรีวิชัย</span></td>
+                    </tr>
+                    <tr>
+                        <td>๓. ฤๅษีวาสุเทพสร้างเมืองและอัญเชิญ <em>"พระนางจามเทวี"</em> จากเมืองละโว้มาเป็นปฐมกษัตริย์ มีโบราณสถานคือเจดีย์กู่กุด</td>
+                        <td style="text-align:center;"><span class="ans-text">แคว้นหริภุญชัย</span></td>
+                    </tr>
+                    <tr>
+                        <td>๔. เมืองท่าสำคัญทางภาคใต้ที่เป็นศูนย์กลางของ <em>"พระพุทธศาสนาเถรวาท ลัทธิลังกาวงศ์"</em> และมีพระบรมธาตุเจดีย์ไร้เงา</td>
+                        <td style="text-align:center;"><span class="ans-text">แคว้นตามพรลิงค์ (นครศรีธรรมราช)</span></td>
+                    </tr>
+                    <tr>
+                        <td>๕. เมืองสำคัญลุ่มน้ำลพบุรี-ป่าสัก ที่รับอิทธิพลศิลปะขอมโบราณ มีโบราณสถานสำคัญคือ <em>"พระปรางค์สามยอด"</em> และเคยส่งทูตไปจีนในชื่อ <em>"หลอฮก"</em></td>
+                        <td style="text-align:center;"><span class="ans-text">แคว้นละโว้ (ลพบุรี)</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ตอนที่ 3: คำถามคิดวิเคราะห์ -->
+        <div class="ws-section">
+            <div class="section-title">ตอนที่ ๓ : คำถามคิดวิเคราะห์และเชื่อมโยงประวัติศาสตร์ (๓ คะแนน)</div>
+            <div class="evidence-card">
+                <p><strong>คำถาม:</strong> ปัจจัยใดบ้างที่ทำให้ชุมชนโบราณในดินแดนไทยสามารถพัฒนาขึ้นเป็น "รัฐโบราณ" ที่มีความเจริญรุ่งเรือง และรัฐโบราณเหล่านี้วางรากฐานให้แก่อาณาจักรสุโขทัยอย่างไร?</p>
+                <div class="ans-block">๑) ปัจจัยความเจริญ: มีที่ตั้งทางภูมิศาสตร์ที่อุดมสมบูรณ์ริมแม่น้ำและชายฝั่งทะเล (สุวรรณภูมิ) เป็นจุดแวะพักการค้าทางทะเลระหว่างอินเดียกับจีน</div>
+                <div class="ans-block">๒) การวางรากฐานสู่สุโขทัย: รัฐโบราณได้传ทอดพระพุทธศาสนา (โดยเฉพาะลังกาวงศ์จากนครศรีธรรมราช) รูปแบบอักษร ศิลปกรรม และระบบการปกครองให้แก่สุโขทัย</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function setMode(isTeacher) {
+            if (isTeacher) {
+                document.body.classList.add('teacher-mode');
+            } else {
+                document.body.classList.remove('teacher-mode');
+            }
+        }
+    </script>
+</body>
+</html>

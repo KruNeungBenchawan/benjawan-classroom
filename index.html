@@ -10,7 +10,7 @@
     href="https://fonts.googleapis.com/css2?family=Mali:wght@500;600;700&family=Sarabun:wght@400;500;600;700&display=swap"
     rel="stylesheet"
   />
-  <link rel="stylesheet" href="styles.css?v=5" />
+  <link rel="stylesheet" href="styles.css?v=6" />
 </head>
 <body>
   <!-- Teacher Mode Toolbar (visible only when Teacher Mode is active) -->
@@ -24,7 +24,8 @@
         <button id="addResourceBtn" class="btn btn-primary btn-sm" type="button">+ เพิ่มสื่อ / เอกสาร</button>
         <button id="addAnnouncementBtn" class="btn btn-secondary btn-sm" type="button">+ เพิ่มประกาศ</button>
         <button id="editProfileBtn" class="btn btn-ghost btn-sm" type="button">แก้ไขข้อมูลครู</button>
-        <button id="exportDataBtn" class="btn btn-ghost btn-sm" type="button">สำรองข้อมูล</button>
+        <button id="exportDataBtn" class="btn btn-ghost btn-sm" type="button">สำรอง JSON</button>
+        <button id="exportDataJsBtn" class="btn btn-ghost btn-sm" type="button" title="ส่งออกเป็นไฟล์ data.js สำหรับอัปโหลดขึ้น GitHub">ส่งออก data.js</button>
         <label class="btn btn-ghost btn-sm file-upload-label">
           นำเข้าข้อมูล
           <input id="importDataInput" type="file" accept=".json" hidden />
@@ -249,7 +250,7 @@
                 </a>
 
                 <a
-                  href="https://kruneungbenchawan.github.io/onet-thai-m3-2569/"
+                  href="onet-thai-m3-2569/index.html"
                   target="_blank"
                   rel="noopener noreferrer"
                   class="onet-banner-card onet-m3"
@@ -317,6 +318,10 @@
 
               <select id="gradeFilter" aria-label="กรองตามระดับชั้น">
                 <option value="all">ทุกระดับชั้น</option>
+              </select>
+
+              <select id="yearFilter" aria-label="กรองตามปีการศึกษา">
+                <option value="all">ทุกปีการศึกษา</option>
               </select>
 
               <select id="sortSelect" aria-label="เรียงลำดับ">
@@ -507,7 +512,7 @@
   <!-- Toast Notification -->
   <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
 
-  <script src="data.js?v=5"></script>
-  <script src="app.js?v=5"></script>
+  <script src="data.js?v=6"></script>
+  <script src="app.js?v=6"></script>
 </body>
 </html>

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ใบงานและเฉลย วิชาประวัติศาสตร์ ม.2 - อาณาจักรธนบุรี (สำนักพิมพ์ พว.)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Prompt:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0D47A1;
+            --primary-light: #E3F2FD;
+            --accent: #E65100;
+            --answer-red: #D32F2F;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background: #DCE2EC;
+            color: #1A1A1A;
+            padding: 75px 0 40px;
+            line-height: 1.5;
+        }
+
+        .toolbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            background: #092047;
+            color: white;
+            padding: 12px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 999;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+        }
+        .toolbar-title { font-family: 'Prompt', sans-serif; font-size: 1rem; display: flex; align-items: center; gap: 10px; }
+        .toolbar-actions { display: flex; gap: 10px; }
+        .btn-tool { padding: 8px 16px; border-radius: 8px; border: none; font-family: 'Prompt', sans-serif; font-weight: 600; font-size: 0.9rem; cursor: pointer; }
+        .btn-student { background: #FFFFFF; color: #092047; }
+        .btn-teacher { background: #E53935; color: white; }
+        .btn-print { background: #00897B; color: white; }
+
+        .a4-page {
+            width: 210mm;
+            min-height: 297mm;
+            background: white;
+            margin: 0 auto 24px;
+            padding: 13mm 15mm;
+            box-shadow: 0 8px 28px rgba(0,0,0,0.18);
+            border-radius: 4px;
+            position: relative;
+        }
+
+        .ws-header { border: 2px solid var(--primary); border-radius: 10px; overflow: hidden; margin-bottom: 11px; }
+        .ws-header-top { background: var(--primary); color: white; padding: 8px 16px; display: flex; justify-content: space-between; align-items: center; font-family: 'Prompt', sans-serif; }
+        .ws-header-top h1 { font-size: 1.15rem; font-weight: 700; }
+        .ws-badge { background: #F57C00; color: white; padding: 2px 10px; border-radius: 14px; font-size: 0.82rem; font-weight: 600; }
+        .ws-student-info { padding: 7px 16px; background: #F7FAFF; font-size: 0.9rem; display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; }
+
+        .ws-section { margin-bottom: 12px; }
+        .section-title { font-family: 'Prompt', sans-serif; font-size: 0.94rem; font-weight: 700; color: var(--primary); background: var(--primary-light); padding: 5px 12px; border-left: 5px solid var(--primary); border-radius: 4px; margin-bottom: 7px; }
+
+        .ws-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+        .ws-table th, .ws-table td { border: 1px solid #9E9E9E; padding: 5px 8px; vertical-align: top; }
+        .ws-table th { background: var(--primary-light); color: #0D47A1; font-family: 'Prompt', sans-serif; font-weight: 600; text-align: center; }
+
+        .matching-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 12px; font-size: 0.86rem; }
+        .match-box { border: 1px solid #B0BEC5; border-radius: 8px; padding: 7px 11px; background: #FAFAFA; }
+        .match-item { margin-bottom: 4px; }
+
+        .fill-blank { display: inline-block; min-width: 105px; border-bottom: 1px dotted #333; text-align: center; padding: 0 5px; }
+        .ans-text { color: transparent; user-select: none; font-weight: 700; }
+        body.teacher-mode .ans-text { color: var(--answer-red); user-select: auto; }
+
+        .ans-block { border-bottom: 1px dotted #555; min-height: 21px; padding: 1px 6px; font-size: 0.85rem; color: transparent; }
+        body.teacher-mode .ans-block { color: var(--answer-red); font-weight: 600; }
+
+        .mindmap-container { border: 1.5px dashed var(--primary); border-radius: 12px; padding: 10px; background: #F9FCFF; }
+        .mindmap-center { background: var(--primary); color: white; font-family: 'Prompt', sans-serif; font-weight: 700; text-align: center; padding: 5px 16px; border-radius: 20px; width: 340px; margin: 3px auto 8px; font-size: 0.92rem; }
+        .mindmap-branches { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+        .mm-node { border: 1.5px solid #1976D2; border-radius: 8px; padding: 6px 10px; background: white; font-size: 0.84rem; }
+        .mm-node-title { font-family: 'Prompt', sans-serif; font-weight: 700; color: var(--primary); border-bottom: 1px solid #E0E0E0; padding-bottom: 2px; margin-bottom: 4px; display: flex; justify-content: space-between; }
+
+        .evidence-card { border: 1px solid #BCAAA4; background: #FFFDF9; border-radius: 8px; padding: 8px 12px; font-size: 0.86rem; }
+        .teacher-watermark { display: none; background: #FFEBEE; color: #C62828; border: 1.5px solid #EF5350; padding: 3px 10px; border-radius: 6px; font-family: 'Prompt', sans-serif; font-weight: 700; font-size: 0.82rem; }
+        body.teacher-mode .teacher-watermark { display: inline-block; }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .toolbar { display: none !important; }
+            .a4-page { box-shadow: none; margin: 0; width: 100%; page-break-after: always; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="toolbar">
+        <div class="toolbar-title">
+            <span>📄 ใบงานประวัติศาสตร์ ม.2 (พว.) — อาณาจักรธนบุรี (รวม 2 ใบงาน)</span>
+            <span class="teacher-watermark">🔑 โหมดครูผู้สอน (แสดงเฉลย)</span>
+        </div>
+        <div class="toolbar-actions">
+            <button class="btn-tool btn-student" onclick="setMode(false)">📝 โหมดใบงานนักเรียน (ซ่อนเฉลย)</button>
+            <button class="btn-tool btn-teacher" onclick="setMode(true)">🔑 โหมดเฉลยสำหรับครู (แสดงคำตอบสีแดง)</button>
+            <button class="btn-tool btn-print" onclick="window.print()">🖨️ สั่งพิมพ์ขนาด A4 / บันทึก PDF</button>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         PAGE 1: ใบงานที่ 4.1 เรื่อง การกอบกู้เอกราช การสถาปนากรุงธนบุรี และการปราบชุมนุม
+         ===================================================================== -->
+    <div class="a4-page">
+        <div class="ws-header">
+            <div class="ws-header-top">
+                <h1>ใบงานที่ ๔.๑ เรื่อง การกอบกู้เอกราช การสถาปนากรุงธนบุรี และการรวบรวมแผ่นดิน</h1>
+                <div>
+                    <span class="ws-badge">วิชาประวัติศาสตร์ ม.๒ (พว.)</span>
+                    <span class="teacher-watermark" style="margin-left:6px;">ฉบับเฉลยครู</span>
+                </div>
+            </div>
+            <div class="ws-student-info">
+                <span><strong>ชื่อ-นามสกุล:</strong> ............................................................................................</span>
+                <span><strong>ชั้น:</strong> ม.๒ / .........</span>
+                <span><strong>เลขที่:</strong> .........</span>
+                <span><strong>คะแนนที่ได้:</strong> ........ / ๒๐ คะแนน</span>
+            </div>
+        </div>
+
+        <!-- ตอนที่ 1 -->
+        <div class="ws-section">
+            <div class="section-title">ตอนที่ ๑ : เติมข้อมูลเกี่ยวกับการกอบกู้เอกราชและการสถาปนากรุงธนบุรี (๖ คะแนน)</div>
+            <div class="evidence-card" style="line-height:1.75;">
+                ๑. ก่อนเสียกรุงศรีอยุธยาครั้งที่ ๒ พระยาวชิรปราการ (สิน) ได้นำกำลังพลราว ๕๐๐ นาย ตีฝ่าวงล้อมพม่าจากค่าย <span class="fill-blank"><span class="ans-text">วัดพิชัย</span></span> มุ่งไปสะสมเสบียงและต่อเรือรบที่เมือง <span class="fill-blank"><span class="ans-text">จันทบุรี</span></span><br>
+                ๒. ในการเข้าตีเมืองจันทบุรี ทรงใช้ยุทธวิธีปลุกขวัญทหารโดยสั่งให้ <span class="fill-blank"><span class="ans-text">ทุบหม้อข้าวหม้อแกง</span></span> เพื่อมุ่งมั่นตีเมืองให้สำเร็จ<br>
+                ๓. พระองค์ทรงยกทัพเรือกลับมายึดค่าย <span class="fill-blank"><span class="ans-text">โพธิ์สามต้น</span></span> จากสุกี้พระนายกอง กอบกู้เอกราชคืนได้ในเวลาเพียง <span class="fill-blank"><span class="ans-text">๗ เดือน (๖ พ.ย. พ.ศ. ๒๓๑๐)</span></span><br>
+                ๔. ทรงปราบดาภิเษกเป็นพระมหากษัตริย์เมื่อวันที่ <span class="fill-blank"><span class="ans-text">๒๘ ธันวาคม พ.ศ. ๒๓๑๐</span></span> ทรงพระนามว่า สมเด็จพระบรมราชาที่ ๔
+            </div>
+        </div>
+
+        <!-- ตอนที่ 2 -->
+        <div class="ws-section">
+            <div class="section-title">ตอนที่ ๒ : ตารางสรุปการปราบปรามชุมนุมอิสระเพื่อรวบรวมแผ่นดินสมัยธนบุรี (๘ คะแนน)</div>
+            <table class="ws-table">
+                <thead>
+                    <tr>
+                        <th style="width:28%;">ชื่อชุมนุมอิสระ</th>
+                        <th style="width:27%;">ผู้นำชุมนุม และที่ตั้งศูนย์กลาง</th>
+                        <th style="width:45%;">ผลการปราบปรามและการรวบรวมเข้ากับกรุงธนบุรี</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>๑. ชุมนุมเจ้าพระยาพิษณุโลก</strong></td>
+                        <td>
+                            <div class="ans-block">เจ้าพระยาพิษณุโลก (เรือง) / เมืองพิษณุโลก</div>
+                        </td>
+                        <td>
+                            <div class="ans-block">เมื่อเจ้าพระยาพิษณุโลกถึงแก่พิราลัย ชุมนุมจึงอ่อนแอและถูกชุมนุมเจ้าพระฝางยึดครองต่อ</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>๒. ชุมนุมเจ้าพิมาย</strong></td>
+                        <td>
+                            <div class="ans-block">กรมหมื่นเทพพิพิธ / เมืองพิมาย (จ.นครราชสีมา)</div>
+                        </td>
+                        <td>
+                            <div class="ans-block">สมเด็จพระเจ้าตากสินฯ ยกทัพไปปราบเมื่อ พ.ศ. ๒๓๑๑ และจับตัวมาสำเร็จโทษ</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>๓. ชุมนุมเจ้านครศรีธรรมราช</strong></td>
+                        <td>
+                            <div class="ans-block">พระปลัดหนู (เจ้านคร) / เมืองนครศรีธรรมราช</div>
+                        </td>
+                        <td>
+                            <div class="ans-block">ยกทัพเรือไปปราบเมื่อ พ.ศ. ๒๓๑๒ พระปลัดหนูยอมสวามิภักดิ์ จึงโปรดให้รับราชการและกลับไปครองเมืองต่อ</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>๔. ชุมนุมเจ้าพระฝาง</strong><br><small>(ชุมนุมสุดท้าย พ.ศ. ๒๓๑๓)</small></td>
+                        <td>
+                            <div class="ans-block">พระพากุลเถระ (เรือน) สงฆ์นุ่งผ้าแดง / เมืองสวางคบุรี (อุตรดิตถ์)</div>
+                        </td>
+                        <td>
+                            <div class="ans-block">ยกทัพไปปราบเมื่อ พ.ศ. ๒๓๑๓ ชำระพระสงฆ์ทุศีลและรวมแผ่นดินไทยเป็นปึกแผ่นสำเร็จ</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ตอนที่ 3 -->
+        <div class="ws-section">
+            <div class="section-title">ตอนที่ ๓ : วิเคราะห์ปัจจัยการเลือก "กรุงธนบุรี" เป็นราชธานีใหม่ (๖ คะแนน)</div>
+            <div class="evidence-card">
+                <p><strong>คำถาม:</strong> เพราะเหตุใดสมเด็จพระเจ้าตากสินมหาราชจึงทรงตัดสินพระทัยสถาปนา "กรุงธนบุรี" เป็นราชธานีใหม่ แทนที่จะบูรณะกรุงศรีอยุธยาเดิม? (ระบุเหตุผลอย่างน้อย ๓ ประการ)</p>
+                <div class="ans-block">๑) กรุงศรีอยุธยาถูกเผาทำลายเสียหายหนักเกินกว่าจะบูรณะได้ทัน และมีขนาดใหญ่เกินกำลังพลของพระองค์ในขณะนั้น</div>
+                <div class="ans-block">๒) เมืองธนบุรีมีขนาดกะทัดรัด มีป้อมปราการแข็งแรงอยู่แล้ว คือ ป้อมวิชัยประสิทธิ์ (ป้อมวิชัยเยนทร์)</div>
+                <div class="ans-block">๓) เมืองธนบุรีตั้งอยู่ติดแม่น้ำเจ้าพระยาใกล้ปากอ่าวไทย ติดต่อค้าขายทางทะเลสะดวก และหากต้านข้าศึกไม่ไหวสามารถถอยทัพเรือไปจันทบุรีได้</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         PAGE 2: ใบงานที่ 4.2 เรื่อง พัฒนาการและภูมิปัญญาสมัยธนบุรี
+         ===================================================================== -->
+    <div class="a4-page">
+        <div class="ws-header">
+            <div class="ws-header-top">
+                <h1>ใบงานที่ ๔.๒ เรื่อง พัฒนาการด้านต่างๆ และภูมิปัญญาสมัยธนบุรี</h1>
+                <div>
+                    <span class="ws-badge">วิชาประวัติศาสตร์ ม.๒ (พว.)</span>
+                    <span class="teacher-watermark" style="margin-left:6px;">ฉบับเฉลยครู</span>
+                </div>
+            </div>
+            <div class="ws-student-info">
+                <span><strong>ชื่อ-นามสกุล:</strong> ............................................................................................</span>
+                <span><strong>ชั้น:</strong> ม.๒ / .........</span>
+                <span><strong>เลขที่:</strong> .........</span>
+                <span><strong>คะแนนที่ได้:</strong> ........ / ๒๐ คะแนน</span>
+            </div>
+        </div>
+
+        <!-- ตอนที่ 1: ผังความคิด Mind Map -->
+        <div class="ws-section">
+            <div class="section-title">ตอนที่ ๑ : สรุปผังความคิด (Mind Mapping) พัฒนาการและภูมิปัญญาสมัยธนบุรี (๑๒ คะแนน)</div>
+            <div class="mindmap-container">
+                <div class="mindmap-center">🌟 พัฒนาการและการฟื้นฟูชาติสมัยกรุงธนบุรี</div>
+                <div class="mindmap-branches">
+                    <div class="mm-node">
+                        <div class="mm-node-title"><span>๑. การป้องกันและขยายอาณาเขต</span><span>(๓ คะแนน)</span></div>
+                        <div>• <strong>ศึกค่ายบางกุ้ง (พ.ศ. ๒๓๑๐):</strong> ที่จังหวัด <span class="fill-blank"><span class="ans-text">สมุทรสงคราม</span></span></div>
+                        <div>• <strong>ศึกเมืองพิชัย (พ.ศ. ๒๓๑๖):</strong> วีรกรรมของ <span class="fill-blank"><span class="ans-text">พระยาพิชัยดาบหัก</span></span></div>
+                        <div>• <strong>ศึกตีเมืองเวียงจันทน์ (พ.ศ. ๒๓๒๑):</strong> ได้อัญเชิญ</div>
+                        <div>&nbsp;&nbsp;<span class="fill-blank"><span class="ans-text">พระแก้วมรกต (และพระบาง)</span></span> มาประดิษฐานที่วัดแจ้ง</div>
+                    </div>
+
+                    <div class="mm-node">
+                        <div class="mm-node-title"><span>๒. การแก้ปัญหาเศรษฐกิจปากท้อง</span><span>(๓ คะแนน)</span></div>
+                        <div>• <strong>แก้ปัญหาขาดแคลนข้าวระยะแรก:</strong> ทรงสละพระราชทรัพย์</div>
+                        <div>&nbsp;&nbsp;<span class="fill-blank"><span class="ans-text">ซื้อข้าวสารจากเรือสำเภามาแจกจ่ายราษฎร</span></span></div>
+                        <div>• <strong>การเพิ่มผลผลิตข้าว:</strong> สั่งให้ข้าราชการและราษฎรทำนา</div>
+                        <div>&nbsp;&nbsp;<span class="fill-blank"><span class="ans-text">ปีละ ๒ ครั้ง (นาปี-นาปรัง) และปราบหนูนา</span></span></div>
+                        <div>• <strong>รายได้หลักจากการค้า:</strong> ส่งเสริมการค้าสำเภากับ <span class="fill-blank"><span class="ans-text">ประเทศจีน</span></span></div>
+                    </div>
+
+                    <div class="mm-node">
+                        <div class="mm-node-title"><span>๓. การฟื้นฟูพระพุทธศาสนา</span><span>(๓ คะแนน)</span></div>
+                        <div>• <strong>การสร้างพระไตรปิฎกฉบับหลวง:</strong> โปรดให้ไปคัดลอก</div>
+                        <div>&nbsp;&nbsp;พระไตรปิฎกจากเมือง <span class="fill-blank"><span class="ans-text">นครศรีธรรมราช และ เมืองฝาง</span></span></div>
+                        <div>• <strong>วัดในเขตพระราชวังกรุงธนบุรี:</strong> ได้แก่</div>
+                        <div>&nbsp;&nbsp;<span class="fill-blank"><span class="ans-text">วัดแจ้ง (วัดอรุณฯ) และ วัดท้ายตลาด</span></span></div>
+                    </div>
+
+                    <div class="mm-node">
+                        <div class="mm-node-title"><span>๔. วรรณกรรมและศิลปกรรมสมัยธนบุรี</span><span>(๓ คะแนน)</span></div>
+                        <div>• <strong>บทละครพระราชนิพนธ์ในพระเจ้าตากสินฯ:</strong></div>
+                        <div>&nbsp;&nbsp;คือเรื่อง <span class="fill-blank"><span class="ans-text">บทละครเรื่องรามเกียรติ์ (๔ ตอน)</span></span></div>
+                        <div>• <strong>ผู้แต่งโคลงยอพระเกียรติพระเจ้ากรุงธนบุรี:</strong> <span class="fill-blank"><span class="ans-text">นายสวน มหาดเล็ก</span></span></div>
+                        <div>• <strong>งานจิตรกรรมชิ้นเอก (พ.ศ. ๒๓๑๙):</strong> <span class="fill-blank"><span class="ans-text">สมุดภาพไตรภูมิฉบับกรุงธนบุรี</span></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ตอนที่ 2: จับคู่ -->
+        <div class="ws-section">
+            <div class="section-title">ตอนที่ ๒ : นำตัวอักษร ก – จ มาเติมหน้าหัวข้อที่มีความสัมพันธ์กัน (๕ คะแนน)</div>
+            <div class="matching-grid">
+                <div class="match-box">
+                    <div class="match-item">.......... <strong>๑. สมเด็จเจ้าพระยามหากษัตริย์ศึก (ทองด้วง)</strong> <span class="ans-text">[ ข ]</span></div>
+                    <div class="match-item">.......... <strong>๒. เจ้าพระยาสุรสีห์ (บุญมา)</strong> <span class="ans-text">[ ง ]</span></div>
+                    <div class="match-item">.......... <strong>๓. พระยาพิชัยดาบหัก (ทองดี)</strong> <span class="ans-text">[ ก ]</span></div>
+                    <div class="match-item">.......... <strong>๔. อะแซหวุ่นกี้</strong> <span class="ans-text">[ ค ]</span></div>
+                    <div class="match-item">.......... <strong>๕. หลวงสรวิชิต (หน)</strong> <span class="ans-text">[ จ ]</span></div>
+                </div>
+                <div class="match-box" style="background:#E3F2FD;">
+                    <div class="match-item"><strong>ก.</strong> ทหารเอกผู้ต่อสู้กับกองทัพโปสุพลาจนดาบหักสองมือ</div>
+                    <div class="match-item"><strong>ข.</strong> แม่ทัพใหญ่ผู้นำทัพตีเวียงจันทน์และอัญเชิญพระแก้วมรกต</div>
+                    <div class="match-item"><strong>ค.</strong> แม่ทัพพม่าผู้ยกทัพมาล้อมเมืองพิษณุโลกเมื่อ พ.ศ. ๒๓๑๘</div>
+                    <div class="match-item"><strong>ง.</strong> แม่ทัพหน้าผู้เกรียงไกรจนได้รับสมญานามว่า "พระยาเสือ"</div>
+                    <div class="match-item"><strong>จ.</strong> กวีสำคัญสมัยธนบุรีผู้แต่งเรื่อง อิเหนาคำฉันท์ และ ลิลิตเพชรมงกุฎ</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ตอนที่ 3: คำถามคิดวิเคราะห์ -->
+        <div class="ws-section">
+            <div class="section-title">ตอนที่ ๓ : วิเคราะห์พระมหากรุณาธิคุณของสมเด็จพระเจ้าตากสินมหาราช (๓ คะแนน)</div>
+            <div class="evidence-card">
+                <p><strong>คำถาม:</strong> แม้ว่าอาณาจักรธนบุรีจะมีอายุเพียง ๑๕ ปี (พ.ศ. ๒๓๑๐ – ๒๓๒๕) แต่มีความสำคัญต่อความอยู่รอดและการสืบทอดของชาติไทยมาจนถึงสมัยรัตนโกสินทร์อย่างไร?</p>
+                <div class="ans-block">ทรงกอบกู้เอกราชได้รวดเร็วใน ๗ เดือน ปราบปรามชุมนุมต่างๆ จนรวมแผ่นดินไทยเป็นปึกแผ่นไม่ให้แตกแยกเป็นรัฐเล็กๆ ป้องกันการรุกรานของพม่า และฟื้นฟูเศรษฐกิจกับพุทธศาสนา จนเป็นรากฐานที่มั่นคงให้แก่สมัยรัตนโกสินทร์</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function setMode(isTeacher) {
+            if (isTeacher) document.body.classList.add('teacher-mode');
+            else document.body.classList.remove('teacher-mode');
+        }
+    </script>
+</body>
+</html>

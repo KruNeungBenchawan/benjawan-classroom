@@ -111,7 +111,10 @@
     profBio: document.getElementById("profBio"),
 
     footerYear: document.getElementById("footerYear"),
-    toast: document.getElementById("toast")
+    toast: document.getElementById("toast"),
+    sidebarNav: document.getElementById("sidebarNav"),
+    homeSection: document.getElementById("homeSection"),
+    resourcesSection: document.getElementById("resourcesSection")
   };
 
   function cloneDefaultData() {
@@ -442,6 +445,26 @@
 
   // Event Listeners
   el.teacherModeBtn.addEventListener("click", toggleTeacherMode);
+
+  if (el.sidebarNav) {
+    el.sidebarNav.addEventListener("click", (e) => {
+      const btn = e.target.closest(".nav-item[data-nav]");
+      if (!btn) return;
+
+      el.sidebarNav.querySelectorAll(".nav-item").forEach((n) => n.classList.remove("active"));
+      btn.classList.add("active");
+
+      const cat = btn.dataset.cat || "all";
+      state.activeCategory = cat;
+      renderCategoryTabs();
+      renderResources();
+
+      const target = btn.dataset.nav === "home" ? el.homeSection : el.resourcesSection;
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    });
+  }
 
   el.categoryTabs.addEventListener("click", (e) => {
     const btn = e.target.closest("[data-cat]");

@@ -2,6 +2,7 @@
   const STORAGE_KEY = "benjawan_classroom_data_v1";
 
   const TYPE_LABELS = {
+    onet: "เว็บติวสอบ / O-NET",
     gdrive: "Google Drive",
     pdf: "PDF",
     canva: "Canva / สไลด์",
@@ -9,6 +10,26 @@
     doc: "เอกสาร Word / Docs",
     sheet: "ตาราง / Sheets",
     link: "ลิงก์เว็บ"
+  };
+
+  const CATEGORY_ICONS = {
+    all: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="16" height="16"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>`,
+    "lesson-plans": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="16" height="16"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>`,
+    worksheets: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="16" height="16"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></svg>`,
+    media: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="16" height="16"><polygon points="5 3 19 12 5 21 5 3"/></svg>`,
+    exams: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="16" height="16"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>`,
+    documents: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="16" height="16"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>`
+  };
+
+  const TYPE_ICONS = {
+    onet: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="14" height="14"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>`,
+    gdrive: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="14" height="14"><polygon points="12 2 2 19 22 19 12 2"/></svg>`,
+    pdf: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="14" height="14"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>`,
+    canva: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="14" height="14"><rect x="3" y="3" width="18" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>`,
+    video: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="14" height="14"><polygon points="5 3 19 12 5 21 5 3"/></svg>`,
+    doc: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="14" height="14"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><line x1="8" y1="13" x2="16" y2="13"/></svg>`,
+    sheet: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="14" height="14"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>`,
+    link: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="14" height="14"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>`
   };
 
   let state = {
@@ -105,6 +126,15 @@
       if (!parsed || !Array.isArray(parsed.resources) || !Array.isArray(parsed.categories)) {
         return cloneDefaultData();
       }
+      // Ensure newly added O-NET default resources appear even if localStorage existed
+      const defaults = cloneDefaultData();
+      const existingIds = new Set(parsed.resources.map((r) => r.id));
+      ["onet-m3-2569", "onet-p6-2569"].forEach((id) => {
+        if (!existingIds.has(id)) {
+          const item = defaults.resources.find((r) => r.id === id);
+          if (item) parsed.resources.unshift(item);
+        }
+      });
       return parsed;
     } catch {
       return cloneDefaultData();
@@ -244,6 +274,7 @@
         class="cat-tab ${state.activeCategory === tab.id ? "active" : ""}"
         data-cat="${escapeHtml(tab.id)}"
       >
+        <span class="cat-icon" aria-hidden="true">${CATEGORY_ICONS[tab.id] || CATEGORY_ICONS.documents}</span>
         <span>${escapeHtml(tab.name)}</span>
         <span class="cat-count">${counts[tab.id] || 0}</span>
       </button>`
@@ -334,7 +365,9 @@
     el.resourcesContainer.innerHTML = items
       .map((item) => {
         const safeUrl = sanitizeUrl(item.url);
-        const typeLabel = TYPE_LABELS[item.type] || "ลิงก์";
+        const typeKey = TYPE_LABELS[item.type] ? item.type : "link";
+        const typeLabel = TYPE_LABELS[typeKey];
+        const typeIcon = TYPE_ICONS[typeKey] || TYPE_ICONS.link;
         const catName = getCategoryName(item.category);
 
         return `
@@ -345,7 +378,10 @@
                 <span class="res-cat-badge">${escapeHtml(catName)}</span>
                 ${item.pinned ? `<span class="res-pin-tag">ปักหมุด</span>` : ""}
               </div>
-              <span class="res-type-badge">${escapeHtml(typeLabel)}</span>
+              <span class="res-type-badge type-${escapeHtml(typeKey)}">
+                ${typeIcon}
+                <span>${escapeHtml(typeLabel)}</span>
+              </span>
             </div>
             <h3 class="res-title">${escapeHtml(item.title)}</h3>
             ${item.description ? `<p class="res-desc">${escapeHtml(item.description)}</p>` : ""}

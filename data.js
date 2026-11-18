@@ -14,15 +14,15 @@ window.DEFAULT_CLASSROOM_DATA = {
     { id: "lesson-plans", name: "แผนการสอน" },
     { id: "worksheets", name: "ใบงาน / แบบฝึกหัด" },
     { id: "media", name: "สื่อการสอน / วิดีโอ" },
-    { id: "exams", name: "ข้อสอบ / แบบประเมิน" },
+    { id: "exams", name: "ข้อสอบ / O-NET" },
     { id: "documents", name: "เอกสารทั่วไป / แบบฟอร์ม" }
   ],
 
   announcements: [
     {
       id: "ann-1",
-      title: "เปิดภาคเรียนที่ 2 — อัปเดตใบงานและสื่อการสอนชุดใหม่แล้ว",
-      content: "นักเรียนสามารถดาวน์โหลดใบงานหน่วยการเรียนรู้ที่ 1 และทบทวนบทเรียนผ่านสไลด์ได้เลยครับ",
+      title: "เปิดคลังติวสอบ O-NET ภาษาไทย ป.6 และ ม.3 ปี 2569 แล้ว!",
+      content: "นักเรียนสามารถเข้าฝึกทำข้อสอบออนไลน์ได้ทันทีจากมุม 'เว็บติวสอบ O-NET แนะนำ' หรือในหมวดหมู่ 'ข้อสอบ / O-NET' ครับ",
       date: "2026-11-18"
     },
     {
@@ -35,6 +35,30 @@ window.DEFAULT_CLASSROOM_DATA = {
 
   resources: [
     {
+      id: "onet-p6-2569",
+      title: "ติวสอบ O-NET ภาษาไทย ป.6 (ปี 2569)",
+      category: "exams",
+      type: "onet",
+      subject: "ภาษาไทย",
+      grade: "ป.6",
+      url: "https://kruneungbenchawan.github.io/onet-thai-p6-2569/index.html",
+      description: "เว็บไซต์ฝึกทำข้อสอบและทบทวนเนื้อหา O-NET วิชาภาษาไทย ระดับชั้นประถมศึกษาปีที่ 6 ปี 2569",
+      date: "2026-11-18",
+      pinned: true
+    },
+    {
+      id: "onet-m3-2569",
+      title: "ติวสอบ O-NET ภาษาไทย ม.3 (ปี 2569)",
+      category: "exams",
+      type: "onet",
+      subject: "ภาษาไทย",
+      grade: "ม.3",
+      url: "https://kruneungbenchawan.github.io/onet-thai-m3-2569/",
+      description: "เว็บไซต์ฝึกทำข้อสอบและทบทวนเนื้อหา O-NET วิชาภาษาไทย ระดับชั้นมัธยมศึกษาปีที่ 3 ปี 2569",
+      date: "2026-11-18",
+      pinned: true
+    },
+    {
       id: "res-1",
       title: "แผนการจัดการเรียนรู้ หน่วยที่ 1 การอ่านจับใจความสำคัญ",
       category: "lesson-plans",
@@ -44,7 +68,7 @@ window.DEFAULT_CLASSROOM_DATA = {
       url: "https://drive.google.com/",
       description: "แผนการสอนฉบับสมบูรณ์ พร้อมจุดประสงค์การเรียนรู้ กิจกรรม และเกณฑ์การวัดผลประเมินผล",
       date: "2026-11-18",
-      pinned: true
+      pinned: false
     },
     {
       id: "res-2",
@@ -68,7 +92,7 @@ window.DEFAULT_CLASSROOM_DATA = {
       url: "https://www.canva.com/",
       description: "สไลด์สีสันสดใส พร้อมตัวอย่างประกอบเข้าใจง่าย ใช้สอนผ่านโปรเจกเตอร์หรือออนไลน์",
       date: "2026-11-12",
-      pinned: true
+      pinned: false
     },
     {
       id: "res-4",

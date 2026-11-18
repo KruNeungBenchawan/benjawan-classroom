@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สไลด์ประกอบการสอน วิชาประวัติศาสตร์ ม.2 - อาณาจักรธนบุรี (สำนักพิมพ์ พว.)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0D47A1;      /* สีน้ำเงินกรมท่า-ทอง โทนกรุงธนบุรีศรีมหาสมุทร */
+            --primary-bg: #F0F6FF;
+            --accent: #E65100;
+            --accent-gold: #C68400;
+            --success: #2E7D32;
+            --text-dark: #1E1B24;
+            --text-muted: #5A5266;
+            --card-bg: #FFFFFF;
+            --border-color: #C5CAE9;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background: linear-gradient(135deg, #092047 0%, #153c7a 50%, #071630 100%);
+            color: var(--text-dark);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1, h2, h3, .font-heading { font-family: 'Prompt', sans-serif; }
+
+        .top-bar {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: #fff;
+            padding: 10px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            z-index: 100;
+        }
+
+        .brand-badge { display: flex; align-items: center; gap: 12px; }
+        .pw-pill { background: #27AE60; color: white; font-family: 'Prompt', sans-serif; font-weight: 600; font-size: 0.85rem; padding: 4px 12px; border-radius: 20px; }
+        .grade-pill { background: #F57C00; color: white; font-family: 'Prompt', sans-serif; font-weight: 700; font-size: 0.85rem; padding: 4px 12px; border-radius: 6px; }
+        .top-controls { display: flex; align-items: center; gap: 8px; }
+        .btn-control {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 6px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Prompt', sans-serif;
+            font-size: 0.84rem;
+            transition: all 0.2s;
+        }
+        .btn-control:hover { background: rgba(255, 255, 255, 0.28); transform: translateY(-1px); }
+
+        .deck-wrapper {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide {
+            width: 100%;
+            max-width: 1280px;
+            height: 100%;
+            max-height: 740px;
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            animation: slideIn 0.35s ease-out;
+        }
+        .slide.active { display: flex; }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(12px) scale(0.99); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .slide-header {
+            background: linear-gradient(90deg, var(--primary) 0%, #1976D2 100%);
+            color: white;
+            padding: 18px 36px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 4px solid #FFB300;
+        }
+        .slide-header h2 { font-size: 1.52rem; font-weight: 700; display: flex; align-items: center; gap: 12px; }
+        .slide-unit-tag { background: rgba(255, 255, 255, 0.2); padding: 4px 14px; border-radius: 20px; font-size: 0.9rem; font-family: 'Prompt', sans-serif; }
+
+        .slide-body {
+            flex: 1;
+            padding: 24px 36px;
+            overflow-y: auto;
+            background: radial-gradient(circle at bottom right, #f5f9ff 0%, #ffffff 70%);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .cover-slide {
+            background: linear-gradient(135deg, #0D47A1 0%, #1565C0 50%, #0A2E6E 100%);
+            color: white;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .cover-box {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(12px);
+            border: 2px solid rgba(255, 213, 79, 0.4);
+            border-radius: 24px;
+            padding: 36px 50px;
+            max-width: 1000px;
+            width: 100%;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .cover-title { font-size: 3.1rem; font-weight: 800; margin: 12px 0 8px; color: #FFF; text-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+        .cover-subtitle { font-size: 1.6rem; color: #FFD54F; font-weight: 600; margin-bottom: 20px; }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+
+        .info-card {
+            background: #FFFFFF;
+            border: 2px solid var(--border-color);
+            border-radius: 14px;
+            padding: 16px 20px;
+            box-shadow: 0 4px 14px rgba(13, 71, 161, 0.06);
+        }
+        .info-card.highlight-orange { border-left: 6px solid var(--accent); }
+        .info-card.highlight-purple { border-left: 6px solid var(--primary); }
+        .info-card.highlight-green { border-left: 6px solid var(--success); }
+        .info-card.highlight-gold { border-left: 6px solid var(--accent-gold); }
+
+        .card-title { font-family: 'Prompt', sans-serif; font-size: 1.16rem; font-weight: 700; color: var(--primary); margin-bottom: 8px; }
+        .card-list { list-style: none; display: flex; flex-direction: column; gap: 6px; font-size: 1.01rem; line-height: 1.5; }
+        .card-list li { position: relative; padding-left: 18px; }
+        .card-list li::before { content: "•"; color: var(--accent); font-weight: bold; font-size: 1.25rem; position: absolute; left: 2px; top: -2px; }
+
+        .styled-table { width: 100%; border-collapse: collapse; border-radius: 12px; overflow: hidden; font-size: 0.98rem; }
+        .styled-table th { background: var(--primary); color: white; font-family: 'Prompt', sans-serif; padding: 10px 14px; text-align: left; }
+        .styled-table td { padding: 9px 14px; border-bottom: 1px solid var(--border-color); background: white; vertical-align: top; line-height: 1.45; }
+        .styled-table tr:nth-child(even) td { background: var(--primary-bg); }
+
+        .tag { display: inline-block; padding: 3px 10px; border-radius: 6px; font-size: 0.83rem; font-weight: 600; font-family: 'Prompt', sans-serif; }
+        .tag-purple { background: #E3F2FD; color: var(--primary); }
+        .tag-orange { background: #FBE9E7; color: var(--accent); }
+        .tag-green { background: #E8F5E9; color: var(--success); }
+        .tag-gold { background: #FFF8E1; color: #9C6B08; }
+
+        .question-box {
+            background: linear-gradient(90deg, #FFF8E7 0%, #FFFDF9 100%);
+            border: 2px solid #F5C76B;
+            border-left: 8px solid var(--accent-gold);
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin-top: auto;
+        }
+        .question-header { font-family: 'Prompt', sans-serif; font-weight: 700; color: #B27200; font-size: 1.04rem; display: flex; justify-content: space-between; align-items: center; }
+        .answer-reveal { display: none; margin-top: 8px; padding-top: 8px; border-top: 1px dashed #E0B860; color: #1B5E20; font-weight: 600; font-size: 1rem; }
+        .btn-reveal { background: var(--accent-gold); color: white; border: none; padding: 5px 14px; border-radius: 6px; font-family: 'Prompt', sans-serif; font-size: 0.85rem; cursor: pointer; font-weight: 600; }
+
+        .bottom-bar { background: rgba(0, 0, 0, 0.35); backdrop-filter: blur(8px); padding: 12px 36px; display: flex; justify-content: space-between; align-items: center; color: white; }
+        .nav-buttons { display: flex; gap: 12px; align-items: center; }
+        .btn-nav { background: #F57C00; color: white; border: none; padding: 8px 22px; border-radius: 10px; font-family: 'Prompt', sans-serif; font-weight: 600; font-size: 1rem; cursor: pointer; }
+        .btn-nav:disabled { background: rgba(255, 255, 255, 0.2); color: rgba(255, 255, 255, 0.5); cursor: not-allowed; }
+        .progress-dots { display: flex; gap: 8px; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; background: rgba(255, 255, 255, 0.3); cursor: pointer; }
+        .dot.active { background: #FFD54F; transform: scale(1.3); }
+
+        .quiz-option { background: white; border: 2px solid var(--border-color); border-radius: 10px; padding: 10px 16px; cursor: pointer; font-size: 1rem; margin-bottom: 7px; display: flex; align-items: center; gap: 10px; }
+        .quiz-option:hover { border-color: var(--primary); background: var(--primary-bg); }
+        .quiz-option.correct { background: #E8F5E9; border-color: #2E7D32; color: #1B5E20; font-weight: 700; }
+        .quiz-option.wrong { background: #FFEBEE; border-color: #C62828; color: #B71C1C; }
+
+        @media print {
+            body { background: white; height: auto; overflow: visible; }
+            .top-bar, .bottom-bar, .btn-reveal { display: none !important; }
+            .deck-wrapper { display: block; padding: 0; }
+            .slide { display: flex !important; page-break-after: always; height: 190mm; max-width: 100%; box-shadow: none; border: 1px solid #ccc; margin-bottom: 15mm; }
+            .answer-reveal { display: block !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <div class="brand-badge">
+            <span class="pw-pill">อ้างอิงหนังสือเรียน พว.</span>
+            <span class="grade-pill">ชั้นมัธยมศึกษาปีที่ ๒</span>
+            <span style="font-family: 'Prompt', sans-serif; font-weight: 600;">รายวิชาพื้นฐาน ประวัติศาสตร์ | หน่วยการเรียนรู้ที่ 4 : อาณาจักรธนบุรี</span>
+        </div>
+        <div class="top-controls">
+            <button class="btn-control" onclick="goToSlide(0)">🏠 หน้าแรก</button>
+            <button class="btn-control" onclick="goToSlide(1)">⚔️ การกอบกู้เอกราช</button>
+            <button class="btn-control" onclick="goToSlide(3)">🗺️ ปราบ 5 ชุมนุม</button>
+            <button class="btn-control" onclick="goToSlide(5)">🌾 การเมือง-เศรษฐกิจ</button>
+            <button class="btn-control" onclick="goToSlide(7)">✨ ภูมิปัญญาธนบุรี</button>
+            <button class="btn-control" onclick="goToSlide(8)">🎯 แบบทดสอบ</button>
+            <button class="btn-control" onclick="window.print()">🖨️ พิมพ์ / PDF</button>
+            <button class="btn-control" onclick="toggleFullScreen()">⛶ เต็มจอ</button>
+        </div>
+    </div>
+
+    <div class="deck-wrapper">
+
+        <!-- SLIDE 1: หน้าปก -->
+        <div class="slide cover-slide active">
+            <div class="cover-box">
+                <div style="display:flex; justify-content:center; gap:12px; margin-bottom:14px;">
+                    <span class="pw-pill" style="font-size:1rem; padding:6px 18px;">กลุ่มสาระการเรียนรู้สังคมศึกษา ศาสนา และวัฒนธรรม</span>
+                    <span class="grade-pill" style="font-size:1rem; padding:6px 18px;">ชั้นมัธยมศึกษาปีที่ ๒</span>
+                </div>
+                <div style="font-size:1.3rem; color:#BBDEFB; font-family:'Prompt',sans-serif;">หน่วยการเรียนรู้ที่ ๔</div>
+                <h1 class="cover-title">พัฒนาการของอาณาจักรธนบุรี<br>(พ.ศ. ๒๓๑๐ – ๒๓๒๕)</h1>
+                <div class="cover-subtitle">(๑๕ ปีแห่งการกอบกู้เอกราช รวบรวมแผ่นดิน และฟื้นฟูชาติไทย)</div>
+                <hr style="border:none; border-top:1px solid rgba(255,255,255,0.25); margin: 18px auto; width: 70%;">
+                <div class="grid-4" style="text-align:left; margin-top:16px;">
+                    <div style="background:rgba(0,0,0,0.28); padding:14px; border-radius:12px;">
+                        <strong style="color:#FFD54F; font-family:'Prompt',sans-serif;">๑. การกอบกู้เอกราช</strong>
+                        <p style="font-size:0.9rem; margin-top:4px; color:#E3F2FD;">เส้นทางเดินทัพสู่จันทบุรี ยึดค่ายโพธิ์สามต้นคืนใน 7 เดือน</p>
+                    </div>
+                    <div style="background:rgba(0,0,0,0.28); padding:14px; border-radius:12px;">
+                        <strong style="color:#FFD54F; font-family:'Prompt',sans-serif;">๒. การสถาปนากรุงธนบุรี</strong>
+                        <p style="font-size:0.9rem; margin-top:4px; color:#E3F2FD;">ปัจจัยการย้ายราชธานี และการปราบปรามชุมนุมทั้ง 5</p>
+                    </div>
+                    <div style="background:rgba(0,0,0,0.28); padding:14px; border-radius:12px;">
+                        <strong style="color:#FFD54F; font-family:'Prompt',sans-serif;">๓. พัฒนาการด้านต่างๆ</strong>
+                        <p style="font-size:0.9rem; margin-top:4px; color:#E3F2FD;">การปกครอง การแก้ปัญหาเศรษฐกิจปากท้อง และการค้ากับจีน</p>
+                    </div>
+                    <div style="background:rgba(0,0,0,0.28); padding:14px; border-radius:12px;">
+                        <strong style="color:#FFD54F; font-family:'Prompt',sans-serif;">๔. การฟื้นฟูศาสนา-ศิลปะ</strong>
+                        <p style="font-size:0.9rem; margin-top:4px; color:#E3F2FD;">การรวบรวมพระไตรปิฎก สมุดภาพไตรภูมิ และวรรณกรรม</p>
+                    </div>
+                </div>
+                <p style="margin-top:20px; font-size:0.95rem; color:#BBDEFB;">
+                    อ้างอิงเนื้อหาจาก: หนังสือเรียน รายวิชาพื้นฐาน ประวัติศาสตร์ ม.2 (ผศ.ดร.วงเดือน นาราสัจจ์ และ ผศ.ชมพูนุท นาคีรักษ์) สำนักพิมพ์ พว.
+                </p>
+            </div>
+        </div>
+
+        <!-- SLIDE 2: การกอบกู้เอกราชของสมเด็จพระเจ้าตากสินมหาราช -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>⚔️ ๑. การกอบกู้เอกราชของสมเด็จพระเจ้าตากสินมหาราช (พ.ศ. ๒๓๑๐)</h2>
+                <span class="slide-unit-tag">ประวัติศาสตร์ ม.2 (พว.) | หน้า 2/10</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="info-card highlight-purple">
+                        <div class="card-title">🔥 เส้นทางการรวบรวมกำลังพลที่หัวเมืองตะวันออก</div>
+                        <ul class="card-list">
+                            <li><strong>การตีฝ่าวงล้อมพม่า (ม.ค. พ.ศ. 2309):</strong> ก่อนเสียกรุงศรีอยุธยาประมาณ 3 เดือน <strong>พระยาวชิรปราการ (สิน)</strong> เล็งเห็นว่ากรุงศรีอยุธยาไม่อาจต้านทานพม่าได้ จึงนำกำลังพลประมาณ <strong>500 นาย</strong> ตีฝ่าวงล้อมพม่าออกจากค่ายวัดพิชัยมุ่งสู่หัวเมืองชายทะเลตะวันออก</li>
+                            <li><strong>เหตุผลที่เลือกหัวเมืองตะวันออก (ระยอง – จันทบุรี – ตราด):</strong>
+                                <br>1) อยู่ไกลจากจุดที่กองทัพพม่าตั้งฐานทัพและไม่บอบช้ำจากสงคราม
+                                <br>2) อุดมสมบูรณ์ด้วยเสบียงอาหารและไม้สำหรับต่อเรือรบ
+                                <br>3) ติดทะเลสามารถติดต่อค้าขายและเดินทัพทางเรือเข้าแม่น้ำเจ้าพระยาได้สะดวก
+                            </li>
+                            <li><strong>ยุทธการตีเมืองจันทบุรี (มิ.ย. พ.ศ. 2310):</strong> ทรงสั่งให้ทหาร <strong>"ทุบหม้อข้าวหม้อแกง"</strong> เพื่อปลุกขวัญให้สู้ตายไปกินข้าวมื้อเช้าในเมืองจันทบุรี จนยึดเมืองได้สำเร็จ</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card highlight-orange">
+                        <div class="card-title" style="color:var(--accent);">⛵ ยุทธการกอบกู้เอกราช (ต.ค. – พ.ย. พ.ศ. 2310)</div>
+                        <ul class="card-list">
+                            <li><strong>การเตรียมทัพเรือ:</strong> ทรงต่อเรือรบได้กว่า 100 ลำ และรวบรวมไพร่พลทั้งคนไทยและคนจีนได้ประมาณ <strong>5,000 นาย</strong></li>
+                            <li><strong>การเดินทัพกลับสู่อยุธยา (ต.ค. พ.ศ. 2310):</strong> เมื่อสิ้นฤดูมรสุม ทรงยกทัพเรือออกจากจันทบุรีเข้าปากแม่น้ำเจ้าพระยา:
+                                <br>• ตีเมืองธนบุรีและ<strong>ป้อมวิชัยประสิทธิ์</strong> (ซึ่งนายทองอินดูแลอยู่) ได้สำเร็จ
+                                <br>• ยกทัพขึ้นไปตี<strong>ค่ายโพธิ์สามต้น</strong> ของ <strong>สุกี้พระนายกอง</strong> แม่ทัพที่พม่าตั้งไว้ควบคุมอยุธยา
+                            </li>
+                            <li><strong>กอบกู้เอกราชสำเร็จ:</strong> วันที่ <strong>6 พฤศจิกายน พ.ศ. 2310</strong> ยึดค่ายโพธิ์สามต้นคืนได้สำเร็จ ใช้เวลาหลังเสียกรุงเพียง <strong>7 เดือน</strong> เท่านั้น</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: ปัจจัยการสถาปนากรุงธนบุรีเป็นราชธานีใหม่ -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>🏰 ๒. ปัจจัยการสถาปนา "กรุงธนบุรีศรีมหาสมุทร" เป็นราชธานี</h2>
+                <span class="slide-unit-tag">ประวัติศาสตร์ ม.2 (พว.) | หน้า 3/10</span>
+            </div>
+            <div class="slide-body">
+                <p style="font-size:1.03rem; color:var(--text-muted);">
+                    สมเด็จพระเจ้าตากสินมหาราชทรงปราบดาภิเษกขึ้นเป็นพระมหากษัตริย์เมื่อวันที่ <strong>28 ธันวาคม พ.ศ. 2310</strong> (ทรงพระนามว่า <em>สมเด็จพระบรมราชาที่ 4</em>) และทรงเลือก <strong>"เมืองธนบุรี"</strong> เป็นราชธานีใหม่แทนอยุธยาด้วยเหตุผลสำคัญ 4 ประการ:
+                </p>
+
+                <div class="grid-2">
+                    <div class="info-card highlight-purple">
+                        <div class="card-title">1. สภาพความเสียหายของกรุงศรีอยุธยาและกำลังพล</div>
+                        <ul class="card-list">
+                            <li>กรุงศรีอยุธยาถูกเผาทำลายเสียหายอย่างหนัก กำแพงเมืองและป้อมปราการพังทลาย ยากแก่การบูรณะในเวลาอันสั้น</li>
+                            <li>ขณะนั้นพระองค์มีกำลังพลเพียงหลักพันคน ซึ่งน้อยเกินกว่าจะใช้รักษาพื้นที่เกาะเมืองอยุธยาที่มีขนาดใหญ่มากได้ ส่วน<strong>เมืองธนบุรีมีขนาดกะทัดรัด</strong> เหมาะสมกับกำลังพลที่มีอยู่</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card highlight-orange">
+                        <div class="card-title" style="color:var(--accent);">2. ด้านยุทธศาสตร์การป้องกันและการถอยทัพ</div>
+                        <ul class="card-list">
+                            <li>เมืองธนบุรีมีป้อมปราการที่แข็งแรงอยู่แล้วตั้งแต่สมัยสมเด็จพระนารายณ์มหาราช คือ <strong>ป้อมวิชัยเยนทร์ (ทรงเปลี่ยนชื่อเป็น "ป้อมวิชัยประสิทธิ์")</strong></li>
+                            <li>ตั้งอยู่ใกล้ปากอ่าวไทย หากข้าศึกยกทัพใหญ่มาทางบกและต้านทานไม่ไหว ก็สามารถยกทัพเรือถอยกลับไปตั้งหลักที่<strong>เมืองจันทบุรี</strong>ได้สะดวก</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card highlight-green">
+                        <div class="card-title" style="color:var(--success);">3. ด้านเศรษฐกิจและการค้าทางทะเล</div>
+                        <ul class="card-list">
+                            <li>ตั้งอยู่สองฝั่ง<strong>แม่น้ำเจ้าพระยา</strong>ใกล้ปากอ่าวไทย ทำให้เรือสำเภาต่างชาติเดินทางเข้ามาค้าขายได้สะดวกกว่าอยุธยา</li>
+                            <li>สามารถปิดกั้นเส้นทางลำเลียงสินค้าและอาวุธไม่ให้ส่งขึ้นไปให้ชุมนุมอิสระอื่นๆ ที่อยู่ทางตอนเหนือได้</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card highlight-gold">
+                        <div class="card-title" style="color:#B27200;">4. ความอุดมสมบูรณ์ของพื้นที่</div>
+                        <ul class="card-list">
+                            <li>ดินแดนสองฝั่งแม่น้ำเจ้าพระยาตอนล่างมีดินตะกอนอุดมสมบูรณ์ เหมาะแก่การทำนาและทำสวนผลไม้เพื่อฟื้นฟูเสบียงอาหารของชาติ</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: การรวบรวมแผ่นดิน (การปราบปรามชุมนุมต่างๆ หลังเสียกรุง) -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>🗺️ ๓. การรวบรวมแผ่นดินให้เป็นปึกแผ่น (การปราบปรามชุมนุมอิสระ พ.ศ. ๒๓๑๑ – ๒๓๑๓)</h2>
+                <span class="slide-unit-tag">ประวัติศาสตร์ ม.2 (พว.) | หน้า 4/10</span>
+            </div>
+            <div class="slide-body">
+                <p style="font-size:1.02rem; color:var(--text-muted);">
+                    หลังกรุงศรีอยุธยาล่มสลาย บ้านเมืองแตกแยกออกเป็นชุมนุมอิสระต่างๆ สมเด็จพระเจ้าตากสินมหาราชทรงใช้เวลาเพียง 3 ปี (พ.ศ. 2311–2313) ปราบปรามชุมนุมต่างๆ จนรวมแผ่นดินไทยเป็นหนึ่งเดียวได้สำเร็จ:
+                </p>
+
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th style="width:26%;">ชื่อชุมนุม</th>
+                            <th style="width:24%;">ผู้นำและศูนย์กลางที่ตั้ง</th>
+                            <th style="width:50%;">เหตุการณ์การปราบปรามและรวบรวมเข้ากับกรุงธนบุรี</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>1. ชุมนุมสุกี้พระนายกอง</strong><br>(ปราบเมื่อ พ.ศ. 2310)</td>
+                            <td>สุกี้พระนายกอง<br>(ค่ายโพธิ์สามต้น จ.พระนครศรีอยุธยา)</td>
+                            <td>เป็นชุมนุมแรกที่ทรงปราบได้สำเร็จในการกอบกู้เอกราชเมื่อ 6 พ.ย. พ.ศ. 2310</td>
+                        </tr>
+                        <tr>
+                            <td><strong>2. ชุมนุมเจ้าพระยาพิษณุโลก</strong><br>(รวมเมื่อ พ.ศ. 2311)</td>
+                            <td>เจ้าพระยาพิษณุโลก (เรือง)<br>(เมืองพิษณุโลกและหัวเมืองเหนือ)</td>
+                            <td>ยกทัพไปตีที่เกยไชย (นครสวรรค์) แต่ทรงถูกกระสุนปืนที่พระชงฆ์จึงถอยทัพ ต่อมาเจ้าพระยาพิษณุโลกถึงแก่พิราลัย ชุมนุมจึงอ่อนแอและตกอยู่ใต้อำนาจชุมนุมเจ้าพระฝาง</td>
+                        </tr>
+                        <tr>
+                            <td><strong>3. ชุมนุมเจ้าพิมาย</strong><br>(ปราบเมื่อ พ.ศ. 2311)</td>
+                            <td>กรมหมื่นเทพพิพิธ (โอรสพระเจ้าอยู่หัวบรมโกศ)<br>(เมืองพิมาย จ.นครราชสีมา)</td>
+                            <td>ทรงยกทัพขึ้นไปตีเมืองนครราชสีมาและเมืองพิมาย จับตัวกรมหมื่นเทพพิพิธลงมาสำเร็จโทษที่กรุงธนบุรี</td>
+                        </tr>
+                        <tr>
+                            <td><strong>4. ชุมนุมเจ้านครศรีธรรมราช</strong><br>(ปราบเมื่อ พ.ศ. 2312)</td>
+                            <td>พระปลัดหนู (เจ้านคร)<br>(เมืองนครศรีธรรมราชและหัวเมืองใต้)</td>
+                            <td>ทรงยกทัพหลวงทางเรือลงไปปราบด้วยพระองค์เอง พระปลัดหนูยอมสวามิภักดิ์ จึงทรงพระกรุณาโปรดเกล้าฯ ให้รับราชการและต่อมาตั้งกลับไปครองเมืองนครศรีธรรมราชตามเดิม</td>
+                        </tr>
+                        <tr>
+                            <td><strong>5. ชุมนุมเจ้าพระฝาง (สวางคบุรี)</strong><br><span class="tag tag-orange">ชุมนุมสุดท้าย พ.ศ. 2313</span></td>
+                            <td>พระพากุลเถระ (เรือน) พระสงฆ์นุ่งผ้าแดง<br>(เมืองสวางคบุรี จ.อุตรดิตถ์)</td>
+                            <td>ทรงยกทัพขึ้นไปปราบชุมนุมพระสงฆ์ทุศีลที่ยึดครองเมืองพิษณุโลกและอุตรดิตถ์ได้สำเร็จ ทำให้<strong>รวบรวมแผ่นดินไทยครบทุกภูมิภาคเมื่อ พ.ศ. 2313</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: การทำสงครามป้องกันและขยายพระราชอาณาเขตสมัยธนบุรี -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>🛡️ ๔. การทำสงครามป้องกันประเทศและขยายพระราชอาณาเขตสมัยธนบุรี</h2>
+                <span class="slide-unit-tag">ประวัติศาสตร์ ม.2 (พว.) | หน้า 5/10</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="info-card highlight-purple">
+                        <div class="card-title">⚔️ 1. สงครามป้องกันการรุกรานของพม่า (รวม 9 ครั้ง)</div>
+                        <ul class="card-list">
+                            <li><strong>ศึกค่ายบางกุ้ง จ.สมุทรสงคราม (พ.ศ. 2310):</strong> พม่ายกทัพจากเมืองทวายมาล้อมค่ายจีนบางกุ้ง ทรงยกทัพไปตีพม่าแตกพ่าย เป็นชัยชนะครั้งแรกหลังสถาปนากรุงธนบุรี</li>
+                            <li><strong>ศึกเมืองพิชัย (พ.ศ. 2316):</strong> โปสุพลาแม่ทัพพม่ายกมาตีเมืองพิชัย <strong>พระยาพิชัย (ทองดี)</strong> ออกรบเคียงบ่าเคียงไหล่กับเจ้าพระยาสุรสีห์จน<strong>ดาบหักสองมือ ("พระยาพิชัยดาบหัก")</strong> และขับไล่พม่าได้สำเร็จ</li>
+                            <li><strong>ศึกบางแก้ว เมืองราชบุรี (พ.ศ. 2317):</strong> ทรงล้อมจับกองทัพพม่าที่บางแก้วจนยอมจำนนทั้งหมด</li>
+                            <li><strong>ศึกอะแซหวุ่นกี้ ตีเมืองพิษณุโลก (พ.ศ. 2318):</strong> สงครามใหญ่ที่สุดในสมัยธนบุรี อะแซหวุ่นกี้ชื่นชมฝีมือ <strong>เจ้าพระยาจักรี (ทองด้วง)</strong> ว่าจะมีบุญญาธิการเป็นกษัตริย์ในภายภาคหน้า</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card highlight-green">
+                        <div class="card-title" style="color:var(--success);">🚩 2. การขยายพระราชอาณาเขตสมัยธนบุรี</div>
+                        <ul class="card-list">
+                            <li><strong>การขับไล่พม่าออกจากล้านนา (พ.ศ. 2317):</strong> ทรงร่วมมือกับ <strong>พระยาจ่าบ้าน</strong> และ <strong>พระยากาวิละ</strong> ตีเมืองเชียงใหม่คืนจากพม่า ทำให้ล้านนาเข้ามาอยู่ร่วมกับไทย</li>
+                            <li><strong>การตีเมืองเวียงจันทน์และหลวงพระบาง (พ.ศ. 2321):</strong> ทรงโปรดเกล้าฯ ให้ <strong>สมเด็จเจ้าพระยามหากษัตริย์ศึก (ทองด้วง)</strong> และเจ้าพระยาสุรสีห์ ยกทัพไปตีเวียงจันทน์ ได้อัญเชิญ <strong>"พระพุทธมหามณีรัตนปฏิมากร (พระแก้วมรกต)"</strong> และพระบาง ลงมาประดิษฐานที่กรุงธนบุรี</li>
+                            <li><strong>ทิศตะวันออกและทิศใต้:</strong> ขยายอำนาจครอบคลุมกัมพูชา (พุทไธมาศ) และหัวเมืองมลายู (ตรังกานู ไทรบุรี)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 6: พัฒนาการด้านการเมืองการปกครอง และ เศรษฐกิจสมัยธนบุรี -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>🌾 ๕. พัฒนาการด้านการเมืองการปกครอง และ เศรษฐกิจสมัยธนบุรี</h2>
+                <span class="slide-unit-tag">ประวัติศาสตร์ ม.2 (พว.) | หน้า 6/10</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="info-card highlight-purple">
+                        <div class="card-title">🏛️ 1. ด้านการเมืองการปกครอง</div>
+                        <ul class="card-list">
+                            <li><strong>ยึดรูปแบบตามอยุธยาตอนปลาย:</strong> เพื่อให้การบริหารบ้านเมืองในภาวะสงครามดำเนินไปได้อย่างรวดเร็วและต่อเนื่อง:
+                                <br>• <strong>ส่วนกลาง:</strong> มี <strong>สมุหนายก</strong> (ดูแลหัวเมืองฝ่ายเหนือ), <strong>สมุหพระกลาโหม</strong> (ดูแลหัวเมืองฝ่ายใต้) และ <strong>จตุสดมภ์</strong> (เวียง วัง คลัง นา) โดยพระคลังดูแลหัวเมืองชายทะเลตะวันออก
+                                <br>• <strong>ส่วนภูมิภาค:</strong> แบ่งเป็น หัวเมืองชั้นใน, หัวเมืองชั้นนอก (เมืองเอก โท ตรี จัตวา) และเมืองประเทศราช
+                            </li>
+                            <li><strong>ตำแหน่งพิเศษสมัยธนบุรี:</strong> ทรงสถาปนาเจ้าพระยาจักรี (ทองด้วง) ขึ้นเป็น <strong>"สมเด็จเจ้าพระยามหากษัตริย์ศึก"</strong> มีเกียรติยศเสมอเจ้าต่างกรม</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card highlight-orange">
+                        <div class="card-title" style="color:var(--accent);">🍚 2. ด้านเศรษฐกิจและการแก้ปัญหาความอดอยาก</div>
+                        <ul class="card-list">
+                            <li><strong>วิกฤตขาดแคลนอาหารระยะแรก:</strong> หลังเสียกรุง ราษฎรไม่ได้ทำนา ข้าวสารแพงถึงเกวียนละ 100–200 บาท ผู้คนอดอยากล้มตาย</li>
+                            <li><strong>แนวพระราชดำริแก้ไขวิกฤตเศรษฐกิจ:</strong>
+                                <br>1) <strong>สละพระราชทรัพย์ส่วนพระองค์</strong>ซื้อข้าวสารและเสื้อผ้าจากเรือสำเภาต่างชาติมาแจกจ่ายราษฎรเพื่อจูงใจให้คนกลับมาอยู่บ้านเมือง
+                                <br>2) สั่งให้ข้าราชการและราษฎรช่วยกันทำนาปีละ 2 ครั้ง (นาปี-นาปรัง) และ<strong>ปราบหนูนา</strong>ที่ทำลายต้นข้าว
+                                <br>3) <strong>ส่งเสริมการค้าสำเภากับจีน:</strong> ทรงใช้เชื้อสายจีนและความสัมพันธ์อันดีกับพ่อค้าจีน ส่งเรือสำเภาไปค้าขาย นำรายได้มาซื้ออาวุธและซ่อมแซมบ้านเมืองแทนการรีดภาษีจากราษฎร</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 7: การฟื้นฟูศาสนา ศิลปวัฒนธรรม และภูมิปัญญาสมัยธนบุรี -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>✨ ๖. การฟื้นฟูพระพุทธศาสนา ศิลปวัฒนธรรม และภูมิปัญญาสมัยธนบุรี</h2>
+                <span class="slide-unit-tag">ประวัติศาสตร์ ม.2 (พว.) | หน้า 7/10</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-3">
+                    <div class="info-card highlight-gold">
+                        <span class="tag tag-gold">ด้านพระพุทธศาสนา</span>
+                        <h3 class="card-title" style="margin-top:8px; color:#B27200;">☸️ 1. การฟื้นฟูพระพุทธศาสนา</h3>
+                        <ul class="card-list">
+                            <li><strong>จัดระเบียบสังฆมณฑล:</strong> ชำระพระสงฆ์ทุศีล (กลุ่มเจ้าพระฝาง) และนิมนต์พระเถระผู้ทรงศีลมาเป็นสมเด็จพระสังฆราช</li>
+                            <li><strong>รวบรวมพระไตรปิฎก:</strong> เนื่องจากคัมภีร์ที่อยุธยาถูกไฟไหม้ จึงโปรดให้ไปคัดลอก<strong>พระไตรปิฎกจากเมืองนครศรีธรรมราชและเมืองฝาง (อุตรดิตถ์)</strong> มาสร้างพระไตรปิฎกฉบับหลวง</li>
+                            <li><strong>บูรณะวัดสำคัญ:</strong> เช่น <strong>วัดแจ้ง (วัดอรุณราชวราราม)</strong> ซึ่งใช้ประดิษฐานพระแก้วมรกต และวัดบางหว้าใหญ่ (วัดระฆังโฆสิตาราม)</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card highlight-purple">
+                        <span class="tag tag-purple">ด้านวรรณกรรมและนาฏศิลป์</span>
+                        <h3 class="card-title" style="margin-top:8px;">📚 2. วรรณกรรมสมัยธนบุรี</h3>
+                        <ul class="card-list">
+                            <li><strong>บทละครเรื่องรามเกียรติ์ (พ.ศ. 2313):</strong> พระราชนิพนธ์ใน<strong>สมเด็จพระเจ้าตากสินมหาราช</strong> จำนวน 4 ตอน เพื่อใช้แสดงละครหลวงและปลุกขวัญกำลังใจ</li>
+                            <li><strong>โคลงยอพระเกียรติพระเจ้ากรุงธนบุรี:</strong> แต่งโดย <strong>นายสวน มหาดเล็ก</strong> บรรยายความงามและความอุดมสมบูรณ์ของกรุงธนบุรี</li>
+                            <li><strong>อิเหนาคำฉันท์ และ ลิลิตเพชรมงกุฎ:</strong> แต่งโดย <strong>หลวงสรวิชิต (หน)</strong> (ต่อมาคือเจ้าพระยาพระคลัง (หน) ในสมัย ร.1)</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card highlight-green">
+                        <span class="tag tag-green">ด้านจิตรกรรมและศิลปกรรม</span>
+                        <h3 class="card-title" style="margin-top:8px; color:var(--success);">🎨 3. ศิลปกรรมชิ้นเอก</h3>
+                        <ul class="card-list">
+                            <li><strong>สมุดภาพไตรภูมิฉบับกรุงธนบุรี (พ.ศ. 2319):</strong> สมุดข่อยเขียนสีขนาดใหญ่ยาวกว่า 34 เมตร วาดภาพสวรรค์ มนุษย์ นรก และพุทธประวัติอย่างวิจิตรงดงาม</li>
+                            <li><strong>ตู้พระธรรมลายรดน้ำ:</strong> วัดเซิงหวายและวัดระฆังฯ</li>
+                            <li><strong>พระราชวังเดิม (กรุงธนบุรี):</strong> ท้องพระโรงและพระที่นั่งขวางริมแม่น้ำเจ้าพระยา</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 8: การสิ้นสุดของอาณาจักรธนบุรี (พ.ศ. 2325) และวีรกรรมบุคคลสำคัญ -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>🌟 ๗. บุคคลสำคัญสมัยธนบุรี และการสิ้นสุดของอาณาจักรธนบุรี (พ.ศ. ๒๓๒๕)</h2>
+                <span class="slide-unit-tag">ประวัติศาสตร์ ม.2 (พว.) | หน้า 8/10</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="info-card highlight-purple">
+                        <div class="card-title">🎖️ บุคคลสำคัญผู้ร่วมสร้างชาติสมัยธนบุรี</div>
+                        <ul class="card-list">
+                            <li><strong>1. สมเด็จพระเจ้าตากสินมหาราช:</strong> พระมหากษัตริย์ผู้ทรงกอบกู้เอกราชใน 7 เดือน รวบรวมแผ่นดินที่แตกแยกให้เป็นปึกแผ่น และฟื้นฟูเศรษฐกิจ-ศาสนา (วันสมเด็จพระเจ้าตากสินมหาราช คือ <strong>28 ธันวาคม</strong> ของทุกปี)</li>
+                            <li><strong>2. สมเด็จเจ้าพระยามหากษัตริย์ศึก (ทองด้วง):</strong> แม่ทัพคู่พระทัยผู้เป็นกำลังหลักในการปราบชุมนุมและขยายพระราชอาณาเขต (ต่อมาคือพระบาทสมเด็จพระพุทธยอดฟ้าจุฬาโลกมหาราช รัชกาลที่ 1)</li>
+                            <li><strong>3. เจ้าพระยาสุรสีห์ (บุญมา):</strong> พระอนุชาของสมเด็จเจ้าพระยามหากษัตริย์ศึก แม่ทัพหน้าผู้เกรียงไกรจนได้รับสมญานามว่า <em>"พระยาเสือ"</em></li>
+                            <li><strong>4. พระยาพิชัยดาบหัก (ทองดี ฟันขาว):</strong> เจ้าเมืองพิชัยผู้มีความกล้าหาญและจงรักภักดีอย่างสูงสุด</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card highlight-orange">
+                        <div class="card-title" style="color:var(--accent);">📉 เหตุการณ์สิ้นสุดอาณาจักรธนบุรี (พ.ศ. 2325)</div>
+                        <ul class="card-list">
+                            <li><strong>การเกิดกบฏพระยาสรรค์ (พ.ศ. 2324 – 2325):</strong> ในช่วงปลายรัชกาล เกิดความวุ่นวายที่กรุงเก่า (อยุธยา) พระองค์ส่งพระยาสรรค์ไปปราบ แต่พระยาสรรค์กลับไปเข้าพวกกบฏแล้วยกทัพลงมาปล้นพระราชวังกรุงธนบุรี บังคับให้พระองค์ทรงผนวช</li>
+                            <li><strong>การระงับจลาจล:</strong> ขณะนั้น <strong>สมเด็จเจ้าพระยามหากษัตริย์ศึก</strong> กำลังยกทัพไปปราบจลาจลที่กัมพูชา เมื่อทราบข่าวจึงรีบยกทัพกลับมาปราบกบฏพระยาสรรค์ เพื่อรักษาความสงบเรียบร้อยของแผ่นดิน</li>
+                            <li><strong>ก้าวสู่สมัยรัตนโกสินทร์ (6 เม.ย. พ.ศ. 2325):</strong> ข้าราชการและราษฎรอัญเชิญสมเด็จเจ้าพระยามหากษัตริย์ศึกขึ้นครองราชย์และย้ายราชธานีมาฝั่งตะวันออกของแม่น้ำเจ้าพระยา (กรุงเทพมหานคร)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 9: กิจกรรมทบทวนความรู้ เรื่อง อาณาจักรธนบุรี (ชุดที่ 1/2) -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>🎯 กิจกรรมทบทวนความรู้ เรื่อง อาณาจักรธนบุรี (ชุดที่ 1/2)</h2>
+                <span class="slide-unit-tag">ประวัติศาสตร์ ม.2 (พว.) | หน้า 9/10</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-3">
+                    <div class="info-card">
+                        <div class="card-title">ข้อที่ 1</div>
+                        <p style="margin-bottom:10px; font-weight:600;">เหตุใดสมเด็จพระเจ้าตากสินมหาราชจึงทรงเลือก "เมืองธนบุรี" เป็นราชธานีใหม่แทนการบูรณะกรุงศรีอยุธยา?</p>
+                        <div class="quiz-option" onclick="checkQuiz(this, true)">ก. กรุงศรีอยุธยาเสียหายหนักเกินกำลังพลจะรักษา ส่วนธนบุรีมีขนาดพอเหมาะ มีป้อมปราการ และติดแม่น้ำใกล้ทะเล</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ข. เมืองธนบุรีตั้งอยู่บนภูเขาสูงที่น้ำท่วมไม่ถึง</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ค. เมืองธนบุรีไม่เคยมีผู้คนอาศัยอยู่มาก่อน</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ง. เพื่อหลีกเลี่ยงการค้าขายทางเรือสำเภากับต่างชาติ</div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="card-title">ข้อที่ 2</div>
+                        <p style="margin-bottom:10px; font-weight:600;">ชุมนุมอิสระใดที่เป็น "ชุมนุมสุดท้าย" ที่สมเด็จพระเจ้าตากสินมหาราชทรงปราบปรามได้สำเร็จเมื่อ พ.ศ. 2313 ทำให้รวมแผ่นดินไทยเป็นปึกแผ่น?</p>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ก. ชุมนุมสุกี้พระนายกอง (โพธิ์สามต้น)</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ข. ชุมนุมเจ้าพิมาย (นครราชสีมา)</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ค. ชุมนุมเจ้านครศรีธรรมราช</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, true)">ง. ชุมนุมเจ้าพระฝาง (เมืองสวางคบุรี จ.อุตรดิตถ์)</div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="card-title">ข้อที่ 3</div>
+                        <p style="margin-bottom:10px; font-weight:600;">ในการแก้ไขวิกฤตขาดแคลนอาหารช่วงต้นสมัยธนบุรี สมเด็จพระเจ้าตากสินมหาราชทรงแก้ปัญหาเร่งด่วนด้วยวิธีใด?</p>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ก. เก็บภาษีจังกอบจากชาวนาเพิ่มขึ้น 2 เท่า</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, true)">ข. สละพระราชทรัพย์ส่วนพระองค์ซื้อข้าวสารจากเรือสำเภามาแจกจ่ายราษฎร และส่งเสริมการทำนาปีละ 2 ครั้ง</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ค. ห้ามเรือสำเภาจีนเข้ามาค้าขายในกรุงธนบุรี</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ง. ยกเลิกระบบไพร่และศักดินาทั้งหมด</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 10: กิจกรรมทบทวนความรู้ เรื่อง อาณาจักรธนบุรี (ชุดที่ 2/2) & สรุป -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>🎯 กิจกรรมทบทวนความรู้ เรื่อง อาณาจักรธนบุรี (ชุดที่ 2/2)</h2>
+                <span class="slide-unit-tag">ประวัติศาสตร์ ม.2 (พว.) | หน้า 10/10</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="info-card">
+                        <div class="card-title">ข้อที่ 4</div>
+                        <p style="margin-bottom:10px; font-weight:600;">ในการฟื้นฟูพระพุทธศาสนาสมัยธนบุรี ได้มีการอัญเชิญคัมภีร์พระไตรปิฎกจากเมืองใดมาคัดลอกสร้างพระไตรปิฎกฉบับหลวงทดแทนของเดิมที่ถูกไฟไหม้?</p>
+                        <div class="quiz-option" onclick="checkQuiz(this, true)">ก. เมืองนครศรีธรรมราช และ เมืองฝาง (อุตรดิตถ์)</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ข. เมืองจันทบุรี และ เมืองตราด</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ค. เมืองทวาย และ เมืองมะริด</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ง. ปักกิ่ง และ โตเกียว</div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="card-title">ข้อที่ 5</div>
+                        <p style="margin-bottom:10px; font-weight:600;">เมื่อตีเมืองเวียงจันทน์ได้เมื่อ พ.ศ. 2321 กองทัพกรุงธนบุรีได้อัญเชิญพระพุทธรูปสำคัญองค์ใดลงมาประดิษฐานที่วัดแจ้ง (วัดอรุณฯ)?</p>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ก. พระพุทธชินราช</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ข. พระศรีศากยมุนี</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, true)">ค. พระพุทธมหามณีรัตนปฏิมากร (พระแก้วมรกต)</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ง. พระอจนะ</div>
+                    </div>
+                </div>
+
+                <div class="info-card highlight-purple" style="background:linear-gradient(90deg, #E3F2FD 0%, #FFF 100%); margin-top:auto;">
+                    <h3 class="card-title" style="font-size:1.3rem;">📝 กิจกรรมต่อเนื่องท้ายคาบเรียน: ใบงานวิชาประวัติศาสตร์ ม.2 เรื่อง อาณาจักรธนบุรี</h3>
+                    <p style="font-size:1.05rem; line-height:1.6;">
+                        ให้นักเรียนทำ <strong>ใบงานที่ 4.1 (การกอบกู้เอกราช การสถาปนากรุงธนบุรี และการปราบชุมนุม)</strong> และ <strong>ใบงานที่ 4.2 (พัฒนาการด้านการเมือง-เศรษฐกิจ-สังคม และภูมิปัญญาสมัยธนบุรี)</strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="bottom-bar">
+        <div style="font-family:'Prompt',sans-serif; font-size:0.95rem;">
+            ใช้ปุ่มลูกศร <strong>⬅️ ➡️ บนคีย์บอร์ด</strong> เพื่อเลื่อนสไลด์ได้ทันที
+        </div>
+        <div class="progress-dots" id="dotsContainer"></div>
+        <div class="nav-buttons">
+            <button class="btn-nav" id="prevBtn" onclick="changeSlide(-1)">⬅️ ก่อนหน้า</button>
+            <span id="slideCounter" style="font-family:'Prompt',sans-serif; font-weight:700; min-width:80px; text-align:center;">1 / 10</span>
+            <button class="btn-nav" id="nextBtn" onclick="changeSlide(1)">ถัดไป ➡️</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        const dotsContainer = document.getElementById('dotsContainer');
+        const slideCounter = document.getElementById('slideCounter');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'dot' + (i === 0 ? ' active' : '');
+            dot.onclick = () => goToSlide(i);
+            dotsContainer.appendChild(dot);
+        }
+
+        function updateUI() {
+            slides.forEach((s, idx) => s.classList.toggle('active', idx === currentSlide));
+            document.querySelectorAll('.dot').forEach((d, idx) => d.classList.toggle('active', idx === currentSlide));
+            slideCounter.textContent = `${currentSlide + 1} / ${totalSlides}`;
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === totalSlides - 1;
+        }
+
+        function changeSlide(dir) {
+            const next = currentSlide + dir;
+            if (next >= 0 && next < totalSlides) { currentSlide = next; updateUI(); }
+        }
+
+        function goToSlide(index) { currentSlide = index; updateUI(); }
+
+        function checkQuiz(el, isCorrect) {
+            const parent = el.parentElement;
+            parent.querySelectorAll('.quiz-option').forEach(opt => opt.classList.remove('correct', 'wrong'));
+            if (isCorrect) {
+                el.classList.add('correct');
+                if (!el.textContent.includes('✅')) el.innerHTML += ' <span>✅ ถูกต้อง!</span>';
+            } else {
+                el.classList.add('wrong');
+                if (!el.textContent.includes('❌')) el.innerHTML += ' <span>❌ ลองใหม่อีกครั้ง</span>';
+            }
+        }
+
+        function toggleFullScreen() {
+            if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+            else if (document.exitFullscreen) document.exitFullscreen();
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') changeSlide(1);
+            else if (e.key === 'ArrowLeft') changeSlide(-1);
+        });
+
+        updateUI();
+    </script>
+</body>
+</html>

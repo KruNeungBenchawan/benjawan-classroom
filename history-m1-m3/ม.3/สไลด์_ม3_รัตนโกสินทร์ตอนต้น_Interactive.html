@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สไลด์ประกอบการสอน วิชาประวัติศาสตร์ ม.3 - สมัยรัตนโกสินทร์ตอนต้น (สำนักพิมพ์ พว.)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00695C;      /* สีเขียวมรกต-ทอง โทนกรุงรัตนโกสินทร์ (พระแก้วมรกต) */
+            --primary-bg: #F0FAF8;
+            --accent: #D84315;
+            --accent-gold: #C68400;
+            --success: #2E7D32;
+            --text-dark: #1E1B24;
+            --text-muted: #5A5266;
+            --card-bg: #FFFFFF;
+            --border-color: #B2DFDB;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background: linear-gradient(135deg, #00332c 0%, #004d40 50%, #00241f 100%);
+            color: var(--text-dark);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1, h2, h3, .font-heading { font-family: 'Prompt', sans-serif; }
+
+        .top-bar {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: #fff;
+            padding: 10px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            z-index: 100;
+        }
+
+        .brand-badge { display: flex; align-items: center; gap: 12px; }
+        .pw-pill { background: #27AE60; color: white; font-family: 'Prompt', sans-serif; font-weight: 600; font-size: 0.85rem; padding: 4px 12px; border-radius: 20px; }
+        .grade-pill { background: #E65100; color: white; font-family: 'Prompt', sans-serif; font-weight: 700; font-size: 0.85rem; padding: 4px 12px; border-radius: 6px; }
+        .top-controls { display: flex; align-items: center; gap: 8px; }
+        .btn-control {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 6px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Prompt', sans-serif;
+            font-size: 0.84rem;
+            transition: all 0.2s;
+        }
+        .btn-control:hover { background: rgba(255, 255, 255, 0.28); transform: translateY(-1px); }
+
+        .deck-wrapper {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide {
+            width: 100%;
+            max-width: 1280px;
+            height: 100%;
+            max-height: 740px;
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            animation: slideIn 0.35s ease-out;
+        }
+        .slide.active { display: flex; }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(12px) scale(0.99); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .slide-header {
+            background: linear-gradient(90deg, var(--primary) 0%, #00897B 100%);
+            color: white;
+            padding: 18px 36px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 4px solid #FFB300;
+        }
+        .slide-header h2 { font-size: 1.52rem; font-weight: 700; display: flex; align-items: center; gap: 12px; }
+        .slide-unit-tag { background: rgba(255, 255, 255, 0.2); padding: 4px 14px; border-radius: 20px; font-size: 0.9rem; font-family: 'Prompt', sans-serif; }
+
+        .slide-body {
+            flex: 1;
+            padding: 24px 36px;
+            overflow-y: auto;
+            background: radial-gradient(circle at bottom right, #f2fbf9 0%, #ffffff 70%);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .cover-slide {
+            background: linear-gradient(135deg, #004D40 0%, #00695C 50%, #00332C 100%);
+            color: white;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .cover-box {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(12px);
+            border: 2px solid rgba(255, 213, 79, 0.45);
+            border-radius: 24px;
+            padding: 36px 50px;
+            max-width: 1000px;
+            width: 100%;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .cover-title { font-size: 3rem; font-weight: 800; margin: 12px 0 8px; color: #FFF; text-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+        .cover-subtitle { font-size: 1.55rem; color: #FFD54F; font-weight: 600; margin-bottom: 20px; }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+
+        .info-card {
+            background: #FFFFFF;
+            border: 2px solid var(--border-color);
+            border-radius: 14px;
+            padding: 16px 20px;
+            box-shadow: 0 4px 14px rgba(0, 105, 92, 0.06);
+        }
+        .info-card.highlight-orange { border-left: 6px solid var(--accent); }
+        .info-card.highlight-purple { border-left: 6px solid var(--primary); }
+        .info-card.highlight-green { border-left: 6px solid var(--success); }
+        .info-card.highlight-gold { border-left: 6px solid var(--accent-gold); }
+
+        .card-title { font-family: 'Prompt', sans-serif; font-size: 1.16rem; font-weight: 700; color: var(--primary); margin-bottom: 8px; }
+        .card-list { list-style: none; display: flex; flex-direction: column; gap: 6px; font-size: 1.01rem; line-height: 1.5; }
+        .card-list li { position: relative; padding-left: 18px; }
+        .card-list li::before { content: "•"; color: var(--accent); font-weight: bold; font-size: 1.25rem; position: absolute; left: 2px; top: -2px; }
+
+        .styled-table { width: 100%; border-collapse: collapse; border-radius: 12px; overflow: hidden; font-size: 0.98rem; }
+        .styled-table th { background: var(--primary); color: white; font-family: 'Prompt', sans-serif; padding: 10px 14px; text-align: left; }
+        .styled-table td { padding: 9px 14px; border-bottom: 1px solid var(--border-color); background: white; vertical-align: top; line-height: 1.45; }
+        .styled-table tr:nth-child(even) td { background: var(--primary-bg); }
+
+        .tag { display: inline-block; padding: 3px 10px; border-radius: 6px; font-size: 0.83rem; font-weight: 600; font-family: 'Prompt', sans-serif; }
+        .tag-purple { background: #E0F2F1; color: var(--primary); }
+        .tag-orange { background: #FBE9E7; color: var(--accent); }
+        .tag-green { background: #E8F5E9; color: var(--success); }
+        .tag-gold { background: #FFF8E1; color: #9C6B08; }
+
+        .question-box {
+            background: linear-gradient(90deg, #FFF8E7 0%, #FFFDF9 100%);
+            border: 2px solid #F5C76B;
+            border-left: 8px solid var(--accent-gold);
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin-top: auto;
+        }
+        .question-header { font-family: 'Prompt', sans-serif; font-weight: 700; color: #B27200; font-size: 1.04rem; display: flex; justify-content: space-between; align-items: center; }
+        .answer-reveal { display: none; margin-top: 8px; padding-top: 8px; border-top: 1px dashed #E0B860; color: #1B5E20; font-weight: 600; font-size: 1rem; }
+        .btn-reveal { background: var(--accent-gold); color: white; border: none; padding: 5px 14px; border-radius: 6px; font-family: 'Prompt', sans-serif; font-size: 0.85rem; cursor: pointer; font-weight: 600; }
+
+        .bottom-bar { background: rgba(0, 0, 0, 0.35); backdrop-filter: blur(8px); padding: 12px 36px; display: flex; justify-content: space-between; align-items: center; color: white; }
+        .nav-buttons { display: flex; gap: 12px; align-items: center; }
+        .btn-nav { background: #E65100; color: white; border: none; padding: 8px 22px; border-radius: 10px; font-family: 'Prompt', sans-serif; font-weight: 600; font-size: 1rem; cursor: pointer; }
+        .btn-nav:disabled { background: rgba(255, 255, 255, 0.2); color: rgba(255, 255, 255, 0.5); cursor: not-allowed; }
+        .progress-dots { display: flex; gap: 8px; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; background: rgba(255, 255, 255, 0.3); cursor: pointer; }
+        .dot.active { background: #FFD54F; transform: scale(1.3); }
+
+        .quiz-option { background: white; border: 2px solid var(--border-color); border-radius: 10px; padding: 10px 16px; cursor: pointer; font-size: 1rem; margin-bottom: 7px; display: flex; align-items: center; gap: 10px; }
+        .quiz-option:hover { border-color: var(--primary); background: var(--primary-bg); }
+        .quiz-option.correct { background: #E8F5E9; border-color: #2E7D32; color: #1B5E20; font-weight: 700; }
+        .quiz-option.wrong { background: #FFEBEE; border-color: #C62828; color: #B71C1C; }
+
+        @media print {
+            body { background: white; height: auto; overflow: visible; }
+            .top-bar, .bottom-bar, .btn-reveal { display: none !important; }
+            .deck-wrapper { display: block; padding: 0; }
+            .slide { display: flex !important; page-break-after: always; height: 190mm; max-width: 100%; box-shadow: none; border: 1px solid #ccc; margin-bottom: 15mm; }
+            .answer-reveal { display: block !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <div class="brand-badge">
+            <span class="pw-pill">อ้างอิงหนังสือเรียน พว.</span>
+            <span class="grade-pill">ชั้นมัธยมศึกษาปีที่ ๓</span>
+            <span style="font-family: 'Prompt', sans-serif; font-weight: 600;">รายวิชาพื้นฐาน ประวัติศาสตร์ | สมัยรัตนโกสินทร์ตอนต้น (ร.1 – ร.3)</span>
+        </div>
+        <div class="top-controls">
+            <button class="btn-control" onclick="goToSlide(0)">🏠 หน้าแรก</button>
+            <button class="btn-control" onclick="goToSlide(1)">🏰 สถาปนากรุงฯ</button>
+            <button class="btn-control" onclick="goToSlide(2)">⚔️ สงคราม 9 ทัพ</button>
+            <button class="btn-control" onclick="goToSlide(3)">⚖️ การปกครอง-เศรษฐกิจ</button>
+            <button class="btn-control" onclick="goToSlide(6)">✨ ศิลปวัฒนธรรม</button>
+            <button class="btn-control" onclick="goToSlide(8)">🎯 แบบทดสอบ</button>
+            <button class="btn-control" onclick="window.print()">🖨️ พิมพ์ / PDF</button>
+            <button class="btn-control" onclick="toggleFullScreen()">⛶ เต็มจอ</button>
+        </div>
+    </div>
+
+    <div class="deck-wrapper">
+
+        <!-- SLIDE 1: หน้าปก -->
+        <div class="slide cover-slide active">
+            <div class="cover-box">
+                <div style="display:flex; justify-content:center; gap:12px; margin-bottom:14px;">
+                    <span class="pw-pill" style="font-size:1rem; padding:6px 18px;">กลุ่มสาระการเรียนรู้สังคมศึกษา ศาสนา และวัฒนธรรม</span>
+                    <span class="grade-pill" style="font-size:1rem; padding:6px 18px;">ชั้นมัธยมศึกษาปีที่ ๓</span>
+                </div>
+                <div style="font-size:1.3rem; color:#B2DFDB; font-family:'Prompt',sans-serif;">หน่วยการเรียนรู้ที่ ๒ – ๓ (ชุดที่ ๑)</div>
+                <h1 class="cover-title">พัฒนาการและภูมิปัญญาสมัยรัตนโกสินทร์ตอนต้น<br>(รัชกาลที่ ๑ – รัชกาลที่ ๓ : พ.ศ. ๒๓๒๕ – ๒๓๙๔)</h1>
+                <div class="cover-subtitle">(ยุคแห่งการก่อร่างสร้างเมือง ป้องกันราชอาณาจักร และฟื้นฟูอารยธรรมไทย)</div>
+                <hr style="border:none; border-top:1px solid rgba(255,255,255,0.25); margin: 18px auto; width: 70%;">
+                <div class="grid-4" style="text-align:left; margin-top:16px;">
+                    <div style="background:rgba(0,0,0,0.28); padding:14px; border-radius:12px;">
+                        <strong style="color:#FFD54F; font-family:'Prompt',sans-serif;">๑. การสถาปนาราชธานี</strong>
+                        <p style="font-size:0.9rem; margin-top:4px; color:#E0F2F1;">การย้ายราชธานีสู่ฝั่งพระนคร (6 เม.ย. 2325) และสงครามเก้าทัพ</p>
+                    </div>
+                    <div style="background:rgba(0,0,0,0.28); padding:14px; border-radius:12px;">
+                        <strong style="color:#FFD54F; font-family:'Prompt',sans-serif;">๒. การเมืองการปกครอง</strong>
+                        <p style="font-size:0.9rem; margin-top:4px; color:#E0F2F1;">อัครมหาเสนาบดี จตุสดมภ์ และการชำระกฎหมายตราสามดวง</p>
+                    </div>
+                    <div style="background:rgba(0,0,0,0.28); padding:14px; border-radius:12px;">
+                        <strong style="color:#FFD54F; font-family:'Prompt',sans-serif;">๓. เศรษฐกิจและการทูต</strong>
+                        <p style="font-size:0.9rem; margin-top:4px; color:#E0F2F1;">การค้าสำเภา ระบบเจ้าภาษีนายอากร เงินถุงแดง และสนธิสัญญาเบอร์นี</p>
+                    </div>
+                    <div style="background:rgba(0,0,0,0.28); padding:14px; border-radius:12px;">
+                        <strong style="color:#FFD54F; font-family:'Prompt',sans-serif;">๔. ศาสนาและภูมิปัญญา</strong>
+                        <p style="font-size:0.9rem; margin-top:4px; color:#E0F2F1;">สังคายนาพระไตรปิฎก จารึกวัดโพธิ์ วรรณกรรมยุคทอง ร.1-ร.3</p>
+                    </div>
+                </div>
+                <p style="margin-top:20px; font-size:0.95rem; color:#B2DFDB;">
+                    อ้างอิงเนื้อหาจาก: หนังสือเรียน รายวิชาพื้นฐาน ประวัติศาสตร์ ม.3 (ผศ.ดร.วงเดือน นาราสัจจ์ และ ผศ.ชมพูนุท นาคีรักษ์) สำนักพิมพ์ พว.
+                </p>
+            </div>
+        </div>
+
+        <!-- SLIDE 2: การสถาปนากรุงรัตนโกสินทร์ และ ปัจจัยการย้ายราชธานี -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>🏰 ๑. การสถาปนากรุงรัตนโกสินทร์ (๖ เมษายน พ.ศ. ๒๓๒๕) และปัจจัยทางภูมิศาสตร์</h2>
+                <span class="slide-unit-tag">ประวัติศาสตร์ ม.3 (พว.) | หน้า 2/10</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="info-card highlight-purple">
+                        <div class="card-title">👑 การสถาปนาราชวงศ์จักรีและกรุงเทพมหานคร</div>
+                        <ul class="card-list">
+                            <li><strong>ปฐมกษัตริย์แห่งราชวงศ์จักรี:</strong> <strong>พระบาทสมเด็จพระพุทธยอดฟ้าจุฬาโลกมหาราช (รัชกาลที่ 1)</strong> เสด็จขึ้นครองราชย์เมื่อวันที่ <strong>6 เมษายน พ.ศ. 2325</strong></li>
+                            <li><strong>การสร้างพระบรมมหาราชวังและวัดพระศรีรัตนศาสดาราม (วัดพระแก้ว):</strong>
+                                <br>• ทรงจำลองผังเมืองและพระราชวังตามแบบ<strong>กรุงศรีอยุธยา</strong> เพื่อสร้างขวัญกำลังใจแก่ราษฎรว่าบ้านเมืองกลับมาเจริญรุ่งเรืองดังเดิม
+                                <br>• อัญเชิญ <strong>"พระพุทธมหามณีรัตนปฏิมากร (พระแก้วมรกต)"</strong> จากวัดอรุณฯ มาประดิษฐาน ณ วัดพระศรีรัตนศาสดาราม (วัดในเขตพระราชวังที่ไม่มีพระสงฆ์จำพรรษา)</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card highlight-gold">
+                        <div class="card-title" style="color:#B27200;">🗺️ เหตุผลการย้ายราชธานีจาก "ฝั่งธนบุรี" มาอยู่ "ฝั่งพระนคร (ตะวันออก)"</div>
+                        <ul class="card-list">
+                            <li><strong>1. ข้อจำกัดของพระราชวังกรุงธนบุรีเดิม:</strong> มีพื้นที่คับแคบเพราะขนาบด้วยวัดแจ้ง (วัดอรุณฯ) และวัดท้ายตลาด (วัดโมลีโลกยาราม) จึงขยายพระราชวังไม่ได้</li>
+                            <li><strong>2. สภาพตลิ่งพัง:</strong> ฝั่งธนบุรีตั้งอยู่บริเวณ<strong>ท้องคุ้งน้ำ</strong> ทำให้กระแสน้ำเจ้าพระยากัดเซาะตลิ่งพังทลายอยู่เสมอ</li>
+                            <li><strong>3. ยุทธศาสตร์การป้องกันข้าศึก:</strong> เมืองธนบุรีมีแม่น้ำเจ้าพระยาผ่ากลางเมือง (อกแตก) ทำให้ป้องกันศึกยาก ส่วน<strong>ฝั่งตะวันออก (บางกอก) มีสภาพเป็นแหลมยื่น</strong> ใช้แม่น้ำเจ้าพระยาเป็นคูเมืองธรรมชาติทางทิศตะวันตกและทิศใต้ ส่วนทิศเหนือและตะวันออกโปรดให้ขุด<strong>คลองรอบกรุง (คลองบางลำพู-โอ่งอ่าง)</strong> ล้อมรอบ</li>
+                            <li><strong>4. พื้นที่ขยายเมืองกว้างขวาง:</strong> ฝั่งพระนครเป็นที่ราบลุ่มกว้างใหญ่ สามารถขยายพระนครออกไปทางทิศตะวันออกได้ไม่จำกัด</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: สงครามป้องกันพระราชอาณาจักรสมัยรัตนโกสินทร์ตอนต้น -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>⚔️ ๒. การป้องกันพระราชอาณาจักรและขยายอำนาจสมัยรัตนโกสินทร์ตอนต้น</h2>
+                <span class="slide-unit-tag">ประวัติศาสตร์ ม.3 (พว.) | หน้า 3/10</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="info-card highlight-orange">
+                        <div class="card-title" style="color:var(--accent);">🛡️ 1. สงครามเก้าทัพ (พ.ศ. 2328) และศึกท่าดินแดง (พ.ศ. 2329)</div>
+                        <ul class="card-list">
+                            <li><strong>สงครามเก้าทัพ (พ.ศ. 2328 สมัย ร.1):</strong>
+                                <br>• <strong>พระเจ้าปดุง</strong> กษัตริย์พม่ายกกองทัพขนาดใหญ่ถึง 9 ทัพ (กำลังพลกว่า 144,000 นาย) เข้ามาทาง 5 เส้นทาง (ด่านเจดีย์สามองค์, ด่านสิงขร, ด่านแม่ละเมา, เชียงแสน และทางใต้ถึงเมืองถลาง)
+                                <br>• <strong>ยุทธศาสตร์ของไทย:</strong> รัชกาลที่ 1 และ <strong>สมเด็จพระบวรราชเจ้ามหาสุรสิงหนาท (วังหน้า)</strong> ทรงเปลี่ยนยุทธวิธีจาก "ตั้งรับในเมือง" เป็น <strong>"ยกทัพออกไปตั้งสกัดข้าศึกตามจุดยุทธศาสตร์และตัดเสบียงอาหาร"</strong> ที่<strong>ทุ่งลาดหญ้า จ.กาญจนบุรี</strong> จนพม่าขาดเสบียงและแตกพ่ายไปทุกเส้นทาง
+                            </li>
+                            <li><strong>วีรกรรมเมืองถลาง (ภูเก็ต พ.ศ. 2328):</strong> <strong>คุณหญิงจัน (ท้าวเทพกระษัตรี)</strong> และ <strong>คุณมุก (ท้าวศรีสุนทร)</strong> รวบรวมชาวเมืองถลางป้องกันเมืองจากทัพพม่าได้สำเร็จ</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card highlight-purple">
+                        <div class="card-title">🚩 2. การรักษาความมั่นคงในสมัยรัชกาลที่ 2 – รัชกาลที่ 3</div>
+                        <ul class="card-list">
+                            <li><strong>สมัยรัชกาลที่ 2:</strong> พม่าเริ่มอ่อนแอลงเพราะทำสงครามกับอังกฤษ การศึกส่วนใหญ่เป็นเพียงการลาดตระเวนชายแดน</li>
+                            <li><strong>สมัยรัชกาลที่ 3 (พระบาทสมเด็จพระนั่งเกล้าเจ้าอยู่หัว):</strong>
+                                <br>• <strong>การปราบกบฏเจ้าอนุวงศ์ เมืองเวียงจันทน์ (พ.ศ. 2369):</strong> เกิดวีรกรรมของ <strong>คุณหญิงโม (ท้าวสุรนารี)</strong> ภริยาปลัดเมืองนครราชสีมา ที่ร่วมกับชาวโคราชวางอุบายต่อสู้กองทัพเวียงจันทน์ที่<strong>ทุ่งสัมฤทธิ์</strong>
+                                <br>• <strong>สงครามอานามสยามยุทธ (พ.ศ. 2376 – 2390):</strong> สงครามระหว่างไทยกับญวน (เวียดนาม) ยืดเยื้อถึง 14 ปี เพื่อชิงความเป็นใหญ่เหนือกัมพูชา นำโดยแม่ทัพสำคัญคือ <strong>เจ้าพระยาบดินทรเดชา (สิงห์ สิงหเสนี)</strong> จบลงโดยกัมพูชายอมส่งบรรณาการให้ทั้งไทยและญวน</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: พัฒนาการด้านการเมืองการปกครอง และ กฎหมายตราสามดวง -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>⚖️ ๓. พัฒนาการด้านการเมืองการปกครอง และ "กฎหมายตราสามดวง"</h2>
+                <span class="slide-unit-tag">ประวัติศาสตร์ ม.3 (พว.) | หน้า 4/10</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="info-card highlight-purple">
+                        <div class="card-title">🏛️ 1. การจัดระเบียบการบริหารราชการแผ่นดิน</div>
+                        <ul class="card-list">
+                            <li><strong>สืบทอดรูปแบบจากสมัยอยุธยาตอนปลายและธนบุรี:</strong>
+                                <br>• <strong>อัครมหาเสนาบดี 2 ตำแหน่ง:</strong>
+                                <br>&nbsp;&nbsp;1) <strong>สมุหนายก (เจ้าพระยาจักรี):</strong> บังคับบัญชาทั้งทหารและพลเรือนใน<strong>หัวเมืองฝ่ายเหนือ</strong>
+                                <br>&nbsp;&nbsp;2) <strong>สมุหพระกลาโหม (เจ้าพระยามหาเสนา):</strong> บังคับบัญชาทั้งทหารและพลเรือนใน<strong>หัวเมืองฝ่ายใต้</strong>
+                                <br>• <strong>จตุสดมภ์ 4 กรม:</strong> กรมเมือง (นครบาล), กรมวัง (ธรรมาธิกรณ์), <strong>กรมคลัง (โกษาธิบดี/กรมท่า — ดูแลหัวเมืองชายทะเลตะวันออกและการค้าต่างชาติ)</strong> และกรมนา (เกษตราธิการ)
+                            </li>
+                            <li><strong>การปรับปรุงระบบไพร่:</strong> ลดเวลาการเข้าเวรรับราชการของไพร่จากปีละ 6 เดือน เหลือ <strong>ปีละ 4 เดือน (เข้า 1 เดือน ออก 2 เดือน)</strong> ในสมัย ร.1 และเหลือ <strong>ปีละ 3 เดือน (เข้า 1 เดือน ออก 3 เดือน)</strong> ในสมัย ร.2 เพื่อให้ไพร่มีเวลาทำมาหากินเพิ่มขึ้น</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card highlight-gold">
+                        <div class="card-title" style="color:#B27200;">📜 2. การชำระ "กฎหมายตราสามดวง" (พ.ศ. 2347 สมัย ร.1)</div>
+                        <ul class="card-list">
+                            <li><strong>สาเหตุการชำระกฎหมาย:</strong> กฎหมายเดิมตั้งแต่สมัยอยุธยาสูญหายและคลาดเคลื่อน (จากคดี <strong>"อำแดงป้อม"</strong> ฟ้องหย่า <strong>"นายบุญศรี"</strong> ทั้งที่อำแดงป้อมเป็นฝ่ายนอกใจ แต่ลูกขุนตัดสินให้หย่าได้ตามตัวบทที่คลาดเคลื่อน)</li>
+                            <li><strong>การชำระและประทับตรา 3 ดวง:</strong> รัชกาลที่ 1 จึงโปรดให้ตั้งคณะกรรมการชำระกฎหมายให้ยุติธรรม แล้วคัดลอกไว้ 3 ชุด ประทับตรา 3 ดวง ได้แก่:
+                                <br>1) <strong>ตราพระราชสีห์</strong> (ประจำตำแหน่งสมุหนายก - มหาดไทย)
+                                <br>2) <strong>ตราคชสีห์</strong> (ประจำตำแหน่งสมุหพระกลาโหม)
+                                <br>3) <strong>ตราบัวแก้ว</strong> (ประจำตำแหน่งโกษาธิบดี - กรมคลัง/กรมท่า)
+                            </li>
+                            <li>ใช้เป็นประมวลกฎหมายหลักของไทยมาจนถึงสมัยปฏิรูปกฎหมายในรัชกาลที่ 5</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: พัฒนาการด้านเศรษฐกิจสมัยรัตนโกสินทร์ตอนต้น (การค้าสำเภา เจ้าภาษีนายอากร เงินถุงแดง) -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>⛵ ๔. พัฒนาการด้านเศรษฐกิจ : การค้าสำเภา ระบบเจ้าภาษีนายอากร และเงินถุงแดง</h2>
+                <span class="slide-unit-tag">ประวัติศาสตร์ ม.3 (พว.) | หน้า 5/10</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="info-card highlight-green">
+                        <div class="card-title" style="color:var(--success);">🚢 1. เศรษฐกิจสมัยรัชกาลที่ 1 – รัชกาลที่ 2 (พระคลังสินค้า)</div>
+                        <ul class="card-list">
+                            <li><strong>การเกษตรเพื่อยังชีพ:</strong> ราษฎรทำนา ทำสวน โดยมีอากรค่านาและอากรสวนเป็นรายได้พื้นฐาน</li>
+                            <li><strong>การค้าสำเภากับจีน:</strong> ในช่วงที่บ้านเมืองยังมีศึกสงคราม ภาษีภายในเก็บได้น้อย รัชกาลที่ 1 และเจ้านายขุนนางจึงทรง<strong>แต่งเรือสำเภาไปค้าขายกับจีน</strong>ผ่านระบบพระคลังสินค้า ทำให้มีรายได้มาสร้างบ้านแปงเมือง</li>
+                            <li><strong>สมัยรัชกาลที่ 2:</strong> ตั้ง <strong>"สวนขวา"</strong> และส่งเสริมการเพาะปลูกพืชเศรษฐกิจเพื่อส่งออก เช่น น้ำตาลทราย พริกไทย</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card highlight-orange">
+                        <div class="card-title" style="color:var(--accent);">💰 2. เศรษฐกิจสมัยรัชกาลที่ 3 (ยุคเจ้าสัว & เจ้าภาษีนายอากร)</div>
+                        <ul class="card-list">
+                            <li><strong>พระราชสมญานาม "เจ้าสัว":</strong> รัชกาลที่ 3 ทรงเชี่ยวชาญการค้าสำเภามาตั้งแต่ทรงดำรงพระยศเป็น<strong>กรมหมื่นเจษฎาบดินทร์</strong> (สมัย ร.2)</li>
+                            <li><strong>ระบบ "เจ้าภาษีนายอากร":</strong> ทรงเปิดให้เอกชน (ส่วนใหญ่เป็นชาวจีนที่มีความรู้ด้านการค้า) <strong>ประมูลผูกขาดการจัดเก็บภาษีอากรส่งให้รัฐ</strong> (มีการตั้งภาษีใหม่เพิ่มขึ้นถึง 38 อย่าง เช่น ภาษีน้ำตาล ภาษีพริกไทย ภาษีฝ้าย ภาษีหวย ก ข) ทำให้รัฐมีรายได้ที่แน่นอนและเพิ่มขึ้นมหาศาล</li>
+                            <li><strong>"เงินถุงแดง" (พระคลังข้างที่):</strong> กำไรจากการค้าสำเภาส่วนพระองค์ที่ทรงเก็บสะสมไว้ในถุงแดง และมีพระราชดำรัสสั่งเสียไว้ว่าให้ใช้เพื่อ<strong>ไถ่บ้านไถ่เมืองยามคับขัน</strong> (ซึ่งได้นำมาใช้จริงในวิกฤตการณ์ ร.ศ. 112 สมัยรัชกาลที่ 5)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 6: ความสัมพันธ์กับต่างประเทศสมัยรัตนโกสินทร์ตอนต้น (เอเชียและชาติตะวันตก) -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>🌏 ๕. ความสัมพันธ์กับต่างประเทศสมัยรัตนโกสินทร์ตอนต้น (พ.ศ. ๒๓๒๕ – ๒๓๙๔)</h2>
+                <span class="slide-unit-tag">ประวัติศาสตร์ ม.3 (พว.) | หน้า 6/10</span>
+            </div>
+            <div class="slide-body">
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th style="width:24%;">ประเทศคู่เจรจา</th>
+                            <th style="width:24%;">รัชกาล / ปี พ.ศ.</th>
+                            <th style="width:52%;">เหตุการณ์และสาระสำคัญของสนธิสัญญา</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>1. ประเทศจีน</strong><br>(ราชวงศ์ชิง)</td>
+                            <td>รัชกาลที่ 1 – รัชกาลที่ 3</td>
+                            <td>
+                                ค้าขายผ่านระบบ<strong>จิ้มก้อง (บรรณาการ)</strong> เพื่อรับสิทธิพิเศษยกเว้นภาษีปากเรือ ทำให้การค้าสำเภาไทย-จีนรุ่งเรืองสูงสุดในสมัยรัชกาลที่ 3 ก่อนจะยุติการส่งบรรณาการในสมัยรัชกาลที่ 4
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>2. โปรตุเกส</strong><br>(ชาติตะวันตกชาติแรกในสมัยกรุงรัตนโกสินทร์)</td>
+                            <td>รัชกาลที่ 2<br>(พ.ศ. 2361)</td>
+                            <td>
+                                ผู้สำเร็จราชการโปรตุเกสที่เมืองมาเก๊าส่ง <strong>คาร์ลอส มานูเอล ดา ซิลเวรา</strong> เข้ามาทำสัญญาการค้าและตั้งสถานกงสุลโปรตุเกสแห่งแรกริมแม่น้ำเจ้าพระยา (ได้รับพระราชทานบรรดาศักดิ์เป็น <em>หลวงอภัยพานิช</em>)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>3. อังกฤษ</strong><br>(ทูต จอห์น ครอว์เฟิร์ด และ เฮนรี เบอร์นี)</td>
+                            <td>รัชกาลที่ 2 (พ.ศ. 2364)<br>และ <strong>รัชกาลที่ 3 (พ.ศ. 2369)</strong></td>
+                            <td>
+                                • สมัย ร.2: <strong>จอห์น ครอว์เฟิร์ด</strong> เข้ามาเจรจาแต่ยังไม่สำเร็จ<br>
+                                • สมัย ร.3: ร้อยเอก <strong>เฮนรี เบอร์นี</strong> เข้ามาทำ <strong>"สนธิสัญญาเบอร์นี" (พ.ศ. 2369)</strong> ซึ่งเป็น<strong>สนธิสัญญาทางพระราชไมตรีและการค้าฉบับแรกที่ไทยทำกับชาติตะวันตกในสมัยรัตนโกสินทร์</strong> โดยไทยยอมเก็บภาษีปากเรืออัตราเดียว (วาละ 1,700 บาท) และยกเลิกการผูกขาดสินค้าส่วนใหญ่ ยกเว้น ข้าว อาวุธ และฝิ่น
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>4. สหรัฐอเมริกา</strong><br>(ทูต เอ็ดมันด์ โรเบิร์ตส์)</td>
+                            <td>รัชกาลที่ 3<br>(พ.ศ. 2376)</td>
+                            <td>
+                                <strong>เอ็ดมันด์ โรเบิร์ตส์</strong> เข้ามาทำสนธิสัญญาทางพระราชไมตรีและการค้า (คล้ายสนธิสัญญาเบอร์นี) และมีมิชชันนารีอเมริกัน เช่น <strong>หมอบรัดเลย์ (แดน บีช บรัดเลย์)</strong> นำการแพทย์สมัยใหม่ (การปลูกฝีป้องกันไข้ทรพิษ การผ่าตัด) และแท่นพิมพ์ภาษาไทยเข้ามาเผยแพร่
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SLIDE 7: ภูมิปัญญา ศาสนา และศิลปวัฒนธรรมสมัยรัตนโกสินทร์ตอนต้น -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>✨ ๖. การฟื้นฟูพระพุทธศาสนา วรรณกรรม และศิลปกรรมสมัยรัตนโกสินทร์ตอนต้น</h2>
+                <span class="slide-unit-tag">ประวัติศาสตร์ ม.3 (พว.) | หน้า 7/10</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-3">
+                    <div class="info-card highlight-gold">
+                        <span class="tag tag-gold">ศาสนาและแหล่งเรียนรู้</span>
+                        <h3 class="card-title" style="margin-top:8px; color:#B27200;">☸️ 1. ด้านศาสนาและการศึกษา</h3>
+                        <ul class="card-list">
+                            <li><strong>การสังคายนาพระไตรปิฎก (พ.ศ. 2331 สมัย ร.1):</strong> จัดขึ้น ณ วัดมหาธาตุฯ และสร้าง<strong>พระไตรปิฎกฉบับทองใหญ่</strong></li>
+                            <li><strong>กำเนิด "ธรรมยุติกนิกาย" (สมัย ร.3):</strong> พระภิกษุเจ้าฟ้ามงกุฎ (ต่อมาคือ ร.4) ทรงตั้งคณะสงฆ์ธรรมยุตที่เคร่งครัดพระธรรมวินัย</li>
+                            <li><strong>จารึกวัดโพธิ์ (มหาวิทยาลัยแห่งแรกของไทย):</strong> รัชกาลที่ 3 โปรดให้จารึกตำราแพทย์ แผนที่ ฤๅษีดัดตน และวรรณคดีไว้ตามศาลารายวัดพระเชตุพนฯ (UNESCO ขึ้นทะเบียนมรดกความทรงจำแห่งโลก)</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card highlight-purple">
+                        <span class="tag tag-purple">วรรณกรรมยุคทอง</span>
+                        <h3 class="card-title" style="margin-top:8px;">📚 2. ด้านวรรณกรรมสำคัญ</h3>
+                        <ul class="card-list">
+                            <li><strong>สมัยรัชกาลที่ 1:</strong> พระราชนิพนธ์ <strong>บทละครเรื่องรามเกียรติ์ (ฉบับสมบูรณ์)</strong> และโปรดให้แปลพงศาวดารจีน-มอญ คือ <strong>"สามก๊ก"</strong> (เจ้าพระยาพระคลัง หน) และ <strong>"ราชาธิราช"</strong> เพื่อศึกษาพิชัยสงคราม</li>
+                            <li><strong>สมัยรัชกาลที่ 2 (ยุคทองของวรรณคดีละครรำ):</strong> พระราชนิพนธ์ <strong>อิเหนา</strong>, รามเกียรติ์, ไกรทอง, สังข์ทอง (UNESCO ยกย่อง ร.2 เป็นบุคคลสำคัญของโลก)</li>
+                            <li><strong>พระสุนทรโวหาร (ภู่ / สุนทรภู่):</strong> กวีเอกของโลกผู้แต่ง <strong>พระอภัยมณี</strong> และนิราศต่างๆ</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card highlight-green">
+                        <span class="tag tag-green">สถาปัตยกรรมและพุทธศิลป์</span>
+                        <h3 class="card-title" style="margin-top:8px; color:var(--success);">🏛️ 3. ด้านศิลปกรรม</h3>
+                        <ul class="card-list">
+                            <li><strong>สมัย ร.1 – ร.2 (สืบสานศิลปะอยุธยา):</strong> สร้างพระบรมมหาราชวัง, วัดพระแก้ว, <strong>เสาชิงช้าและวัดสุทัศนเทพวราราม</strong> (อัญเชิญพระศรีศากยมุนีจากสุโขทัยมาประดิษฐาน)</li>
+                            <li><strong>พระปรางค์วัดอรุณราชวราราม:</strong> เริ่มเสริมสร้างสมัย ร.2 และเสร็จสมบูรณ์ในสมัย ร.3 ประดับด้วยกระเบื้องเคลือบสีอย่างงดงาม</li>
+                            <li><strong>ศิลปะแบบพระราชนิยม รัชกาลที่ 3 (ผสมผสานศิลปะจีน):</strong> หน้าบันก่ออิฐถือปูนประดับกระเบื้องเคลือบสี ไม่มีช่อฟ้าใบระกา เช่น <strong>วัดราชโอรสาราม</strong> และ <strong>วัดเทพธิดาราม</strong></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 8: ตารางสรุปเปรียบเทียบพระราชกรณียกิจสำคัญ รัชกาลที่ 1 – รัชกาลที่ 3 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>📊 ๗. ตารางสรุปเปรียบเทียบพัฒนาการสำคัญในสมัยรัชกาลที่ ๑ – รัชกาลที่ ๓</h2>
+                <span class="slide-unit-tag">ประวัติศาสตร์ ม.3 (พว.) | หน้า 8/10</span>
+            </div>
+            <div class="slide-body">
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th style="width:22%;">รัชกาล</th>
+                            <th style="width:26%;">การเมืองและความมั่นคง</th>
+                            <th style="width:26%;">เศรษฐกิจและการทูต</th>
+                            <th style="width:26%;">ศาสนาและศิลปวัฒนธรรม</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>รัชกาลที่ 1</strong><br>พระบาทสมเด็จพระพุทธยอดฟ้าจุฬาโลกมหาราช<br>(พ.ศ. 2325 – 2352)</td>
+                            <td>
+                                • สถาปนากรุงรัตนโกสินทร์ (6 เม.ย. 2325)<br>
+                                • ชนะ<strong>สงครามเก้าทัพ (พ.ศ. 2328)</strong> และศึกท่าดินแดง<br>
+                                • ชำระ<strong>กฎหมายตราสามดวง (พ.ศ. 2347)</strong>
+                            </td>
+                            <td>
+                                • ฟื้นฟูการค้าสำเภากับจีนผ่านพระคลังสินค้า<br>
+                                • ลดเวลาเข้าเวรไพร่เหลือปีละ 4 เดือน
+                            </td>
+                            <td>
+                                • สังคายนาพระไตรปิฎกครั้งที่ 9<br>
+                                • สร้างวัดพระแก้ว วัดโพธิ์ วัดสุทัศน์<br>
+                                • วรรณกรรม: รามเกียรติ์, สามก๊ก, ราชาธิราช
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>รัชกาลที่ 2</strong><br>พระบาทสมเด็จพระพุทธเลิศหล้านภาลัย<br>(พ.ศ. 2352 – 2367)</td>
+                            <td>
+                                • บ้านเมืองสงบจากศึกใหญ่<br>
+                                • ตรา<strong>พระราชกำหนดห้ามสูบและค้าฝิ่น (พ.ศ. 2354)</strong><br>
+                                • ลดเวลาเข้าเวรไพร่เหลือปีละ 3 เดือน
+                            </td>
+                            <td>
+                                • โปรตุเกสตั้งสถานกงสุลแห่งแรก (พ.ศ. 2361)<br>
+                                • ทูตอังกฤษ จอห์น ครอว์เฟิร์ด เข้ามาเจรจาการค้า
+                            </td>
+                            <td>
+                                • <strong>ยุคทองของวรรณคดีและนาฏศิลป์</strong> (อิเหนา, ขุนช้างขุนแผน, สังข์ทอง)<br>
+                                • ทรงแกะสลักบานประตูวิหารวัดสุทัศน์ด้วยพระองค์เอง
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>รัชกาลที่ 3</strong><br>พระบาทสมเด็จพระนั่งเกล้าเจ้าอยู่หัว<br>(พ.ศ. 2367 – 2394)</td>
+                            <td>
+                                • ปราบกบฏเจ้าอนุวงศ์ (วีรกรรมท้าวสุรนารี พ.ศ. 2369)<br>
+                                • สงครามอานามสยามยุทธกับญวน 14 ปี
+                            </td>
+                            <td>
+                                • การค้าสำเภารุ่งเรืองสูงสุด (<strong>เจ้าสัว</strong>)<br>
+                                • ใช้ระบบ<strong>เจ้าภาษีนายอากร</strong> และเก็บ<strong>เงินถุงแดง</strong><br>
+                                • ทำ<strong>สนธิสัญญาเบอร์นี (อังกฤษ)</strong> และโรเบิร์ตส์ (สหรัฐฯ)
+                            </td>
+                            <td>
+                                • จารึกสรรพวิชาวัดโพธิ์<br>
+                                • ศิลปะแบบพระราชนิยมผสมจีน (วัดราชโอรสฯ)<br>
+                                • พระปรางค์วัดอรุณฯ เสร็จสมบูรณ์
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SLIDE 9: กิจกรรมทบทวนความรู้ สมัยรัตนโกสินทร์ตอนต้น (ชุดที่ 1/2) -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>🎯 กิจกรรมทบทวนความรู้ สมัยรัตนโกสินทร์ตอนต้น (ชุดที่ 1/2)</h2>
+                <span class="slide-unit-tag">ประวัติศาสตร์ ม.3 (พว.) | หน้า 9/10</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-3">
+                    <div class="info-card">
+                        <div class="card-title">ข้อที่ 1</div>
+                        <p style="margin-bottom:10px; font-weight:600;">ข้อใดเป็นเหตุผลสำคัญที่รัชกาลที่ 1 ทรงย้ายราชธานีจากฝั่งธนบุรีมาอยู่ฝั่งตะวันออกของแม่น้ำเจ้าพระยา (ฝั่งพระนคร)?</p>
+                        <div class="quiz-option" onclick="checkQuiz(this, true)">ก. พระราชวังเดิมคับแคบขนาบด้วยวัด 2 แห่ง และฝั่งพระนครมีชัยภูมิเป็นแหลมยื่นที่ขยายเมืองได้กว้างขวาง</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ข. ฝั่งพระนครตั้งอยู่บนภูเขาสูงห่างไกลจากแม่น้ำ</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ค. เพื่อปิดประเทศไม่ติดต่อค้าขายทางทะเลกับต่างชาติ</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ง. ฝั่งธนบุรีไม่มีป้อมปราการใดๆ เลย</div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="card-title">ข้อที่ 2</div>
+                        <p style="margin-bottom:10px; font-weight:600;">การชำระ "กฎหมายตราสามดวง" เมื่อ พ.ศ. 2347 ในสมัยรัชกาลที่ 1 มีสาเหตุเริ่มต้นมาจากคดีฟ้องหย่าของบุคคลใด?</p>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ก. คดีนางวันทอง</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, true)">ข. คดีอำแดงป้อม ฟ้องหย่า นายบุญศรี</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ค. คดีอำแดงเหมือน</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ง. คดีหมอบรัดเลย์</div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="card-title">ข้อที่ 3</div>
+                        <p style="margin-bottom:10px; font-weight:600;">ในสมัยรัชกาลที่ 3 ทรงปฏิรูปการจัดเก็บภาษีอากรเพื่อให้รัฐมีรายได้แน่นอนขึ้นด้วยวิธีการใด?</p>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ก. ยกเลิกการเก็บภาษีทั้งหมดทั่วราชอาณาจักร</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ข. ตั้งหอรัษฎากรพิพัฒน์</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, true)">ค. ใช้ระบบ "เจ้าภาษีนายอากร" เปิดให้เอกชนประมูลผูกขาดเก็บภาษีส่งรัฐ</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ง. เก็บภาษีร้อยละ 3 จากสินค้าทุกชนิด</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 10: กิจกรรมทบทวนความรู้ สมัยรัตนโกสินทร์ตอนต้น (ชุดที่ 2/2) & สรุป -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>🎯 กิจกรรมทบทวนความรู้ สมัยรัตนโกสินทร์ตอนต้น (ชุดที่ 2/2)</h2>
+                <span class="slide-unit-tag">ประวัติศาสตร์ ม.3 (พว.) | หน้า 10/10</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="info-card">
+                        <div class="card-title">ข้อที่ 4</div>
+                        <p style="margin-bottom:10px; font-weight:600;">"สนธิสัญญาเบอร์นี" (พ.ศ. 2369) ในสมัยรัชกาลที่ 3 เป็นสนธิสัญญาทางพระราชไมตรีและการค้าที่ไทยทำกับประเทศใด?</p>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ก. โปรตุเกส</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, true)">ข. อังกฤษ</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ค. ฝรั่งเศส</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ง. สหรัฐอเมริกา</div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="card-title">ข้อที่ 5</div>
+                        <p style="margin-bottom:10px; font-weight:600;">วัดใดที่รัชกาลที่ 3 ทรงพระกรุณาโปรดเกล้าฯ ให้จารึกตำราวิชาการแขนงต่างๆ ไว้ตามศาลาราย จนได้รับการยกย่องว่าเป็น "มหาวิทยาลัยแห่งแรกของไทย"?</p>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ก. วัดพระศรีรัตนศาสดาราม (วัดพระแก้ว)</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ข. วัดอรุณราชวราราม (วัดแจ้ง)</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, true)">ค. วัดพระเชตุพนวิมลมังคลาราม (วัดโพธิ์)</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ง. วัดราชโอรสาราม</div>
+                    </div>
+                </div>
+
+                <div class="info-card highlight-purple" style="background:linear-gradient(90deg, #E0F2F1 0%, #FFF 100%); margin-top:auto;">
+                    <h3 class="card-title" style="font-size:1.3rem;">📝 กิจกรรมต่อเนื่องท้ายคาบเรียน: ใบงานวิชาประวัติศาสตร์ ม.3 (ชุดที่ 1 รัตนโกสินทร์ตอนต้น)</h3>
+                    <p style="font-size:1.05rem; line-height:1.6;">
+                        ให้นักเรียนทำ <strong>ใบงานที่ 3.1 เรื่อง พัฒนาการและภูมิปัญญาสมัยรัตนโกสินทร์ตอนต้น (รัชกาลที่ 1 – รัชกาลที่ 3)</strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="bottom-bar">
+        <div style="font-family:'Prompt',sans-serif; font-size:0.95rem;">
+            ใช้ปุ่มลูกศร <strong>⬅️ ➡️ บนคีย์บอร์ด</strong> เพื่อเลื่อนสไลด์ได้ทันที
+        </div>
+        <div class="progress-dots" id="dotsContainer"></div>
+        <div class="nav-buttons">
+            <button class="btn-nav" id="prevBtn" onclick="changeSlide(-1)">⬅️ ก่อนหน้า</button>
+            <span id="slideCounter" style="font-family:'Prompt',sans-serif; font-weight:700; min-width:80px; text-align:center;">1 / 10</span>
+            <button class="btn-nav" id="nextBtn" onclick="changeSlide(1)">ถัดไป ➡️</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        const dotsContainer = document.getElementById('dotsContainer');
+        const slideCounter = document.getElementById('slideCounter');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'dot' + (i === 0 ? ' active' : '');
+            dot.onclick = () => goToSlide(i);
+            dotsContainer.appendChild(dot);
+        }
+
+        function updateUI() {
+            slides.forEach((s, idx) => s.classList.toggle('active', idx === currentSlide));
+            document.querySelectorAll('.dot').forEach((d, idx) => d.classList.toggle('active', idx === currentSlide));
+            slideCounter.textContent = `${currentSlide + 1} / ${totalSlides}`;
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === totalSlides - 1;
+        }
+
+        function changeSlide(dir) {
+            const next = currentSlide + dir;
+            if (next >= 0 && next < totalSlides) { currentSlide = next; updateUI(); }
+        }
+
+        function goToSlide(index) { currentSlide = index; updateUI(); }
+
+        function checkQuiz(el, isCorrect) {
+            const parent = el.parentElement;
+            parent.querySelectorAll('.quiz-option').forEach(opt => opt.classList.remove('correct', 'wrong'));
+            if (isCorrect) {
+                el.classList.add('correct');
+                if (!el.textContent.includes('✅')) el.innerHTML += ' <span>✅ ถูกต้อง!</span>';
+            } else {
+                el.classList.add('wrong');
+                if (!el.textContent.includes('❌')) el.innerHTML += ' <span>❌ ลองใหม่อีกครั้ง</span>';
+            }
+        }
+
+        function toggleFullScreen() {
+            if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+            else if (document.exitFullscreen) document.exitFullscreen();
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') changeSlide(1);
+            else if (e.key === 'ArrowLeft') changeSlide(-1);
+        });
+
+        updateUI();
+    </script>
+</body>
+</html>

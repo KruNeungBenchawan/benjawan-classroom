@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สไลด์ประกอบการสอน วิชาประวัติศาสตร์ ม.1 - หน่วยการเรียนรู้ที่ 3 (พว.)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6B3FA0;      /* สีม่วงเข้มตามปกหนังสือ พว. */
+            --primary-light: #9B6Bcf;
+            --primary-bg: #F6F0FC;
+            --accent: #E66C37;       /* สีส้มอิฐตามป้ายชั้น ม.1 บนปก */
+            --accent-gold: #D99B26;
+            --success: #2E8B57;
+            --text-dark: #1E1B24;
+            --text-muted: #5A5266;
+            --card-bg: #FFFFFF;
+            --border-color: #E2D6F0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background: linear-gradient(135deg, #2b1742 0%, #462669 50%, #1f1130 100%);
+            color: var(--text-dark);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1, h2, h3, .font-heading {
+            font-family: 'Prompt', sans-serif;
+        }
+
+        /* Top Navigation Bar */
+        .top-bar {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: #fff;
+            padding: 10px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            z-index: 100;
+        }
+
+        .brand-badge {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .pw-pill {
+            background: #27AE60;
+            color: white;
+            font-family: 'Prompt', sans-serif;
+            font-weight: 600;
+            font-size: 0.85rem;
+            padding: 4px 12px;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        .grade-pill {
+            background: var(--accent);
+            color: white;
+            font-family: 'Prompt', sans-serif;
+            font-weight: 700;
+            font-size: 0.85rem;
+            padding: 4px 12px;
+            border-radius: 6px;
+        }
+
+        .top-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-control {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 6px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Prompt', sans-serif;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+
+        .btn-control:hover {
+            background: rgba(255, 255, 255, 0.28);
+            transform: translateY(-1px);
+        }
+
+        /* Slide Container */
+        .deck-wrapper {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide {
+            width: 100%;
+            max-width: 1280px;
+            height: 100%;
+            max-height: 740px;
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            animation: slideIn 0.35s ease-out;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(12px) scale(0.99); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* Slide Header */
+        .slide-header {
+            background: linear-gradient(90deg, var(--primary) 0%, #8752C7 100%);
+            color: white;
+            padding: 18px 36px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 4px solid var(--accent);
+        }
+
+        .slide-header h2 {
+            font-size: 1.55rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .slide-unit-tag {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-family: 'Prompt', sans-serif;
+        }
+
+        /* Slide Body */
+        .slide-body {
+            flex: 1;
+            padding: 28px 36px;
+            overflow-y: auto;
+            background: radial-gradient(circle at bottom right, #faf6ff 0%, #ffffff 70%);
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        /* Cover Slide Special Styling */
+        .cover-slide {
+            background: linear-gradient(135deg, #7C4DFF 0%, #5E35B1 45%, #4527A0 100%);
+            color: white;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .cover-box {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(12px);
+            border: 2px solid rgba(255, 255, 255, 0.25);
+            border-radius: 24px;
+            padding: 40px 50px;
+            max-width: 960px;
+            width: 100%;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+        }
+
+        .cover-title {
+            font-size: 3.1rem;
+            font-weight: 800;
+            margin: 15px 0 10px;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            color: #FFF;
+        }
+
+        .cover-subtitle {
+            font-size: 1.75rem;
+            color: #FFD54F;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+
+        /* Grid & Cards */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .info-card {
+            background: #FFFFFF;
+            border: 2px solid var(--border-color);
+            border-radius: 14px;
+            padding: 18px 22px;
+            box-shadow: 0 4px 14px rgba(107, 63, 160, 0.06);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .info-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(107, 63, 160, 0.13);
+        }
+
+        .info-card.highlight-orange {
+            border-left: 6px solid var(--accent);
+        }
+
+        .info-card.highlight-purple {
+            border-left: 6px solid var(--primary);
+        }
+
+        .info-card.highlight-green {
+            border-left: 6px solid var(--success);
+        }
+
+        .info-card.highlight-gold {
+            border-left: 6px solid var(--accent-gold);
+        }
+
+        .card-title {
+            font-family: 'Prompt', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-size: 1.05rem;
+            line-height: 1.55;
+        }
+
+        .card-list li {
+            position: relative;
+            padding-left: 22px;
+        }
+
+        .card-list li::before {
+            content: "•";
+            color: var(--accent);
+            font-weight: bold;
+            font-size: 1.3rem;
+            position: absolute;
+            left: 4px;
+            top: -2px;
+        }
+
+        /* Tables */
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            font-size: 1.02rem;
+        }
+
+        .styled-table th {
+            background: var(--primary);
+            color: white;
+            font-family: 'Prompt', sans-serif;
+            padding: 12px 16px;
+            text-align: left;
+        }
+
+        .styled-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-color);
+            background: white;
+            vertical-align: top;
+            line-height: 1.5;
+        }
+
+        .styled-table tr:nth-child(even) td {
+            background: var(--primary-bg);
+        }
+
+        /* Badges & Tags */
+        .tag {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            font-family: 'Prompt', sans-serif;
+        }
+        .tag-purple { background: #EDE2F8; color: var(--primary); }
+        .tag-orange { background: #FDE8DF; color: #C84B15; }
+        .tag-green { background: #E1F5EA; color: #1E7043; }
+        .tag-gold { background: #FEF5D8; color: #9C6B08; }
+
+        /* Callout Box / Question Box */
+        .question-box {
+            background: linear-gradient(90deg, #FFF8E7 0%, #FFFDF9 100%);
+            border: 2px solid #F5C76B;
+            border-left: 8px solid var(--accent-gold);
+            border-radius: 12px;
+            padding: 16px 22px;
+            margin-top: auto;
+        }
+
+        .question-header {
+            font-family: 'Prompt', sans-serif;
+            font-weight: 700;
+            color: #B27200;
+            font-size: 1.1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .answer-reveal {
+            display: none;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed #E0B860;
+            color: #1B5E20;
+            font-weight: 600;
+            font-size: 1.05rem;
+        }
+
+        .btn-reveal {
+            background: var(--accent-gold);
+            color: white;
+            border: none;
+            padding: 5px 14px;
+            border-radius: 6px;
+            font-family: 'Prompt', sans-serif;
+            font-size: 0.85rem;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .btn-reveal:hover {
+            background: #B87F14;
+        }
+
+        /* Timeline Flow */
+        .timeline-row {
+            display: flex;
+            align-items: stretch;
+            gap: 14px;
+        }
+
+        .timeline-step {
+            flex: 1;
+            background: white;
+            border: 2px solid var(--border-color);
+            border-top: 6px solid var(--primary);
+            border-radius: 12px;
+            padding: 16px;
+            position: relative;
+        }
+
+        .timeline-step.step-orange { border-top-color: var(--accent); }
+        .timeline-step.step-gold { border-top-color: var(--accent-gold); }
+        .timeline-step.step-green { border-top-color: var(--success); }
+
+        /* Bottom Bar Navigation */
+        .bottom-bar {
+            background: rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(8px);
+            padding: 12px 36px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .btn-nav {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 8px 22px;
+            border-radius: 10px;
+            font-family: 'Prompt', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-nav:hover:not(:disabled) {
+            background: #FF7F47;
+            transform: translateY(-2px);
+        }
+
+        .btn-nav:disabled {
+            background: rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.5);
+            cursor: not-allowed;
+        }
+
+        .progress-dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .dot.active {
+            background: #FFD54F;
+            transform: scale(1.3);
+        }
+
+        /* Quiz Interactive Styling */
+        .quiz-option {
+            background: white;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            padding: 12px 18px;
+            cursor: pointer;
+            font-size: 1.05rem;
+            transition: all 0.2s;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quiz-option:hover {
+            border-color: var(--primary);
+            background: var(--primary-bg);
+        }
+
+        .quiz-option.correct {
+            background: #E8F5E9;
+            border-color: #2E7D32;
+            color: #1B5E20;
+            font-weight: 700;
+        }
+
+        .quiz-option.wrong {
+            background: #FFEBEE;
+            border-color: #C62828;
+            color: #B71C1C;
+        }
+
+        @media print {
+            body {
+                background: white;
+                height: auto;
+                overflow: visible;
+            }
+            .top-bar, .bottom-bar, .btn-reveal {
+                display: none !important;
+            }
+            .deck-wrapper {
+                display: block;
+                padding: 0;
+            }
+            .slide {
+                display: flex !important;
+                page-break-after: always;
+                height: 190mm;
+                max-width: 100%;
+                box-shadow: none;
+                border: 1px solid #ccc;
+                margin-bottom: 15mm;
+            }
+            .answer-reveal {
+                display: block !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="brand-badge">
+            <span class="pw-pill">อ้างอิงหนังสือเรียน พว.</span>
+            <span class="grade-pill">ชั้นมัธยมศึกษาปีที่ ๑</span>
+            <span style="font-family: 'Prompt', sans-serif; font-weight: 600;">รายวิชาพื้นฐาน ประวัติศาสตร์ | หน่วยการเรียนรู้ที่ 3</span>
+        </div>
+        <div class="top-controls">
+            <button class="btn-control" onclick="goToSlide(0)">🏠 หน้าแรก</button>
+            <button class="btn-control" onclick="goToSlide(1)">🪨 สมัยก่อนประวัติศาสตร์</button>
+            <button class="btn-control" onclick="goToSlide(5)">🏛️ รัฐโบราณในดินแดนไทย</button>
+            <button class="btn-control" onclick="goToSlide(10)">🎯 กิจกรรมทบทวน</button>
+            <button class="btn-control" onclick="window.print()">🖨️ พิมพ์สไลด์ / PDF</button>
+            <button class="btn-control" onclick="toggleFullScreen()">⛶ เต็มจอ</button>
+        </div>
+    </div>
+
+    <!-- Main Slide Deck -->
+    <div class="deck-wrapper">
+
+        <!-- SLIDE 1: หน้าปก -->
+        <div class="slide cover-slide active">
+            <div class="cover-box">
+                <div style="display:flex; justify-content:center; gap:12px; margin-bottom:14px;">
+                    <span class="pw-pill" style="font-size:1rem; padding:6px 18px;">กลุ่มสาระการเรียนรู้สังคมศึกษา ศาสนา และวัฒนธรรม</span>
+                    <span class="grade-pill" style="font-size:1rem; padding:6px 18px;">ชั้นมัธยมศึกษาปีที่ ๑</span>
+                </div>
+                <div style="font-size:1.3rem; color:#E1BEE7; font-family:'Prompt',sans-serif;">หน่วยการเรียนรู้ที่ ๓</div>
+                <h1 class="cover-title">ความเป็นมาและการตั้งหลักแหล่ง<br>ในดินแดนประเทศไทย</h1>
+                <div class="cover-subtitle">(สมัยก่อนประวัติศาสตร์ และพัฒนาการของรัฐโบราณในดินแดนไทย)</div>
+                <hr style="border:none; border-top:1px solid rgba(255,255,255,0.25); margin: 22px auto; width: 70%;">
+                <div class="grid-3" style="text-align:left; margin-top:20px;">
+                    <div style="background:rgba(0,0,0,0.25); padding:14px 18px; border-radius:12px;">
+                        <strong style="color:#FFD54F; font-family:'Prompt',sans-serif;">๑. สมัยก่อนประวัติศาสตร์</strong>
+                        <p style="font-size:0.95rem; margin-top:4px; color:#F3E5F5;">ยุคหิน (เก่า-กลาง-ใหม่) และยุคโลหะ (สำริด-เหล็ก) ในดินแดนไทย</p>
+                    </div>
+                    <div style="background:rgba(0,0,0,0.25); padding:14px 18px; border-radius:12px;">
+                        <strong style="color:#FFD54F; font-family:'Prompt',sans-serif;">๒. ชุมชนโบราณสู่รัฐโบราณ</strong>
+                        <p style="font-size:0.95rem; margin-top:4px; color:#F3E5F5;">ปัจจัยทางภูมิศาสตร์ การค้าทางทะเล และการรับอารยธรรมอินเดีย-จีน</p>
+                    </div>
+                    <div style="background:rgba(0,0,0,0.25); padding:14px 18px; border-radius:12px;">
+                        <strong style="color:#FFD54F; font-family:'Prompt',sans-serif;">๓. รัฐโบราณ ๔ ภูมิภาค</strong>
+                        <p style="font-size:0.95rem; margin-top:4px; color:#F3E5F5;">ทวารวดี ละโว้ หริภุญชัย ศรีโคตรบูร ลังกาสุกะ ศรีวิชัย ตามพรลิงค์</p>
+                    </div>
+                </div>
+                <p style="margin-top:24px; font-size:0.95rem; color:#D1C4E9;">
+                    อ้างอิงเนื้อหาจาก: หนังสือเรียน รายวิชาพื้นฐาน ประวัติศาสตร์ ม.1 (ผศ.ดร.วงเดือน นาราสัจจ์ และ ผศ.ชมพูนุท นาคีรักษ์) สำนักพิมพ์ พว.
+                </p>
+            </div>
+        </div>
+
+        <!-- SLIDE 2: แผนผังสาระการเรียนรู้ & มาตรฐานตัวชี้วัด -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>🗺️ แผนผังสาระการเรียนรู้ และจุดประสงค์การเรียนรู้</h2>
+                <span class="slide-unit-tag">หน่วยการเรียนรู้ที่ 3 | หน้า 2/12</span>
+            </div>
+            <div class="slide-body">
+                <div class="info-card highlight-purple" style="background:#F8F4FC;">
+                    <div class="card-title">🎯 ตัวชี้วัด (มฐ. ส 4.3 ม.1/1)</div>
+                    <p style="font-size:1.1rem; line-height:1.6;">
+                        <strong>อธิบายเรื่องราวทางประวัติศาสตร์สมัยก่อนสุโขทัยในดินแดนไทยโดยสังเขป</strong> ทั้งในสมัยก่อนประวัติศาสตร์ ชุมชนโบราณ และรัฐโบราณในภูมิภาคต่างๆ ของประเทศไทย พร้อมวิเคราะห์ปัจจัยที่ส่งผลต่อพัฒนาการของการตั้งหลักแหล่ง
+                    </p>
+                </div>
+
+                <div class="timeline-row" style="margin-top:8px;">
+                    <div class="timeline-step">
+                        <span class="tag tag-purple">ระยะที่ 1</span>
+                        <h3 style="margin:10px 0 8px; color:var(--primary);">🪨 สมัยก่อนประวัติศาสตร์</h3>
+                        <ul class="card-list">
+                            <li>ยังไม่มีตัวอักษรใช้บันทึก</li>
+                            <li>ศึกษาจากเครื่องมือหิน เครื่องปั้นดินเผา โครงกระดูก ภาพเขียนสี</li>
+                            <li><strong>ยุคหิน:</strong> หินเก่า → หินกลาง → หินใหม่</li>
+                            <li><strong>ยุคโลหะ:</strong> ยุคสำริด → ยุคเหล็ก</li>
+                        </ul>
+                    </div>
+                    <div class="timeline-step step-orange">
+                        <span class="tag tag-orange">ระยะที่ 2</span>
+                        <h3 style="margin:10px 0 8px; color:var(--accent);">⛵ ชุมชนสู่บ้านเมือง</h3>
+                        <ul class="card-list">
+                            <li>ตั้งถิ่นฐานริมแม่น้ำและชายฝั่งทะเล</li>
+                            <li>ดินแดน <strong>"สุวรรณภูมิ"</strong> อุดมสมบูรณ์</li>
+                            <li>ติดต่อค้าขายกับพ่อค้าอินเดียและจีน</li>
+                            <li>รับศาสนา ตัวอักษร และระบอบกษัตริย์</li>
+                        </ul>
+                    </div>
+                    <div class="timeline-step step-green">
+                        <span class="tag tag-green">ระยะที่ 3</span>
+                        <h3 style="margin:10px 0 8px; color:var(--success);">🏛️ สมัยประวัติศาสตร์ (รัฐโบราณ)</h3>
+                        <ul class="card-list">
+                            <li>เข้าสู่สมัยประวัติศาสตร์เมื่อราว <strong>พ.ศ. 1180 (พุทธศตวรรษที่ 12)</strong></li>
+                            <li><strong>ภาคกลาง:</strong> ทวารวดี, ละโว้</li>
+                            <li><strong>ภาคเหนือ:</strong> หริภุญชัย, โยนกนาคนคร</li>
+                            <li><strong>ภาคอีสาน:</strong> ศรีโคตรบูร, ขอมโบราณ</li>
+                            <li><strong>ภาคใต้:</strong> ลังกาสุกะ, ศรีวิชัย, ตามพรลิงค์</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-header">
+                        <span>💡 คำถามชวนคิดก่อนเรียน: เส้นแบ่งสำคัญระหว่าง "สมัยก่อนประวัติศาสตร์" กับ "สมัยประวัติศาสตร์" ในดินแดนไทยคืออะไร?</span>
+                        <button class="btn-reveal" onclick="toggleAnswer('ans1')">แสดงแนวคำตอบ</button>
+                    </div>
+                    <div id="ans1" class="answer-reveal">
+                        ✅ แนวคำตอบ: ใช้ "การพบหลักฐานที่เป็นลายลักษณ์อักษร (ตัวหนังสือ)" เป็นเกณฑ์แบ่ง โดยในดินแดนไทยเริ่มเข้าสู่สมัยประวัติศาสตร์เมื่อราวพุทธศตวรรษที่ 12 (ประมาณ พ.ศ. 1180) จากการพบจารึกอักษรปัลลวะ (ภาษาสันสกฤต/บาลี)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: สมัยก่อนประวัติศาสตร์ในดินแดนไทย (ยุคหิน) -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>🪨 ๑. สมัยก่อนประวัติศาสตร์ในดินแดนไทย : ยุคหิน (Stone Age)</h2>
+                <span class="slide-unit-tag">หน่วยการเรียนรู้ที่ 3 | หน้า 3/12</span>
+            </div>
+            <div class="slide-body">
+                <p style="font-size:1.08rem; color:var(--text-muted);">
+                    แบ่งตามเทคโนโลยีการทำเครื่องมือหินและวิถีการดำรงชีวิตของมนุษย์ ออกเป็น <strong>3 ยุคย่อย</strong> ดังนี้:
+                </p>
+
+                <div class="grid-3">
+                    <div class="info-card highlight-purple">
+                        <span class="tag tag-purple">ประมาณ 700,000 - 10,000 ปีมาแล้ว</span>
+                        <h3 class="card-title" style="margin-top:8px;">1. ยุคหินเก่า (Paleolithic)</h3>
+                        <ul class="card-list">
+                            <li><strong>วิถีชีวิต:</strong> เร่ร่อน ล่าสัตว์ หาของป่า อาศัยตามถ้ำและเพิงผา</li>
+                            <li><strong>เครื่องมือ:</strong> เครื่องมือหินกรวดกะเทาะแบบหยาบๆ (กะเทาะหน้าเดียว) ใช้ทุบ สับ ขุด</li>
+                            <li><strong>แหล่งโบราณคดีในไทย:</strong>
+                                <br>- ถ้ำพระ อ.ไทรโยค <strong>จ.กาญจนบุรี</strong>
+                                <br>- แหล่งโบราณคดีบ้านแม่ทะ <strong>จ.ลำปาง</strong>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card highlight-orange">
+                        <span class="tag tag-orange">ประมาณ 10,000 - 4,000 ปีมาแล้ว</span>
+                        <h3 class="card-title" style="margin-top:8px; color:var(--accent);">2. ยุคหินกลาง (Mesolithic)</h3>
+                        <ul class="card-list">
+                            <li><strong>วิถีชีวิต:</strong> อาศัยในถ้ำหรือเพิงผาใกล้แหล่งน้ำ เริ่มรู้จักสะสมอาหารและกึ่งตั้งหลักแหล่ง</li>
+                            <li><strong>เครื่องมือ:</strong> เครื่องมือหินกะเทาะที่ประณีตขึ้น ขนาดเล็กลง (<strong>วัฒนธรรมโฮบินเนียน</strong>)</li>
+                            <li><strong>แหล่งโบราณคดีในไทย:</strong>
+                                <br>- ถ้ำผีแมน <strong>จ.แม่ฮ่องสอน</strong> (พบเมล็ดพืชโบราณ)
+                                <br>- ถ้ำเขาทะลุ <strong>จ.กาญจนบุรี</strong>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card highlight-green">
+                        <span class="tag tag-green">ประมาณ 4,000 - 2,500 ปีมาแล้ว</span>
+                        <h3 class="card-title" style="margin-top:8px; color:var(--success);">3. ยุคหินใหม่ (Neolithic)</h3>
+                        <ul class="card-list">
+                            <li><strong>วิถีชีวิต:</strong> <strong>ตั้งหลักแหล่งถาวร</strong> เป็นชุมชนหมู่บ้านริมน้ำ ทำการ<strong>เพาะปลูกและเลี้ยงสัตว์</strong> ทอผ้า</li>
+                            <li><strong>เครื่องมือ:</strong> <strong>ขวานหินขัด</strong> (ผิวเรียบ มีคม) และปั้น<strong>ภาชนะดินเผา</strong> (เช่น หม้อสามขา)</li>
+                            <li><strong>แหล่งโบราณคดีในไทย:</strong>
+                                <br>- แหล่งโบราณคดี<strong>บ้านเก่า จ.กาญจนบุรี</strong>
+                                <br>- โคกพนมดี <strong>จ.ชลบุรี</strong>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-header">
+                        <span>🔍 วิเคราะห์หลักฐาน: เพราะเหตุใดมนุษย์ใน "ยุคหินใหม่" จึงเริ่มปั้นภาชนะดินเผาและสร้างบ้านเรือนถาวร?</span>
+                        <button class="btn-reveal" onclick="toggleAnswer('ans2')">แสดงแนวคำตอบ</button>
+                    </div>
+                    <div id="ans2" class="answer-reveal">
+                        ✅ แนวคำตอบ: เพราะมนุษย์ยุคหินใหม่เปลี่ยนวิถีชีวิตจากการเร่ร่อนล่าสัตว์ มาเป็นการ "เพาะปลูกและเลี้ยงสัตว์" จึงต้องตั้งหลักแหล่งถาวรเพื่อดูแลผลผลิต และต้องใช้ภาชนะดินเผาในการหุงต้มและเก็บถนอมอาหาร
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: สมัยก่อนประวัติศาสตร์ในดินแดนไทย (ยุคโลหะ) -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>⚔️ ๒. สมัยก่อนประวัติศาสตร์ในดินแดนไทย : ยุคโลหะ (Metal Age)</h2>
+                <span class="slide-unit-tag">หน่วยการเรียนรู้ที่ 3 | หน้า 4/12</span>
+            </div>
+            <div class="slide-body">
+                <p style="font-size:1.08rem; color:var(--text-muted);">
+                    มนุษย์มีความก้าวหน้าทางเทคโนโลยี รู้จักนำแร่โลหะมาหลอมทำเครื่องมือเครื่องใช้ อาวุธ และเครื่องประดับ แบ่งเป็น <strong>2 ยุคย่อย</strong>:
+                </p>
+
+                <div class="grid-2">
+                    <div class="info-card highlight-gold">
+                        <span class="tag tag-gold">ประมาณ 2,500 - 1,500 ปีมาแล้ว</span>
+                        <h3 class="card-title" style="margin-top:8px; color:#B27200;">🔶 1. ยุคสำริด (Bronze Age)</h3>
+                        <ul class="card-list">
+                            <li><strong>เทคโนโลยีสำคัญ:</strong> นำ <strong>"ทองแดง + ดีบุก"</strong> มาหลอมรวมกันเป็น <strong>"สำริด"</strong> เพื่อทำหัวขวาน ใบหอก กำไล ลูกพรวน และกลองมโหระทึก</li>
+                            <li><strong>ลักษณะสังคม:</strong> ชุมชนเกษตรกรรมขนาดใหญ่ มีความเชื่อเรื่องชีวิตหลังความตาย (ฝังสิ่งของเครื่องใช้และภาชนะดินเผาร่วมกับศพ)</li>
+                            <li><strong>แหล่งโบราณคดีสำคัญระดับโลก:</strong>
+                                <br>🌟 <strong>แหล่งโบราณคดีบ้านเชียง อ.หนองหาน จ.อุดรธานี</strong> (มรดกโลก UNESCO) โดดเด่นด้วย<strong>ภาชนะดินเผาลายเขียนสี</strong> (ลายก้นหอย) และเครื่องมือสำริด
+                                <br>🌟 แหล่งโบราณคดีบ้านโนนวัด <strong>จ.นครราชสีมา</strong>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card highlight-purple">
+                        <span class="tag tag-purple">ประมาณ 2,500 - 1,500 ปีมาแล้ว (ต่อเนื่องสู่ยุคประวัติศาสตร์)</span>
+                        <h3 class="card-title" style="margin-top:8px;">⚙️ 2. ยุคเหล็ก (Iron Age)</h3>
+                        <ul class="card-list">
+                            <li><strong>เทคโนโลยีสำคัญ:</strong> รู้จักถลุงและตี<strong>เหล็ก</strong> ซึ่งต้องใช้อุณหภูมิสูงกว่าสำริด ทำให้ได้เครื่องมือการเกษตรและอาวุธที่<strong>แข็งแกร่งทนทานกว่าสำริดมาก</strong></li>
+                            <li><strong>ลักษณะสังคม:</strong> ขยายพื้นที่ทำนาข้าวได้กว้างขวาง มีคูน้ำคันดินล้อมรอบชุมชน มีการจัดชนชั้นผู้นำ และ<strong>เริ่มติดต่อค้าขายทางไกลกับอินเดียและจีน</strong></li>
+                            <li><strong>แหล่งโบราณคดีสำคัญในไทย:</strong>
+                                <br>🌟 <strong>บ้านดอนตาเพชร จ.กาญจนบุรี</strong> (พบลูกปัดหินคาร์เนเลียน ลูกปัดแก้ว และภาชนะสำริดที่แสดงถึงการติดต่อกับอินเดีย)
+                                <br>🌟 เนินอุโลก <strong>จ.นครราชสีมา</strong>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-header">
+                        <span>💡 ชวนคิด: การค้นพบเครื่องมือเหล็กส่งผลต่อการพัฒนาจาก "หมู่บ้าน" ไปสู่ "รัฐโบราณ" อย่างไร?</span>
+                        <button class="btn-reveal" onclick="toggleAnswer('ans3')">แสดงแนวคำตอบ</button>
+                    </div>
+                    <div id="ans3" class="answer-reveal">
+                        ✅ แนวคำตอบ: เหล็กมีความแข็งแกร่งมาก ทำให้ถางป่าและทำการเกษตรได้ผลผลิตเพิ่มขึ้น ประชากรจึงเพิ่มจำนวนขึ้นอย่างรวดเร็ว อีกทั้งอาวุธเหล็กยังทำให้เกิดกองกำลังป้องกันชุมชนและขยายอำนาจกลายเป็นเมืองและรัฐโบราณ
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: แหล่งโบราณคดีสมัยก่อนประวัติศาสตร์ใน 4 ภูมิภาคของไทย -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>📍 ๓. สรุปแหล่งโบราณคดีสมัยก่อนประวัติศาสตร์ในแต่ละภูมิภาคของไทย</h2>
+                <span class="slide-unit-tag">หน่วยการเรียนรู้ที่ 3 | หน้า 5/12</span>
+            </div>
+            <div class="slide-body">
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th style="width:18%;">ภูมิภาค</th>
+                            <th style="width:32%;">แหล่งโบราณคดีสำคัญ</th>
+                            <th style="width:50%;">หลักฐานทางโบราณคดีและลักษณะเด่น</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>ภาคเหนือ</strong></td>
+                            <td>
+                                • บ้านแม่ทะ (จ.ลำปาง)<br>
+                                • ถ้ำผีแมน (จ.แม่ฮ่องสอน)<br>
+                                • ภาพเขียนสีประตูผา (จ.ลำปาง)
+                            </td>
+                            <td>
+                                พบเครื่องมือหินกะเทาะยุคหินเก่า เมล็ดพืชโบราณในถ้ำ โลงไม้ขุด (โลงผีแมน) และภาพเขียนสีตามเพิงผาสะท้อนพิธีกรรมและการล่าสัตว์
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>ภาคกลาง</strong></td>
+                            <td>
+                                • ถ้ำพระ อ.ไทรโยค (จ.กาญจนบุรี)<br>
+                                • บ้านเก่า (จ.กาญจนบุรี)<br>
+                                • บ้านดอนตาเพชร (จ.กาญจนบุรี)<br>
+                                • โคกพนมดี (จ.ชลบุรี)
+                            </td>
+                            <td>
+                                พบหลักฐานต่อเนื่องตั้งแต่ยุคหินเก่าถึงยุคเหล็ก เช่น ขวานหินขัด <strong>ภาชนะดินเผาหม้อสามขา (บ้านเก่า)</strong> โครงกระดูกมนุษย์ และลูกปัดหิน/เครื่องสำริดที่ติดต่อกับต่างชาติ (บ้านดอนตาเพชร)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>ภาคตะวันออกเฉียงเหนือ (อีสาน)</strong></td>
+                            <td>
+                                • <strong>บ้านเชียง (จ.อุดรธานี)</strong><br>
+                                • ผาแต้ม (จ.อุบลราชธานี)<br>
+                                • บ้านโนนวัด / เนินอุโลก (จ.นครราชสีมา)
+                            </td>
+                            <td>
+                                ศูนย์กลางอารยธรรมยุคสำริดและเหล็กที่สำคัญ <strong>ภาชนะดินเผาลายเขียนสีบ้านเชียง</strong> กำไลสำริด และภาพเขียนสีโบราณริมฝั่งแม่น้ำโขงที่ผาแต้ม
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>ภาคใต้</strong></td>
+                            <td>
+                                • ถ้ำหมอเขียว (จ.กระบี่)<br>
+                                • เขาศรีวิชัย (จ.สุราษฎร์ธานี)<br>
+                                • คลองท่อม / ควนลูกปัด (จ.กระบี่)
+                            </td>
+                            <td>
+                                พบโครงกระดูกและเครื่องมือหินยุคหินเก่า-หินใหม่ และพัฒนาเป็นชุมชนเมืองท่าผลิตลูกปัดและค้าขายทางทะเลในยุคโลหะต่อยุคประวัติศาสตร์
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="info-card highlight-green" style="padding:12px 20px;">
+                    <strong>📌 สรุปสาระสำคัญตามหนังสือเรียน พว.:</strong> ดินแดนประเทศไทยทุกภูมิภาคมีมนุษย์อาศัยอยู่มาอย่างต่อเนื่องตั้งแต่ยุคหินเก่าจนถึงยุคเหล็ก ก่อนจะหลอมรวมกับอารยธรรมภายนอกและก้าวเข้าสู่ยุคประวัติศาสตร์
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 6: ปัจจัยการพัฒนาจากชุมชนโบราณสู่ "รัฐโบราณ" -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>⛵ ๔. พัฒนาการจากชุมชนโบราณสู่ "รัฐโบราณ" ในดินแดนไทย</h2>
+                <span class="slide-unit-tag">หน่วยการเรียนรู้ที่ 3 | หน้า 6/12</span>
+            </div>
+            <div class="slide-body">
+                <p style="font-size:1.08rem; color:var(--text-muted);">
+                    ตั้งแต่ราวพุทธศตวรรษที่ 6–12 ชุมชนโบราณในดินแดนไทย (ซึ่งชาวอินเดียโบราณเรียกว่า <strong>"สุวรรณภูมิ"</strong> แปลว่า แผ่นดินทอง) ได้พัฒนาขึ้นเป็นบ้านเมืองและรัฐโบราณ จากปัจจัยสำคัญ 4 ประการ:
+                </p>
+
+                <div class="grid-2">
+                    <div class="info-card highlight-purple">
+                        <div class="card-title">1. ปัจจัยทางภูมิศาสตร์และทรัพยากร</div>
+                        <ul class="card-list">
+                            <li>ตั้งอยู่กึ่งกลางเส้นทางเดินเรือค้าขายระหว่าง<strong>มหาสมุทรอินเดีย (อินเดีย-โรมัน)</strong> กับ <strong>ทะเลจีนใต้ (จีน)</strong></li>
+                            <li>มีที่ราบลุ่มแม่น้ำอุดมสมบูรณ์ (แม่น้ำเจ้าพระยา, แม่น้ำโขง, แม่น้ำปิง, แม่น้ำตาปี) เหมาะแก่การปลูกข้าวและมีของป่า/แร่ธาตุ</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card highlight-orange">
+                        <div class="card-title" style="color:var(--accent);">2. การติดต่อค้าขายทางทะเล</div>
+                        <ul class="card-list">
+                            <li>การเดินทางโดยอาศัย<strong>ลมมรสุม</strong> ทำให้พ่อค้าชาวอินเดีย จีน อาหรับ เดินทางมาแวะพักและแลกเปลี่ยนสินค้าตามเมืองท่าชายฝั่ง</li>
+                            <li>เกิดเมืองท่าสำคัญ เช่น คลองท่อม (กระบี่), อู่ทอง (สุพรรณบุรี), ตามพรลิงค์ (นครศรีธรรมราช)</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card highlight-gold">
+                        <div class="card-title" style="color:#B27200;">3. การเลือกรับอารยธรรมอินเดียและจีน</div>
+                        <ul class="card-list">
+                            <li><strong>ด้านศาสนา:</strong> รับพระพุทธศาสนา (ทั้งเถรวาทและมหายาน) และศาสนาพราหมณ์-ฮินดู</li>
+                            <li><strong>ด้านภาษาและอักษร:</strong> รับ<strong>อักษรปัลลวะ</strong> (อินเดียใต้) และภาษาบาลี-สันสกฤต มาดัดแปลง</li>
+                            <li><strong>ด้านการปกครอง:</strong> เปลี่ยนจาก "หัวหน้าเผ่า" เป็น <strong>"กษัตริย์ (สมมติเทพ / ธรรมราชา)"</strong></li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card highlight-green">
+                        <div class="card-title" style="color:var(--success);">4. การจัดระเบียบสังคมและเทคโนโลยีชลประทาน</div>
+                        <ul class="card-list">
+                            <li>มีการขุดคูน้ำ คันดิน และอ่างเก็บน้ำ (บาราย) เพื่อจัดการน้ำในการเกษตรและป้องกันเมือง</li>
+                            <li>เกิดเครือข่ายเมืองศูนย์กลางและเมืองบริวาร จนกลายเป็น <strong>"แคว้นหรือรัฐโบราณ"</strong></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 7: รัฐโบราณในภาคกลาง (ทวารวดี และ ละโว้) -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>🏛️ ๕. รัฐโบราณในดินแดนไทย : ภาคกลาง (ทวารวดี และ ละโว้)</h2>
+                <span class="slide-unit-tag">หน่วยการเรียนรู้ที่ 3 | หน้า 7/12</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="info-card highlight-purple">
+                        <span class="tag tag-purple">พุทธศตวรรษที่ 11 – 16</span>
+                        <h3 class="card-title" style="margin-top:8px; font-size:1.35rem;">☸️ 1. อาณาจักรทวารวดี (Dvaravati)</h3>
+                        <ul class="card-list">
+                            <li><strong>ศูนย์กลาง:</strong> บริเวณลุ่มแม่น้ำเจ้าพระยาตอนล่าง ได้แก่ <strong>นครปฐม</strong> (เมืองนครไชยศรี), เมืองอู่ทอง (สุพรรณบุรี), เมืองคูบัว (ราชบุรี) และเมืองศรีมโหสถ (ปราจีนบุรี)</li>
+                            <li><strong>หลักฐานยืนยันชื่อ:</strong> บันทึกของพระภิกษุจีน <strong>"เหี้ยนจัง (พระถังซัมจั๋ง)"</strong> เรียกว่า <em>"โถโลโปตี้"</em> และพบเหรียญเงินจารึกภาษาสันสกฤตว่า <strong>"ศรีทวารวดีศวรปุณยะ"</strong> (บุญกุศลของพระราชาแห่งศรีทวารวดี)</li>
+                            <li><strong>ศาสนาและศิลปวัฒนธรรม:</strong> ศูนย์กลาง<strong>พระพุทธศาสนานิกายเถรวาท</strong> นิยมสร้าง <strong>"ธรรมจักรศิลาและกวางหมอบ"</strong> (สัญลักษณ์การแสดงปฐมเทศนา) และพระปฐมเจดีย์</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card highlight-orange">
+                        <span class="tag tag-orange">พุทธศตวรรษที่ 12 – 19</span>
+                        <h3 class="card-title" style="margin-top:8px; font-size:1.35rem; color:var(--accent);">🏰 2. แคว้นละโว้ (ลพบุรี)</h3>
+                        <ul class="card-list">
+                            <li><strong>ศูนย์กลาง:</strong> บริเวณลุ่มแม่น้ำลพบุรี-ป่าสัก (<strong>จังหวัดลพบุรี</strong>ในปัจจุบัน) เป็นเมืองที่มีคูน้ำคันดินล้อมรอบและติดต่อค้าขายทางน้ำได้สะดวก</li>
+                            <li><strong>พัฒนาการทางการเมือง:</strong>
+                                <br>• ระยะแรกได้รับอิทธิพลวัฒนธรรมทวารวดี (พุทธเถรวาท) และส่ง<strong>พระนางจามเทวี</strong>ไปครองแคว้นหริภุญชัย
+                                <br>• ตั้งแต่พุทธศตวรรษที่ 16 ได้รับอิทธิพลทางการเมืองและศิลปวัฒนธรรมจาก<strong>อาณาจักรขอม (กัมพูชา)</strong> เคยส่งทูตไปจีน (จีนเรียก "หลอฮก")
+                            </li>
+                            <li><strong>หลักฐานสำคัญ:</strong> <strong>พระปรางค์สามยอด</strong>, เทวสถานปรางค์แขก, ศาลพระกาฬ (ศิลปะลพบุรี/ขอมโบราณ)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-header">
+                        <span>🔎 ชวนสังเกตหลักฐาน: การพบ "ธรรมจักรศิลาคู่กับกวางหมอบ" ในเมืองโบราณสมัยทวารวดี สะท้อนเรื่องใด?</span>
+                        <button class="btn-reveal" onclick="toggleAnswer('ans4')">แสดงแนวคำตอบ</button>
+                    </div>
+                    <div id="ans4" class="answer-reveal">
+                        ✅ แนวคำตอบ: สะท้อนความเลื่อมใสในพระพุทธศาสนาอย่างลึกซึ้ง โดย "ธรรมจักร" หมายถึงการเผยแผ่พระธรรม (ธัมมจักกัปปวัตตนสูตร) และ "กวางหมอบ" หมายถึงป่าอิสิปตนมฤคทายวัน สถานที่แสดงปฐมเทศนาของพระพุทธเจ้า
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 8: รัฐโบราณในภาคเหนือ และ ภาคตะวันออกเฉียงเหนือ -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>🏯 ๖. รัฐโบราณในภาคเหนือ และ ภาคตะวันออกเฉียงเหนือ (อีสาน)</h2>
+                <span class="slide-unit-tag">หน่วยการเรียนรู้ที่ 3 | หน้า 8/12</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="info-card highlight-green">
+                        <span class="tag tag-green">ภาคเหนือ (พุทธศตวรรษที่ 13 – 19)</span>
+                        <h3 class="card-title" style="margin-top:8px; color:var(--success);">⛰️ แคว้นหริภุญชัย และ โยนกนาคนคร</h3>
+                        <ul class="card-list">
+                            <li><strong>แคว้นหริภุญชัย (จ.ลำพูน):</strong>
+                                <br>• ตามตำนานจามเทวีวงศ์ <strong>ฤๅษีวาสุเทพ</strong>สร้างเมืองหริภุญชัย แล้วอัญเชิญ <strong>"พระนางจามเทวี"</strong> พระราชธิดาเจ้าเมืองละโว้ ขึ้นมาเป็นปฐมกษัตริย์ พร้อมนำพระสงฆ์และช่างฝีมือมาด้วย
+                                <br>• รุ่งเรืองด้วย<strong>พระพุทธศาสนาเถรวาท</strong>และอักษรมอญโบราณ
+                                <br>• <strong>หลักฐานสำคัญ:</strong> <strong>พระธาตุหริภุญชัย</strong>, <strong>เจดีย์กู่กุด (วัดจามเทวี)</strong>
+                                <br>• ต่อมาใน พ.ศ. 1835 <strong>พญามังราย</strong>ได้ตีเมืองหริภุญชัยและรวบรวมเข้าเป็นส่วนหนึ่งของ<strong>อาณาจักรล้านนา</strong>
+                            </li>
+                            <li><strong>แคว้นโยนกนาคนคร / หิรัญเงินยางเชียงแสน:</strong>
+                                <br>• ตั้งอยู่บริเวณลุ่มน้ำกก-แม่น้ำโขง (<strong>จ.เชียงราย</strong>) เป็นบรรพบุรุษสายพญามังรายผู้สถาปนาอาณาจักรล้านนา</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card highlight-gold">
+                        <span class="tag tag-gold">ภาคตะวันออกเฉียงเหนือ (พุทธศตวรรษที่ 11 – 18)</span>
+                        <h3 class="card-title" style="margin-top:8px; color:#B27200;">🌾 แคว้นศรีโคตรบูร และ วัฒนธรรมขอมโบราณ</h3>
+                        <ul class="card-list">
+                            <li><strong>แคว้นศรีโคตรบูร (ลุ่มแม่น้ำโขงตอนกลาง):</strong>
+                                <br>• ตั้งอยู่บริเวณสองฝั่งแม่น้ำโขง แถบ <strong>จ.นครพนม, สกลนคร, มุกดาหาร</strong> ไปจนถึงฝั่งลาว
+                                <br>• นับถือพระพุทธศาสนาควบคู่กับความเชื่อเรื่องพญานาค
+                                <br>• <strong>หลักฐานสำคัญ:</strong> <strong>องค์พระธาตุพนม (วัดพระธาตุพนมวรมหาวิหาร จ.นครพนม)</strong> ซึ่งเป็นศูนย์รวมจิตใจของคนสองฝั่งโขง
+                            </li>
+                            <li><strong>ชุมชนวัฒนธรรมขอมโบราณ (อีสานใต้):</strong>
+                                <br>• บริเวณลุ่มแม่น้ำมูล-ชี ได้รับอิทธิพลจากอาณาจักรขอม มีการสร้างปราสาทหิน ถนนโบราณ (ราชมรรคา) และอโรคยาศาล (โรงพยาบาล)
+                                <br>• <strong>หลักฐานสำคัญ:</strong> <strong>ปราสาทหินพิมาย (จ.นครราชสีมา)</strong>, <strong>ปราสาทพนมรุ้ง (จ.บุรีรัมย์)</strong></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 9: รัฐโบราณในภาคใต้ (ลังกาสุกะ, ศรีวิชัย, ตามพรลิงค์) -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>🌊 ๗. รัฐโบราณในภาคใต้ : ศูนย์กลางการค้าทางทะเลและพุทธศาสนา</h2>
+                <span class="slide-unit-tag">หน่วยการเรียนรู้ที่ 3 | หน้า 9/12</span>
+            </div>
+            <div class="slide-body">
+                <p style="font-size:1.05rem; color:var(--text-muted);">
+                    คาบสมุทรภาคใต้ขนาบด้วยทะเลทั้งสองฝั่ง (อ่าวไทยและทะเลอันดามัน) จึงเกิดรัฐเมืองท่าที่มั่งคั่งจากการค้าทางทะเล 3 รัฐสำคัญ:
+                </p>
+
+                <div class="grid-3">
+                    <div class="info-card highlight-orange">
+                        <span class="tag tag-orange">พุทธศตวรรษที่ 7 – 14</span>
+                        <h3 class="card-title" style="margin-top:8px; color:var(--accent);">1. แคว้นลังกาสุกะ</h3>
+                        <ul class="card-list">
+                            <li><strong>ที่ตั้ง:</strong> บริเวณลุ่มแม่น้ำปัตตานี (<strong>เมืองโบราณยะรัง จ.ปัตตานี</strong> และ จ.ยะลา)</li>
+                            <li><strong>ความสำคัญ:</strong> เมืองท่าค้าขายทางทะเลที่มีความสัมพันธ์ทางการทูตกับจีน (เอกสารจีนเรียก <em>"หลั่งยะซิว"</em>)</li>
+                            <li><strong>ศาสนา:</strong> นับถือศาสนาพราหมณ์-ฮินดู (ไศวนิกาย) และพระพุทธศาสนานิกายมหายาน</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card highlight-purple">
+                        <span class="tag tag-purple">พุทธศตวรรษที่ 13 – 18</span>
+                        <h3 class="card-title" style="margin-top:8px;">2. อาณาจักรศรีวิชัย</h3>
+                        <ul class="card-list">
+                            <li><strong>ที่ตั้ง:</strong> ครอบคลุมคาบสมุทรภาคใต้ของไทย (<strong>อ.ไชยา จ.สุราษฎร์ธานี</strong>) คาบสมุทรมลายู และเกาะสุมาตรา</li>
+                            <li><strong>ความสำคัญ:</strong> มหาอำนาจการค้าทางทะเลที่ควบคุมช่องแคบมะละกาและเส้นทางข้ามคาบสมุทร</li>
+                            <li><strong>ศาสนาและหลักฐาน:</strong> ศูนย์กลาง<strong>พระพุทธศาสนานิกายมหายาน</strong> หลักฐานสำคัญคือ <strong>พระบรมธาตุไชยา</strong> และ <strong>ประติมากรรมพระโพธิสัตว์อวโลกิเตศวรสำริด</strong></li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card highlight-green">
+                        <span class="tag tag-green">พุทธศตวรรษที่ 12 – 19</span>
+                        <h3 class="card-title" style="margin-top:8px; color:var(--success);">3. แคว้นตามพรลิงค์</h3>
+                        <ul class="card-list">
+                            <li><strong>ที่ตั้ง:</strong> บริเวณ <strong>จ.นครศรีธรรมราช</strong> (ต่อมาพัฒนาเป็นอาณาจักรนครศรีธรรมราช / พระเจ้าศรีธรรมาโศกราช)</li>
+                            <li><strong>ความสำคัญ:</strong> เมืองท่าสำคัญและศูนย์กลางการเผยแผ่<strong>พระพุทธศาสนาเถรวาท ลัทธิลังกาวงศ์</strong> (ติดต่อกับศรีลังกา)</li>
+                            <li><strong>มรดกสำคัญ:</strong> <strong>พระบรมธาตุเจดีย์นครศรีธรรมราช</strong> และได้เผยแผ่พุทธศาสนาลังกาวงศ์ขึ้นไปยัง<strong>อาณาจักรสุโขทัย</strong></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-header">
+                        <span>🔗 เชื่อมโยงสู่หน่วยที่ 4 (สุโขทัย): แคว้นโบราณใดในภาคใต้ที่มีบทบาทสำคัญในการเผยแผ่ "พระพุทธศาสนาเถรวาท ลัทธิลังกาวงศ์" ไปสู่อาณาจักรสุโขทัย?</span>
+                        <button class="btn-reveal" onclick="toggleAnswer('ans5')">แสดงแนวคำตอบ</button>
+                    </div>
+                    <div id="ans5" class="answer-reveal">
+                        ✅ แนวคำตอบ: แคว้นตามพรลิงค์ (เมืองนครศรีธรรมราช) ดังปรากฏในศิลาจารึกหลักที่ 1 ของพ่อขุนรามคำแหงมหาราช ที่กล่าวถึงการนิมนต์พระเถระผู้รู้ปิฎกไตรจากเมืองนครศรีธรรมราชขึ้นมาเผยแผ่ศาสนาที่สุโขทัย
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 10: ตารางสรุปเปรียบเทียบรัฐโบราณในดินแดนไทย 4 ภูมิภาค -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>📊 ๘. ตารางสรุปเปรียบเทียบรัฐโบราณในดินแดนไทย (๔ ภูมิภาค)</h2>
+                <span class="slide-unit-tag">หน่วยการเรียนรู้ที่ 3 | หน้า 10/12</span>
+            </div>
+            <div class="slide-body">
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>ภูมิภาค</th>
+                            <th>ชื่อรัฐ / แคว้นโบราณ</th>
+                            <th>ศูนย์กลางที่ตั้ง (ปัจจุบัน)</th>
+                            <th>ศาสนา / ความเชื่อหลัก</th>
+                            <th>โบราณสถาน / โบราณวัตถุสำคัญ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>ภาคกลาง</strong></td>
+                            <td><strong>ทวารวดี</strong><br>(พ.ศ. 1000–1500)</td>
+                            <td>นครปฐม, อู่ทอง (สุพรรณบุรี), คูบัว (ราชบุรี)</td>
+                            <td>พุทธศาสนาเถรวาท</td>
+                            <td>ธรรมจักรศิลาและกวางหมอบ, พระปฐมเจดีย์, เหรียญเงินศรีทวารวดีศวรปุณยะ</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ภาคกลาง</strong></td>
+                            <td><strong>ละโว้ (ลพบุรี)</strong><br>(พ.ศ. 1100–1800)</td>
+                            <td>ลพบุรี (ลุ่มน้ำลพบุรี-ป่าสัก)</td>
+                            <td>พุทธเถรวาท, พราหมณ์-ฮินดู และพุทธมหายาน</td>
+                            <td>พระปรางค์สามยอด, ศาลพระกาฬ, ปรางค์แขก</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ภาคเหนือ</strong></td>
+                            <td><strong>หริภุญชัย</strong><br>(พ.ศ. 1200–1835)</td>
+                            <td>ลำพูน (ลุ่มแม่น้ำปิง-กวง)</td>
+                            <td>พุทธศาสนาเถรวาท (พระนางจามเทวี)</td>
+                            <td>พระธาตุหริภุญชัย, เจดีย์กู่กุด (วัดจามเทวี), จารึกภาษามอญโบราณ</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ภาคอีสาน</strong></td>
+                            <td><strong>ศรีโคตรบูร</strong> และ <strong>วัฒนธรรมขอม</strong></td>
+                            <td>นครพนม-สกลนคร (ลุ่มน้ำโขง) / นครราชสีมา-บุรีรัมย์</td>
+                            <td>พุทธศาสนา, พราหมณ์-ฮินดู และพุทธมหายาน</td>
+                            <td>พระธาตุพนม (นครพนม), ปราสาทหินพิมาย, ปราสาทพนมรุ้ง</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ภาคใต้</strong></td>
+                            <td><strong>ศรีวิชัย</strong><br>(พ.ศ. 1200–1700)</td>
+                            <td>อ.ไชยา จ.สุราษฎร์ธานี และคาบสมุทรภาคใต้</td>
+                            <td>พุทธศาสนานิกายมหายาน</td>
+                            <td>พระบรมธาตุไชยา, พระโพธิสัตว์อวโลกิเตศวรสำริด</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ภาคใต้</strong></td>
+                            <td><strong>ตามพรลิงค์</strong><br>(พ.ศ. 1100–1800)</td>
+                            <td>นครศรีธรรมราช</td>
+                            <td>พุทธศาสนาเถรวาท (ลัทธิลังกาวงศ์)</td>
+                            <td>พระบรมธาตุเจดีย์นครศรีธรรมราช</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SLIDE 11: กิจกรรมทบทวนความรู้ (Interactive Quiz 1-3) -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>🎯 กิจกรรมทบทวนความรู้ท้ายหน่วยที่ 3 (ชุดที่ 1/2)</h2>
+                <span class="slide-unit-tag">หน่วยการเรียนรู้ที่ 3 | หน้า 11/12</span>
+            </div>
+            <div class="slide-body">
+                <p style="font-size:1.05rem; color:var(--text-muted);">คลิกเลือกคำตอบที่ถูกต้องเพื่อตรวจคำตอบทันทีหน้าชั้นเรียน:</p>
+
+                <div class="grid-3">
+                    <!-- ข้อ 1 -->
+                    <div class="info-card">
+                        <div class="card-title">ข้อที่ 1</div>
+                        <p style="margin-bottom:12px; font-weight:600;">หลักฐานใดแสดงว่ามนุษย์ในดินแดนไทยก้าวเข้าสู่ "ยุคหินใหม่" และเริ่มตั้งหลักแหล่งถาวร?</p>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ก. เครื่องมือหินกรวดกะเทาะหน้าเดียว</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, true)">ข. ขวานหินขัด และภาชนะดินเผาหม้อสามขา</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ค. กลองมโหระทึก และกำไลสำริด</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ง. ศิลาจารึกอักษรปัลลวะ</div>
+                    </div>
+
+                    <!-- ข้อ 2 -->
+                    <div class="info-card">
+                        <div class="card-title">ข้อที่ 2</div>
+                        <p style="margin-bottom:12px; font-weight:600;">แหล่งโบราณคดีใดในภาคตะวันออกเฉียงเหนือที่ได้รับการขึ้นทะเบียนเป็นมรดกโลก และโดดเด่นใน "ยุคสำริด"?</p>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ก. แหล่งโบราณคดีบ้านเก่า จ.กาญจนบุรี</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ข. แหล่งโบราณคดีถ้ำผีแมน จ.แม่ฮ่องสอน</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, true)">ค. แหล่งโบราณคดีบ้านเชียง จ.อุดรธานี</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ง. แหล่งโบราณคดีโคกพนมดี จ.ชลบุรี</div>
+                    </div>
+
+                    <!-- ข้อ 3 -->
+                    <div class="info-card">
+                        <div class="card-title">ข้อที่ 3</div>
+                        <p style="margin-bottom:12px; font-weight:600;">โบราณวัตถุ "ธรรมจักรศิลาและกวางหมอบ" รวมถึงเหรียญเงินจารึกว่า "ศรีทวารวดีศวรปุณยะ" เป็นหลักฐานของรัฐโบราณใด?</p>
+                        <div class="quiz-option" onclick="checkQuiz(this, true)">ก. อาณาจักรทวารวดี (ภาคกลาง)</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ข. แคว้นหริภุญชัย (ภาคเหนือ)</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ค. อาณาจักรศรีวิชัย (ภาคใต้)</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ง. แคว้นศรีโคตรบูร (ภาคอีสาน)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 12: กิจกรรมทบทวนความรู้ (Interactive Quiz 4-5) & เชื่อมโยงใบงาน -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>🎯 กิจกรรมทบทวนความรู้ท้ายหน่วยที่ 3 (ชุดที่ 2/2) และสรุป</h2>
+                <span class="slide-unit-tag">หน่วยการเรียนรู้ที่ 3 | หน้า 12/12</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <!-- ข้อ 4 -->
+                    <div class="info-card">
+                        <div class="card-title">ข้อที่ 4</div>
+                        <p style="margin-bottom:12px; font-weight:600;">"พระนางจามเทวี" ทรงได้รับอัญเชิญจากเมืองละโว้ ขึ้นไปครองราชย์เป็นปฐมกษัตริย์ของแคว้นโบราณใดในภาคเหนือ?</p>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ก. แคว้นโยนกนาคนคร (จ.เชียงราย)</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, true)">ข. แคว้นหริภุญชัย (จ.ลำพูน)</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ค. แคว้นศรีโคตรบูร (จ.นครพนม)</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ง. แคว้นตามพรลิงค์ (จ.นครศรีธรรมราช)</div>
+                    </div>
+
+                    <!-- ข้อ 5 -->
+                    <div class="info-card">
+                        <div class="card-title">ข้อที่ 5</div>
+                        <p style="margin-bottom:12px; font-weight:600;">"พระบรมธาตุไชยา" และ "พระโพธิสัตว์อวโลกิเตศวรสำริด" สะท้อนความรุ่งเรืองของพระพุทธศาสนานิกายมหายานของอาณาจักรใด?</p>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ก. แคว้นละโว้</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ข. อาณาจักรทวารวดี</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, true)">ค. อาณาจักรศรีวิชัย</div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">ง. แคว้นหริภุญชัย</div>
+                    </div>
+                </div>
+
+                <div class="info-card highlight-purple" style="background:linear-gradient(90deg, #F3E5F5 0%, #FFF 100%); margin-top:auto;">
+                    <h3 class="card-title" style="font-size:1.3rem;">📝 กิจกรรมต่อเนื่องท้ายคาบเรียน: ใบงานหน่วยการเรียนรู้ที่ 3</h3>
+                    <p style="font-size:1.05rem; line-height:1.6;">
+                        ให้นักเรียนทำ <strong>ใบงานที่ 3.1 (สมัยก่อนประวัติศาสตร์ในดินแดนไทย)</strong> และ <strong>ใบงานที่ 3.2 (พัฒนาการของรัฐโบราณในดินแดนไทย 4 ภูมิภาค)</strong> ซึ่งประกอบด้วย กิจกรรมเติมคำสำคัญ จับคู่หลักฐานทางประวัติศาสตร์ วิเคราะห์กรณีศึกษา และสรุปผังความคิด (Mind Mapping)
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-bar">
+        <div style="font-family:'Prompt',sans-serif; font-size:0.95rem;">
+            ใช้ปุ่มลูกศร <strong>⬅️ ➡️ บนคีย์บอร์ด</strong> เพื่อเลื่อนสไลด์ได้ทันที
+        </div>
+        <div class="progress-dots" id="dotsContainer"></div>
+        <div class="nav-buttons">
+            <button class="btn-nav" id="prevBtn" onclick="changeSlide(-1)">⬅️ ก่อนหน้า</button>
+            <span id="slideCounter" style="font-family:'Prompt',sans-serif; font-weight:700; min-width:80px; text-align:center;">1 / 12</span>
+            <button class="btn-nav" id="nextBtn" onclick="changeSlide(1)">ถัดไป ➡️</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        const dotsContainer = document.getElementById('dotsContainer');
+        const slideCounter = document.getElementById('slideCounter');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        // Create dots
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'dot' + (i === 0 ? ' active' : '');
+            dot.onclick = () => goToSlide(i);
+            dotsContainer.appendChild(dot);
+        }
+
+        function updateUI() {
+            slides.forEach((s, idx) => {
+                s.classList.toggle('active', idx === currentSlide);
+            });
+            const dots = document.querySelectorAll('.dot');
+            dots.forEach((d, idx) => {
+                d.classList.toggle('active', idx === currentSlide);
+            });
+            slideCounter.textContent = `${currentSlide + 1} / ${totalSlides}`;
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === totalSlides - 1;
+        }
+
+        function changeSlide(dir) {
+            const next = currentSlide + dir;
+            if (next >= 0 && next < totalSlides) {
+                currentSlide = next;
+                updateUI();
+            }
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateUI();
+        }
+
+        function toggleAnswer(id) {
+            const el = document.getElementById(id);
+            if (el.style.display === 'block') {
+                el.style.display = 'none';
+            } else {
+                el.style.display = 'block';
+            }
+        }
+
+        function checkQuiz(el, isCorrect) {
+            const parent = el.parentElement;
+            const options = parent.querySelectorAll('.quiz-option');
+            options.forEach(opt => {
+                opt.classList.remove('correct', 'wrong');
+            });
+            if (isCorrect) {
+                el.classList.add('correct');
+                if (!el.textContent.includes('✅')) {
+                    el.innerHTML += ' <span>✅ ถูกต้อง!</span>';
+                }
+            } else {
+                el.classList.add('wrong');
+                if (!el.textContent.includes('❌')) {
+                    el.innerHTML += ' <span>❌ ลองใหม่อีกครั้ง</span>';
+                }
+            }
+        }
+
+        function toggleFullScreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else if (document.exitFullscreen) {
+                document.exitFullscreen();
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                changeSlide(1);
+            } else if (e.key === 'ArrowLeft') {
+                changeSlide(-1);
+            }
+        });
+
+        updateUI();
+    </script>
+</body>
+</html>

@@ -493,7 +493,7 @@ a {
 
 .featured-onet-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 10px;
   flex: 1;
 }
@@ -502,7 +502,7 @@ a {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 12px 13px;
+  padding: 10px 13px;
   border-radius: 18px;
   border: 2.5px solid var(--navy);
   box-shadow: 0 4px 0 var(--navy);
@@ -567,6 +567,14 @@ a {
 
 .onet-game .onet-icon-box {
   color: #7c3aed;
+}
+
+.onet-history {
+  background: linear-gradient(135deg, #fef3c7 0%, #ffedd5 100%);
+}
+
+.onet-history .onet-icon-box {
+  color: #b45309;
 }
 
 .onet-icon-box {

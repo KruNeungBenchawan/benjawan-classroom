@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ใบงานและเฉลย วิชาประวัติศาสตร์ ม.3 - สมัยรัตนโกสินทร์ตอนต้น (สำนักพิมพ์ พว.)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Prompt:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00695C;
+            --primary-light: #E0F2F1;
+            --accent: #D84315;
+            --answer-red: #D32F2F;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background: #D8E6E4;
+            color: #1A1A1A;
+            padding: 75px 0 40px;
+            line-height: 1.5;
+        }
+
+        .toolbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            background: #00332C;
+            color: white;
+            padding: 12px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 999;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+        }
+        .toolbar-title { font-family: 'Prompt', sans-serif; font-size: 1rem; display: flex; align-items: center; gap: 10px; }
+        .toolbar-actions { display: flex; gap: 10px; }
+        .btn-tool { padding: 8px 16px; border-radius: 8px; border: none; font-family: 'Prompt', sans-serif; font-weight: 600; font-size: 0.9rem; cursor: pointer; }
+        .btn-student { background: #FFFFFF; color: #00332C; }
+        .btn-teacher { background: #E53935; color: white; }
+        .btn-print { background: #1976D2; color: white; }
+
+        .a4-page {
+            width: 210mm;
+            min-height: 297mm;
+            background: white;
+            margin: 0 auto 24px;
+            padding: 13mm 15mm;
+            box-shadow: 0 8px 28px rgba(0,0,0,0.18);
+            border-radius: 4px;
+            position: relative;
+        }
+
+        .ws-header { border: 2px solid var(--primary); border-radius: 10px; overflow: hidden; margin-bottom: 11px; }
+        .ws-header-top { background: var(--primary); color: white; padding: 8px 16px; display: flex; justify-content: space-between; align-items: center; font-family: 'Prompt', sans-serif; }
+        .ws-header-top h1 { font-size: 1.15rem; font-weight: 700; }
+        .ws-badge { background: #E65100; color: white; padding: 2px 10px; border-radius: 14px; font-size: 0.82rem; font-weight: 600; }
+        .ws-student-info { padding: 7px 16px; background: #F4FBF9; font-size: 0.9rem; display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; }
+
+        .ws-section { margin-bottom: 12px; }
+        .section-title { font-family: 'Prompt', sans-serif; font-size: 0.94rem; font-weight: 700; color: var(--primary); background: var(--primary-light); padding: 5px 12px; border-left: 5px solid var(--primary); border-radius: 4px; margin-bottom: 7px; }
+
+        .ws-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+        .ws-table th, .ws-table td { border: 1px solid #9E9E9E; padding: 5px 8px; vertical-align: top; }
+        .ws-table th { background: var(--primary-light); color: #004D40; font-family: 'Prompt', sans-serif; font-weight: 600; text-align: center; }
+
+        .matching-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 12px; font-size: 0.86rem; }
+        .match-box { border: 1px solid #B0BEC5; border-radius: 8px; padding: 7px 11px; background: #FAFAFA; }
+        .match-item { margin-bottom: 4px; }
+
+        .fill-blank { display: inline-block; min-width: 105px; border-bottom: 1px dotted #333; text-align: center; padding: 0 5px; }
+        .ans-text { color: transparent; user-select: none; font-weight: 700; }
+        body.teacher-mode .ans-text { color: var(--answer-red); user-select: auto; }
+
+        .ans-block { border-bottom: 1px dotted #555; min-height: 21px; padding: 1px 6px; font-size: 0.85rem; color: transparent; }
+        body.teacher-mode .ans-block { color: var(--answer-red); font-weight: 600; }
+
+        .mindmap-container { border: 1.5px dashed var(--primary); border-radius: 12px; padding: 10px; background: #F8FEFD; }
+        .mindmap-center { background: var(--primary); color: white; font-family: 'Prompt', sans-serif; font-weight: 700; text-align: center; padding: 5px 16px; border-radius: 20px; width: 350px; margin: 3px auto 8px; font-size: 0.92rem; }
+        .mindmap-branches { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+        .mm-node { border: 1.5px solid #00897B; border-radius: 8px; padding: 6px 10px; background: white; font-size: 0.84rem; }
+        .mm-node-title { font-family: 'Prompt', sans-serif; font-weight: 700; color: var(--primary); border-bottom: 1px solid #E0E0E0; padding-bottom: 2px; margin-bottom: 4px; display: flex; justify-content: space-between; }
+
+        .evidence-card { border: 1px solid #BCAAA4; background: #FFFDF9; border-radius: 8px; padding: 8px 12px; font-size: 0.86rem; }
+        .teacher-watermark { display: none; background: #FFEBEE; color: #C62828; border: 1.5px solid #EF5350; padding: 3px 10px; border-radius: 6px; font-family: 'Prompt', sans-serif; font-weight: 700; font-size: 0.82rem; }
+        body.teacher-mode .teacher-watermark { display: inline-block; }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .toolbar { display: none !important; }
+            .a4-page { box-shadow: none; margin: 0; width: 100%; page-break-after: always; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="toolbar">
+        <div class="toolbar-title">
+            <span>📄 ใบงานประวัติศาสตร์ ม.3 (พว.) — สมัยรัตนโกสินทร์ตอนต้น ร.1–ร.3 (รวม 2 หน้า)</span>
+            <span class="teacher-watermark">🔑 โหมดครูผู้สอน (แสดงเฉลย)</span>
+        </div>
+        <div class="toolbar-actions">
+            <button class="btn-tool btn-student" onclick="setMode(false)">📝 โหมดใบงานนักเรียน (ซ่อนเฉลย)</button>
+            <button class="btn-tool btn-teacher" onclick="setMode(true)">🔑 โหมดเฉลยสำหรับครู (แสดงคำตอบสีแดง)</button>
+            <button class="btn-tool btn-print" onclick="window.print()">🖨️ สั่งพิมพ์ขนาด A4 / บันทึก PDF</button>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         PAGE 1: ใบงานที่ 2.1 เรื่อง การสถาปนาและพัฒนาการสมัยรัตนโกสินทร์ตอนต้น (ร.1 - ร.3)
+         ===================================================================== -->
+    <div class="a4-page">
+        <div class="ws-header">
+            <div class="ws-header-top">
+                <h1>ใบงานที่ ๒.๑ เรื่อง การสถาปนาและพัฒนาการสมัยรัตนโกสินทร์ตอนต้น (ร.๑ – ร.๓)</h1>
+                <div>
+                    <span class="ws-badge">วิชาประวัติศาสตร์ ม.๓ (พว.)</span>
+                    <span class="teacher-watermark" style="margin-left:6px;">ฉบับเฉลยครู</span>
+                </div>
+            </div>
+            <div class="ws-student-info">
+                <span><strong>ชื่อ-นามสกุล:</strong> ............................................................................................</span>
+                <span><strong>ชั้น:</strong> ม.๓ / .........</span>
+                <span><strong>เลขที่:</strong> .........</span>
+                <span><strong>คะแนนที่ได้:</strong> ........ / ๒๐ คะแนน</span>
+            </div>
+        </div>
+
+        <!-- ตอนที่ 1 -->
+        <div class="ws-section">
+            <div class="section-title">ตอนที่ ๑ : เติมข้อมูลเกี่ยวกับการสถาปนากรุงรัตนโกสินทร์และการเมืองการปกครอง (๖ คะแนน)</div>
+            <div class="evidence-card" style="line-height:1.75;">
+                ๑. พระบาทสมเด็จพระพุทธยอดฟ้าจุฬาโลกมหาราช (รัชกาลที่ ๑) ทรงสถาปนากรุงรัตนโกสินทร์เมื่อวันที่ <span class="fill-blank"><span class="ans-text">๖ เมษายน พ.ศ. ๒๓๒๕</span></span> และทรงอัญเชิญพระพุทธรูปคู่บ้านคู่เมืองคือ <span class="fill-blank"><span class="ans-text">พระแก้วมรกต</span></span> มาประดิษฐาน ณ วัดพระศรีรัตนศาสดาราม<br>
+                ๒. เหตุผลสำคัญที่ทรงย้ายราชธานีจากฝั่งธนบุรีมาอยู่ฝั่งพระนคร (ตะวันออก) เพราะพระราชวังเดิมคับแคบขนาบด้วยวัด ๒ แห่ง คือ <span class="fill-blank"><span class="ans-text">วัดแจ้ง (วัดอรุณฯ) และวัดท้ายตลาด</span></span> อีกทั้งฝั่งพระนครมีชัยภูมิเป็นแหลมยื่นที่ขยายเมืองออกไปได้กว้างขวาง<br>
+                ๓. ในปี พ.ศ. ๒๓๔๗ รัชกาลที่ ๑ โปรดให้ชำระกฎหมายให้ยุติธรรม (จากคดีอำแดงป้อม) เรียกว่า <span class="fill-blank"><span class="ans-text">กฎหมายตราสามดวง</span></span> ซึ่งประทับตราประจำตำแหน่งเสนาบดี ๓ ดวง ได้แก่ <span class="fill-blank"><span class="ans-text">ตราพระราชสีห์, ตราคชสีห์ และตราบัวแก้ว</span></span>
+            </div>
+        </div>
+
+        <!-- ตอนที่ 2 -->
+        <div class="ws-section">
+            <div class="section-title">ตอนที่ ๒ : ตารางเปรียบเทียบพัฒนาการสำคัญในสมัยรัชกาลที่ ๑ – รัชกาลที่ ๓ (๙ คะแนน)</div>
+            <table class="ws-table">
+                <thead>
+                    <tr>
+                        <th style="width:20%;">รัชกาล</th>
+                        <th style="width:40%;">เหตุการณ์ด้านความมั่นคง / การเมือง</th>
+                        <th style="width:40%;">พัฒนาการด้านเศรษฐกิจ / การทูต</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>๑. รัชกาลที่ ๑</strong><br><small>(พ.ศ. ๒๓๒๕ – ๒๓๕๒)</small></td>
+                        <td>
+                            <div class="ans-block">ชนะสงครามเก้าทัพ (พ.ศ. ๒๓๒๘) ที่ทุ่งลาดหญ้า จ.กาญจนบุรี, วีรกรรมท้าวเทพกระษัตรี-ท้าวศรีสุนทร ที่เมืองถลาง และชำระกฎหมายตราสามดวง</div>
+                        </td>
+                        <td>
+                            <div class="ans-block">ฟื้นฟูการค้าสำเภากับจีนผ่านพระคลังสินค้า และลดเวลาเข้าเวรของไพร่จากปีละ ๖ เดือน เหลือปีละ ๔ เดือน</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>๒. รัชกาลที่ ๒</strong><br><small>(พ.ศ. ๒๓๕๒ – ๒๓๖๗)</small></td>
+                        <td>
+                            <div class="ans-block">ตราพระราชกำหนดห้ามสูบและค้าฝิ่น (พ.ศ. ๒๓๕๔) และลดเวลาเข้าเวรของไพร่เหลือปีละ ๓ เดือน (เข้า ๑ เดือน ออก ๓ เดือน)</div>
+                        </td>
+                        <td>
+                            <div class="ans-block">โปรตุเกสส่งทูต (คาร์ลอส มานูเอล ดา ซิลเวรา) มาทำสัญญาการค้าและตั้งสถานกงสุลตะวันตกแห่งแรก (พ.ศ. ๒๓๖๑)</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>๓. รัชกาลที่ ๓</strong><br><small>(พ.ศ. ๒๓๖๗ – ๒๓๙๔)</small></td>
+                        <td>
+                            <div class="ans-block">ปราบกบฏเจ้าอนุวงศ์ (วีรกรรมท้าวสุรนารี ทุ่งสัมฤทธิ์ พ.ศ. ๒๓๖๙) และทำสงครามอานามสยามยุทธกับญวน ๑๔ ปี</div>
+                        </td>
+                        <td>
+                            <div class="ans-block">ใช้ระบบ "เจ้าภาษีนายอากร" ประมูลเก็บภาษี ๓๘ อย่าง, เก็บสะสม "เงินถุงแดง" และทำ "สนธิสัญญาเบอร์นี" กับอังกฤษ (พ.ศ. ๒๓๖๙)</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ตอนที่ 3 -->
+        <div class="ws-section">
+            <div class="section-title">ตอนที่ ๓ : วิเคราะห์หลักฐานทางประวัติศาสตร์ เรื่อง "เงินถุงแดง" และระบบเจ้าภาษีนายอากร (๕ คะแนน)</div>
+            <div class="evidence-card">
+                <p><strong>คำถาม:</strong> เพราะเหตุใดรัชกาลที่ ๓ จึงได้รับพระราชสมญานามว่า "เจ้าสัว" และเงินกำไรจากการค้าสำเภาที่ทรงเก็บไว้ใน "ถุงแดง" มีความสำคัญต่อการรักษาเอกราชของไทยในสมัยรัชกาลที่ ๕ อย่างไร?</p>
+                <div class="ans-block">๑) ทรงเชี่ยวชาญการแต่งเรือสำเภาไปค้าขายกับจีนมาตั้งแต่ยังทรงเป็นกรมหมื่นเจษฎาบดินทร์ และทรงปฏิรูปภาษีด้วยระบบเจ้าภาษีนายอากรจนท้องพระคลังมั่งคั่ง</div>
+                <div class="ans-block">๒) เงินถุงแดงถูกนำมาใช้เป็นค่าชดเชยให้แก่ฝรั่งเศสในวิกฤตการณ์ ร.ศ. ๑๑๒ (พ.ศ. ๒๔๓๖) สมัยรัชกาลที่ ๕ ช่วยไถ่บ้านไถ่เมืองและรักษาเอกราชของไทยไว้ได้</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         PAGE 2: ใบงานที่ 2.2 เรื่อง ศาสนา ศิลปวัฒนธรรม และภูมิปัญญาสมัยรัตนโกสินทร์ตอนต้น
+         ===================================================================== -->
+    <div class="a4-page">
+        <div class="ws-header">
+            <div class="ws-header-top">
+                <h1>ใบงานที่ ๒.๒ เรื่อง ศาสนา ศิลปวัฒนธรรม และภูมิปัญญาสมัยรัตนโกสินทร์ตอนต้น</h1>
+                <div>
+                    <span class="ws-badge">วิชาประวัติศาสตร์ ม.๓ (พว.)</span>
+                    <span class="teacher-watermark" style="margin-left:6px;">ฉบับเฉลยครู</span>
+                </div>
+            </div>
+            <div class="ws-student-info">
+                <span><strong>ชื่อ-นามสกุล:</strong> ............................................................................................</span>
+                <span><strong>ชั้น:</strong> ม.๓ / .........</span>
+                <span><strong>เลขที่:</strong> .........</span>
+                <span><strong>คะแนนที่ได้:</strong> ........ / ๒๐ คะแนน</span>
+            </div>
+        </div>
+
+        <!-- ตอนที่ 1: ผังความคิด Mind Map -->
+        <div class="ws-section">
+            <div class="section-title">ตอนที่ ๑ : สรุปผังความคิด (Mind Mapping) ศาสนาและภูมิปัญญาสมัยรัตนโกสินทร์ตอนต้น (๑๒ คะแนน)</div>
+            <div class="mindmap-container">
+                <div class="mindmap-center">✨ ศาสนา วรรณกรรม และศิลปกรรมสมัยรัตนโกสินทร์ตอนต้น</div>
+                <div class="mindmap-branches">
+                    <div class="mm-node">
+                        <div class="mm-node-title"><span>๑. ด้านพระพุทธศาสนาและการศึกษา</span><span>(๓ คะแนน)</span></div>
+                        <div>• <strong>การสังคายนาพระไตรปิฎกครั้งที่ ๙ (สมัย ร.๑):</strong></div>
+                        <div>&nbsp;&nbsp;จัดขึ้น ณ วัด <span class="fill-blank"><span class="ans-text">วัดมหาธาตุยุวราชรังสฤษฎิ์</span></span></div>
+                        <div>• <strong>กำเนิดนิกายสงฆ์ใหม่สมัย ร.๓:</strong> <span class="fill-blank"><span class="ans-text">ธรรมยุติกนิกาย (โดยเจ้าฟ้ามงกุฎ)</span></span></div>
+                        <div>• <strong>มหาวิทยาลัยแห่งแรกของประชาชน (จารึกตำรา):</strong></div>
+                        <div>&nbsp;&nbsp;อยู่ที่วัด <span class="fill-blank"><span class="ans-text">วัดพระเชตุพนวิมลมังคลาราม (วัดโพธิ์)</span></span></div>
+                    </div>
+
+                    <div class="mm-node">
+                        <div class="mm-node-title"><span>๒. ด้านวรรณกรรมยุคทอง</span><span>(๓ คะแนน)</span></div>
+                        <div>• <strong>วรรณกรรมแปลพงศาวดารจีน-มอญสมัย ร.๑:</strong></div>
+                        <div>&nbsp;&nbsp;ได้แก่เรื่อง <span class="fill-blank"><span class="ans-text">สามก๊ก และ ราชาธิราช</span></span></div>
+                        <div>• <strong>ยุคทองของวรรณคดีละครรำ (สมัย ร.๒):</strong></div>
+                        <div>&nbsp;&nbsp;บทละครเรื่อง <span class="fill-blank"><span class="ans-text">อิเหนา, รามเกียรติ์, สังข์ทอง</span></span></div>
+                        <div>• <strong>กวีเอกของโลกผู้แต่งเรื่อง พระอภัยมณี:</strong> <span class="fill-blank"><span class="ans-text">สุนทรภู่ (พระสุนทรโวหาร)</span></span></div>
+                    </div>
+
+                    <div class="mm-node">
+                        <div class="mm-node-title"><span>๓. ด้านสถาปัตยกรรมและพุทธศิลป์</span><span>(๓ คะแนน)</span></div>
+                        <div>• <strong>พระปรางค์ประดับกระเบื้องเคลือบสีริมแม่น้ำเจ้าพระยา:</strong></div>
+                        <div>&nbsp;&nbsp;คือ <span class="fill-blank"><span class="ans-text">พระปรางค์วัดอรุณราชวราราม</span></span></div>
+                        <div>• <strong>ศิลปะแบบพระราชนิยม ร.๓ (ผสมศิลปะจีน ไม่มีช่อฟ้า):</strong></div>
+                        <div>&nbsp;&nbsp;เช่น วัด <span class="fill-blank"><span class="ans-text">วัดราชโอรสาราม / วัดเทพธิดาราม</span></span></div>
+                        <div>• <strong>พระพุทธรูปหล่อจากสุโขทัยที่วิหารวัดสุทัศน์:</strong> <span class="fill-blank"><span class="ans-text">พระศรีศากยมุนี</span></span></div>
+                    </div>
+
+                    <div class="mm-node">
+                        <div class="mm-node-title"><span>๔. การรับวิทยาการตะวันตกระยะแรก</span><span>(๓ คะแนน)</span></div>
+                        <div>• <strong>หมอสอนศาสนาชาวอเมริกันคนสำคัญสมัย ร.๓:</strong></div>
+                        <div>&nbsp;&nbsp;คือ <span class="fill-blank"><span class="ans-text">หมอบรัดเลย์ (แดน บีช บรัดเลย์)</span></span></div>
+                        <div>• <strong>วิทยาการทางการแพทย์ที่นำเข้ามา:</strong></div>
+                        <div>&nbsp;&nbsp;<span class="fill-blank"><span class="ans-text">การปลูกฝีป้องกันไข้ทรพิษ และการผ่าตัด</span></span></div>
+                        <div>• <strong>วิทยาการด้านสื่อสิ่งพิมพ์:</strong> <span class="fill-blank"><span class="ans-text">แท่นพิมพ์ภาษาไทย (หนังสือพิมพ์บางกอกรีคอร์เดอร์)</span></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ตอนที่ 2: จับคู่บุคคลสำคัญสมัยรัตนโกสินทร์ตอนต้น -->
+        <div class="ws-section">
+            <div class="section-title">ตอนที่ ๒ : นำตัวอักษร ก – จ มาเติมหน้าชื่อบุคคลสำคัญสมัยรัตนโกสินทร์ตอนต้นให้สัมพันธ์กัน (๕ คะแนน)</div>
+            <div class="matching-grid">
+                <div class="match-box">
+                    <div class="match-item">.......... <strong>๑. สมเด็จพระบวรราชเจ้ามหาสุรสิงหนาท</strong> <span class="ans-text">[ ค ]</span></div>
+                    <div class="match-item">.......... <strong>๒. ท้าวเทพกระษัตรี และ ท้าวศรีสุนทร</strong> <span class="ans-text">[ ก ]</span></div>
+                    <div class="match-item">.......... <strong>๓. ท้าวสุรนารี (คุณหญิงโม)</strong> <span class="ans-text">[ ง ]</span></div>
+                    <div class="match-item">.......... <strong>๔. เจ้าพระยาพระคลัง (หน)</strong> <span class="ans-text">[ จ ]</span></div>
+                    <div class="match-item">.......... <strong>๕. เจ้าพระยาบดินทรเดชา (สิงห์ สิงหเสนี)</strong> <span class="ans-text">[ ข ]</span></div>
+                </div>
+                <div class="match-box" style="background:#E0F2F1;">
+                    <div class="match-item"><strong>ก.</strong> วีรสตรีสองพี่น้องผู้ป้องกันเมืองถลางจากกองทัพพม่า พ.ศ. ๒๓๒๘</div>
+                    <div class="match-item"><strong>ข.</strong> แม่ทัพใหญ่ในสมัย ร.๓ ผู้นำทัพทำสงครามอานามสยามยุทธกับญวน</div>
+                    <div class="match-item"><strong>ค.</strong> กรมพระราชวังบวรสถานมงคล (วังหน้า) ผู้บัญชาการรบที่ทุ่งลาดหญ้าในสงครามเก้าทัพ</div>
+                    <div class="match-item"><strong>ง.</strong> วีรสตรีเมืองนครราชสีมาผู้วางอุบายต่อสู้กองทัพเจ้าอนุวงศ์ที่ทุ่งสัมฤทธิ์</div>
+                    <div class="match-item"><strong>จ.</strong> กวีและเสนาบดีสมัย ร.๑ ผู้อำนวยการแปลหนังสือเรื่อง สามก๊ก และ ราชาธิราช</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ตอนที่ 3: คำถามคิดวิเคราะห์ -->
+        <div class="ws-section">
+            <div class="section-title">ตอนที่ ๓ : วิเคราะห์ความสำคัญของ "สนธิสัญญาเบอร์นี (พ.ศ. ๒๓๖๙)" (๓ คะแนน)</div>
+            <div class="evidence-card">
+                <p><strong>คำถาม:</strong> สนธิสัญญาเบอร์นีที่ไทยทำกับอังกฤษในสมัยรัชกาลที่ ๓ ส่งผลต่อการเปลี่ยนแปลงรูปแบบการค้าของไทยอย่างไร?</p>
+                <div class="ans-block">เป็นสนธิสัญญาการค้าฉบับแรกที่ไทยทำกับชาติตะวันตกในสมัยรัตนโกสินทร์ ทำให้ไทยเปลี่ยนจากการผูกขาดสินค้าโดยพระคลังสินค้า มาเป็นการเก็บภาษีปากเรือในอัตราเดียวที่แน่นอน (วาละ ๑,๗๐๐ บาท) และเปิดโอกาสให้พ่อค้าเอกชนค้าขายได้เสรีมากขึ้น</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function setMode(isTeacher) {
+            if (isTeacher) document.body.classList.add('teacher-mode');
+            else document.body.classList.remove('teacher-mode');
+        }
+    </script>
+</body>
+</html>

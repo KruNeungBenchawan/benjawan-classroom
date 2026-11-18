@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <title>ห้องเรียนครูเบ็ญจวรรณ | คลังสื่อการสอนและเอกสารออนไลน์</title>
   <link rel="icon" type="image/png" href="assets/logo-kruneung.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -11,7 +14,7 @@
     href="https://fonts.googleapis.com/css2?family=Mali:wght@500;600;700&family=Sarabun:wght@400;500;600;700&display=swap"
     rel="stylesheet"
   />
-  <link rel="stylesheet" href="styles.css?v=11" />
+  <link rel="stylesheet" href="styles.css?v=12" />
 </head>
 <body>
   <!-- Teacher Mode Toolbar (visible only when Teacher Mode is active) -->
@@ -129,6 +132,16 @@
         </nav>
 
         <div class="sidebar-footer">
+          <button id="refreshPageBtn" class="nav-item" type="button" title="รีเฟรชโหลดข้อมูลล่าสุด">
+            <span class="nav-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="20" height="20">
+                <polyline points="23 4 23 10 17 10" />
+                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
+              </svg>
+            </span>
+            <span class="nav-label">รีเฟรช</span>
+          </button>
+
           <button id="teacherModeBtn" class="nav-item nav-teacher-btn" type="button">
             <span class="nav-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22">
@@ -560,7 +573,7 @@
   <!-- Toast Notification -->
   <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
 
-  <script src="data.js?v=11"></script>
-  <script src="app.js?v=11"></script>
+  <script src="data.js?v=12"></script>
+  <script src="app.js?v=12"></script>
 </body>
 </html>

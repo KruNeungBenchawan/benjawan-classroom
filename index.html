@@ -10,7 +10,7 @@
     href="https://fonts.googleapis.com/css2?family=Mali:wght@500;600;700&family=Sarabun:wght@400;500;600;700&display=swap"
     rel="stylesheet"
   />
-  <link rel="stylesheet" href="styles.css?v=6" />
+  <link rel="stylesheet" href="styles.css?v=7" />
 </head>
 <body>
   <!-- Teacher Mode Toolbar (visible only when Teacher Mode is active) -->
@@ -93,6 +93,18 @@
               </svg>
             </span>
             <span class="nav-label">สื่อ / วิดีโอ</span>
+          </button>
+
+          <button class="nav-item" type="button" data-nav="resources" data-cat="games">
+            <span class="nav-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+                <rect x="2" y="6" width="20" height="12" rx="4" />
+                <path d="M6 12h4M8 10v4" />
+                <circle cx="15" cy="11" r="1" fill="currentColor" />
+                <circle cx="17" cy="13" r="1" fill="currentColor" />
+              </svg>
+            </span>
+            <span class="nav-label">เกมการเรียนรู้</span>
           </button>
 
           <button class="nav-item" type="button" data-nav="resources" data-cat="exams">
@@ -264,6 +276,25 @@
                   <div class="onet-info">
                     <span class="onet-level-badge">ระดับชั้น ม.3</span>
                     <h3>O-NET ภาษาไทย ม.3</h3>
+                  </div>
+                  <span class="onet-arrow" aria-hidden="true">→</span>
+                </a>
+
+                <a
+                  href="kham-khlong-chong/index.html"
+                  class="onet-banner-card onet-game"
+                >
+                  <div class="onet-icon-box" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                      <rect x="2" y="6" width="20" height="12" rx="4" />
+                      <path d="M6 12h4M8 10v4" />
+                      <circle cx="15" cy="11" r="1" fill="currentColor" />
+                      <circle cx="17" cy="13" r="1" fill="currentColor" />
+                    </svg>
+                  </div>
+                  <div class="onet-info">
+                    <span class="onet-level-badge">เกม + บทเรียน</span>
+                    <h3>คำคล้องจองหรรษา</h3>
                   </div>
                   <span class="onet-arrow" aria-hidden="true">→</span>
                 </a>
@@ -512,7 +543,7 @@
   <!-- Toast Notification -->
   <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
 
-  <script src="data.js?v=6"></script>
-  <script src="app.js?v=6"></script>
+  <script src="data.js?v=7"></script>
+  <script src="app.js?v=7"></script>
 </body>
 </html>

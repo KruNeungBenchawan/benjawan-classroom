@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>คลังสื่อการสอนประวัติศาสตร์ ม.1 - ม.3 ครบทั้ง 15 หน่วย (อ้างอิงหนังสือเรียน พว.)</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --text: #1e293b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Sarabun', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 32px 20px 60px;
+  }
+  .container { max-width: 1240px; margin: 0 auto; }
+  header {
+    background: linear-gradient(135deg, #1e1b4b 0%, #4c1d95 50%, #7c2d12 100%);
+    color: #fff;
+    padding: 36px 40px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(30, 27, 75, 0.18);
+    margin-bottom: 36px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  header .badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.35);
+    padding: 5px 14px;
+    border-radius: 99px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  header h1 { font-size: 2rem; font-weight: 800; margin-bottom: 6px; }
+  header p { font-size: 1rem; opacity: 0.92; }
+  .app-cta {
+    background: #fbbf24;
+    color: #1e1b4b;
+    text-decoration: none;
+    padding: 14px 24px;
+    border-radius: 14px;
+    font-weight: 800;
+    font-size: 1.05rem;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  }
+  .grade-section { margin-bottom: 44px; }
+  .grade-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+    padding: 14px 22px;
+    border-radius: 14px;
+    color: #fff;
+    margin-bottom: 20px;
+  }
+  .grade-m1 { background: linear-gradient(90deg, #581c87, #7e22ce); }
+  .grade-m2 { background: linear-gradient(90deg, #7f1d1d, #b91c1c); }
+  .grade-m3 { background: linear-gradient(90deg, #064e3b, #047857); }
+  .grade-header h2 { font-size: 1.4rem; font-weight: 700; }
+  .unit-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 20px;
+  }
+  .unit-card {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 22px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .unit-card h3 { font-size: 1.15rem; font-weight: 800; margin-bottom: 6px; color: #0f172a; }
+  .unit-card .desc { font-size: 0.88rem; color: #475569; margin-bottom: 16px; }
+  .btn-group { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 12px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.84rem;
+    transition: transform 0.15s ease;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-slide-html { background: #ede9fe; color: #5b21b6; border: 1px solid #c4b5fd; }
+  .btn-ws-html { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+  .btn-pptx { background: #ffedd5; color: #c2410c; border: 1px solid #fed7aa; }
+  .btn-docx { background: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; }
+  .btn-ans { background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; grid-column: span 2; justify-content: center; }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div>
+      <div class="badge">หลักสูตรแกนกลางการศึกษาขั้นพื้นฐาน พ.ศ. ๒๕๕๑ • สำนักพิมพ์ พว. (ครบ 15 หน่วยการเรียนรู้)</div>
+      <h1>คลังสื่อการสอนและใบงานวิชาประวัติศาสตร์ (ม.1 – ม.3)</h1>
+      <p>รวมสไลด์ Interactive, ใบงาน A4 พร้อมปุ่มสลับเฉลย, ไฟล์ PowerPoint (.pptx) และไฟล์ Word (.docx) ครบทุกหน่วยรวม 75 ไฟล์</p>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+      <a class="app-cta" href="../index.html" style="background:#ffffff;color:#1e1b4b;">🏠 หน้าหลักห้องเรียนครูเบ็ญจวรรณ</a>
+      <a class="app-cta" href="index.html">🚀 เปิดเว็บแอป Interactive ครบวงจร</a>
+    </div>
+  </header>
+
+  <!-- ม.1 (5 หน่วย) -->
+  <section class="grade-section">
+    <div class="grade-header grade-m1">
+      <h2>ชั้นมัธยมศึกษาปีที่ 1 (ครบทั้ง 5 หน่วยการเรียนรู้)</h2>
+      <span>โฟลเดอร์ ม.1 • รวม 25 ไฟล์</span>
+    </div>
+    <div class="unit-grid">
+      <div class="unit-card">
+        <div>
+          <h3>หน่วยที่ 1 : เวลาและยุคสมัยทางประวัติศาสตร์</h3>
+          <p class="desc">ความสำคัญของเวลา การนับและเทียบศักราช (พ.ศ., ค.ศ., ม.ศ., จ.ศ., ร.ศ., ฮ.ศ.) และการแบ่งยุคสมัยทางประวัติศาสตร์</p>
+        </div>
+        <div class="btn-group">
+          <a class="btn btn-slide-html" href="ม.1/สไลด์_หน่วยที่1_เวลาและยุคสมัยทางประวัติศาสตร์_Interactive.html" target="_blank">🖥️ สไลด์ HTML</a>
+          <a class="btn btn-ws-html" href="ม.1/ใบงานและเฉลย_หน่วยที่1_เวลาและยุคสมัยทางประวัติศาสตร์_A4.html" target="_blank">📄 ใบงาน A4</a>
+          <a class="btn btn-pptx" href="ม.1/สไลด์ประกอบการสอน_หน่วยที่1_เวลาและยุคสมัยทางประวัติศาสตร์.pptx">📊 PowerPoint</a>
+          <a class="btn btn-docx" href="ม.1/ใบงาน_หน่วยที่1_เวลาและยุคสมัยทางประวัติศาสตร์.docx">📝 ใบงาน Word</a>
+          <a class="btn btn-ans" href="ม.1/เฉลยใบงาน_หน่วยที่1_เวลาและยุคสมัยทางประวัติศาสตร์.docx">✅ เฉลยครู Word (.docx)</a>
+        </div>
+      </div>
+
+      <div class="unit-card">
+        <div>
+          <h3>หน่วยที่ 2 : วิธีการทางประวัติศาสตร์</h3>
+          <p class="desc">ขั้นตอนวิธีการทางประวัติศาสตร์ 5 ขั้นตอน ประเภทของหลักฐานชั้นต้น-ชั้นรอง และการประเมินคุณค่าหลักฐาน</p>
+        </div>
+        <div class="btn-group">
+          <a class="btn btn-slide-html" href="ม.1/สไลด์_หน่วยที่2_วิธีการทางประวัติศาสตร์_Interactive.html" target="_blank">🖥️ สไลด์ HTML</a>
+          <a class="btn btn-ws-html" href="ม.1/ใบงานและเฉลย_หน่วยที่2_วิธีการทางประวัติศาสตร์_A4.html" target="_blank">📄 ใบงาน A4</a>
+          <a class="btn btn-pptx" href="ม.1/สไลด์ประกอบการสอน_หน่วยที่2_วิธีการทางประวัติศาสตร์.pptx">📊 PowerPoint</a>
+          <a class="btn btn-docx" href="ม.1/ใบงาน_หน่วยที่2_วิธีการทางประวัติศาสตร์.docx">📝 ใบงาน Word</a>
+          <a class="btn btn-ans" href="ม.1/เฉลยใบงาน_หน่วยที่2_วิธีการทางประวัติศาสตร์.docx">✅ เฉลยครู Word (.docx)</a>
+        </div>
+      </div>
+
+      <div class="unit-card">
+        <div>
+          <h3>หน่วยที่ 3 : สมัยก่อนสุโขทัยในดินแดนไทย</h3>
+          <p class="desc">สมัยก่อนประวัติศาสตร์ (ยุคหิน-ยุคโลหะ) และรัฐโบราณในดินแดนไทย (ทวารวดี ศรีวิชัย ตามพรลิงค์ โคตรบูรณ์ ละโว้ หริภุญชัย)</p>
+        </div>
+        <div class="btn-group">
+          <a class="btn btn-slide-html" href="ม.1/สไลด์_หน่วยที่3_สมัยก่อนสุโขทัย_Interactive.html" target="_blank">🖥️ สไลด์ HTML</a>
+          <a class="btn btn-ws-html" href="ม.1/ใบงานและเฉลย_หน่วยที่3_สมัยก่อนสุโขทัย_A4.html" target="_blank">📄 ใบงาน A4</a>
+          <a class="btn btn-pptx" href="ม.1/สไลด์ประกอบการสอน_หน่วยที่3_สมัยก่อนสุโขทัยในดินแดนไทย.pptx">📊 PowerPoint</a>
+          <a class="btn btn-docx" href="ม.1/ใบงาน_หน่วยที่3_สมัยก่อนสุโขทัยในดินแดนไทย.docx">📝 ใบงาน Word</a>
+          <a class="btn btn-ans" href="ม.1/เฉลยใบงาน_หน่วยที่3_สมัยก่อนสุโขทัยในดินแดนไทย.docx">✅ เฉลยครู Word (.docx)</a>
+        </div>
+      </div>
+
+      <div class="unit-card">
+        <div>
+          <h3>หน่วยที่ 4 : อาณาจักรสุโขทัย</h3>
+          <p class="desc">การสถาปนา การเมืองการปกครอง (พ่อปกครองลูก/ธรรมราชา) เศรษฐกิจ สังคม ศิลปวัฒนธรรม และภูมิปัญญาไทยสมัยสุโขทัย</p>
+        </div>
+        <div class="btn-group">
+          <a class="btn btn-slide-html" href="ม.1/สไลด์_หน่วยที่4_อาณาจักรสุโขทัย_Interactive.html" target="_blank">🖥️ สไลด์ HTML</a>
+          <a class="btn btn-ws-html" href="ม.1/ใบงานและเฉลย_หน่วยที่4_อาณาจักรสุโขทัย_A4.html" target="_blank">📄 ใบงาน A4</a>
+          <a class="btn btn-pptx" href="ม.1/สไลด์ประกอบการสอน_หน่วยที่4_อาณาจักรสุโขทัย.pptx">📊 PowerPoint</a>
+          <a class="btn btn-docx" href="ม.1/ใบงาน_หน่วยที่4_อาณาจักรสุโขทัย.docx">📝 ใบงาน Word</a>
+          <a class="btn btn-ans" href="ม.1/เฉลยใบงาน_หน่วยที่4_อาณาจักรสุโขทัย.docx">✅ เฉลยครู Word (.docx)</a>
+        </div>
+      </div>
+
+      <div class="unit-card">
+        <div>
+          <h3>หน่วยที่ 5 : พัฒนาการของภูมิภาคเอเชียตะวันออกเฉียงใต้</h3>
+          <p class="desc">สภาพภูมิศาสตร์ แหล่งอารยธรรมโบราณ ยุคอาณานิคม การได้รับเอกราช และความร่วมมืออาเซียน (ASEAN)</p>
+        </div>
+        <div class="btn-group">
+          <a class="btn btn-slide-html" href="ม.1/สไลด์_หน่วยที่5_ภูมิภาคเอเชียตะวันออกเฉียงใต้_Interactive.html" target="_blank">🖥️ สไลด์ HTML</a>
+          <a class="btn btn-ws-html" href="ม.1/ใบงานและเฉลย_หน่วยที่5_ภูมิภาคเอเชียตะวันออกเฉียงใต้_A4.html" target="_blank">📄 ใบงาน A4</a>
+          <a class="btn btn-pptx" href="ม.1/สไลด์ประกอบการสอน_หน่วยที่5_ภูมิภาคเอเชียตะวันออกเฉียงใต้.pptx">📊 PowerPoint</a>
+          <a class="btn btn-docx" href="ม.1/ใบงาน_หน่วยที่5_ภูมิภาคเอเชียตะวันออกเฉียงใต้.docx">📝 ใบงาน Word</a>
+          <a class="btn btn-ans" href="ม.1/เฉลยใบงาน_หน่วยที่5_ภูมิภาคเอเชียตะวันออกเฉียงใต้.docx">✅ เฉลยครู Word (.docx)</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ม.2 (5 หน่วย) -->
+  <section class="grade-section">
+    <div class="grade-header grade-m2">
+      <h2>ชั้นมัธยมศึกษาปีที่ 2 (ครบทั้ง 5 หน่วยการเรียนรู้)</h2>
+      <span>โฟลเดอร์ ม.2 • รวม 25 ไฟล์</span>
+    </div>
+    <div class="unit-grid">
+      <div class="unit-card">
+        <div>
+          <h3>หน่วยที่ 1 : การประเมินความน่าเชื่อถือของหลักฐานทางประวัติศาสตร์</h3>
+          <p class="desc">วิพากษ์วิธีภายนอก-ภายใน การแยกแยะข้อเท็จจริงกับความคิดเห็น และการตีความหลักฐานสมัยอยุธยา-ธนบุรี</p>
+        </div>
+        <div class="btn-group">
+          <a class="btn btn-slide-html" href="ม.2/สไลด์_หน่วยที่1_การประเมินหลักฐานทางประวัติศาสตร์_Interactive.html" target="_blank">🖥️ สไลด์ HTML</a>
+          <a class="btn btn-ws-html" href="ม.2/ใบงานและเฉลย_หน่วยที่1_การประเมินหลักฐานทางประวัติศาสตร์_A4.html" target="_blank">📄 ใบงาน A4</a>
+          <a class="btn btn-pptx" href="ม.2/สไลด์ประกอบการสอน_หน่วยที่1_การประเมินหลักฐานทางประวัติศาสตร์.pptx">📊 PowerPoint</a>
+          <a class="btn btn-docx" href="ม.2/ใบงาน_หน่วยที่1_การประเมินหลักฐานทางประวัติศาสตร์.docx">📝 ใบงาน Word</a>
+          <a class="btn btn-ans" href="ม.2/เฉลยใบงาน_หน่วยที่1_การประเมินหลักฐานทางประวัติศาสตร์.docx">✅ เฉลยครู Word (.docx)</a>
+        </div>
+      </div>
+
+      <div class="unit-card">
+        <div>
+          <h3>หน่วยที่ 2 : พัฒนาการของอาณาจักรอยุธยา</h3>
+          <p class="desc">การสถาปนากรุงศรีอยุธยา การเมืองการปกครอง 3 ช่วงสมัย ระบบศักดินา สังคม และเศรษฐกิจพระคลังสินค้า</p>
+        </div>
+        <div class="btn-group">
+          <a class="btn btn-slide-html" href="ม.2/สไลด์_ม2_อาณาจักรอยุธยา_Interactive.html" target="_blank">🖥️ สไลด์ HTML</a>
+          <a class="btn btn-ws-html" href="ม.2/ใบงานและเฉลย_ม2_อาณาจักรอยุธยา_A4.html" target="_blank">📄 ใบงาน A4</a>
+          <a class="btn btn-pptx" href="ม.2/สไลด์ประกอบการสอน_ม2_อาณาจักรอยุธยา.pptx">📊 PowerPoint</a>
+          <a class="btn btn-docx" href="ม.2/ใบงาน_ม2_อาณาจักรอยุธยา.docx">📝 ใบงาน Word</a>
+          <a class="btn btn-ans" href="ม.2/เฉลยใบงาน_ม2_อาณาจักรอยุธยา.docx">✅ เฉลยครู Word (.docx)</a>
+        </div>
+      </div>
+
+      <div class="unit-card">
+        <div>
+          <h3>หน่วยที่ 3 : ความสัมพันธ์ระหว่างประเทศและภูมิปัญญาไทยสมัยอยุธยา</h3>
+          <p class="desc">ความสัมพันธ์กับรัฐเพื่อนบ้าน เอเชีย (จีน/ญี่ปุ่น) ชาติตะวันตก (โปรตุเกส/ฮอลันดา/ฝรั่งเศส) และภูมิปัญญาสมัยอยุธยา</p>
+        </div>
+        <div class="btn-group">
+          <a class="btn btn-slide-html" href="ม.2/สไลด์_หน่วยที่3_ความสัมพันธ์และภูมิปัญญาอยุธยา_Interactive.html" target="_blank">🖥️ สไลด์ HTML</a>
+          <a class="btn btn-ws-html" href="ม.2/ใบงานและเฉลย_หน่วยที่3_ความสัมพันธ์และภูมิปัญญาอยุธยา_A4.html" target="_blank">📄 ใบงาน A4</a>
+          <a class="btn btn-pptx" href="ม.2/สไลด์ประกอบการสอน_หน่วยที่3_ความสัมพันธ์และภูมิปัญญาอยุธยา.pptx">📊 PowerPoint</a>
+          <a class="btn btn-docx" href="ม.2/ใบงาน_หน่วยที่3_ความสัมพันธ์และภูมิปัญญาอยุธยา.docx">📝 ใบงาน Word</a>
+          <a class="btn btn-ans" href="ม.2/เฉลยใบงาน_หน่วยที่3_ความสัมพันธ์และภูมิปัญญาอยุธยา.docx">✅ เฉลยครู Word (.docx)</a>
+        </div>
+      </div>
+
+      <div class="unit-card">
+        <div>
+          <h3>หน่วยที่ 4 : พัฒนาการของอาณาจักรธนบุรี</h3>
+          <p class="desc">การกอบกู้เอกราช การสถาปนากรุงธนบุรี การรวมชุมนุม การฟื้นฟูเศรษฐกิจ ศาสนา และวีรกรรมบรรพบุรุษไทย</p>
+        </div>
+        <div class="btn-group">
+          <a class="btn btn-slide-html" href="ม.2/สไลด์_ม2_อาณาจักรธนบุรี_Interactive.html" target="_blank">🖥️ สไลด์ HTML</a>
+          <a class="btn btn-ws-html" href="ม.2/ใบงานและเฉลย_ม2_อาณาจักรธนบุรี_A4.html" target="_blank">📄 ใบงาน A4</a>
+          <a class="btn btn-pptx" href="ม.2/สไลด์ประกอบการสอน_ม2_อาณาจักรธนบุรี.pptx">📊 PowerPoint</a>
+          <a class="btn btn-docx" href="ม.2/ใบงาน_ม2_อาณาจักรธนบุรี.docx">📝 ใบงาน Word</a>
+          <a class="btn btn-ans" href="ม.2/เฉลยใบงาน_ม2_อาณาจักรธนบุรี.docx">✅ เฉลยครู Word (.docx)</a>
+        </div>
+      </div>
+
+      <div class="unit-card">
+        <div>
+          <h3>หน่วยที่ 5 : พัฒนาการของทวีปเอเชีย</h3>
+          <p class="desc">อารยธรรมโบราณลุ่มแม่น้ำ (เมโสโปเตเมีย สินธุ ฮวงโห) และพัฒนาการของเอเชียตะวันออก เอเชียใต้ เอเชียตะวันตกเฉียงใต้ และเอเชียกลาง</p>
+        </div>
+        <div class="btn-group">
+          <a class="btn btn-slide-html" href="ม.2/สไลด์_หน่วยที่5_พัฒนาการของทวีปเอเชีย_Interactive.html" target="_blank">🖥️ สไลด์ HTML</a>
+          <a class="btn btn-ws-html" href="ม.2/ใบงานและเฉลย_หน่วยที่5_พัฒนาการของทวีปเอเชีย_A4.html" target="_blank">📄 ใบงาน A4</a>
+          <a class="btn btn-pptx" href="ม.2/สไลด์ประกอบการสอน_หน่วยที่5_พัฒนาการของทวีปเอเชีย.pptx">📊 PowerPoint</a>
+          <a class="btn btn-docx" href="ม.2/ใบงาน_หน่วยที่5_พัฒนาการของทวีปเอเชีย.docx">📝 ใบงาน Word</a>
+          <a class="btn btn-ans" href="ม.2/เฉลยใบงาน_หน่วยที่5_พัฒนาการของทวีปเอเชีย.docx">✅ เฉลยครู Word (.docx)</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ม.3 (5 หน่วย) -->
+  <section class="grade-section">
+    <div class="grade-header grade-m3">
+      <h2>ชั้นมัธยมศึกษาปีที่ 3 (ครบทั้ง 5 หน่วยการเรียนรู้)</h2>
+      <span>โฟลเดอร์ ม.3 • รวม 25 ไฟล์</span>
+    </div>
+    <div class="unit-grid">
+      <div class="unit-card">
+        <div>
+          <h3>หน่วยที่ 1 : วิธีการทางประวัติศาสตร์และการศึกษาประวัติศาสตร์ท้องถิ่น</h3>
+          <p class="desc">การวิเคราะห์เหตุการณ์อย่างเป็นระบบ ประวัติศาสตร์บอกเล่า (Oral History) และแนวทางการสืบค้นประวัติศาสตร์ท้องถิ่น</p>
+        </div>
+        <div class="btn-group">
+          <a class="btn btn-slide-html" href="ม.3/สไลด์_หน่วยที่1_วิธีการทางประวัติศาสตร์และท้องถิ่น_Interactive.html" target="_blank">🖥️ สไลด์ HTML</a>
+          <a class="btn btn-ws-html" href="ม.3/ใบงานและเฉลย_หน่วยที่1_วิธีการทางประวัติศาสตร์และท้องถิ่น_A4.html" target="_blank">📄 ใบงาน A4</a>
+          <a class="btn btn-pptx" href="ม.3/สไลด์ประกอบการสอน_หน่วยที่1_วิธีการทางประวัติศาสตร์และท้องถิ่น.pptx">📊 PowerPoint</a>
+          <a class="btn btn-docx" href="ม.3/ใบงาน_หน่วยที่1_วิธีการทางประวัติศาสตร์และท้องถิ่น.docx">📝 ใบงาน Word</a>
+          <a class="btn btn-ans" href="ม.3/เฉลยใบงาน_หน่วยที่1_วิธีการทางประวัติศาสตร์และท้องถิ่น.docx">✅ เฉลยครู Word (.docx)</a>
+        </div>
+      </div>
+
+      <div class="unit-card">
+        <div>
+          <h3>หน่วยที่ 2 : พัฒนาการของไทยสมัยรัตนโกสินทร์ตอนต้น (ร.1 – ร.3)</h3>
+          <p class="desc">การสถาปนากรุงรัตนโกสินทร์ กฎหมายตราสามดวง สงครามเก้าทัพ การค้าสำเภา สนธิสัญญาเบอร์นี และวัดพระเชตุพนฯ</p>
+        </div>
+        <div class="btn-group">
+          <a class="btn btn-slide-html" href="ม.3/สไลด์_ม3_รัตนโกสินทร์ตอนต้น_Interactive.html" target="_blank">🖥️ สไลด์ HTML</a>
+          <a class="btn btn-ws-html" href="ม.3/ใบงานและเฉลย_ม3_รัตนโกสินทร์ตอนต้น_A4.html" target="_blank">📄 ใบงาน A4</a>
+          <a class="btn btn-pptx" href="ม.3/สไลด์ประกอบการสอน_ม3_รัตนโกสินทร์ตอนต้น.pptx">📊 PowerPoint</a>
+          <a class="btn btn-docx" href="ม.3/ใบงาน_ม3_รัตนโกสินทร์ตอนต้น.docx">📝 ใบงาน Word</a>
+          <a class="btn btn-ans" href="ม.3/เฉลยใบงาน_ม3_รัตนโกสินทร์ตอนต้น.docx">✅ เฉลยครู Word (.docx)</a>
+        </div>
+      </div>
+
+      <div class="unit-card">
+        <div>
+          <h3>หน่วยที่ 3 : พัฒนาการของไทยสมัยปรับปรุงและปฏิรูปประเทศ (ร.4 – ร.6)</h3>
+          <p class="desc">สนธิสัญญาเบาว์ริง การปฏิรูปการปกครองและเลิกทาสสมัย ร.5 วิกฤตการณ์ ร.ศ. 112 และการเข้าร่วมสงครามโลกครั้งที่ 1 สมัย ร.6</p>
+        </div>
+        <div class="btn-group">
+          <a class="btn btn-slide-html" href="ม.3/สไลด์_ม3_ปฏิรูปประเทศและยุคประชาธิปไตย_Interactive.html" target="_blank">🖥️ สไลด์ HTML</a>
+          <a class="btn btn-ws-html" href="ม.3/ใบงานและเฉลย_ม3_ปฏิรูปประเทศและยุคประชาธิปไตย_A4.html" target="_blank">📄 ใบงาน A4</a>
+          <a class="btn btn-pptx" href="ม.3/สไลด์ประกอบการสอน_ม3_ปฏิรูปประเทศและยุคประชาธิปไตย.pptx">📊 PowerPoint</a>
+          <a class="btn btn-docx" href="ม.3/ใบงาน_ม3_ปฏิรูปประเทศและยุคประชาธิปไตย.docx">📝 ใบงาน Word</a>
+          <a class="btn btn-ans" href="ม.3/เฉลยใบงาน_ม3_ปฏิรูปประเทศและยุคประชาธิปไตย.docx">✅ เฉลยครู Word (.docx)</a>
+        </div>
+      </div>
+
+      <div class="unit-card">
+        <div>
+          <h3>หน่วยที่ 4 : พัฒนาการของไทยสมัยประชาธิปไตย (พ.ศ. 2475 – ปัจจุบัน)</h3>
+          <p class="desc">การเปลี่ยนแปลงการปกครอง พ.ศ. 2475 ขบวนการเสรีไทย แผนพัฒนาเศรษฐกิจแห่งชาติ ปรัชญาเศรษฐกิจพอเพียง และบทบาทสตรีไทย</p>
+        </div>
+        <div class="btn-group">
+          <a class="btn btn-slide-html" href="ม.3/สไลด์_หน่วยที่4_พัฒนาการสมัยประชาธิปไตย_Interactive.html" target="_blank">🖥️ สไลด์ HTML</a>
+          <a class="btn btn-ws-html" href="ม.3/ใบงานและเฉลย_หน่วยที่4_พัฒนาการสมัยประชาธิปไตย_A4.html" target="_blank">📄 ใบงาน A4</a>
+          <a class="btn btn-pptx" href="ม.3/สไลด์ประกอบการสอน_หน่วยที่4_พัฒนาการสมัยประชาธิปไตย.pptx">📊 PowerPoint</a>
+          <a class="btn btn-docx" href="ม.3/ใบงาน_หน่วยที่4_พัฒนาการสมัยประชาธิปไตย.docx">📝 ใบงาน Word</a>
+          <a class="btn btn-ans" href="ม.3/เฉลยใบงาน_หน่วยที่4_พัฒนาการสมัยประชาธิปไตย.docx">✅ เฉลยครู Word (.docx)</a>
+        </div>
+      </div>
+
+      <div class="unit-card">
+        <div>
+          <h3>หน่วยที่ 5 : พัฒนาการของภูมิภาคต่างๆ ของโลก และความร่วมมือระหว่างประเทศ</h3>
+          <p class="desc">พัฒนาการทวีปยุโรป อเมริกาเหนือ อเมริกาใต้ แอฟริกา ออสเตรเลีย สงครามโลก และองค์การสหประชาชาติ (UN)</p>
+        </div>
+        <div class="btn-group">
+          <a class="btn btn-slide-html" href="ม.3/สไลด์_หน่วยที่5_พัฒนาการของภูมิภาคต่างๆของโลก_Interactive.html" target="_blank">🖥️ สไลด์ HTML</a>
+          <a class="btn btn-ws-html" href="ม.3/ใบงานและเฉลย_หน่วยที่5_พัฒนาการของภูมิภาคต่างๆของโลก_A4.html" target="_blank">📄 ใบงาน A4</a>
+          <a class="btn btn-pptx" href="ม.3/สไลด์ประกอบการสอน_หน่วยที่5_พัฒนาการของภูมิภาคต่างๆของโลก.pptx">📊 PowerPoint</a>
+          <a class="btn btn-docx" href="ม.3/ใบงาน_หน่วยที่5_พัฒนาการของภูมิภาคต่างๆของโลก.docx">📝 ใบงาน Word</a>
+          <a class="btn btn-ans" href="ม.3/เฉลยใบงาน_หน่วยที่5_พัฒนาการของภูมิภาคต่างๆของโลก.docx">✅ เฉลยครู Word (.docx)</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+</body>
+</html>

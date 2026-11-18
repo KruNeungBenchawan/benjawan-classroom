@@ -113,8 +113,9 @@
     footerYear: document.getElementById("footerYear"),
     toast: document.getElementById("toast"),
     sidebarNav: document.getElementById("sidebarNav"),
-    homeSection: document.getElementById("homeSection"),
-    resourcesSection: document.getElementById("resourcesSection")
+    viewHome: document.getElementById("viewHome"),
+    viewResources: document.getElementById("viewResources"),
+    heroExploreBtn: document.getElementById("heroExploreBtn")
   };
 
   function cloneDefaultData() {
@@ -138,6 +139,10 @@
           if (item) parsed.resources.unshift(item);
         }
       });
+      // Auto-migrate old placeholder profile to official profile
+      if (parsed.profile && (parsed.profile.name === "ครูเบ็ญจวรรณ" || parsed.profile.school === "โรงเรียนตัวอย่างวิทยาคม")) {
+        parsed.profile = defaults.profile;
+      }
       return parsed;
     } catch {
       return cloneDefaultData();
@@ -443,6 +448,26 @@
     renderResources();
   }
 
+  function switchStageView(navType, cat = "all") {
+    if (el.sidebarNav) {
+      el.sidebarNav.querySelectorAll(".nav-item[data-nav]").forEach((n) => {
+        const match = n.dataset.nav === navType && (navType === "home" || n.dataset.cat === cat);
+        n.classList.toggle("active", match);
+      });
+    }
+
+    if (navType === "home") {
+      el.viewHome.classList.remove("hidden");
+      el.viewResources.classList.add("hidden");
+    } else {
+      el.viewHome.classList.add("hidden");
+      el.viewResources.classList.remove("hidden");
+      state.activeCategory = cat;
+      renderCategoryTabs();
+      renderResources();
+    }
+  }
+
   // Event Listeners
   el.teacherModeBtn.addEventListener("click", toggleTeacherMode);
 
@@ -450,19 +475,13 @@
     el.sidebarNav.addEventListener("click", (e) => {
       const btn = e.target.closest(".nav-item[data-nav]");
       if (!btn) return;
+      switchStageView(btn.dataset.nav, btn.dataset.cat || "all");
+    });
+  }
 
-      el.sidebarNav.querySelectorAll(".nav-item").forEach((n) => n.classList.remove("active"));
-      btn.classList.add("active");
-
-      const cat = btn.dataset.cat || "all";
-      state.activeCategory = cat;
-      renderCategoryTabs();
-      renderResources();
-
-      const target = btn.dataset.nav === "home" ? el.homeSection : el.resourcesSection;
-      if (target) {
-        target.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
+  if (el.heroExploreBtn) {
+    el.heroExploreBtn.addEventListener("click", () => {
+      switchStageView("resources", "all");
     });
   }
 

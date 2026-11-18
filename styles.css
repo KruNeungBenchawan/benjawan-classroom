@@ -309,6 +309,17 @@ a {
   margin-bottom: 2px;
 }
 
+.hero-logo-img {
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #ffffff;
+  outline: 2.5px solid var(--sky-outer);
+  box-shadow: 0 6px 16px rgba(30, 82, 124, 0.16);
+  display: block;
+}
+
 .hero-main-title {
   font-family: 'Mali', sans-serif;
   font-size: clamp(1.65rem, 2.6vw, 2.25rem);

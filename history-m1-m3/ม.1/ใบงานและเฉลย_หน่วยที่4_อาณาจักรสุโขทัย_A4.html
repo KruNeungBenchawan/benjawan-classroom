@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ใบงานและเฉลย วิชาประวัติศาสตร์ ม.1 - หน่วยการเรียนรู้ที่ 4 อาณาจักรสุโขทัย (พว.)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Prompt:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #5E35B1;
+            --primary-light: #EDE7F6;
+            --accent: #E65100;
+            --answer-red: #D32F2F;
+            --border-dark: #4A3B69;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background: #E0DCE8;
+            color: #1A1A1A;
+            padding: 75px 0 40px;
+            line-height: 1.5;
+        }
+
+        /* Floating Control Toolbar (Hidden when printing) */
+        .toolbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #2C1847;
+            color: white;
+            padding: 12px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 999;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+        }
+
+        .toolbar-title {
+            font-family: 'Prompt', sans-serif;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toolbar-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-tool {
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: none;
+            font-family: 'Prompt', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-student { background: #FFFFFF; color: #2C1847; }
+        .btn-teacher { background: #E53935; color: white; }
+        .btn-print { background: #00897B; color: white; }
+
+        .btn-tool:hover {
+            transform: translateY(-1px);
+            opacity: 0.92;
+        }
+
+        /* A4 Page Layout */
+        .a4-page {
+            width: 210mm;
+            min-height: 297mm;
+            background: white;
+            margin: 0 auto 24px;
+            padding: 13mm 15mm;
+            box-shadow: 0 8px 28px rgba(0,0,0,0.18);
+            border-radius: 4px;
+            position: relative;
+        }
+
+        /* Header Banner of Worksheet */
+        .ws-header {
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 11px;
+        }
+
+        .ws-header-top {
+            background: var(--primary);
+            color: white;
+            padding: 8px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Prompt', sans-serif;
+        }
+
+        .ws-header-top h1 {
+            font-size: 1.18rem;
+            font-weight: 700;
+        }
+
+        .ws-badge {
+            background: #FF6F00;
+            color: white;
+            padding: 2px 10px;
+            border-radius: 14px;
+            font-size: 0.82rem;
+            font-weight: 600;
+        }
+
+        .ws-student-info {
+            padding: 7px 16px;
+            background: #FBF9FF;
+            font-size: 0.9rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: space-between;
+        }
+
+        /* Section Styling */
+        .ws-section {
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-family: 'Prompt', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--primary);
+            background: var(--primary-light);
+            padding: 5px 12px;
+            border-left: 5px solid var(--primary);
+            border-radius: 4px;
+            margin-bottom: 7px;
+        }
+
+        /* Tables */
+        .ws-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.86rem;
+        }
+
+        .ws-table th, .ws-table td {
+            border: 1px solid #9E9E9E;
+            padding: 5px 8px;
+            vertical-align: top;
+        }
+
+        .ws-table th {
+            background: #EDE7F6;
+            color: #311B92;
+            font-family: 'Prompt', sans-serif;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        /* Matching Box */
+        .matching-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 12px;
+            font-size: 0.87rem;
+        }
+
+        .match-box {
+            border: 1px solid #B0BEC5;
+            border-radius: 8px;
+            padding: 7px 11px;
+            background: #FAFAFA;
+        }
+
+        .match-item {
+            margin-bottom: 4px;
+        }
+
+        /* Dotted Line Input & Teacher Answer */
+        .fill-blank {
+            display: inline-block;
+            min-width: 110px;
+            border-bottom: 1px dotted #333;
+            text-align: center;
+            padding: 0 5px;
+            position: relative;
+        }
+
+        .ans-text {
+            color: transparent;
+            user-select: none;
+            font-weight: 700;
+        }
+
+        body.teacher-mode .ans-text {
+            color: var(--answer-red);
+            user-select: auto;
+        }
+
+        .ans-block {
+            border-bottom: 1px dotted #555;
+            min-height: 21px;
+            padding: 1px 6px;
+            font-size: 0.86rem;
+            color: transparent;
+        }
+
+        body.teacher-mode .ans-block {
+            color: var(--answer-red);
+            font-weight: 600;
+        }
+
+        /* Mind Map Structure */
+        .mindmap-container {
+            border: 1.5px dashed var(--primary);
+            border-radius: 12px;
+            padding: 10px;
+            background: #FDFBFF;
+            position: relative;
+        }
+
+        .mindmap-center {
+            background: var(--primary);
+            color: white;
+            font-family: 'Prompt', sans-serif;
+            font-weight: 700;
+            text-align: center;
+            padding: 5px 16px;
+            border-radius: 20px;
+            width: 330px;
+            margin: 4px auto 8px;
+            font-size: 0.92rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+
+        .mindmap-branches {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 9px;
+        }
+
+        .mm-node {
+            border: 1.5px solid #7E57C2;
+            border-radius: 8px;
+            padding: 6px 10px;
+            background: white;
+            font-size: 0.84rem;
+        }
+
+        .mm-node-title {
+            font-family: 'Prompt', sans-serif;
+            font-weight: 700;
+            color: var(--primary);
+            border-bottom: 1px solid #E0E0E0;
+            padding-bottom: 2px;
+            margin-bottom: 4px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .evidence-card {
+            border: 1px solid #BCAAA4;
+            background: #FFFDF9;
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 0.87rem;
+        }
+
+        .teacher-watermark {
+            display: none;
+            background: #FFEBEE;
+            color: #C62828;
+            border: 1.5px solid #EF5350;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-family: 'Prompt', sans-serif;
+            font-weight: 700;
+            font-size: 0.82rem;
+        }
+
+        body.teacher-mode .teacher-watermark {
+            display: inline-block;
+        }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .toolbar { display: none !important; }
+            .a4-page {
+                box-shadow: none;
+                margin: 0;
+                width: 100%;
+                page-break-after: always;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Floating Toolbar -->
+    <div class="toolbar">
+        <div class="toolbar-title">
+            <span>📄 ใบงานประวัติศาสตร์ ม.1 (พว.) — หน่วยการเรียนรู้ที่ 4 อาณาจักรสุโขทัย (รวม 2 ใบงาน)</span>
+            <span class="teacher-watermark">🔑 โหมดครูผู้สอน (แสดงเฉลย)</span>
+        </div>
+        <div class="toolbar-actions">
+            <button class="btn-tool btn-student" onclick="setMode(false)">📝 โหมดใบงานนักเรียน (ซ่อนเฉลย)</button>
+            <button class="btn-tool btn-teacher" onclick="setMode(true)">🔑 โหมดเฉลยสำหรับครู (แสดงคำตอบสีแดง)</button>
+            <button class="btn-tool btn-print" onclick="window.print()">🖨️ สั่งพิมพ์ขนาด A4 / บันทึก PDF</button>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         PAGE 1: ใบงานที่ 4.1 เรื่อง การสถาปนาและพัฒนาการของอาณาจักรสุโขทัย
+         ===================================================================== -->
+    <div class="a4-page">
+        <div class="ws-header">
+            <div class="ws-header-top">
+                <h1>ใบงานที่ ๔.๑ เรื่อง การสถาปนาและพัฒนาการของอาณาจักรสุโขทัย</h1>
+                <div>
+                    <span class="ws-badge">วิชาประวัติศาสตร์ ม.๑ (พว.)</span>
+                    <span class="teacher-watermark" style="margin-left:6px;">ฉบับเฉลยครู</span>
+                </div>
+            </div>
+            <div class="ws-student-info">
+                <span><strong>ชื่อ-นามสกุล:</strong> ............................................................................................</span>
+                <span><strong>ชั้น:</strong> ม.๑ / .........</span>
+                <span><strong>เลขที่:</strong> .........</span>
+                <span><strong>คะแนนที่ได้:</strong> ........ / ๒๐ คะแนน</span>
+            </div>
+        </div>
+
+        <!-- ตอนที่ 1 -->
+        <div class="ws-section">
+            <div class="section-title">ตอนที่ ๑ : เติมข้อมูลเกี่ยวกับการสถาปนาอาณาจักรสุโขทัยให้ถูกต้อง (๕ คะแนน)</div>
+            <div class="evidence-card" style="line-height:1.75;">
+                ๑. ก่อนการสถาปนาอาณาจักรสุโขทัย เมืองสุโขทัยและศรีสัชนาลัยเคยมีผู้นำคนไทยปกครองมาก่อนคือ <span class="fill-blank"><span class="ans-text">พ่อขุนศรีนาวนำถุม</span></span><br>
+                ๒. เมื่อผู้นำเดิมสิ้นพระชนม์ ขุนนางขอมที่เข้ามายึดอำนาจในเมืองสุโขทัยคือ <span class="fill-blank"><span class="ans-text">ขอมสบาดโขลญลำพง</span></span><br>
+                ๓. ผู้นำคนไทย ๒ พระองค์ที่ร่วมมือกันขับไล่อำนาจขอมเมื่อราว พ.ศ. ๑๗๙๒ ได้แก่ <span class="fill-blank"><span class="ans-text">พ่อขุนบางกลางหาว</span></span> (เจ้าเมืองบางยาง) และ <span class="fill-blank"><span class="ans-text">พ่อขุนผาเมือง</span></span> (เจ้าเมืองราด)<br>
+                ๔. ปฐมกษัตริย์แห่งราชวงศ์พระร่วงผู้สถาปนาอาณาจักรสุโขทัย ทรงพระนามว่า <span class="fill-blank"><span class="ans-text">พ่อขุนศรีอินทราทิตย์</span></span>
+            </div>
+        </div>
+
+        <!-- ตอนที่ 2 -->
+        <div class="ws-section">
+            <div class="section-title">ตอนที่ ๒ : เปรียบเทียบพัฒนาการด้านการเมืองการปกครองของอาณาจักรสุโขทัย (๙ คะแนน)</div>
+            <table class="ws-table">
+                <thead>
+                    <tr>
+                        <th style="width:22%;">ประเด็นเปรียบเทียบ</th>
+                        <th style="width:39%;">ระยะที่ ๑ : การปกครองแบบ "พ่อปกครองลูก"</th>
+                        <th style="width:39%;">ระยะที่ ๒ : การปกครองแบบ "ธรรมราชา"</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>๑. ช่วงเวลา / รัชกาลสำคัญ</strong></td>
+                        <td>
+                            <div class="ans-block">สุโขทัยตอนต้น (พ่อขุนศรีอินทราทิตย์ - พ่อขุนรามคำแหงมหาราช)</div>
+                        </td>
+                        <td>
+                            <div class="ans-block">สุโขทัยตอนปลาย (เริ่มชัดเจนสมัยพระมหาธรรมราชาที่ ๑ / พญาลิไท)</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>๒. คำนำหน้าพระนามกษัตริย์</strong></td>
+                        <td>
+                            <div class="ans-block">เรียกว่า "พ่อขุน"</div>
+                        </td>
+                        <td>
+                            <div class="ans-block">เรียกว่า "พระญา / พระมหาธรรมราชา"</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>๓. ลักษณะความสัมพันธ์และหลักฐานสำคัญ</strong></td>
+                        <td>
+                            <div class="ans-block">กษัตริย์ใกล้ชิดราษฎรเหมือนพ่อดูแลลูก มีการแขวน "กระดิ่ง" ไว้ที่ประตูวังให้ราษฎรสั่นร้องทุกข์</div>
+                        </td>
+                        <td>
+                            <div class="ans-block">ทรงใช้หลักธรรมทางพุทธศาสนา (ทศพิธราชธรรม) ปกครอง และทรงพระราชนิพนธ์ "ไตรภูมิพระร่วง"</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div style="margin-top:7px; font-size:0.86rem; background:#F3E5F5; padding:6px 10px; border-radius:6px;">
+                <strong>การจัดระเบียบการปกครองส่วนภูมิภาค (เมืองลูกหลวง ๔ ทิศ):</strong><br>
+                • ทิศเหนือ: เมือง <span class="fill-blank"><span class="ans-text">ศรีสัชนาลัย (สวรรคโลก)</span></span> &nbsp;&nbsp;
+                • ทิศใต้ / ตะวันออก: เมือง <span class="fill-blank"><span class="ans-text">สองแคว (พิษณุโลก) / สระหลวง</span></span> &nbsp;&nbsp;
+                • ทิศตะวันตก: เมือง <span class="fill-blank"><span class="ans-text">นครชุม (กำแพงเพชร)</span></span>
+            </div>
+        </div>
+
+        <!-- ตอนที่ 3 -->
+        <div class="ws-section">
+            <div class="section-title">ตอนที่ ๓ : วิเคราะห์หลักฐานทางประวัติศาสตร์จากศิลาจารึกสุโขทัยหลักที่ ๑ (๖ คะแนน)</div>
+            <div class="evidence-card">
+                <p style="margin-bottom:5px;">
+                    <strong>ข้อความจากศิลาจารึกหลักที่ ๑:</strong> <em>"เมื่อชั่วพ่อขุนรามคำแหง เมืองสุโขทัยนี้ดี ในน้ำมีปลา ในนามีข้าว เจ้าเมืองบ่เอาจกอบในไพร่ลู่ทาง เพื่อนจูงวัวไปค้า ขี่ม้าไปขาย ใครจักใคร่ค้าช้างค้า ใครจักใคร่ค้าม้าค้า ใครจักใคร่ค้าเงินค้าทองค้า..."</em>
+                </p>
+                <p style="margin-top:4px;"><strong>๑. คำว่า "จกอบ (จังกอบ)" หมายถึงอะไร และการไม่เก็บจกอบส่งผลดีต่อเศรษฐกิจสุโขทัยอย่างไร? (๓ คะแนน)</strong></p>
+                <div class="ans-block">"จกอบ" คือ ภาษีผ่านด่าน การยกเว้นไม่เก็บภาษีจกอบเป็นการส่งเสริม "การค้าเสรี" ทำให้พ่อค้าทั้งในและต่างแดนเดินทางเข้ามาค้าขายที่ตลาดปสานอย่างคึกคัก เศรษฐกิจจึงรุ่งเรือง</div>
+
+                <p style="margin-top:5px;"><strong>๒. เมืองสุโขทัยตั้งอยู่ห่างจากแม่น้ำสายใหญ่และมีลักษณะเป็นที่ลาดเชิงเขา ชาวสุโขทัยแก้ไขปัญหาการขาดแคลนน้ำในฤดูแล้งอย่างไร? (๓ คะแนน)</strong></p>
+                <div class="ans-block">สร้างคันดินกั้นน้ำตามหุบเขาเรียกว่า "ทำนบพระร่วง (สรีดภงส์)" เพื่อกักเก็บน้ำและผันเข้าสู่คูเมืองและสระน้ำขนาดใหญ่ที่เรียกว่า "ตระพัง" สำหรับใช้อุปโภคบริโภคและทำการเกษตร</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         PAGE 2: ใบงานที่ 4.2 เรื่อง ภูมิปัญญา ศิลปวัฒนธรรม และความเสื่อมของอาณาจักรสุโขทัย
+         ===================================================================== -->
+    <div class="a4-page">
+        <div class="ws-header">
+            <div class="ws-header-top">
+                <h1>ใบงานที่ ๔.๒ เรื่อง ภูมิปัญญา ศิลปวัฒนธรรม และความเสื่อมของอาณาจักรสุโขทัย</h1>
+                <div>
+                    <span class="ws-badge">วิชาประวัติศาสตร์ ม.๑ (พว.)</span>
+                    <span class="teacher-watermark" style="margin-left:6px;">ฉบับเฉลยครู</span>
+                </div>
+            </div>
+            <div class="ws-student-info">
+                <span><strong>ชื่อ-นามสกุล:</strong> ............................................................................................</span>
+                <span><strong>ชั้น:</strong> ม.๑ / .........</span>
+                <span><strong>เลขที่:</strong> .........</span>
+                <span><strong>คะแนนที่ได้:</strong> ........ / ๒๐ คะแนน</span>
+            </div>
+        </div>
+
+        <!-- ตอนที่ 1: ผังความคิด Mind Map -->
+        <div class="ws-section">
+            <div class="section-title">ตอนที่ ๑ : สรุปผังความคิด (Mind Mapping) มรดกภูมิปัญญาและศิลปวัฒนธรรมสมัยสุโขทัย (๑๒ คะแนน)</div>
+            <div class="mindmap-container">
+                <div class="mindmap-center">✨ วัฒนธรรมและภูมิปัญญาไทยสมัยสุโขทัย</div>
+                <div class="mindmap-branches">
+                    <!-- ด้านภาษาและวรรณกรรม -->
+                    <div class="mm-node">
+                        <div class="mm-node-title"><span>๑. ด้านภาษาและวรรณกรรม</span><span>(๓ คะแนน)</span></div>
+                        <div>• <strong>การประดิษฐ์อักษรไทย:</strong> เรียกว่า <span class="fill-blank"><span class="ans-text">ลายสือไทย (พ.ศ. ๑๘๒๖)</span></span></div>
+                        <div>&nbsp;&nbsp;ผู้ประดิษฐ์: <span class="fill-blank"><span class="ans-text">พ่อขุนรามคำแหงมหาราช</span></span></div>
+                        <div>&nbsp;&nbsp;เอกลักษณ์การวางสระ: <span class="fill-blank"><span class="ans-text">อยู่บนบรรทัดเดียวกันกับพยัญชนะ</span></span></div>
+                        <div>• <strong>วรรณกรรมพุทธศาสนาชิ้นเอก:</strong> เรื่อง <span class="fill-blank"><span class="ans-text">ไตรภูมิพระร่วง (เตภูมิกถา)</span></span></div>
+                        <div>&nbsp;&nbsp;ผู้พระราชนิพนธ์: <span class="fill-blank"><span class="ans-text">พระมหาธรรมราชาที่ ๑ (พญาลิไท)</span></span></div>
+                    </div>
+
+                    <!-- ด้านสถาปัตยกรรมและประติมากรรม -->
+                    <div class="mm-node">
+                        <div class="mm-node-title"><span>๒. ด้านศิลปกรรม (พุทธศิลป์)</span><span>(๓ คะแนน)</span></div>
+                        <div>• <strong>เจดีย์เอกลักษณ์สุโขทัยแท้:</strong> <span class="fill-blank"><span class="ans-text">เจดีย์ทรงพุ่มข้าวบิณฑ์ (ดอกบัวตูม)</span></span></div>
+                        <div>&nbsp;&nbsp;วัดที่พบเจดีย์ประธานนี้: <span class="fill-blank"><span class="ans-text">วัดมหาธาตุ (สุโขทัย), วัดเจดีย์เจ็ดแถว</span></span></div>
+                        <div>• <strong>เจดีย์อิทธิพลศรีลังกา:</strong> <span class="fill-blank"><span class="ans-text">เจดีย์ทรงลังกา (ทรงระฆังคว่ำ / วัดช้างล้อม)</span></span></div>
+                        <div>• <strong>พระพุทธรูปที่งดงามเป็นเอกลักษณ์:</strong> <span class="fill-blank"><span class="ans-text">พระพุทธรูปปางลีลา</span></span></div>
+                        <div>• <strong>พระพุทธรูปสำคัญคู่บ้านคู่เมือง:</strong> <span class="fill-blank"><span class="ans-text">พระพุทธชินราช, พระอจนะ (วัดศรีชุม)</span></span></div>
+                    </div>
+
+                    <!-- ด้านหัตถกรรมและการจัดการน้ำ -->
+                    <div class="mm-node">
+                        <div class="mm-node-title"><span>๓. ด้านหัตถกรรมและชลประทาน</span><span>(๓ คะแนน)</span></div>
+                        <div>• <strong>หัตถกรรมส่งออกขึ้นชื่อ:</strong> <span class="fill-blank"><span class="ans-text">เครื่องสังคโลก (เคลือบสีเขียวไข่กา)</span></span></div>
+                        <div>• <strong>ชื่อเตาเผาโบราณ:</strong> <span class="fill-blank"><span class="ans-text">เตาทุเรียง (สุโขทัยและศรีสัชนาลัย)</span></span></div>
+                        <div>• <strong>เขื่อนดินกักเก็บน้ำจากหุบเขา:</strong> <span class="fill-blank"><span class="ans-text">ทำนบพระร่วง (สรีดภงส์)</span></span></div>
+                        <div>• <strong>สระน้ำขุดกักเก็บน้ำในเมือง:</strong> <span class="fill-blank"><span class="ans-text">ตระพัง (เช่น ตระพังเงิน ตระพังทอง)</span></span></div>
+                    </div>
+
+                    <!-- ด้านศาสนาและความสัมพันธ์ต่างแดน -->
+                    <div class="mm-node">
+                        <div class="mm-node-title"><span>๔. ด้านศาสนาและความสัมพันธ์</span><span>(๓ คะแนน)</span></div>
+                        <div>• <strong>ศาสนาหลักของสุโขทัย:</strong> <span class="fill-blank"><span class="ans-text">พระพุทธศาสนาเถรวาท ลัทธิลังกาวงศ์</span></span></div>
+                        <div>&nbsp;&nbsp;รับผ่านเมืองทางภาคใต้คือ: <span class="fill-blank"><span class="ans-text">เมืองนครศรีธรรมราช (ตามพรลิงค์)</span></span></div>
+                        <div>• <strong>พระสงฆ์วัดในเมือง (คันถธุระ):</strong> เรียกว่า <span class="fill-blank"><span class="ans-text">คณะคามวาสี</span></span></div>
+                        <div>• <strong>พระสงฆ์วัดในป่า (วิปัสสนาธุระ):</strong> เรียกว่า <span class="fill-blank"><span class="ans-text">คณะอรัญญวาสี</span></span></div>
+                        <div>• <strong>พันธมิตรสามกษัตริย์:</strong> สุโขทัย - <span class="fill-blank"><span class="ans-text">ล้านนา (พญามังราย) - พะเยา (พญางำเมือง)</span></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ตอนที่ 2: จับคู่ -->
+        <div class="ws-section">
+            <div class="section-title">ตอนที่ ๒ : นำตัวอักษร ก – จ มาเติมหน้าหัวข้อที่มีความสัมพันธ์กันมากที่สุด (๕ คะแนน)</div>
+            <div class="matching-grid">
+                <div class="match-box">
+                    <div class="match-item">.......... <strong>๑. ตลาดปสาน</strong> <span class="ans-text">[ ค ]</span></div>
+                    <div class="match-item">.......... <strong>๒. พระอจนะ (วัดศรีชุม)</strong> <span class="ans-text">[ ก ]</span></div>
+                    <div class="match-item">.......... <strong>๓. เตาทุเรียง</strong> <span class="ans-text">[ จ ]</span></div>
+                    <div class="match-item">.......... <strong>๔. เมืองสองแคว (พิษณุโลก)</strong> <span class="ans-text">[ ข ]</span></div>
+                    <div class="match-item">.......... <strong>๕. สมเด็จพระบรมไตรโลกนาถ</strong> <span class="ans-text">[ ง ]</span></div>
+                </div>
+                <div class="match-box" style="background:#F3E5F5;">
+                    <div class="match-item"><strong>ก.</strong> พระพุทธรูปปางมารวิชัยขนาดใหญ่ประดิษฐานในมณฑป</div>
+                    <div class="match-item"><strong>ข.</strong> เมืองศูนย์กลางของสุโขทัยตอนปลายและที่ประดิษฐานพระพุทธชินราช</div>
+                    <div class="match-item"><strong>ค.</strong> ศูนย์กลางการแลกเปลี่ยนซื้อขายสินค้าในเมืองสุโขทัย</div>
+                    <div class="match-item"><strong>ง.</strong> กษัตริย์อยุธยาผู้รวมสุโขทัยเข้ากับอาณาจักรอยุธยาเมื่อ พ.ศ. ๑๙๘๑</div>
+                    <div class="match-item"><strong>จ.</strong> แหล่งผลิตเครื่องปั้นดินเผาเคลือบสังคโลกเพื่อการส่งออก</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ตอนที่ 3: คำถามคิดวิเคราะห์ -->
+        <div class="ws-section">
+            <div class="section-title">ตอนที่ ๓ : วิเคราะห์สาเหตุความเสื่อมของอาณาจักรสุโขทัย (๓ คะแนน)</div>
+            <div class="evidence-card">
+                <p><strong>คำถาม:</strong> เพราะเหตุใดอาณาจักรสุโขทัยจึงเสื่อมอำนาจลงในระยะหลัง และถูกรวมเข้าเป็นส่วนหนึ่งของอาณาจักรอยุธยาเมื่อ พ.ศ. ๑๙๘๑? (ระบุปัจจัยภายในและปัจจัยภายนอก)</p>
+                <div class="ans-block">๑) ปัจจัยภายใน: เกิดการแย่งชิงอำนาจในหมู่ราชวงศ์พระร่วง เมืองประเทศราชแยกตัวเป็นอิสระ และที่ตั้งของสุโขทัยอยู่ลึกในแผ่นดินห่างไกลจากการค้าทางทะเล</div>
+                <div class="ans-block">๒) ปัจจัยภายนอก: อาณาจักรอยุธยาซึ่งตั้งอยู่ลุ่มน้ำเจ้าพระยาตอนล่างใกล้ทะเลมีความมั่งคั่งและเข้มแข็งทางทหารมากกว่า จึงแผ่อำนาจขึ้นมารวมสุโขทัยได้สำเร็จ</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function setMode(isTeacher) {
+            if (isTeacher) {
+                document.body.classList.add('teacher-mode');
+            } else {
+                document.body.classList.remove('teacher-mode');
+            }
+        }
+    </script>
+</body>
+</html>

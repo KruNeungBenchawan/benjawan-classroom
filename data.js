@@ -296,6 +296,32 @@ window.DEFAULT_CLASSROOM_DATA = {
       pinned: false
     },
     {
+      id: "m3-slide-2568",
+      title: "สไลด์ติวแนวข้อสอบ O-NET ภาษาไทย ม.3 ปี 68 (29 ข้อ Interactive)",
+      category: "media",
+      type: "canva",
+      subject: "ภาษาไทย",
+      grade: "ม.3",
+      year: "2568",
+      url: "onet-thai-m3-2569/8_สไลด์ติวแนวข้อสอบ_ONET_ภาษาไทย_ม3_ปี68.html",
+      description: "สไลด์ติวแนวข้อสอบ O-NET ภาษาไทย ม.3 ปีการศึกษา 2568 ครบ 29 ข้อ พร้อมเฉลยละเอียด",
+      date: "2026-11-18",
+      pinned: false
+    },
+    {
+      id: "m3-exam-pdf-2568",
+      title: "แนวข้อสอบ O-NET ภาษาไทย ม.3 ปี 2568 (.pdf)",
+      category: "documents",
+      type: "pdf",
+      subject: "ภาษาไทย",
+      grade: "ม.3",
+      year: "2568",
+      url: "onet-thai-m3-2569/โอเน็ต%20ม.3%2068.pdf",
+      description: "ไฟล์ PDF สไลด์แนวข้อสอบ O-NET ภาษาไทย ม.3 ปีการศึกษา 2568 เฉลยครบ 29 ข้อ",
+      date: "2026-11-18",
+      pinned: false
+    },
+    {
       id: "m3-slide-2568-html",
       title: "สไลด์ติวแนวข้อสอบ O-NET ภาษาไทย ม.3 ปี 68 (29 ข้อ Interactive)",
       category: "media",

@@ -3,61 +3,75 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-<meta name="theme-color" content="#4c1d95">
+<meta name="theme-color" content="#8b5cf6">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>History Smart Class | เว็บแอปสื่อการสอนประวัติศาสตร์ ม.1–ม.3 (พว.)</title>
 <link rel="manifest" href="manifest.json">
-<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Mali:wght@500;600;700&family=Sarabun:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #f1f5f9;
+    --bg: #f4f7ff;
+    --bg-gradient: linear-gradient(135deg, #dff1ff 0%, #f3e8ff 52%, #ffe4f2 100%);
     --surface: #ffffff;
-    --surface-2: #f8fafc;
-    --text: #0f172a;
-    --text-muted: #475569;
-    --border: #e2e8f0;
-    --primary: #5b21b6;
-    --primary-light: #ede9fe;
-    --accent: #d97706;
+    --surface-2: #f8faff;
+    --text: #1e293b;
+    --text-muted: #526071;
+    --border: #e2e8f8;
+    --primary: #7c3aed;
+    --primary-light: #f3e8ff;
+    --pink: #ec4899;
+    --pink-light: #fce7f3;
+    --sky: #0ea5e9;
+    --sky-light: #e0f2fe;
+    --accent: #f59e0b;
     --accent-light: #fef3c7;
-    --success: #059669;
+    --success: #10b981;
     --success-light: #d1fae5;
-    --danger: #dc2626;
+    --danger: #ef4444;
     --danger-light: #fee2e2;
-    --m1-color: #6d28d9;
-    --m2-color: #b91c1c;
-    --m3-color: #047857;
-    --shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
-    --radius: 16px;
+    --m1-color: #8b5cf6;
+    --m2-color: #ec4899;
+    --m3-color: #10b981;
+    --shadow: 0 8px 26px rgba(124, 58, 237, 0.08);
+    --radius: 22px;
     --font-scale: 1;
   }
 
   body.dark-mode {
     --bg: #0f172a;
+    --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 60%, #1e293b 100%);
     --surface: #1e293b;
-    --surface-2: #334155;
+    --surface-2: #283548;
     --text: #f8fafc;
     --text-muted: #cbd5e1;
     --border: #334155;
-    --primary: #8b5cf6;
-    --primary-light: rgba(139, 92, 246, 0.2);
+    --primary: #a78bfa;
+    --primary-light: rgba(167, 139, 250, 0.18);
+    --pink: #f472b6;
+    --pink-light: rgba(244, 114, 182, 0.18);
+    --sky: #38bdf8;
+    --sky-light: rgba(56, 189, 248, 0.16);
     --accent: #fbbf24;
     --accent-light: rgba(251, 191, 36, 0.15);
-    --shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+    --shadow: 0 6px 26px rgba(0, 0, 0, 0.35);
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { font-size: calc(16px * var(--font-scale)); }
   body {
     font-family: 'Sarabun', sans-serif;
-    background: var(--bg);
+    background: var(--bg-gradient);
+    background-attachment: fixed;
     color: var(--text);
     line-height: 1.65;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    transition: background 0.2s ease, color 0.2s ease;
+    transition: background 0.25s ease, color 0.2s ease;
+  }
+  h1, h2, h3, h4, .grade-tab, .mode-tab, .btn-primary, .btn-secondary, .btn-success, .btn-danger, .unit-badge, .slide-tag {
+    font-family: 'Mali', 'Sarabun', sans-serif;
   }
 
   /* Top App Bar */
@@ -65,249 +79,625 @@
     position: sticky;
     top: 0;
     z-index: 100;
-    background: linear-gradient(135deg, #2e1065 0%, #4c1d95 50%, #7c2d12 100%);
+    background: linear-gradient(125deg, #7c3aed 0%, #a855f7 48%, #ec4899 100%);
     color: #fff;
-    padding: 12px 20px;
+    padding: 8px 16px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+    gap: 10px;
+    box-shadow: 0 4px 18px rgba(124, 58, 237, 0.22);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.28);
   }
   .brand {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
+    min-width: 0;
   }
   .brand-logo {
-    width: 42px;
-    height: 42px;
+    width: 38px;
+    height: 38px;
     border-radius: 12px;
-    background: rgba(255,255,255,0.15);
-    border: 1px solid rgba(255,255,255,0.3);
+    background: #fff;
+    border: 2px solid rgba(255,255,255,0.85);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.4rem;
+    overflow: hidden;
     flex-shrink: 0;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.14);
+  }
+  .brand-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
   .brand-title h1 {
-    font-size: 1.15rem;
-    font-weight: 800;
+    font-size: 1.05rem;
+    font-weight: 700;
     line-height: 1.2;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    white-space: nowrap;
   }
   .brand-title span {
-    font-size: 0.78rem;
-    opacity: 0.85;
+    font-size: 0.72rem;
+    opacity: 0.94;
     display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .topbar-actions {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     flex-wrap: wrap;
+    flex-shrink: 0;
   }
   .icon-btn {
-    background: rgba(255,255,255,0.14);
+    background: rgba(255,255,255,0.2);
     color: #fff;
-    border: 1px solid rgba(255,255,255,0.25);
-    padding: 7px 12px;
-    border-radius: 10px;
+    border: 1.5px solid rgba(255,255,255,0.35);
+    padding: 5px 10px;
+    border-radius: 99px;
     cursor: pointer;
-    font-family: inherit;
-    font-size: 0.85rem;
+    font-family: 'Mali', 'Sarabun', sans-serif;
+    font-size: 0.78rem;
     font-weight: 600;
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    transition: background 0.15s;
+    gap: 5px;
+    transition: all 0.16s ease;
+    backdrop-filter: blur(4px);
+    white-space: nowrap;
   }
-  .icon-btn:hover { background: rgba(255,255,255,0.26); }
+  .icon-btn:hover { background: rgba(255,255,255,0.32); transform: translateY(-1px); }
   .icon-btn.teacher-active {
-    background: #dc2626;
-    border-color: #fca5a5;
-    box-shadow: 0 0 12px rgba(220,38,38,0.5);
+    background: #ef4444;
+    border-color: #fecaca;
+    box-shadow: 0 0 14px rgba(239,68,68,0.55);
   }
 
   /* Layout */
   .app-layout {
     display: grid;
-    grid-template-columns: 310px 1fr;
+    grid-template-columns: 280px 1fr;
     flex: 1;
-    max-width: 1600px;
+    max-width: 100%;
     width: 100%;
     margin: 0 auto;
-    gap: 20px;
-    padding: 20px;
+    gap: 14px;
+    padding: 10px 16px;
   }
 
   /* Sidebar */
   .sidebar {
     background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 16px;
+    border: 2px solid var(--border);
+    border-radius: 18px;
+    padding: 10px;
     box-shadow: var(--shadow);
-    height: fit-content;
+    max-height: calc(100vh - 76px);
+    display: flex;
+    flex-direction: column;
     position: sticky;
-    top: 80px;
+    top: 66px;
+  }
+  .sidebar-mascot {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    background: linear-gradient(135deg, #fff6d6 0%, #fce7f3 100%);
+    border: 1.5px solid #fbcfe8;
+    border-radius: 14px;
+    padding: 8px 10px;
+    margin-bottom: 10px;
+    flex-shrink: 0;
+  }
+  body.dark-mode .sidebar-mascot {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.22) 0%, rgba(236, 72, 153, 0.22) 100%);
+    border-color: rgba(244, 114, 182, 0.35);
+  }
+  .sidebar-mascot img {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    object-fit: cover;
+    border: 2px solid #fff;
+    box-shadow: 0 3px 10px rgba(236, 72, 153, 0.2);
+    flex-shrink: 0;
+  }
+  .sidebar-mascot-text strong {
+    display: block;
+    font-family: 'Mali', 'Sarabun', sans-serif;
+    font-size: 0.84rem;
+    color: #9d174d;
+  }
+  body.dark-mode .sidebar-mascot-text strong { color: #f9a8d4; }
+  .sidebar-mascot-text span {
+    font-size: 0.74rem;
+    color: var(--text-muted);
+    line-height: 1.25;
+    display: block;
   }
   .grade-tabs {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 6px;
-    margin-bottom: 14px;
+    gap: 5px;
+    margin-bottom: 10px;
     background: var(--surface-2);
-    padding: 5px;
+    padding: 4px;
     border-radius: 12px;
+    border: 1px solid var(--border);
+    flex-shrink: 0;
   }
   .grade-tab {
     border: none;
     background: transparent;
     color: var(--text-muted);
-    font-family: inherit;
     font-weight: 700;
-    font-size: 0.85rem;
-    padding: 7px 4px;
-    border-radius: 8px;
+    font-size: 0.82rem;
+    padding: 6px 4px;
+    border-radius: 9px;
     cursor: pointer;
-    transition: all 0.15s;
+    transition: all 0.16s;
   }
   .grade-tab.active {
-    background: var(--primary);
+    background: linear-gradient(135deg, #7c3aed, #ec4899);
     color: #fff;
-    box-shadow: 0 2px 8px rgba(91,33,182,0.25);
+    box-shadow: 0 3px 10px rgba(124, 58, 237, 0.28);
   }
   .unit-list {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 6px;
+    overflow-y: auto;
+    padding-right: 3px;
+    flex: 1;
   }
+  .unit-list::-webkit-scrollbar { width: 5px; }
+  .unit-list::-webkit-scrollbar-thumb { background: #d8b4fe; border-radius: 99px; }
   .unit-item {
     text-align: left;
     background: var(--surface-2);
-    border: 2px solid transparent;
-    border-radius: 12px;
-    padding: 12px 14px;
+    border: 1.5px solid transparent;
+    border-radius: 14px;
+    padding: 8px 10px;
     cursor: pointer;
     font-family: inherit;
     color: var(--text);
-    transition: all 0.15s;
-    position: relative;
+    transition: all 0.16s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
   }
   .unit-item:hover {
-    border-color: var(--border);
-    transform: translateY(-1px);
+    border-color: #d8b4fe;
+    transform: translateX(2px);
+    box-shadow: 0 3px 10px rgba(124, 58, 237, 0.08);
   }
   .unit-item.active {
-    background: var(--primary-light);
+    background: linear-gradient(135deg, var(--primary-light), var(--pink-light));
     border-color: var(--primary);
+  }
+  .unit-icon-box {
+    width: 36px;
+    height: 36px;
+    border-radius: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    flex-shrink: 0;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  }
+  .icon-m1 { background: #ede9fe; }
+  .icon-m2 { background: #fce7f3; }
+  .icon-m3 { background: #d1fae5; }
+  body.dark-mode .icon-m1 { background: rgba(139, 92, 246, 0.25); }
+  body.dark-mode .icon-m2 { background: rgba(236, 72, 153, 0.25); }
+  body.dark-mode .icon-m3 { background: rgba(16, 185, 129, 0.25); }
+  .unit-item-body {
+    flex: 1;
+    min-width: 0;
+  }
+  .unit-item-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    margin-bottom: 2px;
   }
   .unit-badge {
     display: inline-block;
-    font-size: 0.72rem;
-    font-weight: 800;
-    padding: 2px 8px;
+    font-size: 0.66rem;
+    font-weight: 700;
+    padding: 1px 8px;
     border-radius: 99px;
     color: #fff;
-    margin-bottom: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   }
-  .badge-m1 { background: var(--m1-color); }
-  .badge-m2 { background: var(--m2-color); }
-  .badge-m3 { background: var(--m3-color); }
+  .badge-m1 { background: linear-gradient(135deg, #8b5cf6, #6366f1); }
+  .badge-m2 { background: linear-gradient(135deg, #ec4899, #f43f5e); }
+  .badge-m3 { background: linear-gradient(135deg, #10b981, #0ea5e9); }
   .unit-item h4 {
-    font-size: 0.95rem;
+    font-size: 0.84rem;
     font-weight: 700;
-    margin-bottom: 3px;
-  }
-  .unit-item p {
-    font-size: 0.78rem;
-    color: var(--text-muted);
-    line-height: 1.35;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .unit-score-pill {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    font-size: 0.72rem;
+    font-size: 0.68rem;
     font-weight: 700;
     background: var(--success-light);
-    color: var(--success);
-    padding: 2px 7px;
+    color: #065f46;
+    padding: 1px 6px;
     border-radius: 99px;
+    flex-shrink: 0;
   }
 
   /* Main Content Area */
   .main-area {
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 10px;
     min-width: 0;
   }
   .unit-hero {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 20px 24px;
+    background: linear-gradient(135deg, #ffffff 0%, #f5f3ff 55%, #fdf2f8 100%);
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    padding: 8px 14px;
     box-shadow: var(--shadow);
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     align-items: center;
     justify-content: space-between;
-    gap: 16px;
+    gap: 10px;
+    position: relative;
+    overflow: hidden;
+  }
+  body.dark-mode .unit-hero {
+    background: linear-gradient(135deg, #1e293b 0%, #2e1065 65%, #3b0764 100%);
+  }
+  .unit-hero-main {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    min-width: 0;
+  }
+  .unit-hero-info {
+    min-width: 0;
+    flex: 1;
+  }
+  .hero-chibi-wrap {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    border-radius: 13px;
+    background: #fff;
+    border: 2px solid #f9a8d4;
+    box-shadow: 0 4px 12px rgba(236, 72, 153, 0.16);
+    overflow: hidden;
+    flex-shrink: 0;
+    animation: chibiFloat 3.6s ease-in-out infinite;
+  }
+  .hero-chibi-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  @keyframes chibiFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-4px); }
   }
   .unit-hero-info h2 {
-    font-size: 1.45rem;
-    font-weight: 800;
-    margin-top: 4px;
+    font-size: 1.08rem;
+    font-weight: 700;
+    margin-top: 2px;
+    line-height: 1.2;
+    color: var(--primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .unit-hero-info p {
-    font-size: 0.92rem;
+    font-size: 0.78rem;
     color: var(--text-muted);
+    margin-top: 1px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .unit-hero .btn-primary,
+  .unit-hero .btn-secondary {
+    padding: 5px 10px;
+    font-size: 0.76rem;
+    white-space: nowrap;
   }
 
   /* Mode Navigation Tabs */
   .mode-tabs {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
     background: var(--surface);
-    padding: 8px;
-    border-radius: var(--radius);
-    border: 1px solid var(--border);
+    padding: 4px;
+    border-radius: 14px;
+    border: 2px solid var(--border);
     box-shadow: var(--shadow);
   }
   .mode-tab {
     border: none;
     background: transparent;
     color: var(--text-muted);
-    padding: 12px 10px;
-    border-radius: 12px;
-    font-family: inherit;
-    font-size: 0.95rem;
+    padding: 7px 6px;
+    border-radius: 10px;
+    font-size: 0.8rem;
     font-weight: 700;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    transition: all 0.15s;
+    gap: 5px;
+    white-space: nowrap;
+    transition: all 0.18s;
   }
-  .mode-tab:hover { background: var(--surface-2); color: var(--text); }
-  .mode-tab.active {
-    background: var(--primary);
+
+  /* MODE 4: Historical Sources & VDO */
+  .res-section-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 22px 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px dashed var(--border);
+  }
+  .res-section-title h3 {
+    font-size: 1.15rem;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .doc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .doc-card {
+    background: var(--surface-2);
+    border: 1.5px solid var(--border);
+    border-radius: 18px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: transform 0.16s, box-shadow 0.16s;
+  }
+  .doc-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(124, 58, 237, 0.08);
+    border-color: #d8b4fe;
+  }
+  .doc-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+  }
+  .doc-badge {
+    font-family: 'Mali', 'Sarabun', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 2px 9px;
+    border-radius: 99px;
+  }
+  .doc-badge-primary { background: #ede9fe; color: #6d28d9; }
+  .doc-badge-secondary { background: #fef3c7; color: #b45309; }
+  .doc-badge-form { background: #e0f2fe; color: #0369a1; }
+  .doc-badge-era { background: #fce7f3; color: #be185d; }
+  body.dark-mode .doc-badge-primary { background: rgba(139,92,246,0.25); color: #ddd6fe; }
+  body.dark-mode .doc-badge-secondary { background: rgba(245,158,11,0.22); color: #fde68a; }
+  body.dark-mode .doc-badge-form { background: rgba(14,165,233,0.22); color: #bae6fd; }
+  body.dark-mode .doc-badge-era { background: rgba(236,72,153,0.22); color: #fbcfe8; }
+  .doc-card h4 {
+    font-size: 1.02rem;
+    color: var(--text);
+    line-height: 1.35;
+  }
+  .doc-excerpt {
+    background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+    border-left: 4px solid #f59e0b;
+    border-radius: 10px;
+    padding: 10px 13px;
+    font-size: 0.9rem;
+    color: #451a03;
+    line-height: 1.55;
+  }
+  body.dark-mode .doc-excerpt {
+    background: rgba(245, 158, 11, 0.12);
+    color: #fef3c7;
+  }
+  .doc-significance {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+  .doc-q-box {
+    background: var(--surface);
+    border: 1.5px dashed #c4b5fd;
+    border-radius: 12px;
+    padding: 10px 12px;
+    font-size: 0.86rem;
+    margin-top: auto;
+  }
+  .doc-q-box strong { color: var(--primary); }
+  .doc-answer {
+    margin-top: 8px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: var(--success-light);
+    color: #065f46;
+    font-size: 0.84rem;
+    font-weight: 600;
+    display: none;
+  }
+  .doc-answer.show, body.teacher-mode .doc-answer { display: block; }
+  .doc-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding-top: 6px;
+    border-top: 1px solid var(--border);
+  }
+  .doc-link {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--primary);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .doc-link:hover { text-decoration: underline; }
+  .mini-toggle-btn {
+    background: var(--primary-light);
+    color: var(--primary);
+    border: none;
+    border-radius: 99px;
+    padding: 4px 10px;
+    font-family: 'Mali', 'Sarabun', sans-serif;
+    font-size: 0.76rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .video-card {
+    background: var(--surface-2);
+    border: 1.5px solid var(--border);
+    border-radius: 18px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.16s, box-shadow 0.16s;
+  }
+  .video-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(236, 72, 153, 0.12);
+    border-color: #f9a8d4;
+  }
+  .video-thumb-bar {
+    background: linear-gradient(135deg, #7c3aed 0%, #ec4899 65%, #f59e0b 100%);
     color: #fff;
-    box-shadow: 0 4px 12px rgba(91, 33, 182, 0.25);
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .video-play-circle {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.24);
+    border: 2px solid #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+  .video-card-body {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+  }
+  .video-card-body h4 {
+    font-size: 0.98rem;
+    line-height: 1.38;
+  }
+  .video-card-body p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.45;
+    flex: 1;
+  }
+  .video-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    font-size: 0.76rem;
+    color: var(--text-muted);
+  }
+  .video-embed-wrap {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+    background: #0f172a;
+  }
+  .video-embed-wrap iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+  .custom-res-box {
+    background: linear-gradient(135deg, #f5f3ff 0%, #fdf2f8 100%);
+    border: 2px dashed #c4b5fd;
+    border-radius: 18px;
+    padding: 18px;
+    margin-top: 8px;
+  }
+  body.dark-mode .custom-res-box {
+    background: rgba(139, 92, 246, 0.12);
+    border-color: rgba(167, 139, 250, 0.4);
+  }
+  .custom-res-form {
+    display: grid;
+    grid-template-columns: 1.2fr 1.6fr auto;
+    gap: 10px;
+    margin-top: 12px;
+  }
+  @media (max-width: 768px) {
+    .custom-res-form { grid-template-columns: 1fr; }
+  }
+  .mode-tab:hover { background: var(--primary-light); color: var(--primary); }
+  .mode-tab.active {
+    background: linear-gradient(135deg, #7c3aed, #ec4899);
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(124, 58, 237, 0.28);
   }
 
   /* Workspace Card */
   .workspace-card {
     background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 24px;
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    padding: 12px 16px;
     box-shadow: var(--shadow);
-    min-height: 520px;
+    min-height: calc(100vh - 208px);
+    display: flex;
+    flex-direction: column;
   }
 
   /* MODE 1: Interactive Slide Player */
@@ -316,23 +706,82 @@
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 16px;
-    padding-bottom: 12px;
+    gap: 8px;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
     border-bottom: 1px solid var(--border);
   }
+  .slide-toolbar .btn-primary,
+  .slide-toolbar .btn-secondary {
+    padding: 5px 11px;
+    font-size: 0.78rem;
+  }
   .slide-stage {
-    background: linear-gradient(145deg, #1e1b4b 0%, #311042 60%, #1e293b 100%);
+    background: linear-gradient(145deg, #312e81 0%, #6d28d9 52%, #be185d 100%);
     color: #fff;
-    border-radius: 18px;
-    padding: 36px 40px;
-    min-height: 430px;
+    border-radius: 16px;
+    padding: 18px 22px;
+    flex: 1;
+    min-height: clamp(270px, calc(100vh - 295px), 480px);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     position: relative;
-    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.12), 0 12px 30px rgba(0,0,0,0.2);
+    box-shadow: inset 0 0 0 2px rgba(255,255,255,0.18), 0 10px 26px rgba(109, 40, 217, 0.22);
     overflow: hidden;
+  }
+  .slide-chibi-sticker {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    width: 58px;
+    height: 58px;
+    border-radius: 15px;
+    background: #fff;
+    border: 2.5px solid #fde68a;
+    box-shadow: 0 5px 14px rgba(0,0,0,0.22);
+    overflow: hidden;
+    z-index: 2;
+    animation: chibiFloat 4s ease-in-out infinite;
+  }
+  .slide-chibi-sticker img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .chibi-cheer-banner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: linear-gradient(135deg, #e0f2fe 0%, #fce7f3 100%);
+    border: 1.5px solid #f9a8d4;
+    border-radius: 16px;
+    padding: 10px 16px;
+    margin-bottom: 16px;
+  }
+  body.dark-mode .chibi-cheer-banner {
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.18) 0%, rgba(236, 72, 153, 0.18) 100%);
+    border-color: rgba(244, 114, 182, 0.35);
+  }
+  .chibi-cheer-banner img {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    object-fit: cover;
+    border: 2px solid #fff;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    flex-shrink: 0;
+  }
+  .chibi-cheer-banner strong {
+    font-family: 'Mali', 'Sarabun', sans-serif;
+    color: #9d174d;
+    font-size: 0.95rem;
+  }
+  body.dark-mode .chibi-cheer-banner strong { color: #f9a8d4; }
+  .chibi-cheer-banner span {
+    display: block;
+    font-size: 0.82rem;
+    color: var(--text-muted);
   }
   .slide-stage:fullscreen {
     padding: 60px 80px;
@@ -344,49 +793,50 @@
     background: rgba(251, 191, 36, 0.2);
     border: 1px solid #fbbf24;
     color: #fde68a;
-    font-size: 0.82rem;
+    font-size: 0.78rem;
     font-weight: 700;
-    padding: 4px 12px;
+    padding: 3px 11px;
     border-radius: 99px;
-    margin-bottom: 12px;
+    margin-bottom: 6px;
   }
   .slide-title {
-    font-size: 1.85rem;
+    font-size: 1.52rem;
     font-weight: 800;
     color: #fef08a;
-    margin-bottom: 18px;
-    line-height: 1.3;
+    margin-bottom: 12px;
+    padding-right: 72px;
+    line-height: 1.28;
   }
   .slide-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 16px;
-    margin-top: 8px;
+    gap: 12px;
+    margin-top: 4px;
   }
   .slide-box {
     background: rgba(255, 255, 255, 0.09);
     border: 1px solid rgba(255, 255, 255, 0.16);
     border-radius: 14px;
-    padding: 16px 18px;
+    padding: 12px 15px;
     backdrop-filter: blur(8px);
   }
   .slide-box h4 {
     color: #fbbf24;
-    font-size: 1.05rem;
-    margin-bottom: 8px;
+    font-size: 0.98rem;
+    margin-bottom: 6px;
   }
   .slide-box ul {
     padding-left: 18px;
-    font-size: 0.95rem;
-    line-height: 1.6;
+    font-size: 0.9rem;
+    line-height: 1.5;
   }
-  .slide-box li { margin-bottom: 5px; }
+  .slide-box li { margin-bottom: 4px; }
   .slide-controls {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 28px;
-    padding-top: 16px;
+    margin-top: 14px;
+    padding-top: 10px;
     border-top: 1px solid rgba(255,255,255,0.15);
   }
   .slide-dots {
@@ -565,24 +1015,47 @@
   /* Buttons */
   .btn-primary, .btn-secondary, .btn-danger, .btn-success {
     padding: 10px 18px;
-    border-radius: 10px;
+    border-radius: 99px;
     border: none;
-    font-family: inherit;
     font-weight: 700;
-    font-size: 0.92rem;
+    font-size: 0.9rem;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
     text-decoration: none;
-    transition: transform 0.12s, opacity 0.12s;
+    transition: transform 0.14s, box-shadow 0.14s, opacity 0.14s;
   }
-  .btn-primary { background: var(--primary); color: #fff; }
-  .btn-secondary { background: var(--surface-2); color: var(--text); border: 1px solid var(--border); }
-  .btn-success { background: var(--success); color: #fff; }
-  .btn-danger { background: var(--danger); color: #fff; }
-  .btn-primary:hover, .btn-success:hover, .btn-danger:hover { opacity: 0.92; transform: translateY(-1px); }
+  .btn-primary {
+    background: linear-gradient(135deg, #7c3aed, #ec4899);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.25);
+  }
+  .btn-secondary {
+    background: var(--surface);
+    color: var(--primary);
+    border: 1.5px solid #ddd6fe;
+  }
+  body.dark-mode .btn-secondary {
+    background: var(--surface-2);
+    color: var(--text);
+    border-color: var(--border);
+  }
+  .btn-success {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.24);
+  }
+  .btn-danger {
+    background: linear-gradient(135deg, #f43f5e, #e11d48);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(244, 63, 94, 0.24);
+  }
+  .btn-primary:hover, .btn-secondary:hover, .btn-success:hover, .btn-danger:hover {
+    opacity: 0.95;
+    transform: translateY(-2px);
+  }
 
   /* Modal */
   .modal-backdrop {
@@ -600,7 +1073,7 @@
   .modal-box {
     background: var(--surface);
     color: var(--text);
-    border-radius: 20px;
+    border-radius: 22px;
     max-width: 600px;
     width: 100%;
     padding: 28px;
@@ -623,6 +1096,17 @@
     }
     .sidebar {
       position: static;
+      max-height: none;
+    }
+    .workspace-card {
+      min-height: auto;
+    }
+    .unit-hero {
+      flex-wrap: wrap;
+    }
+    .unit-hero-info h2,
+    .unit-hero-info p {
+      white-space: normal;
     }
     .unit-list {
       display: grid;
@@ -640,12 +1124,24 @@
       padding: 22px 20px;
       min-height: 360px;
     }
-    .slide-title { font-size: 1.35rem; }
+    .slide-chibi-sticker {
+      width: 52px;
+      height: 52px;
+      top: 14px;
+      right: 14px;
+      border-radius: 14px;
+    }
+    .hero-chibi-wrap {
+      width: 74px;
+      height: 74px;
+      border-radius: 18px;
+    }
+    .slide-title { font-size: 1.35rem; padding-right: 58px; }
     .brand-title span { display: none; }
   }
 
   @media print {
-    .topbar, .sidebar, .mode-tabs, .no-print { display: none !important; }
+    .topbar, .sidebar, .mode-tabs, .no-print, .hero-chibi-wrap, .slide-chibi-sticker, .chibi-cheer-banner { display: none !important; }
     .app-layout { display: block; padding: 0; }
     .workspace-card { border: none; box-shadow: none; padding: 0; }
   }
@@ -656,14 +1152,16 @@
   <!-- Top Navigation Bar -->
   <header class="topbar">
     <div class="brand">
-      <div class="brand-logo">🏛️</div>
+      <div class="brand-logo">
+        <img src="assets/chibi-history-duo.jpg" alt="นักเรียนประวัติศาสตร์ Chibi">
+      </div>
       <div class="brand-title">
-        <h1>History Smart Class (ม.1 – ม.3)</h1>
+        <h1>✨ History Smart Class (ม.1 – ม.3)</h1>
         <span>เว็บแอปสื่อการสอน สไลด์ ใบงานโต้ตอบ และคลังข้อสอบ • อ้างอิงหนังสือเรียน พว.</span>
       </div>
     </div>
     <div class="topbar-actions">
-      <a class="icon-btn" href="../index.html" style="text-decoration:none;background:rgba(255,255,255,0.24);font-weight:700;">
+      <a class="icon-btn" href="../index.html" style="text-decoration:none;background:rgba(255,255,255,0.28);font-weight:700;">
         🏠 ห้องเรียนครูเบ็ญจวรรณ
       </a>
       <button class="icon-btn" id="teacherToggleBtn" onclick="toggleTeacherMode()">
@@ -681,6 +1179,13 @@
   <div class="app-layout">
     <!-- Sidebar: Grade & Unit Selector -->
     <aside class="sidebar">
+      <div class="sidebar-mascot">
+        <img src="assets/chibi-classroom.jpg" alt="ห้องเรียนประวัติศาสตร์ Chibi">
+        <div class="sidebar-mascot-text">
+          <strong>🌟 ยินดีต้อนรับจ้า!</strong>
+          <span>เลือกชั้นเรียนและหน่วยการเรียนรู้ที่ต้องการศึกษาได้เลยนะ</span>
+        </div>
+      </div>
       <div class="grade-tabs">
         <button class="grade-tab active" onclick="filterGrade('all', this)">ทั้งหมด</button>
         <button class="grade-tab" onclick="filterGrade('m1', this)">ม.1</button>
@@ -694,23 +1199,30 @@
     <main class="main-area">
       <!-- Unit Hero Header -->
       <section class="unit-hero">
-        <div class="unit-hero-info">
-          <span class="unit-badge badge-m1" id="heroBadge">ม.1</span>
-          <h2 id="heroTitle">หน่วยการเรียนรู้</h2>
-          <p id="heroDesc">คำอธิบายหน่วยการเรียนรู้</p>
+        <div class="unit-hero-main">
+          <div class="hero-chibi-wrap">
+            <img id="heroChibiImg" src="assets/chibi-history-duo.jpg" alt="การ์ตูนนักเรียน Chibi">
+          </div>
+          <div class="unit-hero-info">
+            <span class="unit-badge badge-m1" id="heroBadge">ม.1</span>
+            <h2 id="heroTitle">หน่วยการเรียนรู้</h2>
+            <p id="heroDesc">คำอธิบายหน่วยการเรียนรู้</p>
+          </div>
         </div>
         <div class="no-print" style="display:flex; gap:8px; flex-wrap:wrap;">
           <a id="heroQuickSlideLink" href="#" target="_blank" class="btn-secondary">🖥️ เปิดสไลด์แยกเต็มจอ</a>
           <a id="heroQuickWsLink" href="#" target="_blank" class="btn-secondary">🖨️ เปิดใบงาน A4 สำหรับพิมพ์</a>
+          <button type="button" class="btn-primary" onclick="openResourcesTab()">🎬 หลักฐาน & คลิป VDO</button>
         </div>
       </section>
 
-      <!-- 4 Interactive Mode Tabs -->
+      <!-- 5 Interactive Mode Tabs -->
       <nav class="mode-tabs">
-        <button class="mode-tab active" onclick="switchMode('slides', this)">🖥️ 1. สไลด์ประกอบการสอน</button>
-        <button class="mode-tab" onclick="switchMode('worksheet', this)">✍️ 2. ใบงานโต้ตอบออนไลน์</button>
-        <button class="mode-tab" onclick="switchMode('quiz', this)">🎯 3. แบบทดสอบวัดผล</button>
-        <button class="mode-tab" onclick="switchMode('downloads', this)">📥 4. ดาวน์โหลดไฟล์ (.pptx/.docx)</button>
+        <button class="mode-tab active" data-mode="slides" onclick="switchMode('slides', this)">🖥️ 1. สไลด์สอน</button>
+        <button class="mode-tab" data-mode="worksheet" onclick="switchMode('worksheet', this)">✍️ 2. ใบงานโต้ตอบ</button>
+        <button class="mode-tab" data-mode="quiz" onclick="switchMode('quiz', this)">🎯 3. แบบทดสอบ</button>
+        <button class="mode-tab" data-mode="resources" onclick="switchMode('resources', this)">📜 4. หลักฐาน & VDO</button>
+        <button class="mode-tab" data-mode="downloads" onclick="switchMode('downloads', this)">📥 5. ดาวน์โหลด</button>
       </nav>
 
       <!-- Dynamic Workspace Container -->
@@ -767,6 +1279,7 @@
   </div>
 
 <script src="units-extra.js?v=3"></script>
+<script src="resources-data.js?v=1"></script>
 <script>
 // ============================================================================
 // DATA STORE: All 6 Core Units across Grades 7, 8, 9 (ม.1, ม.2, ม.3 - พว.)
@@ -1795,11 +2308,11 @@ function initApp() {
   }
   if ('caches' in window) {
     caches.keys().then(keys => {
-      keys.filter(k => k !== 'thai-history-pwa-v3').forEach(k => caches.delete(k));
+      keys.filter(k => k !== 'thai-history-pwa-v5').forEach(k => caches.delete(k));
     }).catch(() => {});
   }
   if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
-    navigator.serviceWorker.register('sw.js?v=3').then(reg => reg.update()).catch(() => {});
+    navigator.serviceWorker.register('sw.js?v=5').then(reg => reg.update()).catch(() => {});
   }
 }
 
@@ -1814,19 +2327,34 @@ function filterGrade(grade, btnEl) {
   }
 }
 
+function getUnitIcon(unitId, idx) {
+  const iconMap = {
+    m1_u1: '⏳', m1_u2: '🔍', m1_u3: '🏺', m1_u4: '👑', m1_u5: '🌏',
+    m2_u1: '🏯', m2_u2: '⚔️', m2_u3: '📜', m2_u4: '🎭', m2_u5: '🧭',
+    m3_u0_1: '🔎', m3_u1: '🚂', m3_u2: '🏛️', m3_u3: '🇹🇭', m3_u4_dem: '🗳️', m3_u5_world: '🌍'
+  };
+  const fallback = ['📚', '✨', '🏰', '🌟', '🗺️', '🎨'];
+  return iconMap[unitId] || fallback[idx % fallback.length];
+}
+
 function renderUnitList() {
   const container = document.getElementById('unitListContainer');
   const units = UNITS_DATA.filter(u => currentGradeFilter === 'all' || u.grade === currentGradeFilter);
   const scores = JSON.parse(localStorage.getItem('historyQuizScores') || '{}');
 
-  container.innerHTML = units.map(u => {
+  container.innerHTML = units.map((u, idx) => {
     const scoreText = scores[u.id] !== undefined ? `<span class="unit-score-pill">✓ ${scores[u.id]}/${u.quiz.length}</span>` : '';
+    const icon = getUnitIcon(u.id, idx);
     return `
-      <button class="unit-item ${u.id === currentUnitId ? 'active' : ''}" onclick="selectUnit('${u.id}')">
-        <span class="unit-badge ${u.badgeClass}">${u.gradeLabel}</span>
-        ${scoreText}
-        <h4>${u.title}</h4>
-        <p>${u.desc}</p>
+      <button class="unit-item ${u.id === currentUnitId ? 'active' : ''}" onclick="selectUnit('${u.id}')" title="${u.title}">
+        <div class="unit-icon-box icon-${u.grade}">${icon}</div>
+        <div class="unit-item-body">
+          <div class="unit-item-top">
+            <span class="unit-badge ${u.badgeClass}">${u.gradeLabel}</span>
+            ${scoreText}
+          </div>
+          <h4>${u.title}</h4>
+        </div>
       </button>
     `;
   }).join('');
@@ -1842,9 +2370,21 @@ function selectUnit(unitId) {
   badge.className = `unit-badge ${unit.badgeClass}`;
   badge.textContent = unit.gradeLabel;
   document.getElementById('heroTitle').textContent = unit.title;
-  document.getElementById('heroDesc').textContent = unit.desc;
+  const heroDescEl = document.getElementById('heroDesc');
+  heroDescEl.textContent = unit.desc;
+  heroDescEl.title = unit.desc;
   document.getElementById('heroQuickSlideLink').href = unit.files.slideHtml;
   document.getElementById('heroQuickWsLink').href = unit.files.wsHtml;
+
+  const heroChibi = document.getElementById('heroChibiImg');
+  if (heroChibi) {
+    const chibiMap = {
+      m1: 'assets/chibi-student-boy.jpg',
+      m2: 'assets/chibi-student-girl.jpg',
+      m3: 'assets/chibi-history-duo.jpg'
+    };
+    heroChibi.src = chibiMap[unit.grade] || 'assets/chibi-history-duo.jpg';
+  }
 
   renderWorkspace();
 }
@@ -1854,6 +2394,13 @@ function switchMode(mode, btnEl) {
   document.querySelectorAll('.mode-tab').forEach(b => b.classList.remove('active'));
   if (btnEl) btnEl.classList.add('active');
   renderWorkspace();
+}
+
+function openResourcesTab() {
+  const btn = document.querySelector('.mode-tab[data-mode="resources"]');
+  switchMode('resources', btn);
+  const ws = document.getElementById('workspaceContainer');
+  if (ws) ws.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function renderWorkspace() {
@@ -1866,9 +2413,171 @@ function renderWorkspace() {
     renderWorksheetMode(unit, container);
   } else if (currentMode === 'quiz') {
     renderQuizMode(unit, container);
+  } else if (currentMode === 'resources') {
+    renderResourcesMode(unit, container);
   } else if (currentMode === 'downloads') {
     renderDownloadsMode(unit, container);
   }
+}
+
+// ============================================================================
+// MODE 4: HISTORICAL EVIDENCE DOCUMENTS & RELATED VDO CLIPS
+// ============================================================================
+function escapeHtmlStr(str) {
+  return String(str || '').replace(/[&<>"']/g, s => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[s]));
+}
+
+function extractYoutubeId(url) {
+  if (!url) return null;
+  const m = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/);
+  return m ? m[1] : null;
+}
+
+function renderResourcesMode(unit, container) {
+  const res = (window.UNIT_RESOURCES && window.UNIT_RESOURCES[unit.id]) || { documents: [], videos: [] };
+  const customList = JSON.parse(localStorage.getItem(`customRes_${unit.id}`) || '[]');
+
+  const docsHtml = res.documents.map((doc, idx) => {
+    const isPrimary = doc.category.includes('ชั้นต้น');
+    return `
+      <article class="doc-card">
+        <div class="doc-badges">
+          <span class="doc-badge ${isPrimary ? 'doc-badge-primary' : 'doc-badge-secondary'}">📌 ${doc.category}</span>
+          <span class="doc-badge doc-badge-form">📄 ${doc.form}</span>
+          <span class="doc-badge doc-badge-era">⏳ ${doc.era}</span>
+        </div>
+        <h4>${doc.title}</h4>
+        <div class="doc-excerpt">
+          <strong>📜 สาระสำคัญจากหลักฐาน:</strong><br>${doc.excerpt}
+        </div>
+        <div class="doc-significance">
+          <strong>✨ คุณค่าทางประวัติศาสตร์:</strong> ${doc.significance}
+        </div>
+        <div class="doc-q-box">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px;">
+            <div><strong>🤔 ชวนคิดวิเคราะห์:</strong> ${doc.question}</div>
+          </div>
+          <div style="margin-top:8px;">
+            <button type="button" class="mini-toggle-btn" onclick="toggleDocAnswer(${idx})">💡 ดู/ซ่อนแนวคำตอบ</button>
+          </div>
+          <div class="doc-answer" id="doc_ans_${idx}">
+            ✅ <strong>แนวคำตอบ:</strong> ${doc.guideAnswer}
+          </div>
+        </div>
+        <div class="doc-footer">
+          <span style="font-size:0.78rem; color:var(--text-muted);">แหล่งอ้างอิง: ${doc.sourceName}</span>
+          <a class="doc-link" href="${doc.sourceUrl}" target="_blank" rel="noopener">🔗 เปิดคลังหลักฐานออนไลน์ ↗</a>
+        </div>
+      </article>
+    `;
+  }).join('');
+
+  const videosHtml = res.videos.map(v => `
+    <article class="video-card">
+      <div class="video-thumb-bar">
+        <div>
+          <span class="unit-badge" style="background:rgba(255,255,255,0.25); box-shadow:none;">🎬 ${v.tag}</span>
+          <div style="font-size:0.78rem; opacity:0.92; margin-top:4px;">⏱️ ${v.duration}</div>
+        </div>
+        <div class="video-play-circle">▶</div>
+      </div>
+      <div class="video-card-body">
+        <h4>${v.title}</h4>
+        <div class="video-meta">
+          <span>📺 ${v.channel}</span>
+        </div>
+        <p>${v.desc}</p>
+        <a class="btn-primary" href="${v.url}" target="_blank" rel="noopener" style="width:100%; margin-top:6px;">
+          ▶️ เปิดรับชมคลิป VDO
+        </a>
+      </div>
+    </article>
+  `).join('');
+
+  const customHtml = customList.length ? `
+    <div class="video-grid" style="margin-top:14px;">
+      ${customList.map((item, idx) => {
+        const ytId = extractYoutubeId(item.url);
+        const embedHtml = ytId
+          ? `<div class="video-embed-wrap"><iframe src="https://www.youtube.com/embed/${ytId}" title="${escapeHtmlStr(item.title)}" allowfullscreen></iframe></div>`
+          : `<div class="video-thumb-bar" style="background:linear-gradient(135deg,#0ea5e9,#8b5cf6);"><span>📎 สื่อเสริมของคุณครู</span><div class="video-play-circle">🔗</div></div>`;
+        return `
+          <article class="video-card">
+            ${embedHtml}
+            <div class="video-card-body">
+              <h4>${escapeHtmlStr(item.title)}</h4>
+              <div style="display:flex; gap:8px; margin-top:auto;">
+                <a class="btn-primary" href="${escapeHtmlStr(item.url)}" target="_blank" rel="noopener" style="flex:1;">🔗 เปิดลิงก์</a>
+                <button type="button" class="btn-secondary" onclick="deleteCustomResource('${unit.id}', ${idx})" title="ลบรายการนี้">🗑️</button>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join('')}
+    </div>
+  ` : '<p style="font-size:0.84rem; color:var(--text-muted); margin-top:10px;">ยังไม่มีลิงก์เพิ่มเติมของครูในหน่วยนี้ (สามารถวางลิงก์ YouTube เพื่อเล่นในหน้านี้ได้ทันที หรือวางลิงก์เอกสาร Google Drive / Canva ได้เลยครับ)</p>';
+
+  container.innerHTML = `
+    <div class="chibi-cheer-banner">
+      <img src="assets/chibi-history-duo.jpg" alt="นักเรียน Chibi นักสืบประวัติศาสตร์">
+      <div>
+        <strong>🔎 มุมนักสืบประวัติศาสตร์ : หลักฐานชั้นต้น–ชั้นรอง & คลิป VDO</strong>
+        <span>ศึกษาเอกสารหลักฐานจริง คิดวิเคราะห์คำถาม และชมคลิปวิดีโอประกอบหน่วย "${unit.title}"</span>
+      </div>
+    </div>
+
+    <div class="res-section-title" style="margin-top:4px;">
+      <h3>📜 เอกสารและหลักฐานทางประวัติศาสตร์ที่สำคัญ (${res.documents.length} รายการ)</h3>
+      <span style="font-size:0.82rem; color:var(--text-muted);">เปิดโหมดครูด้านบนเพื่อแสดงแนวคำตอบทุกข้อพร้อมกัน</span>
+    </div>
+    <div class="doc-grid">${docsHtml}</div>
+
+    <div class="res-section-title">
+      <h3>🎬 คลิป VDO และสื่อการเรียนรู้ที่เกี่ยวข้อง (${res.videos.length} รายการ)</h3>
+      <span style="font-size:0.82rem; color:var(--text-muted);">คัดสรรคลิปสรุป สารคดี และห้องเรียนติวเข้ม ม.ต้น</span>
+    </div>
+    <div class="video-grid">${videosHtml}</div>
+
+    <div class="custom-res-box no-print">
+      <h4 style="color:var(--primary); font-size:1rem;">➕ เพิ่มคลิป VDO YouTube หรือลิงก์เอกสารของครูเอง (บันทึกเฉพาะเครื่องนี้)</h4>
+      <p style="font-size:0.84rem; color:var(--text-muted);">ถ้าวางลิงก์ YouTube เช่น https://www.youtube.com/watch?v=... ระบบจะฝังตัวเล่นวิดีโอให้เปิดสอนในหน้านี้ได้ทันที!</p>
+      <div class="custom-res-form">
+        <input type="text" id="customResTitle" class="ws-input" placeholder="ชื่อคลิปหรือชื่อเอกสาร เช่น คลิปสรุปสุโขทัย...">
+        <input type="url" id="customResUrl" class="ws-input" placeholder="วางลิงก์ YouTube หรือลิงก์เอกสาร (https://...)">
+        <button type="button" class="btn-primary" onclick="addCustomResource('${unit.id}')">💾 บันทึกลิงก์</button>
+      </div>
+      ${customHtml}
+    </div>
+  `;
+}
+
+function toggleDocAnswer(idx) {
+  const el = document.getElementById(`doc_ans_${idx}`);
+  if (el) el.classList.toggle('show');
+}
+
+function addCustomResource(unitId) {
+  const titleEl = document.getElementById('customResTitle');
+  const urlEl = document.getElementById('customResUrl');
+  const title = (titleEl?.value || '').trim();
+  const url = (urlEl?.value || '').trim();
+  if (!title || !url || !/^https?:\/\//i.test(url)) {
+    alert('กรุณากรอกชื่อเรื่องและลิงก์ที่ขึ้นต้นด้วย https:// ให้ครบถ้วนครับ');
+    return;
+  }
+  const list = JSON.parse(localStorage.getItem(`customRes_${unitId}`) || '[]');
+  list.push({ title, url });
+  localStorage.setItem(`customRes_${unitId}`, JSON.stringify(list));
+  renderWorkspace();
+}
+
+function deleteCustomResource(unitId, idx) {
+  const list = JSON.parse(localStorage.getItem(`customRes_${unitId}`) || '[]');
+  list.splice(idx, 1);
+  localStorage.setItem(`customRes_${unitId}`, JSON.stringify(list));
+  renderWorkspace();
 }
 
 // ============================================================================
@@ -1889,19 +2598,24 @@ function renderSlideMode(unit, container) {
     <button class="slide-dot ${idx === currentSlideIndex ? 'active' : ''}" onclick="goToSlide(${idx})" title="สไลด์ที่ ${idx + 1}"></button>
   `).join('');
 
+  const slideChibiImg = currentSlideIndex % 2 === 0 ? 'assets/chibi-student-boy.jpg' : 'assets/chibi-student-girl.jpg';
+
   container.innerHTML = `
     <div class="slide-toolbar">
-      <div>
-        <strong>🖥️ สไลด์สรุปสาระสำคัญ (${currentSlideIndex + 1} / ${total})</strong>
-        <span style="font-size:0.85rem; color:var(--text-muted); margin-left:8px;">(ใช้ปุ่มลูกศร ⬅️ ➡️ หรือปัดหน้าจอบนมือถือ/แท็บเล็ตได้)</span>
+      <div style="font-size:0.9rem;">
+        <strong>🖥️ สไลด์สรุป (${currentSlideIndex + 1} / ${total})</strong>
+        <span style="font-size:0.78rem; color:var(--text-muted); margin-left:6px;">(กด ⬅️ ➡️ หรือปัดจอได้)</span>
       </div>
-      <div style="display:flex; gap:8px;">
+      <div style="display:flex; gap:6px;">
         <button class="btn-secondary" onclick="toggleSlideFullscreen()">⛶ ขยายเต็มจอโปรเจกเตอร์</button>
         <a class="btn-primary" href="${unit.files.slideHtml}" target="_blank">🚀 เปิดสไลด์ฉบับเต็ม (10+ หน้า)</a>
       </div>
     </div>
 
     <div class="slide-stage" id="slideStageEl" ontouchstart="handleTouchStart(event)" ontouchend="handleTouchEnd(event)">
+      <div class="slide-chibi-sticker" title="นักเรียนเพื่อนคู่คิด">
+        <img src="${slideChibiImg}" alt="การ์ตูนนักเรียน Chibi">
+      </div>
       <div>
         <span class="slide-tag">${slide.tag}</span>
         <h3 class="slide-title">${slide.title}</h3>
@@ -1980,6 +2694,14 @@ function renderWorksheetMode(unit, container) {
   `).join('');
 
   container.innerHTML = `
+    <div class="chibi-cheer-banner">
+      <img src="assets/chibi-student-girl.jpg" alt="นักเรียน Chibi ชวนทำใบงาน">
+      <div>
+        <strong>✍️ ตั้งใจทำใบงานนะคนเก่ง!</strong>
+        <span>อ่านโจทย์ให้ครบ แล้วพิมพ์คำตอบในช่องด้านล่าง ระบบจะบันทึกให้อัตโนมัติเลยจ้า</span>
+      </div>
+    </div>
+
     <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:16px;">
       <div>
         <h3>✍️ ใบงานออนไลน์แบบโต้ตอบ : ${unit.title}</h3>
@@ -2086,6 +2808,14 @@ function renderQuizMode(unit, container) {
   }).join('');
 
   container.innerHTML = `
+    <div class="chibi-cheer-banner">
+      <img src="assets/chibi-student-boy.jpg" alt="นักเรียน Chibi ชวนทำแบบทดสอบ">
+      <div>
+        <strong>🎯 พร้อมลุยแบบทดสอบวัดผลหรือยัง?</strong>
+        <span>เลือกคำตอบที่มั่นใจที่สุด แล้วดูคำอธิบายเฉลยไปพร้อมกันได้เลย สู้ๆ นะ!</span>
+      </div>
+    </div>
+
     <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:18px;">
       <div>
         <h3>🎯 แบบทดสอบวัดผลประจำหน่วย : ${unit.title}</h3>
@@ -2142,6 +2872,14 @@ function selectQuizOption(qIdx, optIdx) {
 // ============================================================================
 function renderDownloadsMode(unit, container) {
   container.innerHTML = `
+    <div class="chibi-cheer-banner">
+      <img src="assets/chibi-classroom.jpg" alt="ห้องเรียน Chibi คลังสื่อ">
+      <div>
+        <strong>📥 คลังไฟล์สื่อการสอนและใบงานพร้อมใช้</strong>
+        <span>ดาวน์โหลดไฟล์ .pptx และ .docx ไปปรับแต่งเพิ่มเติมหรือสั่งพิมพ์ได้ทันทีเลยจ้า</span>
+      </div>
+    </div>
+
     <div style="margin-bottom:20px;">
       <h3>📥 ดาวน์โหลดไฟล์สื่อการสอนและใบงาน : ${unit.title}</h3>
       <p style="font-size:0.9rem; color:var(--text-muted);">รองรับการนำไปแก้ไขต่อใน Microsoft PowerPoint, Microsoft Word, Google Slides และ Google Docs</p>
@@ -2228,6 +2966,31 @@ function updateQrImage() {
 }
 
 window.addEventListener('DOMContentLoaded', initApp);
+
+// Cute Chibi Pop Sound & Sparkle FX
+(() => {
+  let ctx = null;
+  const pop = () => {
+    try {
+      if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
+      if (ctx.state === 'suspended') ctx.resume();
+      const t = ctx.currentTime;
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = 'triangle'; o.frequency.setValueAtTime(640, t);
+      o.frequency.exponentialRampToValueAtTime(920, t + 0.06);
+      g.gain.setValueAtTime(0.001, t);
+      g.gain.exponentialRampToValueAtTime(0.08, t + 0.015);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.09);
+      o.connect(g); g.connect(ctx.destination);
+      o.start(t); o.stop(t + 0.1);
+    } catch {}
+  };
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('button, .unit-item, .mode-tab, .icon-btn')) {
+      pop();
+    }
+  });
+})();
 </script>
 </body>
 </html>

@@ -22,25 +22,40 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: 'Mali', 'Kodchasan', 'Sarabun', Tahoma, sans-serif;
-            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #312e81 100%);
+            background: linear-gradient(180deg, #38bdf8 0%, #bae6fd 52%, #a7f3d0 78%, #4ade80 100%);
             color: var(--text-main);
             height: 100vh;
             overflow: hidden;
             display: flex;
             flex-direction: column;
+            position: relative;
+        }
+        body::before {
+            content: "☁️   ☁️      ☁️";
+            position: fixed;
+            top: 74px;
+            left: 5%;
+            right: 5%;
+            font-size: 2.6rem;
+            opacity: 0.55;
+            pointer-events: none;
+            letter-spacing: 80px;
+            z-index: 0;
         }
         .topbar {
-            background: rgba(15, 23, 42, 0.9);
+            background: linear-gradient(90deg, #1e3a8a 0%, #4338ca 50%, #7c3aed 100%);
             backdrop-filter: blur(8px);
             color: #ffffff;
             padding: 10px 22px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 3px solid #38bdf8;
+            border-bottom: 4px solid #fde047;
             height: 64px;
             flex-shrink: 0;
             gap: 10px;
+            position: relative;
+            z-index: 2;
         }
         .topbar-title {
             font-family: 'Kodchasan', 'Mali', sans-serif;
@@ -61,9 +76,9 @@
         }
         .controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
         .btn {
-            background: #334155;
+            background: rgba(255,255,255,0.18);
             color: #fff;
-            border: 2px solid #64748b;
+            border: 2px solid rgba(255,255,255,0.45);
             padding: 6px 14px;
             border-radius: 999px;
             font-family: 'Kodchasan', 'Mali', sans-serif;
@@ -76,19 +91,21 @@
             align-items: center;
             gap: 4px;
         }
-        .btn:hover { background: var(--primary); border-color: #7dd3fc; }
-        .btn-primary { background: var(--primary); border-color: #38bdf8; }
-        .btn-accent { background: var(--accent); color: #0f172a; border-color: #fbbf24; }
-        .btn-accent:hover { background: #fbbf24; color: #000; }
+        .btn:hover { background: #ec4899; border-color: #fbcfe8; transform: translateY(-1px); }
+        .btn-primary { background: #0ea5e9; border-color: #bae6fd; }
+        .btn-accent { background: #fde047; color: #1e1b4b; border-color: #f59e0b; }
+        .btn-accent:hover { background: #facc15; color: #000; }
+        .btn-sound { background: #10b981; border-color: #a7f3d0; color: #fff; }
+        .btn-sound.muted { background: #64748b; border-color: #cbd5e1; }
         .slide-select {
-            background: #0f172a;
+            background: #1e1b4b;
             color: #fff;
-            border: 1px solid #475569;
+            border: 2px solid #818cf8;
             padding: 6px 10px;
-            border-radius: 8px;
+            border-radius: 10px;
             font-family: inherit;
             font-size: 0.88rem;
-            max-width: 260px;
+            max-width: 245px;
         }
         .stage {
             flex: 1;
@@ -97,62 +114,112 @@
             align-items: center;
             padding: 18px;
             overflow: hidden;
+            position: relative;
+            z-index: 1;
         }
         .slide {
             display: none;
             width: 100%;
             max-width: 1120px;
             height: 100%;
-            background: #ffffff;
-            border-radius: 28px;
-            border: 4px solid #bae6fd;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
-            padding: 26px 36px;
+            background: #fffdf7;
+            background-image:
+                radial-gradient(circle at 95% 8%, rgba(253, 224, 71, 0.22) 0%, transparent 28%),
+                radial-gradient(circle at 6% 92%, rgba(244, 114, 182, 0.16) 0%, transparent 28%),
+                radial-gradient(#e2e8f0 1.2px, transparent 1.2px);
+            background-size: 100% 100%, 100% 100%, 24px 24px;
+            border-radius: 32px;
+            border: 5px solid #f59e0b;
+            box-shadow: 0 18px 45px rgba(15, 23, 42, 0.25), inset 0 0 0 4px #fef3c7;
+            padding: 24px 34px;
             flex-direction: column;
             overflow-y: auto;
+            position: relative;
         }
-        .slide.active { display: flex; }
+        .slide.active { display: flex; animation: popIn 0.22s ease-out; }
+        @keyframes popIn {
+            from { opacity: 0.6; transform: scale(0.985); }
+            to { opacity: 1; transform: scale(1); }
+        }
         .slide-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 3px dashed #cbd5e1;
+            border-bottom: 3px dashed #fbbf24;
             padding-bottom: 12px;
             margin-bottom: 16px;
-            gap: 12px;
-            flex-wrap: wrap;
+            gap: 14px;
+        }
+        .slide-header-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex: 1;
+        }
+        .mascot-badge {
+            flex-shrink: 0;
+            width: 68px;
+            height: 68px;
+            background: linear-gradient(135deg, #fef08a, #fde047);
+            border: 3px solid #f59e0b;
+            border-radius: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 0 #d97706;
+            animation: floatMascot 3s ease-in-out infinite;
+        }
+        @keyframes floatMascot {
+            0%, 100% { transform: translateY(0px) rotate(-1deg); }
+            50% { transform: translateY(-5px) rotate(2deg); }
         }
         .slide-title {
             font-family: 'Kodchasan', 'Mali', sans-serif;
-            font-size: 1.4rem;
+            font-size: 1.36rem;
             font-weight: 700;
-            color: #0c4a6e;
+            color: #1e3a8a;
+            line-height: 1.35;
         }
         .strand-tag {
-            background: #e0f2fe;
-            color: #0369a1;
-            border: 2px solid #7dd3fc;
-            padding: 4px 14px;
+            background: linear-gradient(90deg, #fce7f3, #ede9fe);
+            color: #9d174d;
+            border: 2px solid #f472b6;
+            padding: 5px 14px;
             border-radius: 999px;
-            font-size: 0.88rem;
+            font-size: 0.86rem;
             font-weight: 700;
+            flex-shrink: 0;
         }
         .slide-body { flex: 1; font-size: 1.06rem; line-height: 1.65; }
+        .slide-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 10px;
+            margin-top: auto;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .corner-deco {
+            font-size: 1.3rem;
+            user-select: none;
+        }
         .passage-box {
-            background: #fefce8;
-            border: 2px solid #fde047;
-            border-left: 6px solid #eab308;
-            border-radius: 14px;
+            background: #fef9c3;
+            border: 2.5px solid #facc15;
+            border-left: 7px solid #f59e0b;
+            border-radius: 18px;
             padding: 14px 18px;
             margin-bottom: 14px;
             font-size: 1.02rem;
             color: #1e293b;
+            box-shadow: 0 4px 0 #fef08a;
         }
         .poem-box {
             background: #fdf4ff;
-            border: 2px solid #e9d5ff;
-            border-left: 6px solid #a855f7;
-            border-radius: 14px;
+            border: 2.5px solid #e9d5ff;
+            border-left: 7px solid #a855f7;
+            border-radius: 18px;
             padding: 14px 22px;
             margin-bottom: 14px;
             font-size: 1.08rem;
@@ -161,6 +228,7 @@
             grid-template-columns: max-content max-content;
             gap: 4px 36px;
             justify-content: center;
+            box-shadow: 0 4px 0 #f3e8ff;
         }
         .question-text {
             font-weight: 700;
@@ -170,9 +238,9 @@
         }
         .choices-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin-bottom: 14px; }
         .choice-btn {
-            background: #f8fafc;
+            background: #ffffff;
             border: 2.5px solid #cbd5e1;
-            border-radius: 14px;
+            border-radius: 16px;
             padding: 11px 16px;
             text-align: left;
             font-family: inherit;
@@ -181,23 +249,37 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: 0 3px 0 #e2e8f0;
             transition: all 0.15s;
         }
-        .choice-btn:hover { background: #f0f9ff; border-color: #38bdf8; }
-        .choice-btn.selected-multi { background: #e0f2fe; border-color: #0284c7; font-weight: 700; }
-        .choice-btn.correct-revealed { background: #d1fae5; border-color: #059669; color: #064e3b; font-weight: 700; }
-        .choice-btn.wrong-selected { background: #ffe4e6; border-color: #e11d48; color: #881337; }
+        .choice-btn:hover { background: #f0f9ff; border-color: #38bdf8; transform: translateX(4px); }
+        .choice-btn.selected-multi { background: #e0f2fe; border-color: #0284c7; font-weight: 700; box-shadow: 0 3px 0 #7dd3fc; }
+        .choice-btn.correct-revealed { background: #dcfce7; border-color: #16a34a; color: #14532d; font-weight: 700; box-shadow: 0 3px 0 #86efac; }
+        .choice-btn.wrong-selected { background: #ffe4e6; border-color: #e11d48; color: #881337; box-shadow: 0 3px 0 #fda4af; }
         .choice-status { font-weight: 700; font-size: 0.92rem; margin-left: 10px; flex-shrink: 0; }
         .answer-panel {
             display: none;
-            background: #ecfdf5;
-            border: 2.5px solid #10b981;
-            border-radius: 16px;
+            background: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%);
+            border: 3px solid #10b981;
+            border-radius: 18px;
             padding: 14px 18px;
             margin-top: 10px;
             color: #064e3b;
+            box-shadow: 0 5px 0 #a7f3d0;
+            animation: popIn 0.2s ease-out;
         }
         .answer-panel.visible { display: block; }
+        .sparkle-burst {
+            position: fixed;
+            pointer-events: none;
+            font-size: 1.6rem;
+            z-index: 9999;
+            animation: sparkleFly 0.9s ease-out forwards;
+        }
+        @keyframes sparkleFly {
+            0% { opacity: 1; transform: translate(0, 0) scale(0.7) rotate(0deg); }
+            100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(1.3) rotate(180deg); }
+        }
         .cover-slide {
             text-align: center;
             justify-content: center;
@@ -242,6 +324,7 @@
             <span id="slideCounter" style="font-weight:700; min-width:65px; text-align:center;">1 / 31</span>
             <button class="btn btn-primary" onclick="nextSlide()">ถัดไป ▶</button>
             <button class="btn btn-accent" id="globalRevealBtn" onclick="toggleCurrentAnswer()" style="display:none;">💡 เปิด/ซ่อนเฉลย</button>
+            <button class="btn btn-sound" id="soundToggleBtn" onclick="toggleSound()">🔊 เสียง: เปิด</button>
             <button class="btn" onclick="toggleFullScreen()">⛶ เต็มจอ</button>
         </div>
     </div>
@@ -254,18 +337,23 @@
                 type: 'cover',
                 menuTitle: '0. หน้าปก : แนวข้อสอบ O-NET ภาษาไทย ม.3 ปี 2568',
                 html: `
-                    <div style="max-width:840px; margin:auto;">
-                        <div style="display:inline-block; background:#fde047; color:#1e1b4b; padding:8px 22px; border-radius:999px; font-weight:800; margin-bottom:18px; border:2px solid #eab308;">
+                    <div style="max-width:860px; margin:auto;">
+                        <div style="display:flex; justify-content:center; gap:16px; align-items:center; margin-bottom:14px;">
+                            <div class="mascot-badge" style="width:92px; height:92px; border-radius:50%;">${getMascotSvg(0)}</div>
+                            <div class="mascot-badge" style="width:92px; height:92px; border-radius:50%; background:linear-gradient(135deg,#fbcfe8,#f472b6); border-color:#db2777; box-shadow:0 5px 0 #9d174d; animation-delay:0.4s;">${getMascotSvg(1)}</div>
+                            <div class="mascot-badge" style="width:92px; height:92px; border-radius:50%; background:linear-gradient(135deg,#bae6fd,#38bdf8); border-color:#0284c7; box-shadow:0 5px 0 #0369a1; animation-delay:0.8s;">${getMascotSvg(2)}</div>
+                        </div>
+                        <div style="display:inline-block; background:#fde047; color:#1e1b4b; padding:8px 22px; border-radius:999px; font-weight:800; margin-bottom:16px; border:2px solid #eab308;">
                             ✨ แนวข้อสอบ O-NET วิชาภาษาไทย ชั้นมัธยมศึกษาปีที่ 3 ปีการศึกษา 2568
                         </div>
-                        <h1 style="font-size:2.4rem; color:#0c4a6e; margin-bottom:14px; line-height:1.3;">ติวเข้มแนวข้อสอบ O-NET ภาษาไทย ม.3 (ปี 2568)</h1>
-                        <p style="font-size:1.2rem; color:#475569; margin-bottom:24px;">ฝึกทำข้อสอบจริงแบบโต้ตอบทีละข้อ ครบทั้ง 29 ข้อ พร้อมเฉลยและคำอธิบายทุกข้อ</p>
-                        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px; margin-bottom:26px;">
-                            <div style="background:#e0f2fe; border:2px solid #0284c7; border-radius:16px; padding:14px;"><strong>ตอนที่ 1 : ปรนัย 4 ตัวเลือก</strong><br>ข้อ 1 – 21 และ 23 – 25 (24 ข้อ)</div>
-                            <div style="background:#f3e8ff; border:2px solid #7c3aed; border-radius:16px; padding:14px;"><strong>หมวดสัมพันธ์กัน</strong><br>ข้อ 22 (เติมคำประพันธ์ + ข้อคิด)</div>
-                            <div style="background:#fef3c7; border:2px solid #d97706; border-radius:16px; padding:14px;"><strong>ตอนที่ 2 : ปรนัย 5 ตัวเลือก</strong><br>ข้อ 26 – 29 (เลือก 2 คำตอบ)</div>
+                        <h1 style="font-size:2.35rem; color:#0c4a6e; margin-bottom:12px; line-height:1.3;">ติวเข้มแนวข้อสอบ O-NET ภาษาไทย ม.3 (ปี 2568)</h1>
+                        <p style="font-size:1.18rem; color:#475569; margin-bottom:22px;">ฝึกทำข้อสอบจริงแบบโต้ตอบทีละข้อ ครบทั้ง 29 ข้อ พร้อมเสียงประกอบและเฉลยทุกข้อ</p>
+                        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px; margin-bottom:22px;">
+                            <div style="background:#e0f2fe; border:2.5px solid #0284c7; border-radius:18px; padding:14px; box-shadow:0 4px 0 #bae6fd;"><strong>🎯 ตอนที่ 1 : ปรนัย 4 ตัวเลือก</strong><br>ข้อ 1 – 21 และ 23 – 25 (24 ข้อ)</div>
+                            <div style="background:#f3e8ff; border:2.5px solid #7c3aed; border-radius:18px; padding:14px; box-shadow:0 4px 0 #ddd6fe;"><strong>🔗 หมวดสัมพันธ์กัน</strong><br>ข้อ 22 (เติมคำประพันธ์ + ข้อคิด)</div>
+                            <div style="background:#fef3c7; border:2.5px solid #d97706; border-radius:18px; padding:14px; box-shadow:0 4px 0 #fde68a;"><strong>☑️ ตอนที่ 2 : ปรนัย 5 ตัวเลือก</strong><br>ข้อ 26 – 29 (เลือก 2 คำตอบ)</div>
                         </div>
-                        <div style="background:#ffffff; border:3px solid #f472b6; border-radius:20px; padding:10px 22px; display:inline-block; color:#be185d; font-weight:700; font-size:0.98rem;">
+                        <div style="background:#ffffff; border:3px solid #f472b6; border-radius:20px; padding:10px 22px; display:inline-block; color:#be185d; font-weight:700; font-size:0.98rem; box-shadow:0 4px 0 #fbcfe8;">
                             👩‍🏫 สื่อการสอนห้องเรียนครูเบ็ญจวรรณ สิงห์กุล | โรงเรียนวัดราษฎร์บำรุง สพป.สระบุรี เขต 2
                         </div>
                     </div>
@@ -815,8 +903,96 @@
         ];
 
         let currentSlide = 0;
+        let soundEnabled = true;
+        let audioCtx = null;
         const multiState = {};
         const matchState = {};
+
+        function getAudioCtx() {
+            if (!audioCtx) {
+                const Ctx = window.AudioContext || window.webkitAudioContext;
+                if (Ctx) audioCtx = new Ctx();
+            }
+            if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+            return audioCtx;
+        }
+
+        function playTone(freq, duration, type = 'sine', delay = 0, vol = 0.16) {
+            if (!soundEnabled) return;
+            const ctx = getAudioCtx();
+            if (!ctx) return;
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, ctx.currentTime + delay);
+            gain.gain.setValueAtTime(0.001, ctx.currentTime + delay);
+            gain.gain.exponentialRampToValueAtTime(vol, ctx.currentTime + delay + 0.02);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + delay + duration);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(ctx.currentTime + delay);
+            osc.stop(ctx.currentTime + delay + duration + 0.02);
+        }
+
+        function playCorrectSound() {
+            playTone(523.25, 0.14, 'triangle', 0, 0.18);
+            playTone(659.25, 0.14, 'triangle', 0.09, 0.18);
+            playTone(783.99, 0.16, 'triangle', 0.18, 0.18);
+            playTone(1046.5, 0.32, 'triangle', 0.27, 0.2);
+        }
+
+        function playWrongSound() {
+            playTone(311.13, 0.18, 'sawtooth', 0, 0.08);
+            playTone(233.08, 0.28, 'sawtooth', 0.14, 0.08);
+        }
+
+        function playRevealSound() {
+            playTone(587.33, 0.12, 'sine', 0, 0.15);
+            playTone(783.99, 0.12, 'sine', 0.08, 0.15);
+            playTone(987.77, 0.24, 'sine', 0.16, 0.17);
+        }
+
+        function playClickSound() {
+            playTone(660, 0.07, 'sine', 0, 0.1);
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            const btn = document.getElementById('soundToggleBtn');
+            btn.textContent = soundEnabled ? '🔊 เสียง: เปิด' : '🔇 เสียง: ปิด';
+            btn.classList.toggle('muted', !soundEnabled);
+            if (soundEnabled) playClickSound();
+        }
+
+        function spawnSparkles(targetEl) {
+            const rect = targetEl ? targetEl.getBoundingClientRect() : { left: window.innerWidth / 2, top: window.innerHeight / 2, width: 0, height: 0 };
+            const cx = rect.left + rect.width / 2;
+            const cy = rect.top + rect.height / 2;
+            const icons = ['✨', '⭐', '🌸', '🎉', '💫'];
+            for (let i = 0; i < 8; i++) {
+                const sp = document.createElement('span');
+                sp.className = 'sparkle-burst';
+                sp.textContent = icons[i % icons.length];
+                const angle = (Math.PI * 2 * i) / 8;
+                const dist = 55 + Math.random() * 45;
+                sp.style.left = cx + 'px';
+                sp.style.top = cy + 'px';
+                sp.style.setProperty('--tx', Math.cos(angle) * dist + 'px');
+                sp.style.setProperty('--ty', Math.sin(angle) * dist + 'px');
+                document.body.appendChild(sp);
+                setTimeout(() => sp.remove(), 950);
+            }
+        }
+
+        function getMascotSvg(idx) {
+            const svgs = [
+                `<svg viewBox="0 0 80 80" width="52" height="52"><circle cx="40" cy="44" r="24" fill="#8b5cf6"/><ellipse cx="40" cy="50" rx="15" ry="15" fill="#ede9fe"/><circle cx="31" cy="38" r="8" fill="#fff" stroke="#4c1d95" stroke-width="2"/><circle cx="49" cy="38" r="8" fill="#fff" stroke="#4c1d95" stroke-width="2"/><circle cx="31" cy="38" r="3.5" fill="#1e1b4b"/><circle cx="49" cy="38" r="3.5" fill="#1e1b4b"/><polygon points="40,41 36,47 44,47" fill="#f59e0b"/><polygon points="40,12 16,22 40,30 64,22" fill="#1e293b"/><rect x="28" y="25" width="24" height="5" rx="2" fill="#334155"/></svg>`,
+                `<svg viewBox="0 0 80 80" width="52" height="52"><rect x="14" y="18" width="52" height="44" rx="10" fill="#fb7185" stroke="#be123c" stroke-width="3"/><rect x="20" y="22" width="40" height="34" rx="6" fill="#fff1f2"/><line x1="40" y1="22" x2="40" y2="56" stroke="#fda4af" stroke-width="2.5"/><circle cx="31" cy="37" r="3" fill="#1e293b"/><circle cx="49" cy="37" r="3" fill="#1e293b"/><path d="M35 45 Q40 50 45 45" fill="none" stroke="#be123c" stroke-width="2.5" stroke-linecap="round"/></svg>`,
+                `<svg viewBox="0 0 80 80" width="52" height="52"><polygon points="40,10 49,29 70,32 54,46 58,67 40,57 22,67 26,46 10,32 31,29" fill="#fde047" stroke="#d97706" stroke-width="3" stroke-linejoin="round"/><circle cx="34" cy="38" r="3" fill="#1e293b"/><circle cx="46" cy="38" r="3" fill="#1e293b"/><path d="M35 46 Q40 50 45 46" fill="none" stroke="#b45309" stroke-width="2.5" stroke-linecap="round"/></svg>`,
+                `<svg viewBox="0 0 80 80" width="52" height="52"><polygon points="20,30 26,12 36,24" fill="#fb923c" stroke="#c2410c" stroke-width="2.5"/><polygon points="60,30 54,12 44,24" fill="#fb923c" stroke="#c2410c" stroke-width="2.5"/><circle cx="40" cy="44" r="22" fill="#fdba74" stroke="#c2410c" stroke-width="2.5"/><circle cx="33" cy="40" r="3.2" fill="#1e293b"/><circle cx="47" cy="40" r="3.2" fill="#1e293b"/><polygon points="40,44 37,48 43,48" fill="#f43f5e"/><path d="M35 51 Q40 55 45 51" fill="none" stroke="#9a3412" stroke-width="2" stroke-linecap="round"/></svg>`
+            ];
+            return svgs[idx % svgs.length];
+        }
 
         function renderSlides() {
             const container = document.getElementById('slidesContainer');
@@ -892,16 +1068,28 @@
                 if (s.type === 'cover') {
                     slideEl.innerHTML = bodyHtml;
                 } else {
+                    const mascotColors = [
+                        'linear-gradient(135deg,#fef08a,#fde047)',
+                        'linear-gradient(135deg,#fbcfe8,#f472b6)',
+                        'linear-gradient(135deg,#bae6fd,#38bdf8)',
+                        'linear-gradient(135deg,#bbf7d0,#4ade80)'
+                    ];
+                    const cornerDecos = ['🌸 🌼 ✨', '🍀 🦋 🌟', '🌻 📚 💡', '🌷 🎨 ⭐'];
                     slideEl.innerHTML = `
                         <div class="slide-header">
-                            <div class="slide-title">${s.title}</div>
+                            <div class="slide-header-left">
+                                <div class="mascot-badge" style="background:${mascotColors[idx % mascotColors.length]}">${getMascotSvg(idx)}</div>
+                                <div class="slide-title">${s.title}</div>
+                            </div>
                             <div class="strand-tag">${s.strand}</div>
                         </div>
                         <div class="slide-body">${bodyHtml}</div>
-                        <div style="text-align:center; padding-top:10px; margin-top:auto;">
-                            <div style="background:#ffffff; border:2px solid #f472b6; border-radius:16px; padding:6px 18px; display:inline-block; color:#be185d; font-weight:700; font-size:0.92rem;">
+                        <div class="slide-footer">
+                            <span class="corner-deco">${cornerDecos[idx % cornerDecos.length]}</span>
+                            <div style="background:#ffffff; border:2px solid #f472b6; border-radius:16px; padding:6px 18px; display:inline-block; color:#be185d; font-weight:700; font-size:0.92rem; box-shadow:0 3px 0 #fbcfe8;">
                                 👩‍🏫 ครูเบ็ญจวรรณ สิงห์กุล | โรงเรียนวัดราษฎร์บำรุง สพป.สระบุรี เขต 2
                             </div>
+                            <span class="corner-deco">${cornerDecos[(idx + 1) % cornerDecos.length]}</span>
                         </div>
                     `;
                 }
@@ -934,11 +1122,14 @@
             if (cIdx === correctIdx) {
                 clickedEl.classList.add('correct-revealed');
                 clickedEl.querySelector('.choice-status').textContent = '✅ ถูกต้อง!';
+                playCorrectSound();
+                spawnSparkles(clickedEl);
             } else {
                 clickedEl.classList.add('wrong-selected');
                 clickedEl.querySelector('.choice-status').textContent = '❌ ยังไม่ถูก';
                 correctEl.classList.add('correct-revealed');
                 correctEl.querySelector('.choice-status').textContent = '✅ คำตอบที่ถูก';
+                playWrongSound();
             }
             panel.classList.add('visible');
         }
@@ -951,24 +1142,35 @@
                 sel.delete(cIdx);
                 el.classList.remove('selected-multi');
                 el.querySelector('.choice-status').textContent = '';
+                playClickSound();
             } else if (sel.size < 2) {
                 sel.add(cIdx);
                 el.classList.add('selected-multi');
                 el.querySelector('.choice-status').textContent = '☑️ เลือกแล้ว';
+                if (sel.size < 2) playClickSound();
             }
             if (sel.size === 2) {
+                let allCorrect = true;
                 for (let i = 0; i < 5; i++) {
                     const btn = document.getElementById(`${qId}_c${i}`);
                     btn.classList.remove('selected-multi', 'correct-revealed', 'wrong-selected');
                     if (corrects.includes(i)) {
                         btn.classList.add('correct-revealed');
                         btn.querySelector('.choice-status').textContent = '✅ คำตอบที่ถูก';
+                        if (!sel.has(i)) allCorrect = false;
                     } else if (sel.has(i)) {
                         btn.classList.add('wrong-selected');
                         btn.querySelector('.choice-status').textContent = '❌ ยังไม่ถูก';
+                        allCorrect = false;
                     } else {
                         btn.querySelector('.choice-status').textContent = '';
                     }
+                }
+                if (allCorrect) {
+                    playCorrectSound();
+                    spawnSparkles(el);
+                } else {
+                    playWrongSound();
                 }
                 document.getElementById(`ans_${qId}`).classList.add('visible');
             }
@@ -987,6 +1189,7 @@
             selBtn.querySelector('.choice-status').textContent = '☑️ เลือกแล้ว';
 
             if (matchState[qId].a !== undefined && matchState[qId].b !== undefined) {
+                const isAllCorrect = (matchState[qId].a === correctA && matchState[qId].b === correctB);
                 [['a', correctA], ['b', correctB]].forEach(([g, corr]) => {
                     for (let i = 0; i < 4; i++) {
                         const btn = document.getElementById(`${qId}_${g}${i}`);
@@ -1000,7 +1203,15 @@
                         }
                     }
                 });
+                if (isAllCorrect) {
+                    playCorrectSound();
+                    spawnSparkles(selBtn);
+                } else {
+                    playWrongSound();
+                }
                 document.getElementById(`ans_${qId}`).classList.add('visible');
+            } else {
+                playClickSound();
             }
         }
 
@@ -1009,6 +1220,12 @@
             if (!s.isQuiz) return;
             const panel = document.getElementById(`ans_${s.quizId}`);
             const isShowing = panel.classList.toggle('visible');
+            if (isShowing) {
+                playRevealSound();
+                spawnSparkles(document.getElementById('globalRevealBtn'));
+            } else {
+                playClickSound();
+            }
             if (s.quizType === 'single') {
                 const correctEl = document.getElementById(`${s.quizId}_c${s.correctIndex}`);
                 correctEl.classList.toggle('correct-revealed', isShowing);

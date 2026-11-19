@@ -14,7 +14,7 @@
     href="https://fonts.googleapis.com/css2?family=Mali:wght@500;600;700&family=Sarabun:wght@400;500;600;700&display=swap"
     rel="stylesheet"
   />
-  <link rel="stylesheet" href="styles.css?v=12" />
+  <link rel="stylesheet" href="styles.css?v=13" />
 </head>
 <body>
   <!-- Teacher Mode Toolbar (visible only when Teacher Mode is active) -->
@@ -132,6 +132,11 @@
         </nav>
 
         <div class="sidebar-footer">
+          <button id="soundToggleBtn" class="nav-item" type="button" title="เปิด/ปิดเสียงเอฟเฟกต์">
+            <span class="nav-icon" id="soundIconWrap" aria-hidden="true">🔊</span>
+            <span class="nav-label" id="soundLabel">เสียงเปิด</span>
+          </button>
+
           <button id="refreshPageBtn" class="nav-item" type="button" title="รีเฟรชโหลดข้อมูลล่าสุด">
             <span class="nav-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="20" height="20">
@@ -202,6 +207,9 @@
                   <button type="button" class="hero-stat-pill hero-go-btn" id="heroExploreBtn">
                     ดูสื่อทั้งหมด →
                   </button>
+                  <button type="button" class="hero-stat-pill hero-voice-btn" id="voiceGreetBtn" title="ฟังเสียงทักทายครูเบ็ญ">
+                    🗣️ ทักทาย
+                  </button>
                 </div>
               </div>
 
@@ -223,6 +231,17 @@
                     onerror="this.parentElement.style.display='none';"
                   />
                 </div>
+
+                <!-- Interactive Chibi Mascot Buddy -->
+                <button type="button" class="chibi-buddy-btn" id="chibiBuddyBtn" title="คลิกเพื่อรับกำลังใจและเสียงน่ารักๆ!">
+                  <span class="buddy-bubble" id="buddyBubble">สู้ๆ นะคนเก่ง! ✨</span>
+                  <img
+                    src="assets/chibi-mascot.jpg"
+                    alt="มาสคอตนกฮูก Chibi"
+                    class="buddy-img"
+                    onerror="this.style.display='none';"
+                  />
+                </button>
               </div>
             </div>
 
@@ -574,6 +593,7 @@
   <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
 
   <script src="data.js?v=13"></script>
+  <script src="effects.js?v=13"></script>
   <script src="app.js?v=13"></script>
 </body>
 </html>

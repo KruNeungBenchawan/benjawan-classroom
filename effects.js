@@ -51,16 +51,36 @@ window.ClassroomFX = (() => {
     playTone(1396.91, 0.14, "triangle", 0.09, 0.1);
   }
 
+  let cachedVoices = [];
+  if ("speechSynthesis" in window) {
+    cachedVoices = window.speechSynthesis.getVoices();
+    window.speechSynthesis.addEventListener("voiceschanged", () => {
+      cachedVoices = window.speechSynthesis.getVoices();
+    });
+  }
+
+  function pickCuteFemaleThaiVoice() {
+    const voices = cachedVoices.length ? cachedVoices : (window.speechSynthesis.getVoices() || []);
+    const thVoices = voices.filter((v) => v.lang && v.lang.toLowerCase().includes("th"));
+    if (!thVoices.length) return null;
+
+    const preferredPatterns = [/premwadee/i, /google/i, /kanya/i, /narisa/i, /female/i, /natural/i];
+    for (const pat of preferredPatterns) {
+      const match = thVoices.find((v) => pat.test(v.name) && !/niwat|pattara|male/i.test(v.name));
+      if (match) return match;
+    }
+    return thVoices.find((v) => !/niwat|pattara|male/i.test(v.name)) || thVoices[0];
+  }
+
   function speakGreeting(text) {
     if (!soundEnabled || !("speechSynthesis" in window)) return;
     try {
       window.speechSynthesis.cancel();
       const utter = new SpeechSynthesisUtterance(text);
       utter.lang = "th-TH";
-      utter.rate = 1.02;
-      utter.pitch = 1.15;
-      const voices = window.speechSynthesis.getVoices();
-      const thVoice = voices.find((v) => v.lang && v.lang.toLowerCase().includes("th"));
+      utter.rate = 1.05;
+      utter.pitch = 1.24;
+      const thVoice = pickCuteFemaleThaiVoice();
       if (thVoice) utter.voice = thVoice;
       window.speechSynthesis.speak(utter);
     } catch {

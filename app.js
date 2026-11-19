@@ -138,7 +138,7 @@
       // Ensure newly added O-NET default resources appear even if localStorage existed
       const defaults = cloneDefaultData();
       const existingIds = new Set(parsed.resources.map((r) => r.id));
-      ["onet-m3-2569", "onet-p6-2569"].forEach((id) => {
+      ["onet-m3-2569", "onet-p6-2569", "m3-slide-2568-html", "m3-exam-2568-pdf"].forEach((id) => {
         if (!existingIds.has(id)) {
           const item = defaults.resources.find((r) => r.id === id);
           if (item) parsed.resources.unshift(item);

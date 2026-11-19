@@ -14,7 +14,7 @@
     href="https://fonts.googleapis.com/css2?family=Mali:wght@500;600;700&family=Sarabun:wght@400;500;600;700&display=swap"
     rel="stylesheet"
   />
-  <link rel="stylesheet" href="styles.css?v=13" />
+  <link rel="stylesheet" href="styles.css?v=15" />
 </head>
 <body>
   <!-- Teacher Mode Toolbar (visible only when Teacher Mode is active) -->
@@ -279,11 +279,8 @@
                   rel="noopener noreferrer"
                   class="onet-banner-card onet-p6"
                 >
-                  <div class="onet-icon-box" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                      <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
-                      <path d="M6 12v5c3 3 9 3 12 0v-5" />
-                    </svg>
+                  <div class="onet-icon-box onet-thumb" aria-hidden="true">
+                    <img src="assets/chibi-thai-study.jpg" alt="การ์ตูน Chibi ติว O-NET ป.6" />
                   </div>
                   <div class="onet-info">
                     <span class="onet-level-badge">ระดับชั้น ป.6</span>
@@ -298,11 +295,8 @@
                   rel="noopener noreferrer"
                   class="onet-banner-card onet-m3"
                 >
-                  <div class="onet-icon-box" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                      <path d="M12 20h9" />
-                      <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
-                    </svg>
+                  <div class="onet-icon-box onet-thumb" aria-hidden="true">
+                    <img src="assets/chibi-student-girl.jpg" alt="การ์ตูน Chibi ติว O-NET ม.3" />
                   </div>
                   <div class="onet-info">
                     <span class="onet-level-badge">ระดับชั้น ม.3</span>
@@ -315,13 +309,8 @@
                   href="kham-khlong-chong/index.html"
                   class="onet-banner-card onet-game"
                 >
-                  <div class="onet-icon-box" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                      <rect x="2" y="6" width="20" height="12" rx="4" />
-                      <path d="M6 12h4M8 10v4" />
-                      <circle cx="15" cy="11" r="1" fill="currentColor" />
-                      <circle cx="17" cy="13" r="1" fill="currentColor" />
-                    </svg>
+                  <div class="onet-icon-box onet-thumb" aria-hidden="true">
+                    <img src="assets/chibi-games.jpg" alt="การ์ตูน Chibi เกมคำคล้องจอง" />
                   </div>
                   <div class="onet-info">
                     <span class="onet-level-badge">เกม + บทเรียน</span>
@@ -334,12 +323,8 @@
                   href="history-m1-m3/index.html"
                   class="onet-banner-card onet-history"
                 >
-                  <div class="onet-icon-box" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                      <path d="M3 21h18" />
-                      <path d="M5 21V7l7-4 7 4v14" />
-                      <path d="M9 21v-6h6v6" />
-                    </svg>
+                  <div class="onet-icon-box onet-thumb" aria-hidden="true">
+                    <img src="assets/chibi-history.jpg" alt="การ์ตูน Chibi ประวัติศาสตร์" />
                   </div>
                   <div class="onet-info">
                     <span class="onet-level-badge">ประวัติศาสตร์ ม.1–ม.3</span>
@@ -371,6 +356,21 @@
 
         <!-- VIEW 2: Resources & Documents Explorer (Fits in 1 Screen) -->
         <section id="viewResources" class="stage-view hidden" aria-label="คลังสื่อการสอนและเอกสาร">
+          <!-- Lively Chibi Category Header Banner -->
+          <div class="cat-hero-banner" id="categoryHeroBanner">
+            <div class="cat-hero-img-wrap">
+              <img id="catHeroImg" src="assets/chibi-teacher.jpg" alt="การ์ตูน Chibi ประจำหมวดหมู่" />
+            </div>
+            <div class="cat-hero-text">
+              <span class="cat-hero-pill" id="catHeroPill">✨ คลังสื่อการเรียนรู้</span>
+              <h2 id="catHeroTitle">สื่อและเอกสารทั้งหมด</h2>
+              <p id="catHeroDesc">รวมสื่อการสอน ใบงาน สไลด์ เกม และข้อสอบของห้องเรียนครูเบ็ญจวรรณครบในที่เดียว</p>
+            </div>
+            <button type="button" class="cat-hero-cheer-btn" id="catCheerBtn" title="คลิกเพื่อรับกำลังใจและเอฟเฟกต์ดาว!">
+              🌟 กดรับดาวกำลังใจ
+            </button>
+          </div>
+
           <div class="categories-section">
             <div class="category-tabs" id="categoryTabs" role="tablist">
               <!-- Rendered by JS -->
@@ -592,8 +592,8 @@
   <!-- Toast Notification -->
   <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
 
-  <script src="data.js?v=14"></script>
-  <script src="effects.js?v=14"></script>
-  <script src="app.js?v=14"></script>
+  <script src="data.js?v=15"></script>
+  <script src="effects.js?v=15"></script>
+  <script src="app.js?v=15"></script>
 </body>
 </html>

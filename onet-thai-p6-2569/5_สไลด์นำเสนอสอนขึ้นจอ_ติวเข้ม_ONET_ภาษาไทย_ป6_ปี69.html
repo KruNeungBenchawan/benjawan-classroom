@@ -28,26 +28,41 @@
 
         body {
             font-family: 'Mali', 'Kodchasan', 'Sarabun', Tahoma, sans-serif;
-            background: linear-gradient(135deg, #312e81 0%, #581c87 50%, #831843 100%);
+            background: linear-gradient(180deg, #38bdf8 0%, #bae6fd 52%, #a7f3d0 78%, #4ade80 100%);
             color: var(--text-main);
             height: 100vh;
             overflow: hidden;
             display: flex;
             flex-direction: column;
+            position: relative;
+        }
+        body::before {
+            content: "☁️   ☁️      ☁️";
+            position: fixed;
+            top: 74px;
+            left: 5%;
+            right: 5%;
+            font-size: 2.6rem;
+            opacity: 0.55;
+            pointer-events: none;
+            letter-spacing: 80px;
+            z-index: 0;
         }
 
         /* Top Navigation Bar */
         .topbar {
-            background: rgba(15, 23, 42, 0.85);
+            background: linear-gradient(90deg, #4f46e5 0%, #7c3aed 50%, #db2777 100%);
             backdrop-filter: blur(8px);
             color: #ffffff;
             padding: 10px 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 3px solid #f472b6;
+            border-bottom: 4px solid #fde047;
             height: 64px;
             flex-shrink: 0;
+            position: relative;
+            z-index: 2;
         }
 
         .topbar-title {
@@ -107,6 +122,68 @@
         .btn-accent:hover {
             background: #fbbf24;
             color: #000;
+        }
+
+        .btn-sound {
+            background: #10b981;
+            border-color: #a7f3d0;
+            color: #fff;
+        }
+        .btn-sound.muted {
+            background: #64748b;
+            border-color: #cbd5e1;
+        }
+
+        .mascot-badge {
+            flex-shrink: 0;
+            width: 78px;
+            height: 78px;
+            background: #ffffff;
+            border: 3.5px solid #f472b6;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 5px 0 #db2777;
+            animation: floatMascot 3s ease-in-out infinite;
+        }
+        .mascot-badge img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        @keyframes floatMascot {
+            0%, 100% { transform: translateY(0px) rotate(-1deg); }
+            50% { transform: translateY(-5px) rotate(2deg); }
+        }
+        .slide-header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex: 1;
+        }
+        .slide-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 12px;
+            margin-top: auto;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .corner-deco { font-size: 1.4rem; user-select: none; }
+        .sparkle-burst {
+            position: fixed;
+            pointer-events: none;
+            font-size: 1.6rem;
+            z-index: 9999;
+            animation: sparkleFly 0.9s ease-out forwards;
+        }
+        @keyframes sparkleFly {
+            0% { opacity: 1; transform: translate(0, 0) scale(0.7) rotate(0deg); }
+            100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(1.3) rotate(180deg); }
         }
 
         .slide-select {
@@ -411,6 +488,7 @@
             <span id="slideCounter" style="font-weight:700; min-width: 75px; text-align:center;">1 / 33</span>
             <button class="btn btn-primary" onclick="nextSlide()">ถัดไป ▶</button>
             <button class="btn btn-accent" id="globalRevealBtn" onclick="toggleCurrentAnswer()">💡 เฉลยข้อนี้ (Space)</button>
+            <button class="btn btn-sound" id="soundToggleBtn" onclick="toggleSound()">🔊 เสียง: เปิด</button>
             <button class="btn" onclick="toggleFullScreen()">⛶ เต็มจอ (F11)</button>
         </div>
     </div>
@@ -425,6 +503,11 @@
                 type: "cover",
                 html: `
                     <div class="cover-center">
+                        <div style="display:flex; justify-content:center; gap:16px; align-items:center; margin-bottom:14px;">
+                            <div class="mascot-badge" style="width:94px; height:94px; border-color:#f59e0b; box-shadow:0 5px 0 #d97706;"><img src="../assets/chibi-student-girl.jpg" alt="นักเรียนหญิง Chibi" /></div>
+                            <div class="mascot-badge" style="width:94px; height:94px; border-color:#ec4899; box-shadow:0 5px 0 #9d174d; animation-delay:0.4s;"><img src="../assets/chibi-student-boy.jpg" alt="นักเรียนชาย Chibi" /></div>
+                            <div class="mascot-badge" style="width:94px; height:94px; border-color:#0284c7; box-shadow:0 5px 0 #0369a1; animation-delay:0.8s;"><img src="../assets/chibi-teacher.jpg" alt="ครูเบ็ญจวรรณ Chibi" /></div>
+                        </div>
                         <div class="cover-badge">อ้างอิงผังการสร้างข้อสอบ (Test Blueprint) สทศ. ล่าสุด</div>
                         <div class="cover-title">ติวเข้มพิชิต O-NET ภาษาไทย ป.6</div>
                         <div class="cover-sub" style="margin-bottom:14px;">ประจำปีการศึกษา 2569 | สรุปครบ 5 สาระ 19 ตัวชี้วัด + ตะลุยโจทย์ 22 ข้อ (100 คะแนน)</div>
@@ -1093,6 +1176,79 @@
         });
 
         let currentSlide = 0;
+        let soundEnabled = true;
+        let audioCtx = null;
+
+        function getAudioCtx() {
+            if (!audioCtx) {
+                const Ctx = window.AudioContext || window.webkitAudioContext;
+                if (Ctx) audioCtx = new Ctx();
+            }
+            if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+            return audioCtx;
+        }
+        function playTone(freq, duration, type = 'sine', delay = 0, vol = 0.16) {
+            if (!soundEnabled) return;
+            const ctx = getAudioCtx();
+            if (!ctx) return;
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, ctx.currentTime + delay);
+            gain.gain.setValueAtTime(0.001, ctx.currentTime + delay);
+            gain.gain.exponentialRampToValueAtTime(vol, ctx.currentTime + delay + 0.02);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + delay + duration);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(ctx.currentTime + delay);
+            osc.stop(ctx.currentTime + delay + duration + 0.02);
+        }
+        function playCorrectSound() {
+            playTone(523.25, 0.14, 'triangle', 0, 0.18);
+            playTone(659.25, 0.14, 'triangle', 0.09, 0.18);
+            playTone(783.99, 0.16, 'triangle', 0.18, 0.18);
+            playTone(1046.5, 0.32, 'triangle', 0.27, 0.2);
+        }
+        function playWrongSound() {
+            playTone(311.13, 0.18, 'sawtooth', 0, 0.08);
+            playTone(233.08, 0.28, 'sawtooth', 0.14, 0.08);
+        }
+        function playRevealSound() {
+            playTone(587.33, 0.12, 'sine', 0, 0.15);
+            playTone(783.99, 0.12, 'sine', 0.08, 0.15);
+            playTone(987.77, 0.24, 'sine', 0.16, 0.17);
+        }
+        function playClickSound() { playTone(660, 0.07, 'sine', 0, 0.1); }
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            const btn = document.getElementById('soundToggleBtn');
+            btn.textContent = soundEnabled ? '🔊 เสียง: เปิด' : '🔇 เสียง: ปิด';
+            btn.classList.toggle('muted', !soundEnabled);
+            if (soundEnabled) playClickSound();
+        }
+        function spawnSparkles(targetEl) {
+            const rect = targetEl ? targetEl.getBoundingClientRect() : { left: window.innerWidth / 2, top: window.innerHeight / 2, width: 0, height: 0 };
+            const cx = rect.left + rect.width / 2;
+            const cy = rect.top + rect.height / 2;
+            const icons = ['✨', '⭐', '🌸', '🎉', '💫'];
+            for (let i = 0; i < 8; i++) {
+                const sp = document.createElement('span');
+                sp.className = 'sparkle-burst';
+                sp.textContent = icons[i % icons.length];
+                const angle = (Math.PI * 2 * i) / 8;
+                const dist = 55 + Math.random() * 45;
+                sp.style.left = cx + 'px';
+                sp.style.top = cy + 'px';
+                sp.style.setProperty('--tx', Math.cos(angle) * dist + 'px');
+                sp.style.setProperty('--ty', Math.sin(angle) * dist + 'px');
+                document.body.appendChild(sp);
+                setTimeout(() => sp.remove(), 950);
+            }
+        }
+        function getChibiImg(idx) {
+            const imgs = ['../assets/chibi-student-girl.jpg', '../assets/chibi-student-boy.jpg', '../assets/chibi-teacher.jpg'];
+            return `<img src="${imgs[idx % imgs.length]}" alt="การ์ตูนนักเรียน Chibi" />`;
+        }
 
         function renderSlides() {
             const container = document.getElementById('slideContainer');
@@ -1113,18 +1269,25 @@
                 if (s.type === 'cover') {
                     slideEl.innerHTML = s.html;
                 } else {
+                    const borderColors = ['#f472b6', '#f59e0b', '#0284c7', '#10b981'];
+                    const cornerDecos = ['🌸 🌼 ✨', '🍀 🦋 🌟', '🌻 📚 💡', '🌷 🎨 ⭐'];
                     slideEl.innerHTML = `
                         <div class="slide-header">
-                            <div class="slide-title">${s.title}</div>
+                            <div class="slide-header-left">
+                                <div class="mascot-badge" style="border-color:${borderColors[idx % borderColors.length]}">${getChibiImg(idx)}</div>
+                                <div class="slide-title">${s.title}</div>
+                            </div>
                             <div class="strand-tag">${s.strand}</div>
                         </div>
                         <div class="slide-body">
                             ${s.html}
                         </div>
-                        <div style="text-align:center; padding-top:12px; margin-top:auto;">
+                        <div class="slide-footer">
+                            <span class="corner-deco">${cornerDecos[idx % cornerDecos.length]}</span>
                             <div style="background:#ffffff; border:3px solid #f472b6; border-radius:20px; padding:8px 24px; display:inline-block; box-shadow:0 5px 0 #fbcfe8; color:#be185d; font-weight:700; font-size:1.05rem;">
                                 👩‍🏫 ผู้ออกแบบและพัฒนาสื่อการสอน : <strong>ครูเบ็ญจวรรณ สิงห์กุล</strong> | โรงเรียนวัดราษฎร์บำรุง สพป.สระบุรี เขต 2
                             </div>
+                            <span class="corner-deco">${cornerDecos[(idx + 1) % cornerDecos.length]}</span>
                         </div>
                     `;
                 }
@@ -1174,11 +1337,14 @@
             if (cIdx === correctIdx) {
                 clickedEl.classList.add('correct-revealed');
                 clickedEl.querySelector('.choice-status').textContent = '✅ ถูกต้อง!';
+                playCorrectSound();
+                spawnSparkles(clickedEl);
             } else {
                 clickedEl.classList.add('wrong-selected');
                 clickedEl.querySelector('.choice-status').textContent = '❌ ยังไม่ถูก';
                 correctEl.classList.add('correct-revealed');
                 correctEl.querySelector('.choice-status').textContent = '✅ คำตอบที่ถูก';
+                playWrongSound();
             }
             panel.classList.add('visible');
         }
@@ -1189,6 +1355,12 @@
             const qIdx = s.quizIndex;
             const panel = document.getElementById(`ans_panel_${qIdx}`);
             const isShowing = panel.classList.toggle('visible');
+            if (isShowing) {
+                playRevealSound();
+                spawnSparkles(document.getElementById('globalRevealBtn'));
+            } else {
+                playClickSound();
+            }
 
             if (typeof s.correctIndex === 'number') {
                 const correctEl = document.getElementById(`q${qIdx}_c${s.correctIndex}`);

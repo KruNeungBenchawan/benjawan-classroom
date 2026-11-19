@@ -120,7 +120,13 @@
     viewHome: document.getElementById("viewHome"),
     viewResources: document.getElementById("viewResources"),
     heroExploreBtn: document.getElementById("heroExploreBtn"),
-    refreshPageBtn: document.getElementById("refreshPageBtn")
+    refreshPageBtn: document.getElementById("refreshPageBtn"),
+    soundToggleBtn: document.getElementById("soundToggleBtn"),
+    soundIconWrap: document.getElementById("soundIconWrap"),
+    soundLabel: document.getElementById("soundLabel"),
+    voiceGreetBtn: document.getElementById("voiceGreetBtn"),
+    chibiBuddyBtn: document.getElementById("chibiBuddyBtn"),
+    buddyBubble: document.getElementById("buddyBubble")
   };
 
   function cloneDefaultData() {
@@ -489,7 +495,69 @@
   }
 
   // Event Listeners
-  el.teacherModeBtn.addEventListener("click", toggleTeacherMode);
+  el.teacherModeBtn.addEventListener("click", () => {
+    if (window.ClassroomFX) window.ClassroomFX.playChime();
+    toggleTeacherMode();
+  });
+
+  // Sound toggle & Cute FX
+  function syncSoundUI() {
+    if (!window.ClassroomFX || !el.soundIconWrap || !el.soundLabel) return;
+    const on = window.ClassroomFX.isSoundEnabled();
+    el.soundIconWrap.textContent = on ? "🔊" : "🔇";
+    el.soundLabel.textContent = on ? "เสียงเปิด" : "ปิดเสียง";
+  }
+  syncSoundUI();
+
+  if (el.soundToggleBtn) {
+    el.soundToggleBtn.addEventListener("click", () => {
+      if (!window.ClassroomFX) return;
+      const on = window.ClassroomFX.toggleSound();
+      syncSoundUI();
+      showToast(on ? "เปิดเสียงเอฟเฟกต์แล้ว 🔊" : "ปิดเสียงเอฟเฟกต์แล้ว 🔇");
+    });
+  }
+
+  if (el.voiceGreetBtn) {
+    el.voiceGreetBtn.addEventListener("click", (e) => {
+      if (window.ClassroomFX) {
+        const rect = e.currentTarget.getBoundingClientRect();
+        window.ClassroomFX.spawnSparkles(rect.left + rect.width / 2, rect.top + rect.height / 2, 12);
+        window.ClassroomFX.playChime();
+        window.ClassroomFX.speakGreeting("สวัสดีค่ะ ยินดีต้อนรับเข้าสู่ห้องเรียนครูเบ็ญจวรรณนะคะ");
+      }
+      showToast("สวัสดีค่ะ ยินดีต้อนรับสู่ห้องเรียนครูเบ็ญจวรรณนะคะ 💖");
+    });
+  }
+
+  if (el.chibiBuddyBtn && el.buddyBubble) {
+    const messages = [
+      "สู้ๆ นะคนเก่ง! ✨",
+      "ทบทวน O-NET วันละนิด พิชิต 100! 🏆",
+      "ลองไปเล่นเกมคำคล้องจองกันมั้ย? 🎮",
+      "ครูเบ็ญเป็นกำลังใจให้นะคะ 💖",
+      "อ่านหนังสือแล้วอย่าลืมพักผ่อนนะ 🌸"
+    ];
+    let msgIdx = 0;
+    el.chibiBuddyBtn.addEventListener("click", (e) => {
+      msgIdx = (msgIdx + 1) % messages.length;
+      el.buddyBubble.textContent = messages[msgIdx];
+      if (window.ClassroomFX) {
+        const rect = e.currentTarget.getBoundingClientRect();
+        window.ClassroomFX.spawnSparkles(rect.left + rect.width / 2, rect.top + rect.height / 2, 14);
+        window.ClassroomFX.playSparkle();
+      }
+    });
+  }
+
+  document.querySelectorAll(".onet-banner-card").forEach((card) => {
+    card.addEventListener("click", (e) => {
+      if (window.ClassroomFX) {
+        window.ClassroomFX.playSparkle();
+        window.ClassroomFX.spawnSparkles(e.clientX, e.clientY, 10);
+      }
+    });
+  });
 
   if (el.refreshPageBtn) {
     el.refreshPageBtn.addEventListener("click", async () => {
@@ -510,12 +578,14 @@
     el.sidebarNav.addEventListener("click", (e) => {
       const btn = e.target.closest(".nav-item[data-nav]");
       if (!btn) return;
+      if (window.ClassroomFX) window.ClassroomFX.playPop();
       switchStageView(btn.dataset.nav, btn.dataset.cat || "all");
     });
   }
 
   if (el.heroExploreBtn) {
     el.heroExploreBtn.addEventListener("click", () => {
+      if (window.ClassroomFX) window.ClassroomFX.playPop();
       switchStageView("resources", "all");
     });
   }
@@ -523,6 +593,7 @@
   el.categoryTabs.addEventListener("click", (e) => {
     const btn = e.target.closest("[data-cat]");
     if (!btn) return;
+    if (window.ClassroomFX) window.ClassroomFX.playPop();
     state.activeCategory = btn.dataset.cat;
     renderCategoryTabs();
     renderResources();

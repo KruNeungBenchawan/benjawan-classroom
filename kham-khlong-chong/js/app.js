@@ -296,8 +296,16 @@ const App = (() => {
               </div>
             </div>
 
-            <!-- Student Progress Summary Card -->
-            <div class="bg-white/95 text-slate-800 rounded-3xl p-4 sm:p-5 w-full lg:w-80 shadow-xl border-4 border-amber-300">
+            <!-- Chibi Mascot + Student Progress Summary Card -->
+            <div class="flex flex-col sm:flex-row lg:flex-col items-center gap-3 w-full lg:w-80 shrink-0">
+              <div class="relative bg-white/95 rounded-3xl p-2 border-4 border-pink-300 shadow-xl flex items-center gap-3 w-full">
+                <img src="chibi-games.jpg" alt="การ์ตูน Chibi คำคล้องจองหรรษา" class="w-20 h-20 rounded-2xl object-cover border-2 border-indigo-200 shrink-0" />
+                <div class="text-slate-800 min-w-0">
+                  <div class="inline-block bg-pink-100 text-pink-700 font-kid font-bold text-xs px-2.5 py-0.5 rounded-full mb-1">🌟 ห้องเรียน Chibi</div>
+                  <div class="font-kid font-bold text-sm text-indigo-950 leading-snug">มาเก็บดาวสะสมให้ครบทุกด่านเลยนะ!</div>
+                </div>
+              </div>
+              <div class="bg-white/95 text-slate-800 rounded-3xl p-4 sm:p-5 w-full shadow-xl border-4 border-amber-300">
               <div class="flex items-center gap-3 pb-3 border-b border-slate-200">
                 <button onclick="App.openProfileModal()" class="text-3xl sm:text-4xl bg-amber-100 w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center border-2 border-amber-300 hover:scale-105 transition shrink-0">
                   ${avatar.emoji}
@@ -332,6 +340,7 @@ const App = (() => {
                   🔄 เริ่มรอบใหม่
                 </button>
               </div>
+            </div>
             </div>
           </div>
         </section>

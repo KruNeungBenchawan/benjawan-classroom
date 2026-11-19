@@ -1,5 +1,5 @@
 (() => {
-  const STORAGE_KEY = "benjawan_classroom_data_v6";
+  const STORAGE_KEY = "benjawan_classroom_data_v7";
 
   const TYPE_LABELS = {
     onet: "เว็บติวสอบ / O-NET",
@@ -126,7 +126,13 @@
     soundLabel: document.getElementById("soundLabel"),
     voiceGreetBtn: document.getElementById("voiceGreetBtn"),
     chibiBuddyBtn: document.getElementById("chibiBuddyBtn"),
-    buddyBubble: document.getElementById("buddyBubble")
+    buddyBubble: document.getElementById("buddyBubble"),
+    catHeroBanner: document.getElementById("categoryHeroBanner"),
+    catHeroImg: document.getElementById("catHeroImg"),
+    catHeroPill: document.getElementById("catHeroPill"),
+    catHeroTitle: document.getElementById("catHeroTitle"),
+    catHeroDesc: document.getElementById("catHeroDesc"),
+    catCheerBtn: document.getElementById("catCheerBtn")
   };
 
   function cloneDefaultData() {
@@ -374,7 +380,70 @@
     return filtered;
   }
 
+  const CATEGORY_BANNERS = {
+    all: {
+      img: "assets/chibi-teacher.jpg",
+      pill: "✨ คลังสื่อการเรียนรู้ครบวงจร",
+      title: "สื่อและเอกสารทั้งหมดของห้องเรียน",
+      desc: "รวมสื่อการสอน ใบงาน สไลด์ เกม และข้อสอบ O-NET ไว้ครบในที่เดียว!",
+      bg: "linear-gradient(135deg, #ffe4ee 0%, #fff7d6 50%, #e3f3ff 100%)"
+    },
+    "lesson-plans": {
+      img: "assets/chibi-student-boy.jpg",
+      pill: "📖 แผนการสอน & สรุปความรู้",
+      title: "แผนการสอนและสรุปเนื้อหาเข้มข้น",
+      desc: "รวมเอกสารสรุปหลักภาษา เทคนิคพิชิตข้อสอบ และบทเรียนประวัติศาสตร์ ม.1–ม.3",
+      bg: "linear-gradient(135deg, #e0f2fe 0%, #ede9fe 100%)"
+    },
+    worksheets: {
+      img: "assets/chibi-student-girl.jpg",
+      pill: "📝 ฝึกฝนทักษะการเขียน & คิดวิเคราะห์",
+      title: "ใบงานและแบบฝึกหัดพร้อมเฉลย",
+      desc: "ดาวน์โหลดใบงาน A4 และแบบฝึกทักษะพาร์ทเขียนเพื่อฝึกทำให้คล่อง!",
+      bg: "linear-gradient(135deg, #fef3c7 0%, #ffe4ee 100%)"
+    },
+    media: {
+      img: "assets/chibi-classroom.jpg",
+      pill: "🎬 สไลด์สวย & สมุดโน้ตสีพาสเทล",
+      title: "สไลด์สอนขึ้นจอและสื่อภาพสีสันสดใส",
+      desc: "เปิดสไลด์ HTML โต้ตอบ PowerPoint และสมุดโน้ตภาพพาสเทลสุดน่ารัก!",
+      bg: "linear-gradient(135deg, #e3f9ef 0%, #e0f2fe 100%)"
+    },
+    games: {
+      img: "assets/chibi-games.jpg",
+      pill: "🎮 เรียนปนเล่น สนุกได้ความรู้!",
+      title: "เกมการเรียนรู้แสนสนุก",
+      desc: "ตะลุยด่านคำคล้องจองหรรษา 3 เกม พร้อมเสียงอ่านและเกียรติบัตร!",
+      bg: "linear-gradient(135deg, #f3e8ff 0%, #ffe4ee 100%)"
+    },
+    exams: {
+      img: "assets/chibi-thai-study.jpg",
+      pill: "🎓 พิชิต O-NET 100 คะแนนเต็ม!",
+      title: "คลังข้อสอบและชุดติว O-NET",
+      desc: "ฝึกทำข้อสอบจำลอง ป.6 & ม.3 พร้อมเฉลยละเอียดและเกณฑ์ให้คะแนน!",
+      bg: "linear-gradient(135deg, #fff6d6 0%, #ffedd5 100%)"
+    },
+    documents: {
+      img: "assets/chibi-history.jpg",
+      pill: "📂 เอกสาร PDF & สารบัญคลังสื่อ",
+      title: "เอกสารอ้างอิง Test Blueprint & สารบัญ",
+      desc: "ดาวน์โหลดผังข้อสอบ PDF และสารบัญสื่อการสอนฉบับเต็ม",
+      bg: "linear-gradient(135deg, #e3f3ff 0%, #f1f5f9 100%)"
+    }
+  };
+
+  function updateCategoryHeroBanner() {
+    if (!el.catHeroBanner) return;
+    const info = CATEGORY_BANNERS[state.activeCategory] || CATEGORY_BANNERS.all;
+    el.catHeroImg.src = info.img;
+    el.catHeroPill.textContent = info.pill;
+    el.catHeroTitle.textContent = info.title;
+    el.catHeroDesc.textContent = info.desc;
+    el.catHeroBanner.style.background = info.bg;
+  }
+
   function renderResources() {
+    updateCategoryHeroBanner();
     const items = getFilteredResources();
     const hasFilters =
       state.activeCategory !== "all" ||
@@ -547,6 +616,17 @@
         window.ClassroomFX.spawnSparkles(rect.left + rect.width / 2, rect.top + rect.height / 2, 14);
         window.ClassroomFX.playSparkle();
       }
+    });
+  }
+
+  if (el.catCheerBtn) {
+    el.catCheerBtn.addEventListener("click", (e) => {
+      if (window.ClassroomFX) {
+        const rect = e.currentTarget.getBoundingClientRect();
+        window.ClassroomFX.spawnSparkles(rect.left + rect.width / 2, rect.top + rect.height / 2, 16);
+        window.ClassroomFX.playChime();
+      }
+      showToast("เย้! รับดาวกำลังใจจากครูเบ็ญแล้ว ตั้งใจเรียนนะคนเก่ง 🌟💖");
     });
   }
 

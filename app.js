@@ -154,7 +154,7 @@
         if (
           !existingIds.has(item.id) &&
           (item.id.startsWith("thai-slide-") ||
-            ["onet-m3-2569", "onet-p6-2569", "m3-slide-2568-html", "m3-exam-2568-pdf"].includes(item.id))
+            ["onet-m3-2569", "onet-p6-2569", "m3-slide-2568-html", "m3-exam-2568-pdf", "thai-vocab-p1-p6"].includes(item.id))
         ) {
           parsed.resources.unshift(item);
         }
@@ -260,6 +260,7 @@
   }
 
   function renderAnnouncements() {
+    if (!el.announcementList || !el.announcementCount) return;
     const items = [...(state.data.announcements || [])].sort((a, b) =>
       (b.date || "").localeCompare(a.date || "")
     );
@@ -422,7 +423,7 @@
       img: "assets/chibi-games.jpg",
       pill: "🎮 เรียนปนเล่น สนุกได้ความรู้!",
       title: "เกมการเรียนรู้แสนสนุก",
-      desc: "ตะลุยด่านคำคล้องจองหรรษา 3 เกม พร้อมเสียงอ่านและเกียรติบัตร!",
+      desc: "ตะลุยด่านคำคล้องจองหรรษา และตะลุยคำศัพท์ ป.1–ป.6 ฝึกอ่านบัญชีคำพื้นฐาน!",
       bg: "linear-gradient(135deg, #f3e8ff 0%, #ffe4ee 100%)"
     },
     exams: {
@@ -452,6 +453,7 @@
   }
 
   function getCardChibiThumb(item) {
+    if (item.id === "thai-vocab-p1-p6") return "assets/chibi-student-boy.jpg";
     if ((item.subject || "").includes("ประวัติศาสตร์")) return "assets/chibi-history.jpg";
     if (item.category === "games") return "assets/chibi-games.jpg";
     if (item.category === "exams") return "assets/chibi-thai-study.jpg";
@@ -821,35 +823,39 @@
   });
 
   // Announcements
-  el.addAnnouncementBtn.addEventListener("click", () => {
-    el.announcementForm.reset();
-    el.annDate.value = new Date().toISOString().slice(0, 10);
-    openModal(el.announcementModal);
-  });
-
-  el.announcementForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    state.data.announcements.unshift({
-      id: `ann-${Date.now()}`,
-      title: el.annTitle.value.trim(),
-      content: el.annContent.value.trim(),
-      date: el.annDate.value || new Date().toISOString().slice(0, 10)
+  if (el.addAnnouncementBtn && el.announcementForm && el.announcementModal) {
+    el.addAnnouncementBtn.addEventListener("click", () => {
+      el.announcementForm.reset();
+      el.annDate.value = new Date().toISOString().slice(0, 10);
+      openModal(el.announcementModal);
     });
-    saveData();
-    closeModal(el.announcementModal);
-    renderAnnouncements();
-    showToast("เผยแพร่ประกาศเรียบร้อยแล้ว");
-  });
 
-  el.announcementList.addEventListener("click", (e) => {
-    const delBtn = e.target.closest("[data-del-ann]");
-    if (!delBtn) return;
-    const id = delBtn.dataset.delAnn;
-    state.data.announcements = state.data.announcements.filter((a) => a.id !== id);
-    saveData();
-    renderAnnouncements();
-    showToast("ลบประกาศเรียบร้อยแล้ว");
-  });
+    el.announcementForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      state.data.announcements.unshift({
+        id: `ann-${Date.now()}`,
+        title: el.annTitle.value.trim(),
+        content: el.annContent.value.trim(),
+        date: el.annDate.value || new Date().toISOString().slice(0, 10)
+      });
+      saveData();
+      closeModal(el.announcementModal);
+      renderAnnouncements();
+      showToast("เผยแพร่ประกาศเรียบร้อยแล้ว");
+    });
+  }
+
+  if (el.announcementList) {
+    el.announcementList.addEventListener("click", (e) => {
+      const delBtn = e.target.closest("[data-del-ann]");
+      if (!delBtn) return;
+      const id = delBtn.dataset.delAnn;
+      state.data.announcements = state.data.announcements.filter((a) => a.id !== id);
+      saveData();
+      renderAnnouncements();
+      showToast("ลบประกาศเรียบร้อยแล้ว");
+    });
+  }
 
   // Profile Edit
   el.editProfileBtn.addEventListener("click", () => {

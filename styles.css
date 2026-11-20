@@ -124,15 +124,15 @@ a {
 
 /* Left Vertical Navy Sidebar */
 .sidebar {
-  width: 146px;
+  width: 142px;
   flex-shrink: 0;
   background: linear-gradient(180deg, #1f5580 0%, #194569 100%);
   border-radius: 22px;
-  padding: 12px 9px;
+  padding: 10px 8px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 8px;
+  gap: 6px;
   height: 100%;
   overflow-y: auto;
   box-shadow: 0 10px 24px rgba(25, 69, 105, 0.25);
@@ -141,15 +141,21 @@ a {
 .sidebar-nav {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
 }
 
 .sidebar-footer {
-  padding-top: 10px;
+  padding-top: 8px;
   border-top: 1px solid rgba(255, 255, 255, 0.18);
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 5px;
+}
+
+.sidebar-mini-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
 }
 
 .nav-item {
@@ -157,16 +163,31 @@ a {
   border: none;
   background: transparent;
   color: rgba(255, 255, 255, 0.92);
-  border-radius: 16px;
-  padding: 11px 8px;
+  border-radius: 14px;
+  padding: 6px 6px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 3px;
   cursor: pointer;
   transition: all 0.18s ease;
   text-align: center;
+}
+
+.nav-mini {
+  padding: 5px 3px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.nav-mini .nav-icon {
+  width: 24px;
+  height: 24px;
+  font-size: 0.85rem;
+}
+
+.nav-mini .nav-label {
+  font-size: 0.68rem;
 }
 
 .nav-item:hover {
@@ -183,10 +204,15 @@ a {
 .nav-icon {
   display: grid;
   place-items: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.12);
+  width: 28px;
+  height: 28px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.nav-icon svg {
+  width: 17px;
+  height: 17px;
 }
 
 .nav-item.active .nav-icon {
@@ -195,9 +221,9 @@ a {
 }
 
 .nav-label {
-  font-size: 0.82rem;
+  font-size: 0.74rem;
   font-weight: 700;
-  line-height: 1.25;
+  line-height: 1.2;
 }
 
 .nav-teacher-btn.active {
@@ -815,14 +841,15 @@ a {
   background: rgba(255, 255, 255, 0.24);
 }
 
-/* Search & Filter Controls */
+/* Compact Controls Card in View 2 */
 .controls-card {
-  padding: 14px 16px;
+  padding: 10px 14px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 10px;
+  flex-shrink: 0;
 }
 
 .search-box {
@@ -925,79 +952,128 @@ a {
   text-decoration: underline;
 }
 
-/* Resource Cards */
+/* Resource Cards (Chibi Pastel Illustrated Cards) */
 .resources-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(295px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(305px, 1fr));
   gap: 16px;
+  padding-bottom: 8px;
 }
 
 .resources-list {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  padding-bottom: 8px;
 }
 
 .resource-card {
   background: var(--surface);
-  border: 2px solid var(--border-soft);
-  border-radius: 20px;
-  padding: 18px;
+  border: 2.5px solid #cbd5e1;
+  border-radius: 22px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 14px;
-  transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
-  box-shadow: 0 5px 14px rgba(30, 82, 124, 0.05);
+  gap: 12px;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease, border-color 0.2s ease;
+  box-shadow: 0 5px 0 #e2e8f0;
+  position: relative;
+  overflow: hidden;
 }
 
 .resource-card:hover {
-  transform: translateY(-3px);
-  border-color: var(--sky-outer);
-  box-shadow: 0 10px 22px rgba(30, 82, 124, 0.12);
+  transform: translateY(-4px);
+  border-color: var(--navy);
+  box-shadow: 0 8px 0 var(--sky-mid);
 }
 
-.resource-card.pinned {
-  border-color: var(--butter);
-  background: linear-gradient(180deg, #fffdf2 0%, #ffffff 42%);
-}
+.resource-card.res-cat-games { background: linear-gradient(180deg, #fdf4ff 0%, #ffffff 42%); border-color: #d8b4fe; box-shadow: 0 5px 0 #e9d5ff; }
+.resource-card.res-cat-exams { background: linear-gradient(180deg, #fffbeb 0%, #ffffff 42%); border-color: #fcd34d; box-shadow: 0 5px 0 #fde68a; }
+.resource-card.res-cat-media { background: linear-gradient(180deg, #f0f9ff 0%, #ffffff 42%); border-color: #7dd3fc; box-shadow: 0 5px 0 #bae6fd; }
+.resource-card.res-cat-worksheets { background: linear-gradient(180deg, #ecfdf5 0%, #ffffff 42%); border-color: #6ee7b7; box-shadow: 0 5px 0 #a7f3d0; }
+.resource-card.res-cat-lesson-plans { background: linear-gradient(180deg, #eef2ff 0%, #ffffff 42%); border-color: #a5b4fc; box-shadow: 0 5px 0 #c7d2fe; }
+.resource-card.res-cat-documents { background: linear-gradient(180deg, #fff1f2 0%, #ffffff 42%); border-color: #fda4af; box-shadow: 0 5px 0 #fecdd3; }
 
 .res-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
+  gap: 6px;
+  flex-wrap: nowrap;
+}
+
+.res-cat-badge,
+.res-pin-tag,
+.res-type-badge {
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .res-cat-badge {
   font-family: 'Mali', sans-serif;
-  font-size: 0.76rem;
+  font-size: 0.74rem;
   font-weight: 700;
   padding: 3px 10px;
   border-radius: 999px;
-  background: var(--sky-soft);
+  background: rgba(255, 255, 255, 0.92);
+  border: 1.5px solid var(--sky-mid);
   color: var(--navy);
 }
 
 .res-pin-tag {
   font-family: 'Mali', sans-serif;
-  font-size: 0.74rem;
+  font-size: 0.72rem;
   font-weight: 700;
   color: var(--navy-dark);
   background: var(--butter);
-  padding: 2px 9px;
+  border: 1.5px solid var(--navy);
+  padding: 2px 8px;
   border-radius: 999px;
 }
 
 .res-type-badge {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 4px;
   font-family: 'Mali', sans-serif;
-  font-size: 0.76rem;
+  font-size: 0.74rem;
   font-weight: 700;
-  padding: 4px 10px;
+  padding: 3px 9px;
   border-radius: 999px;
+}
+
+.res-title-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  margin-top: 10px;
+}
+
+.res-chibi-thumb {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  border: 2px solid var(--navy);
+  box-shadow: 0 3px 0 var(--sky-mid);
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #ffffff;
+}
+
+.res-chibi-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.res-title {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-top: 0;
+  color: var(--navy-dark);
+  line-height: 1.38;
 }
 
 .type-onet { background: #ffe4ee; color: #be123c; }

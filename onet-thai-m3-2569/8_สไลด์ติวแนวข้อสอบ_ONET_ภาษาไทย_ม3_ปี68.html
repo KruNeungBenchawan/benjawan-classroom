@@ -18,6 +18,7 @@
             --danger: #e11d48;
             --text-main: #1e293b;
             --text-muted: #475569;
+            --zoom: 1;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -120,7 +121,7 @@
         .slide {
             display: none;
             width: 100%;
-            max-width: 1120px;
+            max-width: 1320px;
             height: 100%;
             background: #fffdf7;
             background-image:
@@ -131,7 +132,7 @@
             border-radius: 32px;
             border: 5px solid #f59e0b;
             box-shadow: 0 18px 45px rgba(15, 23, 42, 0.25), inset 0 0 0 4px #fef3c7;
-            padding: 24px 34px;
+            padding: 20px 34px;
             flex-direction: column;
             overflow-y: auto;
             position: relative;
@@ -181,23 +182,30 @@
             50% { transform: translateY(-5px) rotate(2deg); }
         }
         .slide-title {
-            font-family: 'Kodchasan', 'Mali', sans-serif;
-            font-size: 1.36rem;
+            font-family: 'Kodchasan', 'Sarabun', sans-serif;
+            font-size: calc(1.82rem * var(--zoom));
             font-weight: 700;
-            color: #1e3a8a;
+            color: #0f172a;
             line-height: 1.35;
         }
         .strand-tag {
             background: linear-gradient(90deg, #fce7f3, #ede9fe);
             color: #9d174d;
             border: 2px solid #f472b6;
-            padding: 5px 14px;
+            padding: 6px 16px;
             border-radius: 999px;
-            font-size: 0.86rem;
+            font-size: 0.96rem;
             font-weight: 700;
             flex-shrink: 0;
         }
-        .slide-body { flex: 1; font-size: 1.06rem; line-height: 1.65; }
+        .slide-body {
+            flex: 1;
+            font-family: 'Sarabun', 'Kodchasan', sans-serif;
+            font-size: calc(1.32rem * var(--zoom));
+            font-weight: 600;
+            line-height: 1.7;
+            color: #0f172a;
+        }
         .slide-footer {
             display: flex;
             justify-content: space-between;
@@ -214,63 +222,78 @@
         .passage-box {
             background: #fef9c3;
             border: 2.5px solid #facc15;
-            border-left: 7px solid #f59e0b;
+            border-left: 8px solid #f59e0b;
             border-radius: 18px;
-            padding: 14px 18px;
-            margin-bottom: 14px;
-            font-size: 1.02rem;
-            color: #1e293b;
+            padding: 16px 22px;
+            margin-bottom: 16px;
+            font-family: 'Sarabun', sans-serif;
+            font-size: calc(1.34rem * var(--zoom));
+            font-weight: 600;
+            line-height: 1.72;
+            color: #0f172a;
             box-shadow: 0 4px 0 #fef08a;
         }
         .poem-box {
             background: #fdf4ff;
-            border: 2.5px solid #e9d5ff;
-            border-left: 7px solid #a855f7;
+            border: 2.5px solid #d8b4fe;
+            border-left: 8px solid #9333ea;
             border-radius: 18px;
-            padding: 14px 22px;
-            margin-bottom: 14px;
-            font-size: 1.08rem;
-            color: #1e293b;
+            padding: 16px 26px;
+            margin-bottom: 16px;
+            font-family: 'Sarabun', sans-serif;
+            font-size: calc(1.48rem * var(--zoom));
+            font-weight: 700;
+            line-height: 1.75;
+            color: #0f172a;
             display: grid;
             grid-template-columns: max-content max-content;
-            gap: 4px 36px;
+            gap: 6px 42px;
             justify-content: center;
             box-shadow: 0 4px 0 #f3e8ff;
         }
         .question-text {
+            font-family: 'Kodchasan', 'Sarabun', sans-serif;
             font-weight: 700;
-            font-size: 1.15rem;
+            font-size: calc(1.5rem * var(--zoom));
             color: #0f172a;
             margin-bottom: 14px;
+            line-height: 1.5;
         }
-        .choices-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin-bottom: 14px; }
+        .choices-grid { display: grid; grid-template-columns: 1fr; gap: 11px; margin-bottom: 14px; }
         .choice-btn {
             background: #ffffff;
-            border: 2.5px solid #cbd5e1;
+            border: 2.5px solid #94a3b8;
             border-radius: 16px;
-            padding: 11px 16px;
+            padding: 13px 20px;
             text-align: left;
-            font-family: inherit;
-            font-size: 1.04rem;
+            font-family: 'Sarabun', sans-serif;
+            font-size: calc(1.34rem * var(--zoom));
+            font-weight: 600;
+            color: #0f172a;
+            line-height: 1.55;
             cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 3px 0 #e2e8f0;
+            box-shadow: 0 3px 0 #cbd5e1;
             transition: all 0.15s;
         }
-        .choice-btn:hover { background: #f0f9ff; border-color: #38bdf8; transform: translateX(4px); }
+        .choice-btn:hover { background: #f0f9ff; border-color: #0284c7; transform: translateX(4px); }
         .choice-btn.selected-multi { background: #e0f2fe; border-color: #0284c7; font-weight: 700; box-shadow: 0 3px 0 #7dd3fc; }
         .choice-btn.correct-revealed { background: #dcfce7; border-color: #16a34a; color: #14532d; font-weight: 700; box-shadow: 0 3px 0 #86efac; }
         .choice-btn.wrong-selected { background: #ffe4e6; border-color: #e11d48; color: #881337; box-shadow: 0 3px 0 #fda4af; }
-        .choice-status { font-weight: 700; font-size: 0.92rem; margin-left: 10px; flex-shrink: 0; }
+        .choice-status { font-weight: 700; font-size: 1.05rem; margin-left: 12px; flex-shrink: 0; }
         .answer-panel {
             display: none;
             background: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%);
             border: 3px solid #10b981;
             border-radius: 18px;
-            padding: 14px 18px;
-            margin-top: 10px;
+            padding: 16px 22px;
+            margin-top: 12px;
+            font-family: 'Sarabun', sans-serif;
+            font-size: calc(1.28rem * var(--zoom));
+            font-weight: 600;
+            line-height: 1.68;
             color: #064e3b;
             box-shadow: 0 5px 0 #a7f3d0;
             animation: popIn 0.2s ease-out;
@@ -332,6 +355,8 @@
             <button class="btn btn-primary" onclick="nextSlide()">ถัดไป ▶</button>
             <button class="btn btn-accent" id="globalRevealBtn" onclick="toggleCurrentAnswer()" style="display:none;">💡 เปิด/ซ่อนเฉลย</button>
             <button class="btn btn-sound" id="soundToggleBtn" onclick="toggleSound()">🔊 เสียง: เปิด</button>
+            <button class="btn" onclick="zoomText(0.1)" title="ขยายขนาดตัวอักษร">🔍 A+</button>
+            <button class="btn" onclick="zoomText(-0.1)" title="ย่อขนาดตัวอักษร">🔍 A-</button>
             <button class="btn" onclick="toggleFullScreen()">⛶ เต็มจอ</button>
         </div>
     </div>
@@ -1258,6 +1283,12 @@
         function toggleFullScreen() {
             if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(() => {});
             else document.exitFullscreen().catch(() => {});
+        }
+
+        let textZoom = 1;
+        function zoomText(delta) {
+            textZoom = Math.min(1.5, Math.max(0.8, +(textZoom + delta).toFixed(2)));
+            document.documentElement.style.setProperty('--zoom', textZoom);
         }
 
         document.addEventListener('keydown', (e) => {

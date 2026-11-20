@@ -2,14 +2,14 @@
   const STORAGE_KEY = "benjawan_classroom_data_v7";
 
   const TYPE_LABELS = {
-    onet: "เว็บติวสอบ / O-NET",
+    onet: "เว็บโต้ตอบ",
     gdrive: "Google Drive",
     pdf: "PDF",
-    canva: "Canva / สไลด์",
+    canva: "สไลด์ / ภาพ",
     video: "วิดีโอ",
-    doc: "เอกสาร Word / Docs",
-    sheet: "ตาราง / Sheets",
-    link: "ลิงก์เว็บ"
+    doc: "Word (.docx)",
+    sheet: "Sheets",
+    link: "เว็บสารบัญ"
   };
 
   const CATEGORY_ICONS = {
@@ -442,6 +442,16 @@
     el.catHeroBanner.style.background = info.bg;
   }
 
+  function getCardChibiThumb(item) {
+    if ((item.subject || "").includes("ประวัติศาสตร์")) return "assets/chibi-history.jpg";
+    if (item.category === "games") return "assets/chibi-games.jpg";
+    if (item.category === "exams") return "assets/chibi-thai-study.jpg";
+    if (item.category === "worksheets") return "assets/chibi-student-girl.jpg";
+    if (item.category === "lesson-plans") return "assets/chibi-student-boy.jpg";
+    if (item.category === "media") return "assets/chibi-classroom.jpg";
+    return "assets/chibi-mascot.jpg";
+  }
+
   function renderResources() {
     updateCategoryHeroBanner();
     const items = getFilteredResources();
@@ -471,23 +481,27 @@
         const typeLabel = TYPE_LABELS[typeKey];
         const typeIcon = TYPE_ICONS[typeKey] || TYPE_ICONS.link;
         const catName = getCategoryName(item.category);
+        const thumbSrc = getCardChibiThumb(item);
 
         return `
-        <article class="resource-card ${item.pinned ? "pinned" : ""}">
+        <article class="resource-card res-cat-${escapeHtml(item.category)} ${item.pinned ? "pinned" : ""}">
           <div class="res-main">
             <div class="res-top">
-              <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;">
-                <span class="res-cat-badge">${escapeHtml(catName)}</span>
-                ${item.pinned ? `<span class="res-pin-tag">ปักหมุด</span>` : ""}
-              </div>
+              <span class="res-cat-badge">${escapeHtml(catName)}</span>
               <span class="res-type-badge type-${escapeHtml(typeKey)}">
                 ${typeIcon}
                 <span>${escapeHtml(typeLabel)}</span>
               </span>
             </div>
-            <h3 class="res-title">${escapeHtml(item.title)}</h3>
+            <div class="res-title-row">
+              <div class="res-chibi-thumb" aria-hidden="true">
+                <img src="${escapeHtml(thumbSrc)}" alt="" />
+              </div>
+              <h3 class="res-title">${escapeHtml(item.title)}</h3>
+            </div>
             ${item.description ? `<p class="res-desc">${escapeHtml(item.description)}</p>` : ""}
             <div class="res-tags">
+              ${item.pinned ? `<span class="res-pin-tag">⭐ แนะนำ</span>` : ""}
               ${item.subject ? `<span class="tag">วิชา: ${escapeHtml(item.subject)}</span>` : ""}
               ${item.grade ? `<span class="tag">ระดับ: ${escapeHtml(item.grade)}</span>` : ""}
             </div>
@@ -504,7 +518,7 @@
                   : ""
               }
               <a class="btn btn-primary btn-sm" href="${escapeHtml(safeUrl)}" target="_blank" rel="noopener noreferrer">
-                เปิดดูเอกสาร
+                เปิดดูเลย ✨
               </a>
             </div>
           </div>
@@ -574,7 +588,7 @@
     if (!window.ClassroomFX || !el.soundIconWrap || !el.soundLabel) return;
     const on = window.ClassroomFX.isSoundEnabled();
     el.soundIconWrap.textContent = on ? "🔊" : "🔇";
-    el.soundLabel.textContent = on ? "เสียงเปิด" : "ปิดเสียง";
+    el.soundLabel.textContent = on ? "เสียง" : "ปิดเสียง";
   }
   syncSoundUI();
 

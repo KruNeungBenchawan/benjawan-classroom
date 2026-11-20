@@ -617,6 +617,15 @@ a {
   color: #b45309;
 }
 
+.onet-thai-slides {
+  grid-column: 1 / -1;
+  background: linear-gradient(135deg, #e0f2fe 0%, #ede9fe 52%, #fce7f3 100%);
+}
+
+.onet-thai-slides .onet-icon-box {
+  color: #4f46e5;
+}
+
 .onet-icon-box {
   width: 48px;
   height: 48px;

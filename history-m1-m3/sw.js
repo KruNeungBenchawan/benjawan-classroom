@@ -1,8 +1,9 @@
-const CACHE_NAME = 'thai-history-pwa-v3';
+const CACHE_NAME = 'thai-history-pwa-v5';
 const ASSETS = [
   './',
   './index.html',
   './units-extra.js',
+  './resources-data.js',
   './manifest.json'
 ];
 

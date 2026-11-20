@@ -147,15 +147,24 @@
       if (!parsed || !Array.isArray(parsed.resources) || !Array.isArray(parsed.categories)) {
         return cloneDefaultData();
       }
-      // Ensure newly added O-NET default resources appear even if localStorage existed
+      // Ensure newly added default resources and announcements appear even if localStorage existed
       const defaults = cloneDefaultData();
       const existingIds = new Set(parsed.resources.map((r) => r.id));
-      ["onet-m3-2569", "onet-p6-2569", "m3-slide-2568-html", "m3-exam-2568-pdf"].forEach((id) => {
-        if (!existingIds.has(id)) {
-          const item = defaults.resources.find((r) => r.id === id);
-          if (item) parsed.resources.unshift(item);
+      defaults.resources.forEach((item) => {
+        if (
+          !existingIds.has(item.id) &&
+          (item.id.startsWith("thai-slide-") ||
+            ["onet-m3-2569", "onet-p6-2569", "m3-slide-2568-html", "m3-exam-2568-pdf"].includes(item.id))
+        ) {
+          parsed.resources.unshift(item);
         }
       });
+      if (Array.isArray(parsed.announcements)) {
+        const annIds = new Set(parsed.announcements.map((a) => a.id));
+        defaults.announcements.forEach((a) => {
+          if (!annIds.has(a.id)) parsed.announcements.unshift(a);
+        });
+      }
       // Auto-migrate old placeholder profile to official profile
       if (parsed.profile && (parsed.profile.name === "ครูเบ็ญจวรรณ" || parsed.profile.school === "โรงเรียนตัวอย่างวิทยาคม" || parsed.profile.school === "ห้องเรียนภาษาไทย • ปีการศึกษา 2569")) {
         parsed.profile = defaults.profile;

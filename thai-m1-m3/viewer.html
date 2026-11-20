@@ -1,0 +1,1447 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>สไลด์ช่วยสอนออนไลน์ | ห้องเรียนครูเบ็ญจวรรณ</title>
+  <link rel="icon" type="image/png" href="../assets/logo-kruneung.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Mali:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Sarabun:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    :root {
+      --navy: #0f172a;
+      --navy-2: #1e293b;
+      --indigo: #4f46e5;
+      --pink: #ec4899;
+      --amber: #f59e0b;
+      --sky: #38bdf8;
+      --emerald: #10b981;
+      --surface: #1e293b;
+      --border: rgba(255, 255, 255, 0.14);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Mali', 'Sarabun', sans-serif;
+      background: radial-gradient(circle at top left, #1e1b4b, #0f172a 60%, #090d16 100%);
+      color: #f8fafc;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      user-select: none;
+    }
+
+    /* Top Bar */
+    .topbar {
+      height: 56px;
+      padding: 0 14px;
+      background: rgba(15, 23, 42, 0.9);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-shrink: 0;
+      z-index: 30;
+    }
+
+    .top-left, .top-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.08);
+      color: #f8fafc;
+      font-family: inherit;
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+    }
+
+    .btn:hover { background: rgba(255, 255, 255, 0.18); transform: translateY(-1px); }
+    .btn.active { background: #4f46e5; border-color: #818cf8; box-shadow: 0 0 12px rgba(99, 102, 241, 0.45); }
+    .btn-amber { background: #f59e0b; color: #1e1b4b; border-color: #fcd34d; }
+    .btn-amber:hover { background: #fbbf24; }
+    .btn-emerald { background: #059669; border-color: #34d399; }
+    .btn-emerald:hover { background: #10b981; }
+    .btn-pink { background: #db2777; border-color: #f472b6; }
+    .btn-pink:hover { background: #ec4899; }
+    .btn-sm { padding: 5px 9px; font-size: 0.78rem; border-radius: 8px; }
+
+    .deck-select, .slide-select {
+      background: #1e293b;
+      color: #f8fafc;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 10px;
+      padding: 0 10px;
+      height: 36px;
+      line-height: 36px;
+      font-family: inherit;
+      font-size: 0.84rem;
+      font-weight: 600;
+      max-width: 240px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      cursor: pointer;
+    }
+
+    .slide-select { max-width: 200px; }
+
+    .badge-pill {
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      background: rgba(56, 189, 248, 0.2);
+      border: 1px solid rgba(56, 189, 248, 0.45);
+      color: #bae6fd;
+      white-space: nowrap;
+    }
+
+    /* Main Workspace */
+    .workspace {
+      flex: 1;
+      display: flex;
+      min-height: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Slide Overview Sidebar */
+    .overview-drawer {
+      width: 270px;
+      background: rgba(15, 23, 42, 0.95);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      transition: margin-left 0.2s ease;
+      z-index: 20;
+    }
+
+    .overview-drawer.hidden { display: none; }
+
+    .drawer-head {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .overview-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .overview-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.04);
+      color: #e2e8f0;
+      text-align: left;
+      font-family: inherit;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .overview-item:hover { background: rgba(255, 255, 255, 0.12); }
+    .overview-item.active {
+      background: rgba(79, 70, 229, 0.35);
+      border-color: #818cf8;
+      color: #ffffff;
+    }
+
+    .overview-num {
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.12);
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      font-size: 0.78rem;
+      flex-shrink: 0;
+    }
+
+    .overview-item.active .overview-num { background: #f59e0b; color: #1e1b4b; }
+
+    /* Center Stage */
+    .stage-wrap {
+      flex: 1;
+      min-width: 0;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+      overflow: hidden;
+    }
+
+    .slide-viewport {
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.14);
+      background: #ffffff;
+    }
+
+    .slide-canvas {
+      width: 1280px;
+      height: 720px;
+      position: relative;
+      transform-origin: top left;
+      overflow: hidden;
+      font-family: 'Mali', 'Sarabun', sans-serif;
+    }
+
+    /* Slide Elements */
+    .s-el {
+      position: absolute;
+      box-sizing: border-box;
+    }
+
+    .s-text-box {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      overflow: visible;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+
+    .s-text-box p {
+      margin: 0;
+      padding: 0;
+      white-space: pre-wrap;
+    }
+
+    .s-tbl {
+      border-collapse: collapse;
+      table-layout: fixed;
+      width: 100%;
+    }
+
+    .s-tbl td {
+      box-sizing: border-box;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+
+    .s-tbl p {
+      margin: 0;
+      white-space: pre-wrap;
+    }
+
+    /* Quiz Cover Overlay */
+    .quiz-cover {
+      position: absolute;
+      z-index: 15;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 60%, #db2777 100%);
+      color: #ffffff;
+      border: 3px dashed #fde047;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: 'Mali', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(79, 70, 229, 0.42);
+      transition: transform 0.15s ease, opacity 0.25s ease;
+    }
+
+    .quiz-cover:hover { transform: scale(1.03); }
+    .quiz-cover.revealed { opacity: 0; pointer-events: none; transform: scale(0.95); }
+
+    /* Drawing / Laser Canvas Overlay */
+    .draw-layer {
+      position: absolute;
+      inset: 0;
+      width: 1280px;
+      height: 720px;
+      z-index: 25;
+      pointer-events: none;
+    }
+
+    .draw-layer.drawing-active { pointer-events: auto; cursor: crosshair; }
+    .draw-layer.laser-active { pointer-events: auto; cursor: none; }
+
+    .laser-dot {
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      margin: -11px 0 0 -11px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #ffffff 0%, #ff2a55 45%, rgba(255, 42, 85, 0) 75%);
+      box-shadow: 0 0 18px 6px rgba(255, 42, 85, 0.85);
+      pointer-events: none;
+      z-index: 26;
+      display: none;
+    }
+
+    /* Floating Annotation Toolbar */
+    .annot-bar {
+      position: absolute;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(15, 23, 42, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      padding: 6px 12px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      z-index: 35;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .annot-bar.hidden { display: none; }
+
+    .color-swatch {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid #ffffff;
+      cursor: pointer;
+    }
+
+    .color-swatch.selected { outline: 2px solid #fde047; outline-offset: 2px; }
+
+    /* Speaker Notes Side Drawer */
+    .notes-drawer {
+      width: 320px;
+      background: rgba(15, 23, 42, 0.96);
+      border-left: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      z-index: 20;
+    }
+
+    .notes-drawer.hidden { display: none; }
+
+    .notes-body {
+      padding: 16px;
+      overflow-y: auto;
+      flex: 1;
+      font-family: 'Sarabun', 'Mali', sans-serif;
+      font-size: 0.98rem;
+      line-height: 1.7;
+      color: #e2e8f0;
+      white-space: pre-line;
+    }
+
+    .notes-empty {
+      color: #94a3b8;
+      font-style: italic;
+      font-size: 0.9rem;
+    }
+
+    .quiz-panel {
+      margin: 12px 16px;
+      padding: 12px;
+      border-radius: 12px;
+      background: rgba(79, 70, 229, 0.18);
+      border: 1px solid rgba(129, 140, 248, 0.35);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    /* Timer Popup */
+    .timer-pill {
+      position: fixed;
+      bottom: 72px;
+      right: 20px;
+      background: rgba(15, 23, 42, 0.94);
+      border: 2px solid #fbbf24;
+      border-radius: 16px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 40;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+    }
+
+    .timer-pill.hidden { display: none; }
+    .timer-display { font-size: 1.35rem; font-weight: 700; color: #fde047; min-width: 68px; text-align: center; }
+
+    /* Bottom Dock */
+    .bottombar {
+      height: 56px;
+      padding: 0 18px;
+      background: rgba(15, 23, 42, 0.92);
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-shrink: 0;
+      z-index: 30;
+    }
+
+    .dots-nav {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding: 4px 0;
+    }
+    .dots-nav::-webkit-scrollbar { display: none; }
+
+    .dot-btn {
+      width: 25px;
+      height: 25px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.08);
+      color: #cbd5e1;
+      font-family: inherit;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: all 0.15s;
+    }
+
+    .dot-btn:hover { background: rgba(255, 255, 255, 0.22); color: #ffffff; }
+    .dot-btn.active {
+      background: #f59e0b;
+      color: #1e1b4b;
+      border-color: #fde047;
+      transform: scale(1.1);
+    }
+
+    .nav-btns { display: flex; align-items: center; gap: 8px; }
+    .hint-text { font-size: 0.76rem; color: #94a3b8; white-space: nowrap; }
+
+    /* Loading / Error Overlay */
+    .status-box {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 24px;
+      color: #e2e8f0;
+      z-index: 50;
+      background: rgba(15, 23, 42, 0.85);
+    }
+
+    .status-box.hidden { display: none; }
+
+    /* Fullscreen adjustments */
+    body.is-fullscreen .topbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    body.is-fullscreen .topbar:hover { opacity: 1; }
+    body.is-fullscreen .bottombar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    body.is-fullscreen .bottombar:hover { opacity: 1; }
+
+    @media (max-width: 1360px) {
+      .hint-text { display: none; }
+    }
+
+    @media (max-width: 1080px) {
+      .badge-pill, .hide-sm { display: none; }
+      .deck-select { max-width: 170px; }
+      .slide-select { max-width: 150px; }
+      .overview-drawer { width: 220px; }
+      .notes-drawer { width: 260px; }
+    }
+
+    @media (max-width: 760px) {
+      .deck-select { max-width: 130px; }
+      .slide-select { max-width: 115px; }
+      .overview-drawer, .notes-drawer { position: absolute; top: 0; bottom: 0; width: 270px; }
+      .overview-drawer { left: 0; }
+      .notes-drawer { right: 0; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Top Bar -->
+  <header class="topbar">
+    <div class="top-left">
+      <a href="index.html" class="btn" title="กลับหน้าคลังสไลด์">🏠 <span class="hide-sm">คลังสไลด์</span></a>
+      <span id="gradeBadge" class="badge-pill">ม.1</span>
+      <select id="deckSelect" class="deck-select" aria-label="เลือกบทเรียน"></select>
+      <select id="slideSelect" class="slide-select" aria-label="ข้ามไปสไลด์ที่"></select>
+    </div>
+
+    <div class="top-right">
+      <button id="toggleOverviewBtn" class="btn btn-sm" type="button" title="สารบัญสไลด์ (O)">☰ <span class="hide-sm">สารบัญ</span></button>
+      <button id="toggleQuizBtn" class="btn btn-sm btn-pink" type="button" title="ซ่อน/เปิดเฉลยคำถามท้ายบท (Q)">👁️ <span id="quizBtnLabel">ซ่อนเฉลย</span></button>
+      <button id="toggleNotesBtn" class="btn btn-sm" type="button" title="บันทึกครูผู้สอน (N)">📝 <span class="hide-sm">บันทึกครู</span></button>
+      <button id="toggleAnnotBtn" class="btn btn-sm" type="button" title="ปากกาและเลเซอร์ (P)">🖊️ <span class="hide-sm">วาด/ชี้</span></button>
+      <button id="toggleTimerBtn" class="btn btn-sm" type="button" title="ตัวจับเวลากิจกรรม">⏱️ <span class="hide-sm">จับเวลา</span></button>
+      <button id="toggleSoundBtn" class="btn btn-sm" type="button" title="เปิด/ปิดเสียงเอฟเฟกต์">🔊</button>
+      <a id="dlPptxBtn" class="btn btn-sm btn-amber" href="#" download title="ดาวน์โหลดไฟล์ PowerPoint">📊 PPTX</a>
+      <a id="dlPdfBtn" class="btn btn-sm btn-emerald" href="#" target="_blank" rel="noopener" title="เปิด/โหลดไฟล์ PDF">📄 PDF</a>
+      <button id="fullscreenBtn" class="btn btn-sm" type="button" title="เต็มหน้าจอ (F)">⛶</button>
+    </div>
+  </header>
+
+  <!-- Main Workspace -->
+  <div class="workspace">
+    <!-- Left Slide Overview Drawer -->
+    <aside id="overviewDrawer" class="overview-drawer hidden" aria-label="สารบัญสไลด์">
+      <div class="drawer-head">
+        <span>📑 สารบัญสไลด์</span>
+        <button id="closeOverviewBtn" class="btn btn-sm" type="button">✕</button>
+      </div>
+      <div id="overviewList" class="overview-list"></div>
+    </aside>
+
+    <!-- Center Slide Stage -->
+    <main id="stageWrap" class="stage-wrap">
+      <div id="annotBar" class="annot-bar hidden">
+        <button class="btn btn-sm active" data-tool="laser" type="button">🔴 เลเซอร์</button>
+        <button class="btn btn-sm" data-tool="pen" type="button">✏️ ปากกา</button>
+        <button class="color-swatch selected" data-color="#ef4444" style="background:#ef4444" title="สีแดง" type="button"></button>
+        <button class="color-swatch" data-color="#f59e0b" style="background:#f59e0b" title="สีส้ม/เหลือง" type="button"></button>
+        <button class="color-swatch" data-color="#2563eb" style="background:#2563eb" title="สีน้ำเงิน" type="button"></button>
+        <button class="color-swatch" data-color="#10b981" style="background:#10b981" title="สีเขียว" type="button"></button>
+        <button id="clearAnnotBtn" class="btn btn-sm" type="button">🗑️ ล้างเส้น</button>
+      </div>
+
+      <div id="slideViewport" class="slide-viewport">
+        <div id="slideCanvas" class="slide-canvas"></div>
+        <canvas id="drawCanvas" class="draw-layer" width="1280" height="720"></canvas>
+        <div id="laserDot" class="laser-dot"></div>
+      </div>
+
+      <div id="statusBox" class="status-box">
+        <div>
+          <h2 style="margin-bottom:8px;">⏳ กำลังโหลดสไลด์...</h2>
+          <p id="statusMsg">กรุณารอสักครู่</p>
+        </div>
+      </div>
+    </main>
+
+    <!-- Right Teacher Speaker Notes Drawer -->
+    <aside id="notesDrawer" class="notes-drawer hidden" aria-label="บันทึกครูผู้สอน">
+      <div class="drawer-head">
+        <span>📝 บันทึกครูผู้สอน</span>
+        <button id="closeNotesBtn" class="btn btn-sm" type="button">✕</button>
+      </div>
+      <div id="quizQuickPanel" class="quiz-panel hidden">
+        <div style="font-size:0.84rem;font-weight:700;">🎯 สไลด์นี้มีคำถามทบทวน</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <button id="revealAllBtn" class="btn btn-sm btn-emerald" type="button" style="flex:1;min-width:104px;justify-content:center;padding:5px 6px;">เปิดเฉลยทั้งหมด</button>
+          <button id="hideAllBtn" class="btn btn-sm btn-pink" type="button" style="flex:1;min-width:104px;justify-content:center;padding:5px 6px;">ซ่อนเฉลยทั้งหมด</button>
+        </div>
+      </div>
+      <div id="notesBody" class="notes-body"></div>
+    </aside>
+  </div>
+
+  <!-- Floating Activity Timer -->
+  <div id="timerPill" class="timer-pill hidden">
+    <span>⏱️</span>
+    <span id="timerDisplay" class="timer-display">03:00</span>
+    <button class="btn btn-sm" data-min="1" type="button">1 น.</button>
+    <button class="btn btn-sm" data-min="3" type="button">3 น.</button>
+    <button class="btn btn-sm" data-min="5" type="button">5 น.</button>
+    <button id="timerToggleBtn" class="btn btn-sm btn-amber" type="button">เริ่ม</button>
+    <button id="timerCloseBtn" class="btn btn-sm" type="button">✕</button>
+  </div>
+
+  <!-- Bottom Control Bar -->
+  <footer class="bottombar">
+    <div class="nav-btns">
+      <button id="prevBtn" class="btn" type="button">⬅️ ก่อนหน้า</button>
+      <span id="slideCounter" style="font-weight:700;min-width:68px;text-align:center;">1 / 15</span>
+      <button id="nextBtn" class="btn btn-amber" type="button">ถัดไป ➡️</button>
+    </div>
+
+    <div id="dotsNav" class="dots-nav" aria-label="เลือกหมายเลขสไลด์"></div>
+
+    <span class="hint-text">คีย์ลัด: ← → เลื่อน | F เต็มจอ | Q ซ่อนเฉลย | N บันทึกครู</span>
+  </footer>
+
+  <script src="catalog.js"></script>
+  <script>
+    (() => {
+      const CATALOG = window.THAI_SLIDES_CATALOG || [];
+      const SVG_NS = 'http://www.w3.org/2000/svg';
+
+      const el = {
+        gradeBadge: document.getElementById('gradeBadge'),
+        deckSelect: document.getElementById('deckSelect'),
+        slideSelect: document.getElementById('slideSelect'),
+        toggleOverviewBtn: document.getElementById('toggleOverviewBtn'),
+        closeOverviewBtn: document.getElementById('closeOverviewBtn'),
+        overviewDrawer: document.getElementById('overviewDrawer'),
+        overviewList: document.getElementById('overviewList'),
+        toggleQuizBtn: document.getElementById('toggleQuizBtn'),
+        quizBtnLabel: document.getElementById('quizBtnLabel'),
+        toggleNotesBtn: document.getElementById('toggleNotesBtn'),
+        closeNotesBtn: document.getElementById('closeNotesBtn'),
+        notesDrawer: document.getElementById('notesDrawer'),
+        notesBody: document.getElementById('notesBody'),
+        quizQuickPanel: document.getElementById('quizQuickPanel'),
+        revealAllBtn: document.getElementById('revealAllBtn'),
+        hideAllBtn: document.getElementById('hideAllBtn'),
+        toggleAnnotBtn: document.getElementById('toggleAnnotBtn'),
+        annotBar: document.getElementById('annotBar'),
+        clearAnnotBtn: document.getElementById('clearAnnotBtn'),
+        toggleTimerBtn: document.getElementById('toggleTimerBtn'),
+        timerPill: document.getElementById('timerPill'),
+        timerDisplay: document.getElementById('timerDisplay'),
+        timerToggleBtn: document.getElementById('timerToggleBtn'),
+        timerCloseBtn: document.getElementById('timerCloseBtn'),
+        toggleSoundBtn: document.getElementById('toggleSoundBtn'),
+        dlPptxBtn: document.getElementById('dlPptxBtn'),
+        dlPdfBtn: document.getElementById('dlPdfBtn'),
+        fullscreenBtn: document.getElementById('fullscreenBtn'),
+        stageWrap: document.getElementById('stageWrap'),
+        slideViewport: document.getElementById('slideViewport'),
+        slideCanvas: document.getElementById('slideCanvas'),
+        drawCanvas: document.getElementById('drawCanvas'),
+        laserDot: document.getElementById('laserDot'),
+        statusBox: document.getElementById('statusBox'),
+        statusMsg: document.getElementById('statusMsg'),
+        prevBtn: document.getElementById('prevBtn'),
+        nextBtn: document.getElementById('nextBtn'),
+        slideCounter: document.getElementById('slideCounter'),
+        dotsNav: document.getElementById('dotsNav')
+      };
+
+      const state = {
+        deck: null,
+        mediaDict: null,
+        slideIndex: 0,
+        quizHideMode: true,
+        revealedSet: new Set(),
+        soundEnabled: true,
+        annotOpen: false,
+        annotTool: 'laser',
+        penColor: '#ef4444',
+        drawing: false,
+        scale: 1,
+        timerSec: 180,
+        timerRunning: false,
+        timerHandle: null
+      };
+
+      const mediaPackCache = new Map();
+      function resolveAssetUrl(src) {
+        if (!src) return '';
+        return (state.mediaDict && state.mediaDict[src]) || src;
+      }
+
+      // -------------------- Sound Effects (Web Audio) --------------------
+      let audioCtx = null;
+      function playTone(freq, dur = 0.12, type = 'sine', vol = 0.08) {
+        if (!state.soundEnabled) return;
+        try {
+          audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = type;
+          osc.frequency.value = freq;
+          gain.gain.setValueAtTime(vol, audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + dur);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start();
+          osc.stop(audioCtx.currentTime + dur);
+        } catch {}
+      }
+
+      function playChime() {
+        playTone(587.33, 0.12, 'triangle', 0.09);
+        setTimeout(() => playTone(880, 0.18, 'triangle', 0.09), 70);
+      }
+
+      // -------------------- Color & Geometry Helpers --------------------
+      function rgba(hex, alpha = 1) {
+        if (!hex) return 'transparent';
+        const clean = hex.replace('#', '');
+        const r = parseInt(clean.slice(0, 2), 16);
+        const g = parseInt(clean.slice(2, 4), 16);
+        const b = parseInt(clean.slice(4, 6), 16);
+        return alpha >= 0.999 ? `rgb(${r}, ${g}, ${b})` : `rgba(${r}, ${g}, ${b}, ${alpha})`;
+      }
+
+      function dashToBorder(dash) {
+        if (dash === 'dash') return 'dashed';
+        if (dash === 'sysDot') return 'dotted';
+        return 'solid';
+      }
+
+      function dashToArray(dash, w) {
+        if (dash === 'dash') return `${Math.max(6, w * 3)},${Math.max(4, w * 2)}`;
+        if (dash === 'sysDot') return `${Math.max(2, w)},${Math.max(3, w * 1.8)}`;
+        return '';
+      }
+
+      function starPoints(cx, cy, outerR, innerR, points) {
+        const pts = [];
+        for (let i = 0; i < points * 2; i++) {
+          const r = i % 2 === 0 ? outerR : innerR;
+          const a = (Math.PI / points) * i - Math.PI / 2;
+          pts.push(`${(cx + r * Math.cos(a)).toFixed(2)},${(cy + r * Math.sin(a)).toFixed(2)}`);
+        }
+        return pts.join(' ');
+      }
+
+      function buildVectorSvg(item) {
+        const w = Math.max(1, item.w);
+        const h = Math.max(1, item.h);
+        const svg = document.createElementNS(SVG_NS, 'svg');
+        svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+        svg.style.width = '100%';
+        svg.style.height = '100%';
+        svg.style.display = 'block';
+        svg.style.overflow = 'visible';
+
+        const fillStr = item.fill ? rgba(item.fill.hex, item.fill.alpha) : 'none';
+        const strokeStr = item.line ? rgba(item.line.color, item.line.alpha) : 'none';
+        const strokeW = item.line ? item.line.w : 0;
+        const dashArr = item.line ? dashToArray(item.line.dash, strokeW) : '';
+
+        let geomEl;
+        if (item.shape === 'line') {
+          geomEl = document.createElementNS(SVG_NS, 'line');
+          geomEl.setAttribute('x1', '0');
+          geomEl.setAttribute('y1', '0');
+          geomEl.setAttribute('x2', String(item.w));
+          geomEl.setAttribute('y2', String(item.h));
+        } else if (item.shape === 'triangle') {
+          geomEl = document.createElementNS(SVG_NS, 'polygon');
+          geomEl.setAttribute('points', `${w / 2},0 ${w},${h} 0,${h}`);
+        } else if (item.shape === 'star4' || item.shape === 'star5' || item.shape === 'star12') {
+          const n = item.shape === 'star4' ? 4 : item.shape === 'star5' ? 5 : 12;
+          const ratio = item.shape === 'star12' ? 0.72 : 0.42;
+          geomEl = document.createElementNS(SVG_NS, 'polygon');
+          geomEl.setAttribute('points', starPoints(w / 2, h / 2, Math.min(w, h) / 2, (Math.min(w, h) / 2) * ratio, n));
+        } else if (item.shape === 'rightArrow') {
+          geomEl = document.createElementNS(SVG_NS, 'polygon');
+          const hw = w * 0.62;
+          const th = h * 0.25;
+          geomEl.setAttribute('points', `0,${th} ${hw},${th} ${hw},0 ${w},${h / 2} ${hw},${h} ${hw},${h - th} 0,${h - th}`);
+        } else if (item.shape === 'homePlate') {
+          geomEl = document.createElementNS(SVG_NS, 'polygon');
+          const tip = Math.min(w * 0.25, h * 0.5);
+          geomEl.setAttribute('points', `0,0 ${w - tip},0 ${w},${h / 2} ${w - tip},${h} 0,${h}`);
+        } else if (item.shape === 'heart') {
+          geomEl = document.createElementNS(SVG_NS, 'path');
+          geomEl.setAttribute(
+            'd',
+            `M ${w * 0.5} ${h * 0.88} C ${w * 0.1} ${h * 0.62}, 0 ${h * 0.35}, ${w * 0.22} ${h * 0.16} C ${w * 0.36} ${h * 0.04}, ${w * 0.5} ${h * 0.16}, ${w * 0.5} ${h * 0.28} C ${w * 0.5} ${h * 0.16}, ${w * 0.64} ${h * 0.04}, ${w * 0.78} ${h * 0.16} C ${w} ${h * 0.35}, ${w * 0.9} ${h * 0.62}, ${w * 0.5} ${h * 0.88} Z`
+          );
+        } else if (item.shape === 'cloud') {
+          geomEl = document.createElementNS(SVG_NS, 'path');
+          geomEl.setAttribute(
+            'd',
+            `M ${w * 0.25} ${h * 0.82} C ${w * 0.08} ${h * 0.82}, ${w * 0.04} ${h * 0.6}, ${w * 0.16} ${h * 0.48} C ${w * 0.14} ${h * 0.26}, ${w * 0.35} ${h * 0.14}, ${w * 0.52} ${h * 0.24} C ${w * 0.64} ${h * 0.1}, ${w * 0.88} ${h * 0.2}, ${w * 0.86} ${h * 0.44} C ${w * 0.98} ${h * 0.54}, ${w * 0.94} ${h * 0.82}, ${w * 0.76} ${h * 0.82} Z`
+          );
+        } else if (item.shape === 'donut') {
+          geomEl = document.createElementNS(SVG_NS, 'path');
+          const r1 = Math.min(w, h) / 2;
+          const r2 = r1 * 0.52;
+          const cx = w / 2, cy = h / 2;
+          geomEl.setAttribute(
+            'd',
+            `M ${cx - r1} ${cy} A ${r1} ${r1} 0 1 0 ${cx + r1} ${cy} A ${r1} ${r1} 0 1 0 ${cx - r1} ${cy} Z ` +
+            `M ${cx - r2} ${cy} A ${r2} ${r2} 0 1 1 ${cx + r2} ${cy} A ${r2} ${r2} 0 1 1 ${cx - r2} ${cy} Z`
+          );
+          geomEl.setAttribute('fill-rule', 'evenodd');
+        } else if (item.shape === 'wedgeRoundRectCallout') {
+          geomEl = document.createElementNS(SVG_NS, 'path');
+          const r = Math.min(12, w * 0.15, h * 0.25);
+          const bodyH = h * 0.82;
+          const tailX = w * 0.5;
+          const tailW = Math.min(20, w * 0.15);
+          geomEl.setAttribute(
+            'd',
+            `M ${r} 0 H ${w - r} Q ${w} 0 ${w} ${r} V ${bodyH - r} Q ${w} ${bodyH} ${w - r} ${bodyH} H ${tailX + tailW / 2} L ${tailX} ${h} L ${tailX - tailW / 2} ${bodyH} H ${r} Q 0 ${bodyH} 0 ${bodyH - r} V ${r} Q 0 0 ${r} 0 Z`
+          );
+        }
+
+        if (geomEl) {
+          geomEl.setAttribute('fill', fillStr);
+          if (strokeStr !== 'none' && strokeW > 0) {
+            geomEl.setAttribute('stroke', strokeStr);
+            geomEl.setAttribute('stroke-width', String(strokeW));
+            if (dashArr) geomEl.setAttribute('stroke-dasharray', dashArr);
+            geomEl.setAttribute('stroke-linejoin', 'round');
+            geomEl.setAttribute('stroke-linecap', 'round');
+          }
+          if (item.shadow) {
+            svg.style.filter = `drop-shadow(${item.shadow.dx}px ${item.shadow.dy}px ${item.shadow.blur}px ${rgba(item.shadow.color, item.shadow.alpha)})`;
+          }
+          svg.appendChild(geomEl);
+        }
+        return svg;
+      }
+
+      function renderParagraphs(txBody) {
+        const wrap = document.createElement('div');
+        wrap.className = 's-text-box';
+        const anchorMap = { t: 'flex-start', ctr: 'center', b: 'flex-end' };
+        wrap.style.justifyContent = anchorMap[txBody.anchor] || 'flex-start';
+        const [pt, pr, pb, pl] = txBody.pad || [4.8, 9.6, 4.8, 9.6];
+        wrap.style.padding = `${pt}px ${pr}px ${pb}px ${pl}px`;
+
+        const alignMap = { l: 'left', ctr: 'center', r: 'right', just: 'justify' };
+        for (const p of txBody.paragraphs) {
+          const pEl = document.createElement('p');
+          pEl.style.textAlign = alignMap[p.algn] || 'left';
+          if (p.lh) pEl.style.lineHeight = String(p.lh);
+          else pEl.style.lineHeight = '1.18';
+          if (p.sa) pEl.style.marginBottom = `${p.sa}px`;
+
+          for (const r of p.runs) {
+            if (r.br) {
+              pEl.appendChild(document.createElement('br'));
+              continue;
+            }
+            const sp = document.createElement('span');
+            sp.textContent = r.t;
+            sp.style.fontSize = `${r.sz}px`;
+            sp.style.color = rgba(r.c, r.ca ?? 1);
+            sp.style.fontWeight = r.b ? '600' : '400';
+            if (r.i) sp.style.fontStyle = 'italic';
+            if (r.u) sp.style.textDecoration = 'underline';
+            pEl.appendChild(sp);
+          }
+          wrap.appendChild(pEl);
+        }
+        return wrap;
+      }
+
+      function renderTable(item) {
+        const tbl = document.createElement('table');
+        tbl.className = 's-tbl';
+        const colgroup = document.createElement('colgroup');
+        for (const cw of item.colWidths || []) {
+          const col = document.createElement('col');
+          col.style.width = `${cw}px`;
+          colgroup.appendChild(col);
+        }
+        tbl.appendChild(colgroup);
+
+        const tbody = document.createElement('tbody');
+        for (const row of item.rows || []) {
+          const tr = document.createElement('tr');
+          if (row.h) tr.style.height = `${row.h}px`;
+          for (const cell of row.cells || []) {
+            if (cell.hMerge || cell.vMerge) continue;
+            const td = document.createElement('td');
+            if (cell.gridSpan > 1) td.colSpan = cell.gridSpan;
+            if (cell.rowSpan > 1) td.rowSpan = cell.rowSpan;
+            if (cell.fill) td.style.backgroundColor = rgba(cell.fill.hex, cell.fill.alpha);
+            const vMap = { t: 'top', ctr: 'middle', b: 'bottom' };
+            td.style.verticalAlign = vMap[cell.anchor] || 'middle';
+            const [pt, pr, pb, pl] = cell.pad || [4.8, 9.6, 4.8, 9.6];
+            td.style.padding = `${pt}px ${pr}px ${pb}px ${pl}px`;
+            if (cell.borders) {
+              const bSide = { lnL: 'borderLeft', lnR: 'borderRight', lnT: 'borderTop', lnB: 'borderBottom' };
+              for (const [k, cssProp] of Object.entries(bSide)) {
+                if (cell.borders[k]) {
+                  td.style[cssProp] = `${cell.borders[k].w}px solid ${cell.borders[k].c}`;
+                }
+              }
+            }
+            if (cell.text) {
+              const inner = renderParagraphs(cell.text);
+              inner.style.padding = '0';
+              inner.style.height = 'auto';
+              td.appendChild(inner);
+            }
+            tr.appendChild(td);
+          }
+          tbody.appendChild(tr);
+        }
+        tbl.appendChild(tbody);
+        return tbl;
+      }
+
+      // -------------------- Slide Rendering --------------------
+      function renderCurrentSlide() {
+        const deck = state.deck;
+        if (!deck) return;
+        const slide = deck.slides[state.slideIndex];
+        if (!slide) return;
+
+        el.slideCanvas.innerHTML = '';
+        el.slideCanvas.style.background = '#ffffff';
+        el.slideCanvas.style.backgroundImage = 'none';
+
+        let answerCount = 0;
+
+        if (slide.imageSrc) {
+          // PDF-rendered slide
+          const img = document.createElement('img');
+          img.src = slide.imageSrc;
+          img.alt = slide.title || `สไลด์ที่ ${slide.num}`;
+          img.draggable = false;
+          img.style.cssText = 'width:1280px;height:720px;display:block;object-fit:contain;';
+          el.slideCanvas.appendChild(img);
+
+          if (slide.quizHotspots && state.quizHideMode) {
+            slide.quizHotspots.forEach((hs, idx) => {
+              answerCount++;
+              const key = `${state.slideIndex}-${idx}`;
+              const btn = createQuizCover(hs.x, hs.y, hs.w, hs.h, key, hs.label || 'คลิกเพื่อดูเฉลย');
+              el.slideCanvas.appendChild(btn);
+            });
+          } else if (slide.quizHotspots) {
+            answerCount = slide.quizHotspots.length;
+          }
+        } else {
+          // PPTX Vector + Text + Media Slide
+          if (slide.bg) {
+            if (slide.bg.type === 'solid') {
+              el.slideCanvas.style.backgroundColor = rgba(slide.bg.color, slide.bg.alpha ?? 1);
+            } else if (slide.bg.type === 'image') {
+              el.slideCanvas.style.backgroundImage = `url("${resolveAssetUrl(slide.bg.src)}")`;
+              el.slideCanvas.style.backgroundSize = '100% 100%';
+            }
+          }
+
+          (slide.items || []).forEach((item, idx) => {
+            const box = document.createElement('div');
+            box.className = 's-el';
+            box.style.left = `${item.x}px`;
+            box.style.top = `${item.y}px`;
+            box.style.width = `${item.w}px`;
+            box.style.height = `${item.h}px`;
+
+            const tf = [];
+            if (item.rot) tf.push(`rotate(${item.rot}deg)`);
+            if (item.flipH) tf.push('scaleX(-1)');
+            if (item.flipV) tf.push('scaleY(-1)');
+            if (tf.length) box.style.transform = tf.join(' ');
+
+            if (item.kind === 'pic') {
+              const img = document.createElement('img');
+              img.src = resolveAssetUrl(item.src);
+              img.alt = '';
+              img.draggable = false;
+              img.style.cssText = 'width:100%;height:100%;display:block;object-fit:fill;';
+              box.appendChild(img);
+            } else if (item.kind === 'tbl') {
+              box.appendChild(renderTable(item));
+            } else if (item.kind === 'sp') {
+              const cssBoxShapes = new Set(['rect', 'roundRect', 'ellipse']);
+              if (cssBoxShapes.has(item.shape)) {
+                if (item.fill) box.style.backgroundColor = rgba(item.fill.hex, item.fill.alpha);
+                if (item.line) {
+                  box.style.border = `${item.line.w}px ${dashToBorder(item.line.dash)} ${rgba(item.line.color, item.line.alpha)}`;
+                }
+                if (item.shape === 'ellipse') {
+                  box.style.borderRadius = '50%';
+                } else if (item.shape === 'roundRect') {
+                  const r = Math.min(item.w, item.h) * ((item.adj ?? 16667) / 100000);
+                  box.style.borderRadius = `${Math.min(r, Math.min(item.w, item.h) / 2)}px`;
+                }
+                if (item.shadow) {
+                  box.style.boxShadow = `${item.shadow.dx}px ${item.shadow.dy}px ${item.shadow.blur}px ${rgba(item.shadow.color, item.shadow.alpha)}`;
+                }
+              } else {
+                box.appendChild(buildVectorSvg(item));
+              }
+
+              if (item.text) {
+                const txtEl = renderParagraphs(item.text);
+                if (!cssBoxShapes.has(item.shape)) {
+                  txtEl.style.position = 'absolute';
+                  txtEl.style.inset = '0';
+                }
+                box.appendChild(txtEl);
+              }
+
+              if (item.isAnswer) {
+                const ansIdx = answerCount++;
+                if (state.quizHideMode) {
+                  const key = `${state.slideIndex}-${ansIdx}`;
+                  const cover = createQuizCover(item.x, item.y, item.w, item.h, key, 'คลิกเพื่อดูเฉลย ✨');
+                  el.slideCanvas.appendChild(box);
+                  el.slideCanvas.appendChild(cover);
+                  return;
+                }
+              }
+            }
+            el.slideCanvas.appendChild(box);
+          });
+        }
+
+        // Update UI Controls
+        const total = deck.slides.length;
+        el.slideCounter.textContent = `${state.slideIndex + 1} / ${total}`;
+        el.slideSelect.value = String(state.slideIndex);
+        el.dotsNav.querySelectorAll('.dot-btn').forEach((b, i) => {
+          b.classList.toggle('active', i === state.slideIndex);
+        });
+        el.overviewList.querySelectorAll('.overview-item').forEach((b, i) => {
+          b.classList.toggle('active', i === state.slideIndex);
+        });
+
+        // Speaker Notes & Quiz Quick Panel
+        el.quizQuickPanel.classList.toggle('hidden', answerCount === 0);
+        if (slide.note) {
+          el.notesBody.textContent = slide.note;
+          el.notesBody.classList.remove('notes-empty');
+        } else {
+          el.notesBody.innerHTML = `<span class="notes-empty">สไลด์นี้ไม่มีบันทึกย่อเพิ่มเติม (สามารถกด 👁️ ซ่อนเฉลย หรือ 🖊️ ปากกา/เลเซอร์ เพื่อใช้สอนสดได้)</span>`;
+        }
+
+        // Clear drawing layer when changing slides
+        clearAnnotations();
+      }
+
+      function createQuizCover(x, y, w, h, key, label) {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'quiz-cover' + (state.revealedSet.has(key) ? ' revealed' : '');
+        btn.style.left = `${x}px`;
+        btn.style.top = `${y}px`;
+        btn.style.width = `${w}px`;
+        btn.style.height = `${h}px`;
+        btn.textContent = `✨ ${label}`;
+        btn.addEventListener('click', () => {
+          state.revealedSet.add(key);
+          btn.classList.add('revealed');
+          playChime();
+        });
+        return btn;
+      }
+
+      // -------------------- Stage Responsive Scaling --------------------
+      function fitStage() {
+        const rect = el.stageWrap.getBoundingClientRect();
+        const pad = document.fullscreenElement ? 12 : 24;
+        const availW = Math.max(240, rect.width - pad);
+        const availH = Math.max(160, rect.height - pad);
+        const scale = Math.min(availW / 1280, availH / 720);
+        state.scale = scale;
+        const w = Math.floor(1280 * scale);
+        const h = Math.floor(720 * scale);
+        el.slideViewport.style.width = `${w}px`;
+        el.slideViewport.style.height = `${h}px`;
+        el.slideCanvas.style.transform = `scale(${scale})`;
+        el.drawCanvas.style.transform = `scale(${scale})`;
+        el.drawCanvas.style.transformOrigin = 'top left';
+      }
+
+      window.addEventListener('resize', fitStage);
+
+      // -------------------- Deck Loading --------------------
+      async function loadDeck(deckId, startSlide = 0) {
+        const meta = CATALOG.find((d) => d.id === deckId) || CATALOG[0];
+        if (!meta) {
+          el.statusBox.classList.remove('hidden');
+          el.statusMsg.textContent = 'ไม่พบข้อมูลบทเรียนในคลังสไลด์';
+          return;
+        }
+
+        el.statusBox.classList.remove('hidden');
+        el.statusMsg.textContent = `กำลังเปิด: ${meta.fullTitle}...`;
+
+        try {
+          const res = await fetch(`decks/${meta.id}.json`);
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          const data = await res.json();
+          let mediaDict = null;
+          if (data.mediaPack) {
+            if (mediaPackCache.has(data.mediaPack)) {
+              mediaDict = mediaPackCache.get(data.mediaPack);
+            } else {
+              const pRes = await fetch(data.mediaPack);
+              if (!pRes.ok) throw new Error(`Media pack HTTP ${pRes.status}`);
+              mediaDict = await pRes.json();
+              mediaPackCache.set(data.mediaPack, mediaDict);
+            }
+          }
+          state.deck = data;
+          state.mediaDict = mediaDict;
+          state.slideIndex = Math.max(0, Math.min(startSlide, data.slides.length - 1));
+          state.revealedSet.clear();
+
+          // Update URL hash/query cleanly
+          const url = new URL(window.location.href);
+          url.searchParams.set('deck', meta.id);
+          window.history.replaceState({}, '', url);
+
+          document.title = `${meta.fullTitle} | สไลด์ช่วยสอนออนไลน์`;
+          el.gradeBadge.textContent = `${meta.grade} • ${meta.track}`;
+          el.deckSelect.value = meta.id;
+
+          // Download buttons
+          if (meta.pptxUrl) {
+            el.dlPptxBtn.href = encodeURI(meta.pptxUrl);
+            el.dlPptxBtn.style.display = 'inline-flex';
+          } else {
+            el.dlPptxBtn.style.display = 'none';
+          }
+          if (meta.pdfUrl) {
+            el.dlPdfBtn.href = encodeURI(meta.pdfUrl);
+            el.dlPdfBtn.style.display = 'inline-flex';
+          } else {
+            el.dlPdfBtn.style.display = 'none';
+          }
+
+          // Slide Jump Dropdown & Dots & Overview
+          el.slideSelect.innerHTML = data.slides
+            .map((s, i) => `<option value="${i}">สไลด์ ${i + 1}: ${s.title}</option>`)
+            .join('');
+
+          el.dotsNav.innerHTML = data.slides
+            .map((_, i) => `<button class="dot-btn" type="button" data-idx="${i}">${i + 1}</button>`)
+            .join('');
+
+          el.overviewList.innerHTML = data.slides
+            .map(
+              (s, i) => `
+              <button class="overview-item" type="button" data-idx="${i}">
+                <span class="overview-num">${i + 1}</span>
+                <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${s.title}</span>
+              </button>`
+            )
+            .join('');
+
+          el.statusBox.classList.add('hidden');
+          fitStage();
+          renderCurrentSlide();
+        } catch (err) {
+          el.statusBox.classList.remove('hidden');
+          el.statusMsg.textContent = `ไม่สามารถโหลดสไลด์ได้ (${err.message})`;
+        }
+      }
+
+      function populateDeckSelect() {
+        const groups = new Map();
+        for (const item of CATALOG) {
+          const gKey = `${item.grade} — ${item.track}`;
+          if (!groups.has(gKey)) groups.set(gKey, []);
+          groups.get(gKey).push(item);
+        }
+        el.deckSelect.innerHTML = [...groups.entries()]
+          .map(
+            ([label, items]) =>
+              `<optgroup label="${label}">${items
+                .map((it) => `<option value="${it.id}">${it.topicBadge ? it.topicBadge + ': ' : ''}${it.title}</option>`)
+                .join('')}</optgroup>`
+          )
+          .join('');
+      }
+
+      function goSlide(idx) {
+        if (!state.deck) return;
+        const max = state.deck.slides.length - 1;
+        state.slideIndex = Math.max(0, Math.min(idx, max));
+        playTone(440, 0.05, 'sine', 0.04);
+        renderCurrentSlide();
+      }
+
+      // -------------------- Annotation & Laser --------------------
+      const ctx = el.drawCanvas.getContext('2d');
+      function clearAnnotations() {
+        ctx.clearRect(0, 0, 1280, 720);
+      }
+
+      function syncAnnotUI() {
+        el.annotBar.classList.toggle('hidden', !state.annotOpen);
+        el.toggleAnnotBtn.classList.toggle('active', state.annotOpen);
+        el.drawCanvas.classList.toggle('drawing-active', state.annotOpen && state.annotTool === 'pen');
+        el.drawCanvas.classList.toggle('laser-active', state.annotOpen && state.annotTool === 'laser');
+        if (!state.annotOpen || state.annotTool !== 'laser') el.laserDot.style.display = 'none';
+      }
+
+      function toCanvasCoords(e) {
+        const r = el.slideViewport.getBoundingClientRect();
+        return {
+          x: (e.clientX - r.left) / state.scale,
+          y: (e.clientY - r.top) / state.scale,
+          vx: e.clientX - r.left,
+          vy: e.clientY - r.top
+        };
+      }
+
+      el.drawCanvas.addEventListener('pointerdown', (e) => {
+        if (!state.annotOpen || state.annotTool !== 'pen') return;
+        state.drawing = true;
+        const pt = toCanvasCoords(e);
+        ctx.beginPath();
+        ctx.moveTo(pt.x, pt.y);
+        ctx.strokeStyle = state.penColor;
+        ctx.lineWidth = 5;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+      });
+
+      el.drawCanvas.addEventListener('pointermove', (e) => {
+        if (!state.annotOpen) return;
+        const pt = toCanvasCoords(e);
+        if (state.annotTool === 'laser') {
+          el.laserDot.style.display = 'block';
+          el.laserDot.style.left = `${pt.vx}px`;
+          el.laserDot.style.top = `${pt.vy}px`;
+        } else if (state.drawing) {
+          ctx.lineTo(pt.x, pt.y);
+          ctx.stroke();
+        }
+      });
+
+      window.addEventListener('pointerup', () => { state.drawing = false; });
+      el.drawCanvas.addEventListener('pointerleave', () => {
+        state.drawing = false;
+        el.laserDot.style.display = 'none';
+      });
+
+      // -------------------- Timer --------------------
+      function renderTimer() {
+        const m = String(Math.floor(state.timerSec / 60)).padStart(2, '0');
+        const s = String(state.timerSec % 60).padStart(2, '0');
+        el.timerDisplay.textContent = `${m}:${s}`;
+      }
+
+      function stopTimer() {
+        clearInterval(state.timerHandle);
+        state.timerHandle = null;
+        state.timerRunning = false;
+        el.timerToggleBtn.textContent = 'เริ่ม';
+      }
+
+      // -------------------- Event Bindings --------------------
+      el.prevBtn.addEventListener('click', () => goSlide(state.slideIndex - 1));
+      el.nextBtn.addEventListener('click', () => goSlide(state.slideIndex + 1));
+      el.slideSelect.addEventListener('change', (e) => goSlide(Number(e.target.value)));
+      el.deckSelect.addEventListener('change', (e) => loadDeck(e.target.value, 0));
+
+      el.dotsNav.addEventListener('click', (e) => {
+        const b = e.target.closest('[data-idx]');
+        if (b) goSlide(Number(b.dataset.idx));
+      });
+
+      el.overviewList.addEventListener('click', (e) => {
+        const b = e.target.closest('[data-idx]');
+        if (b) goSlide(Number(b.dataset.idx));
+      });
+
+      el.toggleOverviewBtn.addEventListener('click', () => {
+        el.overviewDrawer.classList.toggle('hidden');
+        el.toggleOverviewBtn.classList.toggle('active', !el.overviewDrawer.classList.contains('hidden'));
+        setTimeout(fitStage, 50);
+      });
+      el.closeOverviewBtn.addEventListener('click', () => {
+        el.overviewDrawer.classList.add('hidden');
+        el.toggleOverviewBtn.classList.remove('active');
+        setTimeout(fitStage, 50);
+      });
+
+      el.toggleNotesBtn.addEventListener('click', () => {
+        el.notesDrawer.classList.toggle('hidden');
+        el.toggleNotesBtn.classList.toggle('active', !el.notesDrawer.classList.contains('hidden'));
+        setTimeout(fitStage, 50);
+      });
+      el.closeNotesBtn.addEventListener('click', () => {
+        el.notesDrawer.classList.add('hidden');
+        el.toggleNotesBtn.classList.remove('active');
+        setTimeout(fitStage, 50);
+      });
+
+      el.toggleQuizBtn.addEventListener('click', () => {
+        state.quizHideMode = !state.quizHideMode;
+        el.quizBtnLabel.textContent = state.quizHideMode ? 'ซ่อนเฉลย' : 'แสดงเฉลย';
+        el.toggleQuizBtn.classList.toggle('btn-pink', state.quizHideMode);
+        renderCurrentSlide();
+      });
+
+      el.revealAllBtn.addEventListener('click', () => {
+        el.slideCanvas.querySelectorAll('.quiz-cover').forEach((b) => b.click());
+      });
+      el.hideAllBtn.addEventListener('click', () => {
+        for (const k of [...state.revealedSet]) {
+          if (k.startsWith(`${state.slideIndex}-`)) state.revealedSet.delete(k);
+        }
+        state.quizHideMode = true;
+        el.quizBtnLabel.textContent = 'ซ่อนเฉลย';
+        el.toggleQuizBtn.classList.add('btn-pink');
+        renderCurrentSlide();
+      });
+
+      el.toggleAnnotBtn.addEventListener('click', () => {
+        state.annotOpen = !state.annotOpen;
+        syncAnnotUI();
+      });
+
+      el.annotBar.querySelectorAll('[data-tool]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          state.annotTool = btn.dataset.tool;
+          el.annotBar.querySelectorAll('[data-tool]').forEach((x) => x.classList.toggle('active', x === btn));
+          syncAnnotUI();
+        });
+      });
+
+      el.annotBar.querySelectorAll('.color-swatch').forEach((sw) => {
+        sw.addEventListener('click', () => {
+          state.penColor = sw.dataset.color;
+          state.annotTool = 'pen';
+          el.annotBar.querySelectorAll('.color-swatch').forEach((x) => x.classList.toggle('selected', x === sw));
+          el.annotBar.querySelectorAll('[data-tool]').forEach((x) => x.classList.toggle('active', x.dataset.tool === 'pen'));
+          syncAnnotUI();
+        });
+      });
+
+      el.clearAnnotBtn.addEventListener('click', clearAnnotations);
+
+      el.toggleTimerBtn.addEventListener('click', () => {
+        el.timerPill.classList.toggle('hidden');
+        el.toggleTimerBtn.classList.toggle('active', !el.timerPill.classList.contains('hidden'));
+      });
+      el.timerCloseBtn.addEventListener('click', () => {
+        stopTimer();
+        el.timerPill.classList.add('hidden');
+        el.toggleTimerBtn.classList.remove('active');
+      });
+      el.timerPill.querySelectorAll('[data-min]').forEach((b) => {
+        b.addEventListener('click', () => {
+          stopTimer();
+          state.timerSec = Number(b.dataset.min) * 60;
+          renderTimer();
+        });
+      });
+      el.timerToggleBtn.addEventListener('click', () => {
+        if (state.timerRunning) {
+          stopTimer();
+        } else {
+          state.timerRunning = true;
+          el.timerToggleBtn.textContent = 'หยุด';
+          state.timerHandle = setInterval(() => {
+            if (state.timerSec > 0) {
+              state.timerSec--;
+              renderTimer();
+              if (state.timerSec === 0) {
+                stopTimer();
+                playChime();
+                setTimeout(playChime, 220);
+              }
+            }
+          }, 1000);
+        }
+      });
+
+      el.toggleSoundBtn.addEventListener('click', () => {
+        state.soundEnabled = !state.soundEnabled;
+        el.toggleSoundBtn.textContent = state.soundEnabled ? '🔊' : '🔇';
+      });
+
+      el.fullscreenBtn.addEventListener('click', () => {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen?.();
+        } else {
+          document.exitFullscreen?.();
+        }
+      });
+
+      document.addEventListener('fullscreenchange', () => {
+        document.body.classList.toggle('is-fullscreen', Boolean(document.fullscreenElement));
+        setTimeout(fitStage, 60);
+      });
+
+      // Keyboard Shortcuts
+      document.addEventListener('keydown', (e) => {
+        if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName)) return;
+        if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+          e.preventDefault();
+          goSlide(state.slideIndex + 1);
+        } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+          e.preventDefault();
+          goSlide(state.slideIndex - 1);
+        } else if (e.key === 'Home') {
+          goSlide(0);
+        } else if (e.key === 'End' && state.deck) {
+          goSlide(state.deck.slides.length - 1);
+        } else if (e.key.toLowerCase() === 'f') {
+          el.fullscreenBtn.click();
+        } else if (e.key.toLowerCase() === 'n') {
+          el.toggleNotesBtn.click();
+        } else if (e.key.toLowerCase() === 'o') {
+          el.toggleOverviewBtn.click();
+        } else if (e.key.toLowerCase() === 'q') {
+          el.toggleQuizBtn.click();
+        } else if (e.key.toLowerCase() === 'p') {
+          el.toggleAnnotBtn.click();
+        }
+      });
+
+      // Touch swipe support for mobile/tablet
+      let touchX = null;
+      el.slideViewport.addEventListener('touchstart', (e) => {
+        if (!state.annotOpen && e.touches.length === 1) touchX = e.touches[0].clientX;
+      }, { passive: true });
+      el.slideViewport.addEventListener('touchend', (e) => {
+        if (touchX === null) return;
+        const dx = e.changedTouches[0].clientX - touchX;
+        touchX = null;
+        if (Math.abs(dx) > 50) goSlide(state.slideIndex + (dx < 0 ? 1 : -1));
+      }, { passive: true });
+
+      // Init
+      populateDeckSelect();
+      renderTimer();
+      const params = new URLSearchParams(window.location.search);
+      const initialDeck = params.get('deck') || (CATALOG[0] && CATALOG[0].id);
+      const initialSlide = Number(params.get('slide') || 1) - 1;
+      loadDeck(initialDeck, initialSlide);
+    })();
+  </script>
+</body>
+</html>

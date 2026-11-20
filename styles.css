@@ -516,10 +516,10 @@ a {
   display: block;
 }
 
-/* Home Bottom Grid (O-NET + Announcements side by side in 1 screen) */
+/* Home Bottom Grid (Full-width Featured Cards) */
 .home-bottom-grid {
   display: grid;
-  grid-template-columns: 1.45fr 1fr;
+  grid-template-columns: 1fr;
   gap: 14px;
   flex: 1;
   min-height: 0;
@@ -533,8 +533,8 @@ a {
 
 .featured-onet-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
   flex: 1;
 }
 
@@ -618,12 +618,19 @@ a {
 }
 
 .onet-thai-slides {
-  grid-column: 1 / -1;
   background: linear-gradient(135deg, #e0f2fe 0%, #ede9fe 52%, #fce7f3 100%);
 }
 
 .onet-thai-slides .onet-icon-box {
   color: #4f46e5;
+}
+
+.onet-vocab {
+  background: linear-gradient(135deg, #e0f2fe 0%, #fef9c3 100%);
+}
+
+.onet-vocab .onet-icon-box {
+  color: #0284c7;
 }
 
 .onet-icon-box {
@@ -662,13 +669,14 @@ a {
 .onet-level-badge {
   display: inline-block;
   font-family: 'Mali', sans-serif;
-  font-size: 0.76rem;
+  font-size: 0.74rem;
   font-weight: 700;
   background: #ffffff;
   border: 1.5px solid var(--navy);
-  border-radius: 999px;
+  border-radius: 12px;
   padding: 1px 10px;
   margin-bottom: 4px;
+  max-width: 100%;
 }
 
 .onet-info h3 {

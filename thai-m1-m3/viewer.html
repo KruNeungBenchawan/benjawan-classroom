@@ -422,6 +422,8 @@
       display: flex;
       align-items: center;
       gap: 4px;
+      flex: 1;
+      min-width: 0;
       flex-wrap: nowrap;
       overflow-x: auto;
       scrollbar-width: none;
@@ -494,6 +496,16 @@
       .hint-text { display: none; }
     }
 
+    @media (max-width: 1180px) {
+      .topbar {
+        height: auto;
+        min-height: 52px;
+        padding: 6px 12px;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+    }
+
     @media (max-width: 1080px) {
       .badge-pill, .hide-sm { display: none; }
       .deck-select { max-width: 170px; }
@@ -510,24 +522,36 @@
         flex-wrap: wrap;
         gap: 6px;
       }
-      .top-left,
+      .top-left {
+        width: 100%;
+        gap: 6px;
+      }
       .top-right {
         width: 100%;
-        overflow-x: auto;
-        scrollbar-width: none;
-        padding-bottom: 2px;
+        flex-wrap: wrap;
+        gap: 5px;
       }
-      .top-left::-webkit-scrollbar,
-      .top-right::-webkit-scrollbar {
-        display: none;
+      .top-right .btn-sm {
+        padding: 4px 8px;
+        font-size: 0.74rem;
       }
-      .deck-select { max-width: 150px; }
-      .slide-select { max-width: 125px; }
+      .deck-select,
+      .slide-select {
+        flex: 1 1 0;
+        min-width: 0;
+        max-width: none;
+        height: 32px;
+        line-height: 32px;
+        font-size: 0.78rem;
+      }
       .bottombar {
         height: auto;
         min-height: 50px;
         padding: 6px 10px;
         gap: 8px;
+      }
+      .nav-btns {
+        flex-shrink: 0;
       }
       .nav-btns .btn {
         padding: 5px 10px;

@@ -1665,6 +1665,7 @@ a {
   .sidebar-nav {
     flex-direction: row;
     flex-wrap: nowrap;
+    flex-shrink: 0;
   }
 
   .sidebar-footer {
@@ -1677,10 +1678,17 @@ a {
     align-items: center;
   }
 
-  .nav-item {
-    min-width: 78px;
+  .sidebar-mini-row {
+    display: flex;
     flex-shrink: 0;
-    padding: 8px 6px;
+    gap: 4px;
+  }
+
+  .nav-item {
+    width: auto;
+    min-width: 72px;
+    flex-shrink: 0;
+    padding: 8px 10px;
   }
 
   .hero-content-grid {

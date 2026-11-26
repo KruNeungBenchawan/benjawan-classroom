@@ -634,6 +634,15 @@ a {
   color: #0284c7;
 }
 
+.onet-lit {
+  grid-column: 1 / -1;
+  background: linear-gradient(135deg, #fef3c7 0%, #fce7f3 50%, #d1fae5 100%);
+}
+
+.onet-lit .onet-icon-box {
+  color: #be185d;
+}
+
 .onet-icon-box {
   width: 48px;
   height: 48px;

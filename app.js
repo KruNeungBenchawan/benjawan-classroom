@@ -154,7 +154,7 @@
         if (
           !existingIds.has(item.id) &&
           (item.id.startsWith("thai-slide-") ||
-            ["onet-m3-2569", "onet-p6-2569", "m3-slide-2568-html", "m3-exam-2568-pdf", "thai-vocab-p1-p6"].includes(item.id))
+            ["onet-m3-2569", "onet-p6-2569", "m3-slide-2568-html", "m3-exam-2568-pdf", "thai-vocab-p1-p6", "thai-lit-m1-m3"].includes(item.id))
         ) {
           parsed.resources.unshift(item);
         }
@@ -427,7 +427,7 @@
       img: "assets/chibi-games.jpg",
       pill: "🎮 เรียนปนเล่น สนุกได้ความรู้!",
       title: "เกมการเรียนรู้แสนสนุก",
-      desc: "ตะลุยด่านคำคล้องจองหรรษา และตะลุยคำศัพท์ ป.1–ป.6 ฝึกอ่านบัญชีคำพื้นฐาน!",
+      desc: "อาณาจักรวรรณคดีไทย ม.1–ม.3, ตะลุยด่านคำคล้องจองหรรษา และตะลุยคำศัพท์ ป.1–ป.6!",
       bg: "linear-gradient(135deg, #f3e8ff 0%, #ffe4ee 100%)"
     },
     exams: {
@@ -457,6 +457,7 @@
   }
 
   function getCardChibiThumb(item) {
+    if (item.id === "thai-lit-m1-m3") return "literature-m1-m3/images/cover-all.jpg";
     if (item.id === "thai-vocab-p1-p6") return "assets/chibi-student-boy.jpg";
     if ((item.subject || "").includes("ประวัติศาสตร์")) return "assets/chibi-history.jpg";
     if (item.category === "games") return "assets/chibi-games.jpg";

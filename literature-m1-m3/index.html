@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>อาณาจักรวรรณคดีไทย ม.1–ม.3 | ห้องเรียนครูเบ็ญจวรรณ</title>
+  <link rel="icon" type="image/png" href="../assets/logo-kruneung.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Mali:wght@500;600;700&family=Sarabun:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="styles.css?v=1" />
+</head>
+<body>
+  <!-- Sticky Top Navigation -->
+  <header class="top-header no-print">
+    <div class="header-inner">
+      <div class="header-row">
+        <button type="button" class="brand-btn" id="brandHomeBtn">
+          <img src="../assets/logo-kruneung.png" alt="โลโก้ห้องเรียนครูเบ็ญจวรรณ" class="brand-logo" />
+          <div>
+            <h1 class="brand-title">อาณาจักรวรรณคดีไทย ม.1–ม.3</h1>
+            <p class="brand-sub">คลังสื่อภาพ 24 แผ่น • สรุปบทเรียน • เกมการเรียนรู้ 4 ด่าน</p>
+          </div>
+        </button>
+
+        <div class="header-controls">
+          <a href="../index.html" class="home-classroom-btn" title="กลับหน้าหลัก ห้องเรียนครูเบ็ญจวรรณ">
+            🏠 <span>หน้าหลักห้องเรียนครูเบ็ญจวรรณ</span>
+          </a>
+
+          <button type="button" id="soundBtn" class="pill-btn" title="เปิด/ปิดเสียงเอฟเฟกต์">
+            🔊 <span>เสียง</span>
+          </button>
+
+          <button type="button" id="starsBtn" class="pill-btn stars-pill" title="ดูดาวสะสมและเกียรติบัตร">
+            ⭐ <span id="headerStars">0</span> ดาว
+          </button>
+
+          <button type="button" id="profileBtn" class="pill-btn profile-pill" title="แก้ไขชื่อนักเรียนและระดับชั้น">
+            <span id="headerAvatar">🦉</span>
+            <span id="headerStudentName">นักเรียนคนเก่ง</span>
+          </button>
+        </div>
+      </div>
+
+      <nav class="desktop-nav" aria-label="เมนูหลักอาณาจักรวรรณคดี">
+        <button type="button" class="nav-tab active" data-route="home">🏠 หน้าแรก</button>
+        <button type="button" class="nav-tab" data-route="media">📚 คลังสื่อภาพ (24 แผ่น)</button>
+        <button type="button" class="nav-tab" data-route="games">🎮 โซนเกม (4 เกม)</button>
+        <button type="button" class="nav-tab" data-route="certificate">🏆 เกียรติบัตร</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Dynamic Content -->
+  <main id="appMain" class="app-main"></main>
+
+  <!-- Mobile Bottom Bar -->
+  <nav class="mobile-bottom-nav no-print" aria-label="เมนูมือถือ">
+    <button type="button" class="mobile-nav-btn active" data-route="home">
+      <span>🏠</span><span>หน้าแรก</span>
+    </button>
+    <button type="button" class="mobile-nav-btn" data-route="media">
+      <span>📚</span><span>สื่อภาพ</span>
+    </button>
+    <button type="button" class="mobile-nav-btn" data-route="games">
+      <span>🎮</span><span>เกม</span>
+    </button>
+    <button type="button" class="mobile-nav-btn" data-route="certificate">
+      <span>🏆</span><span>เกียรติบัตร</span>
+    </button>
+  </nav>
+
+  <footer class="app-footer no-print">
+    ห้องเรียนครูเบ็ญจวรรณ (นางสาวเบ็ญจวรรณ สิงห์กุล) • โรงเรียนวัดราษฎร์บำรุง สพป.สระบุรี เขต 2
+  </footer>
+
+  <!-- Lightbox / Presentation Slideshow Modal -->
+  <div id="posterModal" class="poster-modal hidden" role="dialog" aria-modal="true" aria-label="ตัวแสดงสื่อภาพวรรณคดี">
+    <div class="poster-modal-bar">
+      <div class="poster-modal-title" id="pmTitle">กำลังแสดงสื่อภาพ</div>
+      <div class="poster-modal-tools">
+        <button type="button" class="pm-btn" id="pmPrevBtn">◀ ก่อนหน้า</button>
+        <span id="pmCounter" style="font-size:0.86rem;font-weight:700;">1 / 24</span>
+        <button type="button" class="pm-btn" id="pmNextBtn">ถัดไป ▶</button>
+        <button type="button" class="pm-btn" id="pmZoomOutBtn">➖ ย่อ</button>
+        <button type="button" class="pm-btn" id="pmZoomResetBtn">100%</button>
+        <button type="button" class="pm-btn" id="pmZoomInBtn">➕ ขยาย</button>
+        <button type="button" class="pm-btn" id="pmFullscreenBtn">⛶ เต็มจอ</button>
+        <button type="button" class="pm-btn pm-btn-close" id="pmCloseBtn">✕ ปิด</button>
+      </div>
+    </div>
+    <div class="poster-stage" id="pmStage">
+      <img id="pmImage" src="" alt="สื่อภาพวรรณคดี" />
+    </div>
+    <div class="poster-modal-foot">
+      <span id="pmCaption"></span>
+      <span>ใช้ปุ่มลูกศร ◀ ▶ เพื่อเปลี่ยนภาพ หรือ ESC เพื่อปิด</span>
+    </div>
+  </div>
+
+  <!-- Student Profile Modal -->
+  <div id="profileModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="profileModalHeading">
+    <div class="modal-box">
+      <h2 id="profileModalHeading" style="margin:0 0 14px; color:#153c5c;">ข้อมูลนักเรียน (สำหรับเกียรติบัตร)</h2>
+      <form id="profileForm">
+        <div class="form-field">
+          <label for="profStudentName">ชื่อ - นามสกุล / ชื่อเล่น</label>
+          <input type="text" id="profStudentName" required maxlength="60" />
+        </div>
+        <div class="form-field">
+          <label for="profStudentGrade">ระดับชั้น</label>
+          <select id="profStudentGrade">
+            <option value="ม.1">มัธยมศึกษาปีที่ 1 (ม.1)</option>
+            <option value="ม.2">มัธยมศึกษาปีที่ 2 (ม.2)</option>
+            <option value="ม.3">มัธยมศึกษาปีที่ 3 (ม.3)</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label>เลือกตัวละครประจำตัว</label>
+          <div class="avatar-choices" id="avatarChoices">
+            <button type="button" class="avatar-choice-btn" data-avatar="🦉">🦉</button>
+            <button type="button" class="avatar-choice-btn" data-avatar="🦊">🦊</button>
+            <button type="button" class="avatar-choice-btn" data-avatar="🐱">🐱</button>
+            <button type="button" class="avatar-choice-btn" data-avatar="🐼">🐼</button>
+            <button type="button" class="avatar-choice-btn" data-avatar="🐘">🐘</button>
+            <button type="button" class="avatar-choice-btn" data-avatar="🦁">🦁</button>
+          </div>
+        </div>
+        <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:16px;">
+          <button type="button" class="cta-btn btn-soft" id="profCancelBtn">ยกเลิก</button>
+          <button type="submit" class="cta-btn btn-primary">บันทึกข้อมูล</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="data.js?v=1"></script>
+  <script src="app.js?v=1"></script>
+</body>
+</html>

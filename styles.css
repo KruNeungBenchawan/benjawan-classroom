@@ -643,6 +643,12 @@ a {
   color: #be185d;
 }
 
+.onet-lit .onet-icon-box img {
+  object-fit: contain;
+  background: #fffdf5;
+  padding: 2px;
+}
+
 .onet-icon-box {
   width: 48px;
   height: 48px;

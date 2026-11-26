@@ -159,6 +159,10 @@
           parsed.resources.unshift(item);
         }
       });
+      const savedVocab = parsed.resources.find((r) => r.id === "thai-vocab-p1-p6");
+      if (savedVocab && typeof savedVocab.url === "string" && savedVocab.url.includes("script.google.com")) {
+        savedVocab.url = "vocab-p1-p6/index.html";
+      }
       if (Array.isArray(parsed.announcements)) {
         const annIds = new Set(parsed.announcements.map((a) => a.id));
         defaults.announcements.forEach((a) => {

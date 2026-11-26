@@ -77,6 +77,19 @@ window.DEFAULT_CLASSROOM_DATA = {
       "pinned": true
     },
     {
+      "id": "thai-vocab-p1-p6",
+      "title": "ตะลุยคำศัพท์ ป.1–ป.6 (คลังบัญชีคำพื้นฐานภาษาไทย)",
+      "category": "games",
+      "type": "onet",
+      "subject": "ภาษาไทย",
+      "grade": "ป.1–ป.6",
+      "year": "2569",
+      "url": "vocab-p1-p6/index.html",
+      "description": "เว็บแอปคลังบัญชีคำพื้นฐาน ภาษาไทย ป.1–ป.6 พร้อมระบบค้นหาคำศัพท์และโหมดทดสอบการอ่านแบบแฟลชการ์ด (เลือกจำนวนคำและจับเวลาได้)",
+      "date": "2026-11-20",
+      "pinned": true
+    },
+    {
       "id": "history-smart-class",
       "title": "History Smart Class: เว็บแอปสื่อการสอนประวัติศาสตร์ ม.1–ม.3 (ครบ 15 หน่วย)",
       "category": "lesson-plans",

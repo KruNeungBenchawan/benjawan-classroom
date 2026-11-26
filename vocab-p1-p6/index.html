@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>ตะลุยคำศัพท์ ป.1–ป.6 | ห้องเรียนครูเบ็ญจวรรณ</title>
+  <link rel="icon" type="image/png" href="../assets/logo-kruneung.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Mali:wght@600;700&family=Sarabun:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    :root {
+      --navy: #1e527c;
+      --navy-dark: #153c5c;
+      --sky: #9ad0f5;
+      --butter: #ffcb57;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      font-family: 'Sarabun', system-ui, sans-serif;
+      background: #e3f3ff;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      height: 100dvh;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: max(8px, env(safe-area-inset-top)) 14px 8px;
+      background: linear-gradient(90deg, var(--navy) 0%, var(--navy-dark) 100%);
+      border-bottom: 3px solid var(--sky);
+      color: #ffffff;
+      flex-shrink: 0;
+      z-index: 10;
+    }
+
+    .home-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--butter);
+      color: var(--navy-dark);
+      border: 2px solid #ffffff;
+      border-radius: 999px;
+      padding: 6px 15px;
+      font-family: 'Mali', 'Sarabun', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-decoration: none;
+      white-space: nowrap;
+      box-shadow: 0 3px 0 rgba(15, 39, 61, 0.45);
+      transition: transform 0.14s ease, box-shadow 0.14s ease;
+    }
+
+    .home-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 5px 0 rgba(15, 39, 61, 0.45);
+    }
+
+    .title-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Mali', 'Sarabun', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #e0f2fe;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .ext-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(255, 255, 255, 0.14);
+      color: #ffffff;
+      border: 1.5px solid rgba(255, 255, 255, 0.45);
+      border-radius: 999px;
+      padding: 6px 13px;
+      font-family: 'Mali', 'Sarabun', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background-color 0.15s ease;
+    }
+
+    .ext-btn:hover {
+      background: rgba(255, 255, 255, 0.26);
+    }
+
+    .frame-wrap {
+      position: relative;
+      flex: 1;
+      min-height: 0;
+      width: 100%;
+      background: #e3f3ff;
+    }
+
+    .loader-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: var(--navy-dark);
+      font-family: 'Mali', 'Sarabun', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+
+    .loader-overlay.hidden {
+      opacity: 0;
+    }
+
+    .spinner {
+      width: 36px;
+      height: 36px;
+      border: 4px solid rgba(30, 82, 124, 0.2);
+      border-top-color: var(--navy);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    iframe {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+      background: transparent;
+    }
+
+    @media (max-width: 720px) {
+      .title-pill,
+      .home-long {
+        display: none;
+      }
+      .topbar {
+        padding: max(8px, env(safe-area-inset-top)) 10px 8px;
+      }
+      .home-btn {
+        padding: 6px 12px;
+        font-size: 0.84rem;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .topbar {
+        gap: 6px;
+        padding: max(6px, env(safe-area-inset-top)) 8px 6px;
+      }
+      .home-btn,
+      .ext-btn {
+        padding: 5px 10px;
+        font-size: 0.78rem;
+        gap: 5px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a href="../index.html" class="home-btn" title="กลับหน้าหลัก ห้องเรียนครูเบ็ญจวรรณ">
+      🏠 <span>หน้าหลัก<span class="home-long">ห้องเรียนครูเบ็ญจวรรณ</span></span>
+    </a>
+
+    <div class="title-pill">
+      📚 ตะลุยคำศัพท์ ป.1–ป.6 • คลังบัญชีคำพื้นฐานภาษาไทย
+    </div>
+
+    <a
+      href="https://script.google.com/macros/s/AKfycbzfYwUtJsFoF60rqBM8rd7LdPAmPVMYhTwD3JWILZmgKewB049jLgQpkWaMIZUDMnWf/exec"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="ext-btn"
+      title="เปิดในแท็บใหม่เต็มหน้าจอ"
+    >
+      ↗ เปิดแท็บเต็ม
+    </a>
+  </header>
+
+  <main class="frame-wrap">
+    <div id="loaderOverlay" class="loader-overlay">
+      <div class="spinner" aria-hidden="true"></div>
+      <span>กำลังโหลด ตะลุยคำศัพท์ ป.1–ป.6...</span>
+    </div>
+    <iframe
+      id="vocabFrame"
+      src="https://script.google.com/macros/s/AKfycbzfYwUtJsFoF60rqBM8rd7LdPAmPVMYhTwD3JWILZmgKewB049jLgQpkWaMIZUDMnWf/exec"
+      title="ตะลุยคำศัพท์ ป.1–ป.6 (คลังบัญชีคำพื้นฐานภาษาไทย)"
+      allow="autoplay; fullscreen"
+      allowfullscreen
+    ></iframe>
+  </main>
+
+  <script>
+    const frame = document.getElementById("vocabFrame");
+    const loader = document.getElementById("loaderOverlay");
+    frame.addEventListener("load", () => {
+      loader.classList.add("hidden");
+    });
+  </script>
+</body>
+</html>
